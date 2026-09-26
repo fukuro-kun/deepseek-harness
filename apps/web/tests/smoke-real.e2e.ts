@@ -466,7 +466,7 @@ describe('dsh web keyless CLI smoke', () => {
       expect(workspaceMessage).toMatchInlineSnapshot(`
         {
           "content": "<system-reminder>
-        The following workspace instructions may be relevant to your work. Use them as guidance when applicable. More specific instructions take precedence over broader ones. They do not override system, developer, or direct user instructions.
+        Workspace instructions follow as guidance where applicable. More specific instructions take precedence; they never override system, developer, or direct user instructions.
 
         Instructions from: AGENTS.md
 

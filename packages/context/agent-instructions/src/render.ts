@@ -9,14 +9,13 @@ import type { InstructionFile, LoadedInstructionFile } from './files.ts'
 
 const SYSTEM_REMINDER_OPEN = '<system-reminder>'
 const SYSTEM_REMINDER_CLOSE = '</system-reminder>'
-const WORKSPACE_CONTEXT_INTRO = 'The following workspace instructions may be relevant to your work. '
-  + 'Use them as guidance when applicable. More specific instructions take precedence over broader ones. '
-  + 'They do not override system, developer, or direct user instructions.'
-const REPLACEMENT_WORKSPACE_CONTEXT_INTRO = 'This complete workspace instruction baseline replaces all earlier workspace instruction baselines. '
+const WORKSPACE_CONTEXT_INTRO = 'Workspace instructions follow as guidance where applicable. '
+  + 'More specific instructions take precedence; they never override system, developer, or direct user instructions.'
+const REPLACEMENT_WORKSPACE_CONTEXT_INTRO = 'This baseline replaces all earlier workspace instruction baselines. '
   + WORKSPACE_CONTEXT_INTRO
-const EMPTY_REPLACEMENT_WORKSPACE_CONTEXT_INTRO = 'This complete workspace instruction baseline replaces all earlier workspace instruction baselines. '
+const EMPTY_REPLACEMENT_WORKSPACE_CONTEXT_INTRO = 'This baseline replaces all earlier workspace instruction baselines. '
   + 'No workspace instructions are currently active.'
-const COMPACT_WORKSPACE_CONTEXT_INTRO = 'Workspace instructions were omitted or truncated to fit the configured byte budget.'
+const COMPACT_WORKSPACE_CONTEXT_INTRO = 'Workspace instructions omitted or truncated to fit the byte budget.'
 
 /** Byte-accounting record for one truncated instruction file. */
 export interface TruncatedInstruction {
@@ -150,7 +149,7 @@ function additionalSectionText(file: LoadedInstructionFile): string {
   return [
     `Additional instructions from: ${file.displayPath}`,
     '',
-    `These instructions apply to work under \`${scope}\`. Use them as guidance when relevant; more specific instructions take precedence. They do not override system, developer, or direct user instructions.`,
+    `Scoped guidance for work under \`${scope}\`. More specific instructions take precedence; they never override system, developer, or direct user instructions.`,
     '',
     file.content,
   ].join('\n')
@@ -172,12 +171,12 @@ function changedSectionText(item: ChangeRenderItem): string {
   const { change, file } = item
   if (change.action === 'set') return additionalSectionText(file)
   if (change.action === 'remove') {
-    return `Instructions removed: ${change.path}\n\nThe previously loaded instructions from this file no longer apply.`
+    return `Instructions removed: ${change.path}\n\nThey no longer apply.`
   }
   return [
     `Updated instructions from: ${change.path}`,
     '',
-    'This file changed after it was loaded. Use the following content instead of the previously loaded instructions from this file.',
+    'This file changed after it was loaded; the content below replaces the previously loaded instructions.',
     '',
     file.content,
   ].join('\n')

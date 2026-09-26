@@ -134,7 +134,7 @@ export interface Config {
 
 ```markdown
 <system-reminder>
-The following workspace instructions may be relevant to your work. Use them as guidance when applicable. More specific instructions take precedence over broader ones. They do not override system, developer, or direct user instructions.
+Workspace instructions follow as guidance where applicable. More specific instructions take precedence; they never override system, developer, or direct user instructions.
 
 Instructions from: ~/.dsh/AGENTS.md
 
@@ -166,7 +166,7 @@ Instructions from: AGENTS.md
 <system-reminder>
 Additional instructions from: packages/app/AGENTS.md
 
-These instructions apply to work under `packages/app`. Use them as guidance when relevant; more specific instructions take precedence. They do not override system, developer, or direct user instructions.
+Scoped guidance for work under `packages/app`. More specific instructions take precedence; they never override system, developer, or direct user instructions.
 
 <nested-instructions>
 </system-reminder>
@@ -192,7 +192,7 @@ These instructions apply to work under `packages/app`. Use them as guidance when
 <system-reminder>
 Instructions removed: packages/app/AGENTS.md
 
-The previously loaded instructions from this file no longer apply.
+They no longer apply.
 </system-reminder>
 ```
 

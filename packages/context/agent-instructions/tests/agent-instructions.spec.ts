@@ -740,7 +740,7 @@ describe('workspace context rendering', () => {
 
     expect(rendered.text).toBe([
       '<system-reminder>',
-      'The following workspace instructions may be relevant to your work. Use them as guidance when applicable. More specific instructions take precedence over broader ones. They do not override system, developer, or direct user instructions.',
+      'Workspace instructions follow as guidance where applicable. More specific instructions take precedence; they never override system, developer, or direct user instructions.',
       '',
       'Instructions from: AGENTS.md',
       '',
@@ -919,10 +919,10 @@ describe('workspace context rendering', () => {
       content: '',
     }
 
-    const rendered = renderWorkspaceInstructionSet([file], { maxBytes: 300 })
+    const rendered = renderWorkspaceInstructionSet([file], { maxBytes: 233 })
 
     expect(rendered.rendered.text).toContain('<system-reminder>')
-    expect(rendered.rendered.text).toContain('Workspace instructions were omitted or truncated')
+    expect(rendered.rendered.text).toContain('Workspace instructions omitted or truncated')
     expect(rendered.rendered.text).toContain('Instructions from: pkg/AGENTS.md')
     expect(rendered.rendered.truncated).toEqual([
       { displayPath: 'pkg/AGENTS.md', originalBytes: 0, includedBytes: 0 },
@@ -974,8 +974,8 @@ describe('workspace context rendering', () => {
 
   // Each prose-derived budget is the smallest current value that retains the named heading plus a zero-byte marker.
   it.each([
-    { action: 'set' as const, maxBytes: 327, heading: 'Additional instructions from:' },
-    { action: 'replace' as const, maxBytes: 256, heading: 'Updated instructions from:' },
+    { action: 'set' as const, maxBytes: 282, heading: 'Additional instructions from:' },
+    { action: 'replace' as const, maxBytes: 231, heading: 'Updated instructions from:' },
   ])('does not commit a $action change when its heading survives with zero content bytes', ({ action, maxBytes, heading }) => {
     const change = {
       action,
@@ -1003,7 +1003,7 @@ describe('workspace context rendering', () => {
     const rendered = renderInstructionChanges([{
       change,
       file: { absolutePath: '/repo/pkg/AGENTS.md', displayPath: 'pkg/AGENTS.md', content: '😀'.repeat(100) },
-    }], 366)
+    }], 320)
 
     expect(rendered.text).not.toContain('�')
     expect(rendered.text).not.toContain('😀')
@@ -3112,7 +3112,7 @@ describe('dynamic nested workspace context injection', () => {
         '<system-reminder>',
         `Updated instructions from: ${join('pkg', 'AGENTS.md')}`,
         '',
-        'This file changed after it was loaded. Use the following content instead of the previously loaded instructions from this file.',
+        'This file changed after it was loaded; the content below replaces the previously loaded instructions.',
         '',
         'new package rule with more detail',
         '</system-reminder>',
@@ -3490,7 +3490,7 @@ describe('dynamic nested workspace context injection', () => {
         '<system-reminder>',
         `Instructions removed: ${join('pkg', 'AGENTS.md')}`,
         '',
-        'The previously loaded instructions from this file no longer apply.',
+        'They no longer apply.',
         '</system-reminder>',
       ].join('\n'))
     } finally {
