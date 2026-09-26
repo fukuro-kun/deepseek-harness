@@ -14,7 +14,7 @@
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
 import { assertUsableApiKey, LlmError, resolveImageAttachmentAccess, resolveRetryPolicy, RetryPolicySchema } from '@deepseek-ai/dsh-llm'
-import type { ModelModality, RetryPolicyConfig } from '@deepseek-ai/dsh-llm'
+import type { AdapterRegistrationHandle, ModelModality, RetryPolicyConfig } from '@deepseek-ai/dsh-llm'
 import type {} from '@deepseek-ai/dsh-fs'
 import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import { launchEnvironmentOf, type LaunchEnvironmentSnapshot } from '@deepseek-ai/dsh-launch-environment'
@@ -484,14 +484,42 @@ export function apply(ctx: Context, config: Config): void {
         ?? Promise.resolve({ fields: {}, accept: () => Promise.resolve() })
     },
   })
-  ctx.llm.registerConfigurableProviders([
-    { provider: PROVIDER, displayName: 'DeepSeek', settingsNs: NS, settingsPath: [] },
-  ])
-  // Route effects bind to this apply fiber via the stable `ctx` reference,
-  // even when a swap runs inside the scoped settings callback below.
-  const registration = ctx.llm.registerAdapter([PROVIDER], adapter)
+  // fukuro fork: publish the deepseek-official route and its directory entry
+  // only while a usable API key resolves — without one the provider and its
+  // default model catalog must not appear in the picker. Key arrival/removal
+  // is observed through `credentials/reference-updated` and settings changes.
+  let adapterHandle: AdapterRegistrationHandle | null = null
+  let directoryHandle: (() => void) | null = null
   let registeredPolicy = options().retryPolicy
+  const syncVisibility = async (): Promise<void> => {
+    let usable = false
+    try {
+      await resolveApiKey(options())
+      usable = true
+    } catch {
+      // A resolution failure is the signal that no usable key exists; any
+      // other cause still means the provider must not be offered.
+      usable = false
+    }
+    if (usable && adapterHandle === null) {
+      // Route effects bind to this apply fiber via the stable `ctx` reference,
+      // even when a swap runs inside the scoped settings callback below.
+      adapterHandle = ctx.llm.registerAdapter([PROVIDER], adapter)
+      directoryHandle = ctx.llm.registerConfigurableProviders([
+        { provider: PROVIDER, displayName: 'DeepSeek', settingsNs: NS, settingsPath: [] },
+      ])
+    } else if (!usable && adapterHandle !== null) {
+      if (directoryHandle !== null) {
+        directoryHandle()
+        directoryHandle = null
+      }
+      adapterHandle()
+      adapterHandle = null
+    }
+  }
   const ensureRegistrationFacts = (): void => {
+    void syncVisibility()
+    if (adapterHandle === null) return
     const policy = options().retryPolicy
     if (deepEqualJson(policy, registeredPolicy)) return
     // The registry captures the retry policy at registration, so it is the one
@@ -499,9 +527,16 @@ export function apply(ctx: Context, config: Config): void {
     // synchronous registry section: disposing and re-registering instead would
     // publish an empty route set between the two, and an observer that reacted
     // to it would see this provider disappear and come back.
-    registration.replace([PROVIDER])
+    adapterHandle.replace([PROVIDER])
     registeredPolicy = policy
   }
+  ctx.on('credentials/reference-updated', () => {
+    void syncVisibility()
+  })
+  void syncVisibility()
+  ctx.inject(['credentials'], () => {
+    void syncVisibility()
+  })
 
   ctx.inject(['settings'], (settingsCtx) => {
     settingsCtx.settings.installSection(ctx, NS, Config, config, {
