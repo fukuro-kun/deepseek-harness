@@ -2155,6 +2155,15 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1
 
+  packages/client/locale-de:
+    devDependencies:
+      '@deepseek-ai/cordis':
+        specifier: workspace:^
+        version: link:../../../vendor/cordis
+      '@deepseek-ai/dsh-client-locale':
+        specifier: workspace:^
+        version: link:../locale
+
   packages/client/modules:
     devDependencies:
       '@deepseek-ai/cordis':
