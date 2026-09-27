@@ -6,13 +6,29 @@
  * @module @deepseek-ai/dsh-client-locale-de/dicts
  */
 
-import type { LocaleDict } from '@deepseek-ai/dsh-client-locale'
 
+
+/** Registered id of the German locale, matching the language definition. */
 export const LOCALE_ID = 'de'
+/** Human-readable picker label for the German locale. */
 export const LOCALE_LABEL = 'Deutsch'
+/** Fallback locale id the registry resolves missing `de` keys against. */
 export const LOCALE_FALLBACK = 'en'
 
-export const DICTS: Record<string, LocaleDict> = {
+/** German dictionary for the current-session permission popup gate. */
+const accessDe = {
+  'preset.readOnly': 'Nur lesen',
+  'preset.workspaceWrite': 'Im Arbeitsbereich ändern',
+  'preset.fullAccess': 'Voller Zugriff',
+  'confirm.title': 'Vollen Zugriff aktivieren?',
+  'confirm.description': 'Voller Zugriff reduziert die Bestätigungsschritte und erlaubt dem Agenten mehr Aktionen direkt auszuführen — einschließlich sensibler Operationen, Dateiänderungen oder externer Befehle. Nur verwenden, wenn du der aktuellen Aufgabe vertraust.',
+  'confirm.acknowledge': 'Ich verstehe die Risiken und möchte fortfahren',
+  'confirm.cancel': 'Abbrechen',
+  'confirm.enable': 'Vollen Zugriff aktivieren',
+} satisfies Record<string, string>
+
+/** All `de` dictionaries this pack registers, keyed by locale namespace. */
+export const DICTS: Record<string, Record<string, string>> = {
   'approval': {
     'waiting': 'Wartet auf Freigabe',
     'detail.aria': 'Freigabedetails',
@@ -183,10 +199,10 @@ export const DICTS: Record<string, LocaleDict> = {
     'number.million': '{value}M',
   },
   'conversation': {
-    'hint.plan': PLAN_NEXT_ACTION_DE,
+    'hint.plan': 'Beschreibe deine Aufgabe, um einen Plan zu erzeugen',
     'hint.goal': 'Beschreibe das Ziel für eine langlaufende Aufgabe',
     'hint.goal.active': 'Ziel aktiv — edit / pause / resume / clear',
-    'placeholder.plan': PLAN_NEXT_ACTION_DE,
+    'placeholder.plan': 'Beschreibe deine Aufgabe, um einen Plan zu erzeugen',
     'placeholder.default': 'Nachricht senden oder Aufgabe erstellen, / Befehle, @ Dateien oder Sitzungen',
     'placeholder.unavailable': 'Sitzung nicht verfügbar',
     'placeholder.parentOffline': 'Übergeordnete Sitzung offline; Senden nicht möglich, aber du kannst den Lauf noch stoppen',
@@ -1284,6 +1300,8 @@ export const DICTS: Record<string, LocaleDict> = {
     'delete.pending': 'Arbeitsbereich wird gelöscht…',
     'menu.fork': 'Sitzung forken',
     'menu.archiveSession': 'Sitzung archivieren',
+    'menu.unarchiveSession': 'Sitzung wiederherstellen',
+    'archive.label': 'Archiv',
     'sessions.count.one': '{n} Sitzung',
     'sessions.count.other': '{n} Sitzungen',
     'actions.workspace.aria': 'Arbeitsbereich-Aktionen für {name}',

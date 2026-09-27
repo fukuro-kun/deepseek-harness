@@ -9,7 +9,7 @@
 
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 // Type-only: pulls the locale plugin's Context merge (ctx.locale).
-import type {} from '@deepseek-ai/dsh-client-locale'
+import type {} from '@deepseek-ai/dsh-client-locale/client'
 import { DICTS, LOCALE_FALLBACK, LOCALE_ID, LOCALE_LABEL } from './dicts.ts'
 
 export const inject = ['locale']
