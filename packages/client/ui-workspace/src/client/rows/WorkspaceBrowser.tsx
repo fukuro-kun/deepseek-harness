@@ -644,7 +644,7 @@ function SessionTree({
  * echo. The section only renders while at least one archived row exists.
  */
 function ArchiveSection({
-  rows, currentId, now, onOpen, onRename, onFork, onArchive, onUnarchive, t,
+  rows, currentId, now, onOpen, onRename, onFork, onArchive, onUnarchive, flat = false, t,
 }: {
   rows: readonly SessionNode[]
   currentId: SessionNode['id'] | undefined
@@ -654,6 +654,8 @@ function ArchiveSection({
   onFork: (id: SessionNode['id']) => void
   onArchive: (id: SessionNode['id']) => void
   onUnarchive: (id: SessionNode['id']) => void
+  /** Flat-list variant: rows render without the empty status slot. */
+  flat?: boolean | undefined
   t: WorkspaceBrowserProps['t']
 }) {
   const [expanded, setExpanded] = useState(false)
@@ -684,6 +686,7 @@ function ArchiveSection({
           onArchive={onArchive}
           onUnarchive={onUnarchive}
           archived
+          flat={flat}
           t={t}
         />
       ))}
@@ -831,6 +834,7 @@ function FlatList({
             onFork={forkSession}
             onArchive={onSessionArchive}
             onUnarchive={onSessionUnarchive}
+            flat
             t={t}
           />
         )}
