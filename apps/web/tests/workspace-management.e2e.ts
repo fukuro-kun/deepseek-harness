@@ -6,8 +6,9 @@
 // duplicate-name pre-check, the
 // flat "In one list" view with its persisted group-by preference, the session
 // hover card and row action menu, and the session archive round trip (row
-// menu → workspace.archiveSession RPC → durable global set → row hidden
-// across reload). Zero model calls: workspace.create/rename/archiveSession
+// menu → workspace.archiveSession RPC → durable global set → archive section
+// row → Restore → session back in place, across reload). Zero model calls:
+// workspace.create/rename/archiveSession/unarchiveSession
 // are host RPCs with no model involvement, and the one session row the
 // flat/hover/menu/archive scenarios need comes from a seeded fixture (the
 // seeded-history seed reused verbatim — no new recording).
@@ -636,8 +637,29 @@ describe('web e2e: workspace management (create / rename / flat view / hover aff
     ).toBe(true)
     // The archived row must not resurface (the Ungrouped bucket itself may
     // reappear if selection restore lands on another stray — not this test's
-    // concern).
+    // concern). The folded archive section keeps the row out of the tree.
     expect(await sessionRow.count()).toBe(0)
+    const archiveHeader = page.getByRole('button', { name: /Archive/ })
+    await expect.poll(() => archiveHeader.count(), { timeout: 10_000 }).toBe(1)
+
+    // Restore from the archive section: expanding it mounts the dimmed row,
+    // its menu carries only Restore, and the echo resurfaces the Session in
+    // its retained Ungrouped slot.
+    await archiveHeader.click()
+    const archivedRow = page.getByRole('treeitem').filter({
+      has: page.getByText(title, { exact: true }),
+    })
+    await expect.poll(() => archivedRow.count(), { timeout: 10_000 }).toBe(1)
+    await clickHoverAction(archivedRow, `Session actions for ${title}`)
+    await expect.poll(() => page.getByRole('menuitem', { name: 'Archive session' }).count()).toBe(0)
+    await page.getByRole('menuitem', { name: 'Restore session' }).click()
+    await expect.poll(
+      () => scaffold.ctx.workspaceRegistry.archivedSessionIds.length,
+      { timeout: 10_000 },
+    ).toBe(0)
+    // The section dissolves; the row is back as a regular tree item.
+    await expect.poll(() => archiveHeader.count(), { timeout: 10_000 }).toBe(0)
+    await expect.poll(() => sessionRow.count(), { timeout: 10_000 }).toBe(1)
     expect(tripwire.pageErrors).toEqual([])
   }, 90_000)
 

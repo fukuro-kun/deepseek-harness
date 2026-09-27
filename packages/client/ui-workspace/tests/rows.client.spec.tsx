@@ -483,6 +483,28 @@ describe('workspace browser rows', () => {
     expect(screen.queryByRole('menu')).toBeNull()
   })
 
+  it('archived row is inert to open and its menu offers only Restore', () => {
+    const onOpen = vi.fn()
+    const onUnarchive = vi.fn()
+    const node: SessionNode = {
+      id: sid('s1'), title: 'Stowed', blank: false, running: false,
+      runningSubagentCount: 0, completed: false, hasActiveSchedule: false, updatedAt: 0,
+    }
+    render(<SessionNodeItem node={node} currentId={undefined} now={0} onOpen={onOpen}
+      onRename={vi.fn()} onFork={vi.fn()} onArchive={vi.fn()} onUnarchive={onUnarchive}
+      archived t={t} />)
+    const row = screen.getByRole('treeitem')
+    fireEvent.click(row)
+    expect(onOpen).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole('button', { name: '会话“Stowed”的操作' }))
+    expect(screen.queryByRole('menuitem', { name: '归档会话' })).toBeNull()
+    expect(screen.queryByRole('menuitem', { name: '重命名' })).toBeNull()
+    fireEvent.click(screen.getByRole('menuitem', { name: '恢复会话' }))
+    expect(onUnarchive).toHaveBeenCalledWith(node.id)
+    expect(onOpen).not.toHaveBeenCalled()
+  })
+
 
   it('shows the hover card after the dwell and suppresses it while the row menu is open', () => {
     vi.useFakeTimers()

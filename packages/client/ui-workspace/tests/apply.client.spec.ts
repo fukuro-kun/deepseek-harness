@@ -43,6 +43,7 @@ async function bench() {
     delete: vi.fn(async () => undefined),
     insertBefore: vi.fn(async () => undefined),
     archiveSession: vi.fn(async () => undefined),
+    unarchiveSession: vi.fn(async () => undefined),
     insertSessionBefore,
   } as never)
   ctx.provide('sessions', {
@@ -119,6 +120,10 @@ describe('ui-workspace apply', () => {
     declare(b.slots, 'sidebar.workspaces', 'conversation.hero.workspace')
     await b.ctx.plugin({ inject: [...inject], apply }).await()
     const startSession = vi.spyOn(b.ctx.uiWorkspace, 'startSession').mockImplementation(() => undefined)
+    const archiveSession = vi.spyOn(b.ctx.uiWorkspace, 'archiveSession')
+      .mockImplementation(() => Promise.resolve())
+    const unarchiveSession = vi.spyOn(b.ctx.uiWorkspace, 'unarchiveSession')
+      .mockImplementation(() => Promise.resolve())
 
     const browser = (b.slots.entries('sidebar.workspaces')[0]!.inject as () => WorkspaceBrowserInjected)()
     // Both arms delegate to the shared Session navigation action.
@@ -145,6 +150,10 @@ describe('ui-workspace apply', () => {
     expect(b.fork).toHaveBeenCalledWith({ sessionId: 'session', increaseTitle: true })
     await browser.renameWorkspace('ws' as never, 'renamed')
     expect(b.rename).toHaveBeenCalledWith('ws', 'renamed')
+    await browser.archiveSession('session' as never)
+    expect(archiveSession).toHaveBeenCalledWith('session')
+    await browser.unarchiveSession('session' as never)
+    expect(unarchiveSession).toHaveBeenCalledWith('session')
     await browser.insertSessionBefore('ws' as never, 's1' as never, 's2' as never)
     expect(b.insertSessionBefore).toHaveBeenCalledWith('ws', 's1', 's2')
     await browser.createWorkspace({ path: '/tmp/browser-project' })

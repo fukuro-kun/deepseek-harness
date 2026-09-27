@@ -12,8 +12,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import clsx from 'clsx'
 import {
-  Button, IconCloseFill14, IconPersonalizationOutline16,
-  IconProjectAddOutline16, IconSearchOutline16, Menu, Modal, Tooltip,
+  Button, IconArchiveOutline20, IconCloseFill14, IconPersonalizationOutline16,
+  IconProjectAddOutline16, IconSearchOutline16, IconTriangleRightFill14, Menu, Modal, Tooltip,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type {
   SessionListState, SessionSearchResultItem,
@@ -23,7 +23,7 @@ import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { WorkspaceBrowserProps } from '../contract/slots.ts'
 import type { SessionNode, SessionOrderBy } from '../tree.ts'
 import {
-  deriveFlat, deriveGroups, deriveSearchResults, owningGroupKey, UNGROUPED_KEY,
+  deriveArchived, deriveFlat, deriveGroups, deriveSearchResults, owningGroupKey, UNGROUPED_KEY,
 } from '../tree.ts'
 import { ProjectRowItem, SearchResultItem, SessionNodeItem } from './Rows.tsx'
 import { FLAT_SESSION_ORDER_KEY } from '../stores.ts'
@@ -264,6 +264,8 @@ type SessionTreeProps = Pick<
   onSessionRename: (sessionId: SessionNode['id'], currentTitle: string) => void
   /** Archive a session (row menu action; the row disappears on the state echo). */
   onSessionArchive: (sessionId: SessionNode['id']) => void
+  /** Restore an archived session (archive-section row action; the row resurfaces on the echo). */
+  onSessionUnarchive: (sessionId: SessionNode['id']) => void
   /** Session order behavior: fixed after edits, or additionally promoted by user activity. */
   orderBy: SessionOrderBy
   /** One Session chosen from search that must be exposed and scrolled into view. */
@@ -276,7 +278,7 @@ type SessionTreeProps = Pick<
 function SessionTree({
   useSessions, useSessionPendingInteraction, startSession, open, forkSession, workspaces, archivedSessionIds,
   workspaceReady, usePanelInfo,
-  onRenameRequest, onDeleteRequest, onSessionRename, onSessionArchive,
+  onRenameRequest, onDeleteRequest, onSessionRename, onSessionArchive, onSessionUnarchive,
   insertWorkspaceBefore, insertSessionBefore, orderBy,
   groupExpansion, setGroupExpanded,
   sessionOrderByAccount, sessionUpdatedAtByAccount, syncSessionOrderAccount, setSessionOrder, home, t,
@@ -359,6 +361,10 @@ function SessionTree({
         : { ungroupedOrder: sessionOrderByAccount[UNGROUPED_KEY] }),
     }),
     [list, orderedWorkspaces, archivedSessionIds, pendingInteractions, expandedGroups, sessionOrderByAccount],
+  )
+  const archivedRows = useMemo(
+    () => deriveArchived(list, archivedSessionIds, pendingInteractions),
+    [list, archivedSessionIds, pendingInteractions],
   )
   useEffect(() => {
     if (revealGroup === undefined || groupExpansion[revealGroup] === true) return
@@ -611,8 +617,76 @@ function SessionTree({
             </div>
           )
         })}
+        {archivedRows.length > 0 && (
+          <ArchiveSection
+            rows={archivedRows}
+            currentId={current}
+            now={now}
+            onOpen={open}
+            onRename={onSessionRename}
+            onFork={forkSession}
+            onArchive={onSessionArchive}
+            onUnarchive={onSessionUnarchive}
+            t={t}
+          />
+        )}
       </div>
       <span className={css.fade} />
+    </div>
+  )
+}
+
+/**
+ * The bottom archive block of the session list: a folded section header
+ * (icon + count + chevron) that expands into the archived session rows.
+ * Rows are inert to open/drag — the one live affordance is Restore, which
+ * returns the session to its retained workspace slot on the archive-set
+ * echo. The section only renders while at least one archived row exists.
+ */
+function ArchiveSection({
+  rows, currentId, now, onOpen, onRename, onFork, onArchive, onUnarchive, t,
+}: {
+  rows: readonly SessionNode[]
+  currentId: SessionNode['id'] | undefined
+  now: number
+  onOpen: (id: SessionNode['id']) => void
+  onRename: (id: SessionNode['id'], currentTitle: string) => void
+  onFork: (id: SessionNode['id']) => void
+  onArchive: (id: SessionNode['id']) => void
+  onUnarchive: (id: SessionNode['id']) => void
+  t: WorkspaceBrowserProps['t']
+}) {
+  const [expanded, setExpanded] = useState(false)
+  return (
+    <div className={css.archiveSection}>
+      <button
+        type="button"
+        className={css.archiveHeader}
+        aria-expanded={expanded}
+        onClick={() => { setExpanded(v => !v) }}
+      >
+        <span className={css.archiveIcon}>
+          <IconArchiveOutline20 size={16} />
+        </span>
+        <span className={css.archiveTitle}>{t('archive.label')}</span>
+        <span className={css.archiveCount}>{rows.length}</span>
+        <IconTriangleRightFill14 className={clsx(css.archiveArrow, expanded && css.archiveArrowOpen)} />
+      </button>
+      {expanded && rows.map(node => (
+        <SessionNodeItem
+          key={node.id}
+          node={node}
+          currentId={currentId}
+          now={now}
+          onOpen={onOpen}
+          onRename={onRename}
+          onFork={onFork}
+          onArchive={onArchive}
+          onUnarchive={onUnarchive}
+          archived
+          t={t}
+        />
+      ))}
     </div>
   )
 }
@@ -620,7 +694,7 @@ function SessionTree({
 /** The flat "In one list" body: every session is one draggable top-level row. */
 function FlatList({
   useSessions, useSessionPendingInteraction, open, forkSession, onSessionRename, onSessionArchive,
-  archivedSessionIds, usePanelInfo,
+  onSessionUnarchive, archivedSessionIds, usePanelInfo,
   orderBy, sessionOrderByAccount, sessionUpdatedAtByAccount, syncSessionOrderAccount, setSessionOrder,
   revealSessionId, onSessionRevealed, t,
 }: Pick<
@@ -631,6 +705,7 @@ function FlatList({
   | 'forkSession'
   | 'onSessionRename'
   | 'onSessionArchive'
+  | 'onSessionUnarchive'
   | 'archivedSessionIds'
   | 'usePanelInfo'
   | 'orderBy'
@@ -647,6 +722,10 @@ function FlatList({
   const pendingInteractions = useSessionPendingInteraction(s => s)
   const baseRows = useMemo(
     () => deriveFlat(list, archivedSessionIds, pendingInteractions),
+    [list, archivedSessionIds, pendingInteractions],
+  )
+  const archivedRows = useMemo(
+    () => deriveArchived(list, archivedSessionIds, pendingInteractions),
     [list, archivedSessionIds, pendingInteractions],
   )
   const sessionIds = useMemo(() => baseRows.map(row => row.id), [baseRows])
@@ -742,6 +821,19 @@ function FlatList({
             />
           )
         })}
+        {archivedRows.length > 0 && (
+          <ArchiveSection
+            rows={archivedRows}
+            currentId={panelActive ? undefined : list.current}
+            now={now}
+            onOpen={open}
+            onRename={onSessionRename}
+            onFork={forkSession}
+            onArchive={onSessionArchive}
+            onUnarchive={onSessionUnarchive}
+            t={t}
+          />
+        )}
       </div>
       <span className={css.fade} />
     </div>
@@ -853,6 +945,7 @@ export function WorkspaceBrowser({
   deleteWorkspace,
   insertWorkspaceBefore,
   archiveSession,
+  unarchiveSession,
   insertSessionBefore,
   createWorkspace,
   searchSessions,
@@ -1085,6 +1178,14 @@ export function WorkspaceBrowser({
     })
   }
 
+  // Restore is the archive action's mirror: same dialog-free commit, the row
+  // leaves the archive section when the archive-set echo lands.
+  const onSessionUnarchive = (sessionId: SessionNode['id']) => {
+    unarchiveSession(sessionId).catch((reason: unknown) => {
+      console.warn('session unarchive rejected:', reason)
+    })
+  }
+
   // Delete dialog is separate from the row so a successful removal can
   // unmount that row without tearing down the in-flight confirmation state.
   const [deleteTarget, setDeleteTarget] = useState<{ workspaceId: WorkspaceId; title: string } | null>(null)
@@ -1276,6 +1377,7 @@ export function WorkspaceBrowser({
                 useSessions={useSessions} useSessionPendingInteraction={useSessionPendingInteraction}
                 open={open} forkSession={forkSession}
                 onSessionRename={onSessionRename} onSessionArchive={onSessionArchive}
+                onSessionUnarchive={onSessionUnarchive}
                 archivedSessionIds={archivedSessionIds}
                 orderBy={orderBy}
                 sessionOrderByAccount={sessionOrderByAccount}
@@ -1294,6 +1396,7 @@ export function WorkspaceBrowser({
                 useSessionPendingInteraction={useSessionPendingInteraction}
                 onSessionRename={onSessionRename}
                 onSessionArchive={onSessionArchive}
+                onSessionUnarchive={onSessionUnarchive}
                 forkSession={forkSession}
                 workspaces={workspaces}
                 workspaceReady={workspacePhase === 'ready' && workspaceStreamState !== 'loading'}

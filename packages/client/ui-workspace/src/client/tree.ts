@@ -350,6 +350,34 @@ export function deriveFlat(
 }
 
 /**
+ * Derive the archive-section rows: every archived Session, most recently
+ * archived first (the registry set appends on archive, so reversing surfaces
+ * the just-archived row on top). Workspace membership is untouched by
+ * archiving, so this projection stays flat — the Session's workspace slot
+ * resurfaces through the group views on restore.
+ * @param list - sessions list snapshot.
+ * @param archivedSessionIds - registry-global archive set in archive order.
+ * @param pendingInteractions - pending UI interactions by Session.
+ * @returns archived session rows in reverse archive order.
+ */
+export function deriveArchived(
+  list: SessionListState,
+  archivedSessionIds: readonly SessionId[],
+  pendingInteractions: SessionPendingInteractions,
+): SessionNode[] {
+  const descendants = indexSubagentDescendants(list.byId)
+  const rows: SessionNode[] = []
+  for (const id of [...archivedSessionIds].reverse()) {
+    const summary = list.byId[id]
+    // The archive set may lead the summary pull; the row appears once the
+    // summary lands (same lead as workspace sessionIds accounting).
+    if (summary === undefined) continue
+    rows.push(sessionNode(summary, descendants, pendingInteractions))
+  }
+  return rows
+}
+
+/**
  * Merge immediate title/Workspace substring matches with ranked Host content
  * matches. Local rows lead newest-first, content-only rows retain backend
  * order, and duplicate sessions receive the backend snippet in place.

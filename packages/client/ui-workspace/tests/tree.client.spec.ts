@@ -5,7 +5,7 @@ import type { SessionPendingInteractionBase } from '@deepseek-ai/dsh-client-ui-s
 import type { ScheduleId, ScheduleRecord } from '@deepseek-ai/dsh-schedule/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import {
-  deriveFlat, deriveGroups, deriveSearchResults, owningGroupKey, workspaceLabel,
+  deriveArchived, deriveFlat, deriveGroups, deriveSearchResults, owningGroupKey, workspaceLabel,
   UNGROUPED_KEY,
 } from '../src/client/tree.ts'
 import { createWorkspaceViewStore } from '../src/client/stores.ts'
@@ -337,6 +337,44 @@ describe('deriveFlat', () => {
     const kept = summary('kept', 1)
     const gone = summary('gone', 2)
     expect(deriveFlat(list(kept, gone), archived('gone'), noAttention).map(row => row.id)).toEqual([kept.id])
+  })
+})
+
+describe('deriveArchived', () => {
+  it('lists archived sessions most-recently-archived first, independent of membership', () => {
+    const owned = summary('owned', 1, '/projects/first')
+    const loose = summary('loose', 2, '/other')
+    const kept = summary('kept', 3)
+    const sessions = list(owned, loose, kept)
+    // Archive order is append order: owned went in first, loose last — the
+    // section surfaces loose on top.
+    const rows = deriveArchived(sessions, archived('owned', 'loose'), noAttention)
+    expect(rows.map(row => row.id)).toEqual([sid('loose'), sid('owned')])
+  })
+
+  it('skips archived ids whose summary has not landed yet', () => {
+    const rows = deriveArchived(list(summary('present', 1)), archived('ghost', 'present'), noAttention)
+    expect(rows.map(row => row.id)).toEqual([sid('present')])
+  })
+
+  it('keeps archived rows out of the ordinary projections while listing them', () => {
+    const gone = summary('gone', 2, '/projects/first')
+    const sessions = list(summary('kept', 1, '/projects/first'), gone)
+    const set = archived('gone')
+    expect(deriveGroups(sessions, [workspace('first', ['kept', 'gone'])], set, noAttention, view(['first']))[0]!
+      .sessions.map(node => node.id)).toEqual([sid('kept')])
+    expect(deriveFlat(sessions, set, noAttention).map(row => row.id)).toEqual([sid('kept')])
+    expect(deriveArchived(sessions, set, noAttention).map(row => row.id)).toEqual([gone.id])
+  })
+
+  it('projects pending-interaction state into archived rows', () => {
+    const awaiting = summary('awaiting', 10)
+    const attention: ReadonlyMap<SessionId, SessionPendingInteractionBase> = new Map([[
+      awaiting.id,
+      { key: 'question:1', kind: 'question', sessionId: awaiting.id },
+    ]])
+    expect(deriveArchived(list(awaiting), archived('awaiting'), attention)[0]?.pendingInteraction)
+      .toBe('question')
   })
 })
 

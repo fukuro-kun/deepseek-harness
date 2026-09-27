@@ -256,6 +256,17 @@
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
+/* Archive-section rows are dimmed and inert to open: the one live affordance
+   is the Restore menu entry. */
+.sessionRow.archived {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.sessionRow.archived:hover {
+  background: transparent;
+}
+
 /* Session drag insert marker: a leading chevron and 2px rule between rows,
    absolutely positioned so it neither resembles a row border nor changes layout. */
 .sessionRow.dropBefore,
