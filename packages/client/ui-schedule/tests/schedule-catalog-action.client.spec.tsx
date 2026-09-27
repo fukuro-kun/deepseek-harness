@@ -207,7 +207,10 @@ describe('ScheduleCatalogAction rows', () => {
     document.documentElement.lang = 'de-DE'
     const item = record('localized', 'at', START + 3_600_000)
     const localized = formatScheduleLocalTime(item.scheduledAt, 'de-DE')
-    expect(localized).not.toBe(formatScheduleLocalTime(item.scheduledAt))
+    // Guard against a vacuous check: the document-locale result must differ
+    // from a known-other locale. Comparing against the runtime default would
+    // fail on hosts whose runtime default is already de-DE.
+    expect(localized).not.toBe(formatScheduleLocalTime(item.scheduledAt, 'en-US'))
     render(<ScheduleCatalogAction {...props([item])} />)
     fireEvent.click(screen.getByRole('button'))
     expect(screen.getByRole('listitem').textContent).toContain(localized)
