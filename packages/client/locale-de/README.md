@@ -95,3 +95,5 @@ These constraints describe what the pack does not translate and where coverage d
 Fork-local package without an upstream counterpart; it is published by packing a tarball and referencing it through `overrides` in `release/dsh/package.json`. Rebuild and repack after editing `dicts.ts` — the runtime serves the compiled bundle, and a stale build previously shipped a tree-shaken bundle that referenced a dropped constant.
 
 </details>
+
+**Runtime invariant:** No companion is published. The pack contributes dictionaries only; key coverage and fallback resolution are asserted by the locale service's and this package's behavior specs.

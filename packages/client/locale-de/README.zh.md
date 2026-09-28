@@ -95,3 +95,5 @@ client 插件主体声明 `inject: ['locale']` 并以 `immediately: true` 运行
 无上游对应物的 fork 本地包；通过打包 tarball 并在 `release/dsh/package.json` 的 `overrides` 中引用发布。编辑 `dicts.ts` 后需重新构建并重新打包——运行时服务的是编译后的 bundle，此前的陈旧构建曾发布过一个引用了被 tree-shake 掉常量的 bundle。
 
 </details>
+
+**运行时不变量：** 不发布 companion。本包仅贡献词典；键覆盖与回退解析由 locale 服务及本包的行为 spec 断言。
