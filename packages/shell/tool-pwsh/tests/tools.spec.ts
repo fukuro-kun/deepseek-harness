@@ -442,6 +442,9 @@ describe('execution through the bash seam', () => {
     expect(bash.requests[0]?.workdir).toBe(homedir())
     await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: '~/' })
     expect(bash.requests[1]?.workdir).toBe(homedir())
+    // `~\` is the canonical PowerShell spelling and expands identically.
+    await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: '~\\' })
+    expect(bash.requests[2]?.workdir).toBe(homedir())
   })
 
   it('rejects an unusable workdir with a clear error instead of a spawn ENOENT', async () => {
@@ -679,6 +682,15 @@ describe('sandbox escalation through ctx.approval', () => {
       data: Record<string, unknown>,
     ) => unknown)('sandbox/mode', { mode: 'unknown-mode' })
     expect(text(await call(ctx, 'pwsh', escalate, malformed))).toContain('not strictly wider')
+  })
+
+  it('rejects an unusable workdir before routing the escalation prompt', async () => {
+    const { ctx } = await setupSandboxed(true)
+    const prompted = vi.fn()
+    ctx.on('approval/request', () => { prompted(); return Promise.resolve<ApprovalOutcome>('allowed-once') })
+    const result = await call(ctx, 'pwsh', { ...escalate, workdir: '/nonexistent-dsh' }, sandboxAgent())
+    expect(text(result)).toContain('is not an accessible directory')
+    expect(prompted).not.toHaveBeenCalled()
   })
 
   it('fails closed when approval cannot be routed', async () => {

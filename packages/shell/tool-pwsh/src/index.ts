@@ -147,11 +147,12 @@ function pwshDescription(backgroundEnabled: boolean, escalationModes: readonly S
 /**
  * Expand a leading `~` against the user's home. The spawn cwd is applied
  * verbatim — no shell runs first — so a literal `~` would otherwise resolve
- * as a nonexistent path segment inside the session workspace.
+ * as a nonexistent path segment inside the session workspace. pwsh accepts
+ * both separators: `~\dir` is the canonical PowerShell spelling.
  */
 function expandTilde(path: string): string {
   if (path === '~') return homedir()
-  if (path.startsWith('~/')) return join(homedir(), path.slice(2))
+  if (path.startsWith('~/') || path.startsWith('~\\')) return join(homedir(), path.slice(2))
   return path
 }
 
@@ -377,14 +378,15 @@ export function apply(ctx: Context, config: Config = {}): void {
     async execute(args: PwshToolArgs, exec) {
       validatePwshArgs(args)
       // Description is display metadata; workdir defaults to the caller's session.
+      // Deterministic rejection precedes the interactive approval prompt.
       const standingPolicy = resolveSandboxPolicy(exec)
+      const workdir = resolveWorkdir(args.workdir, exec)
       const approvedMode = args.sandbox_permissions !== undefined && args.justification !== undefined
         ? await approvePwshEscalation(args.sandbox_permissions, args.justification, exec, standingPolicy)
         : undefined
       const policy = approvedMode === undefined
         ? standingPolicy
         : { ...(standingPolicy as SandboxExecutionPolicy), mode: approvedMode }
-      const workdir = resolveWorkdir(args.workdir, exec)
       const request = {
         command: args.command,
         ...workdir !== undefined ? { workdir } : {},

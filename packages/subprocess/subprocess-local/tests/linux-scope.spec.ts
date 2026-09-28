@@ -226,6 +226,64 @@ describe('Linux scope establishment and quiescence', () => {
     ]), expect.anything())
   })
 
+  it('stops a late-registered scope on the poll path instead of observing it forever', async () => {
+    // The unit registers while the request is still staged and the launcher
+    // is dead — the state query must reap it itself, not only cleanup.
+    const { child, result, requestPath, spawnSync } = launch(async () => activeUnit())
+    const waiting = result.owner.waitForExit()
+    result.owner.signal('SIGTERM')
+    child.exit(null, 'SIGTERM')
+    await expect(result.direct).resolves.toEqual({ exitCode: null, signal: 'SIGTERM' })
+    await expect(waiting).resolves.toBeUndefined()
+    expect(existsSync(requestPath)).toBe(true)
+    expect(spawnSync).toHaveBeenCalledWith('/bin/systemctl', expect.arrayContaining([
+      'stop', '--no-block',
+    ]), expect.anything())
+    result.owner.cleanup?.()
+  })
+
+  it('surfaces a failed SIGKILL even when an abandoned range is reaped', async () => {
+    // The late-registration reap must not swallow a remembered kill failure.
+    const { child, result, spawnSync } = launch(async () => activeUnit())
+    spawnSync.mockImplementation(() => ({
+      status: 1,
+      stdout: '',
+      stderr: 'Interactive authentication required.',
+    }))
+    result.owner.signal('SIGKILL')
+    child.exit(null, 'SIGKILL')
+    await expect(result.direct).resolves.toEqual({ exitCode: null, signal: 'SIGKILL' })
+    await expect(result.owner.waitForExit()).rejects.toThrow('could not signal')
+    result.owner.cleanup?.()
+  })
+
+  it('treats a request consumed during the state query as established, not post-death', async () => {
+    // The bootstrap may consume the request while systemctl's answer is in
+    // flight; the owner must re-observe consumption before stopping the unit.
+    let requestLocator = ''
+    let consumeOnce = true
+    const states = [activeUnit(), activeUnit('inactive')]
+    const { child, result, requestPath, spawnSync } = launch(async () => {
+      if (requestLocator !== '' && consumeOnce) {
+        consumeOnce = false
+        consumeLinuxLaunchRequest(requestLocator)
+      }
+      return states.shift() ?? activeUnit('inactive')
+    })
+    requestLocator = requestPath
+    // signal() observes consumption itself; run it while the request still
+    // exists so the query-mock consume lands mid-flight after waitForExit().
+    result.owner.signal('SIGTERM')
+    const waiting = result.owner.waitForExit()
+    child.exit(null, 'SIGTERM')
+    await expect(result.direct).resolves.toEqual({ exitCode: null, signal: 'SIGTERM' })
+    await expect(waiting).resolves.toBeUndefined()
+    expect(spawnSync).not.toHaveBeenCalledWith('/bin/systemctl', expect.arrayContaining([
+      'stop', '--no-block',
+    ]), expect.anything())
+    result.owner.cleanup?.()
+  })
+
   it('accepts request consumption followed by rapid --collect unload as stopped', async () => {
     const states = [activeUnit(), unloadedUnit()]
     const { child, result, requestPath } = launch(async () => states.shift() ?? missingUnit())

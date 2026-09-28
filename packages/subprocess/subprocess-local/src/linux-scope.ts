@@ -287,6 +287,9 @@ class SystemdScopeOwner implements BoundProcessOwner {
           `systemctl returned unknown state for ${this.unit}: ${JSON.stringify({ loadState, activeState })}`,
         )
       }
+      // The bootstrap may consume the request while the state query is in
+      // flight; refresh establishment before treating the unit as orphaned.
+      this.observeRequestConsumption()
       if (this.establishment === 'pending' && !this.direct.running()) {
         // The launcher is gone and the bootstrap never consumed the request,
         // yet a scope registered anyway — a post-death artifact of a kill or
@@ -303,6 +306,7 @@ class SystemdScopeOwner implements BoundProcessOwner {
         } catch {
           // Reaping an abandoned range is best-effort; the range is over either way.
         }
+        if (this.killFailure !== undefined) throw this.killFailure
         return false
       }
       this.establishment = 'established'

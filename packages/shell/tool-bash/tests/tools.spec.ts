@@ -666,6 +666,15 @@ describe('sandbox escalation through the generic task producer', () => {
     expect(text(await call(ctx, 'bash', escalate, malformed))).toContain('not strictly wider')
   })
 
+  it('rejects an unusable workdir before routing the escalation prompt', async () => {
+    const { ctx } = await setupSandboxed(true)
+    const prompted = vi.fn()
+    ctx.on('approval/request', () => { prompted(); return Promise.resolve<ApprovalOutcome>('allowed-once') })
+    const result = await call(ctx, 'bash', { ...escalate, workdir: '/nonexistent-dsh' }, sandboxAgent())
+    expect(text(result)).toContain('is not an accessible directory')
+    expect(prompted).not.toHaveBeenCalled()
+  })
+
   it('fails closed when approval cannot be routed', async () => {
     const withoutService = await setupSandboxed()
     expect(text(await call(withoutService.ctx, 'bash', escalate, sandboxAgent()))).toContain('no approval service')
