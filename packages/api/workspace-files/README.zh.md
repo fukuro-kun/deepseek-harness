@@ -1,5 +1,5 @@
 ---
-description: "面向 Web GUI 的工作区文件服务：通过组合文件系统进行有界文件读取，并在 Session 工作区根内列举目录和观察已埋点的文件系统操作。"
+description: "面向 Web GUI 的工作区文件服务：通过组合文件系统进行有界文件读取与带守卫的整文本写入，并在 Session 工作区根内列举目录和观察已埋点的文件系统操作。"
 kind: "package-reference"
 ---
 
@@ -9,7 +9,7 @@ kind: "package-reference"
 
 ## 概述
 
-使用本包可从 Web Client 预览 Session 文件系统允许读取的文件。它按页读取 UTF-8 文本、按有界窗口或完整文件读取原始字节、从基文件目录解析关联文件，并报告文件元数据。文件读取可以指向工作区外路径；目录列举与已埋点的文件系统观察仍限定于工作区。本服务不提供修改操作。
+使用本包可从 Web Client 预览 Session 文件系统允许读取的文件。它按页读取 UTF-8 文本、按有界窗口或完整文件读取原始字节、从基文件目录解析关联文件，并报告文件元数据。文件读取可以指向工作区外路径；目录列举与已埋点的文件系统观察仍限定于工作区。带守卫的 `write` 在相同的可达路径范围内替换文件的完整文本，因为其主体是 UI 前的人，而非受围栏的 Agent。
 
 ## 目录
 
@@ -34,6 +34,7 @@ kind: "package-reference"
 | `readBytes(path, { offset?, length? })` | `WorkspaceFileBytes` = stat + `{ offset, data, eof }` | 任意普通文件的一个原始字节窗口，base64 编码 |
 | `readAll(path)` | `WorkspaceFileBytes`，其中 `offset: 0`、`eof: true` | `maxFileBytes` 内的完整原始字节；超大文件失败，不截断 |
 | `readRelated(path, relativePath)` | `WorkspaceFileBytes` | Host 从基文件目录解析出的文件的完整字节 |
+| `write(path, edit)` | `WorkspaceFileWriteResult` = stat + `{ operation }` | 替换一个普通文件的完整文本，以 `edit.expectedVersion` 守卫并发改动 |
 | `list(path)` | `WorkspaceDirectoryListing { path, entries, truncated }` | 一个目录的直接子项 |
 | `changes()` | `WorkspaceFileWatchFrame` 流 | 订阅就绪确认，随后为工作区根内的文件系统观察 |
 
@@ -57,6 +58,10 @@ kind: "package-reference"
 
 `changes` 是 `stream` 模式的 Remote。一代流注册观察队列并解析 Session 工作区根之后，才产出 `{ kind: 'ready' }`。随后产出 `{ kind: 'change', change }`，其中 `change` 对存在的文件为 `{ absolutePath, version }`，对被观察到已消失的文件为 `{ absolutePath, absent: true }`。来源是按该根内目标过滤的 `fs/observed`；操作系统并未被监视。一代流首次拉取后的观察都会排队，包括解析根期间的观察。流在取消或插件释放时结束。
 
+### 写入
+
+`write` 以 `edit.text` 替换一个普通文件的完整文本，与完整读取一样受 `maxFileBytes` 上限约束，并返回写后的 stat。`edit.expectedVersion` 携带读取返回的版本令牌：令牌仍匹配时写入生效；不匹配则以 `workspace-file/stale-version` 失败且不落盘，所以并发改动——例如 Agent 在读取与保存之间的编辑——绝不会被静默覆盖。省略令牌则无条件覆盖。写入将沙箱策略解析为 `danger-full-access`，与 UI 前的人操作时的读取范围一致；同样的 `lstat` 关卡仍然适用，因此不存在的路径、末端符号链接或非普通文件仍被拒绝，`write` 也绝不创建文件。
+
 ### 配置
 
 | 字段 | 默认值 | 含义 |
@@ -70,7 +75,7 @@ kind: "package-reference"
 
 ### 失败
 
-每种失败都是一个带类型化 details 的 `RemoteError` 代码，声明于 [`src/types.ts`](src/types.ts)：`workspace-file/not-found`、`workspace-file/outside-workspace`（仅目录列举）、`workspace-file/too-large`（带 `limit`，即适用的页、窗口或完整文件上限）、`workspace-file/not-text`、`workspace-file/not-regular-file`（`kind` 为 `directory`、`symlink` 或 `other`）以及 `workspace-file/not-directory`（`kind` 为 `file`、`symlink` 或 `other`）。调用方按代码分支，绝不按消息文本。
+每种失败都是一个带类型化 details 的 `RemoteError` 代码，声明于 [`src/types.ts`](src/types.ts)：`workspace-file/not-found`、`workspace-file/outside-workspace`（仅目录列举）、`workspace-file/too-large`（带 `limit`，即适用的页、窗口或完整文件上限）、`workspace-file/not-text`、`workspace-file/not-regular-file`（`kind` 为 `directory`、`symlink` 或 `other`）以及 `workspace-file/not-directory`（`kind` 为 `file`、`symlink` 或 `other`）、`workspace-file/stale-version` 以及 `workspace-file/write-failed`。调用方按代码分支，绝不按消息文本。
 
 ### Client 文件资源
 
@@ -92,13 +97,13 @@ kind: "package-reference"
 
 ### 设计概念
 
-经 `ctx.fs` 的读取使用后端的读取权限；沙箱后端限制写与编辑，而不限制读取。Typert lookup 从 live Session header 或持久层的 header-only `stat` 导出 `WorkspaceFileScope`，所以 cold subagent Session 不需要激活 Agent 或读取事件正文。本服务增加普通文件检查与有界传输，工作区包含要求只属于目录列举与变更观察。页从 `streamText` 切出，后者逐块解码并拒绝非 UTF-8：切页器对窗口之前的行只计数不保留，对窗口内的每个片段先按字节上限验收再缓冲，并在窗口之后的第一个字符处返回。流之前的一次 `stat` 给出页所报告的版本与大小。
+经 `ctx.fs` 的读取使用后端的读取权限；沙箱后端限制写与编辑，而不限制读取。Typert lookup 从 live Session header 或持久层的 header-only `stat` 导出 `WorkspaceFileScope`，所以 cold subagent Session 不需要激活 Agent 或读取事件正文。本服务增加普通文件检查与有界传输，工作区包含要求只属于目录列举与变更观察。`write` 复用读取的关卡，向沙箱策略请求以人为操作主体的 `danger-full-access` 范围，再由文件系统后端执行带守卫的原子替换。页从 `streamText` 切出，后者逐块解码并拒绝非 UTF-8：切页器对窗口之前的行只计数不保留，对窗口内的每个片段先按字节上限验收再缓冲，并在窗口之后的第一个字符处返回。流之前的一次 `stat` 给出页所报告的版本与大小。
 
 ### 源码地图
 
 | 文件 | 职责 |
 |---|---|
-| [`src/index.ts`](src/index.ts) | `WorkspaceFiles`：`workspaceFiles` 服务与 Remote 命名空间、`Config`、四道关、切页器、`read`、`readBytes`、`readAll`、`readRelated`、`stat`、`list` |
+| [`src/index.ts`](src/index.ts) | `WorkspaceFiles`：`workspaceFiles` 服务与 Remote 命名空间、`Config`、四道关、切页器、`read`、`readBytes`、`readAll`、`readRelated`、`stat`、`list`、`write` |
 | [`src/changes.ts`](src/changes.ts) | `WorkspaceChangeFeed`：`fs/observed` 订阅与每个打开的 `changes` generation 各一条队列 |
 | [`src/types.ts`](src/types.ts) | 线路类型与 `RemoteErrorDetailsMap` 错误码，以 `./types` 发布给 Client 包 |
 | [`src/client/index.ts`](src/client/index.ts)、[`provider.ts`](src/client/provider.ts)、[`change-feed.ts`](src/client/change-feed.ts) | 浏览器插件、文件元数据与每 Session 变更流 |
@@ -137,6 +142,7 @@ Typert 生成 `./typert` 与 `./remote` 暴露的 Host 与 Client Remote 产物�
 <a id="known-limitations-and-deferred-work"></a>
 
 - **仅覆盖已埋点操作**——`changes` 转发 `fs/observed` 的发射；子进程、shell 命令或用户编辑器改动的文件不产生任何帧。
+- **仅替换式写入**——`write` 以人为操作主体的全访问策略重写既有普通文件的完整文本；不创建文件、不跟随符号链接，且按设计绕过 Agent 的 `workspace-write` 围栏。
 - **仅目录受限**——尽管文件预览可以读取文件系统后端允许的任意路径，`list` 与 `changes` 仍限定在 Session 工作区内。
 - **没有总行数**——页只报告 `eof`，不报告后面还有多少行；需要总数的消费方要翻到末尾或按 `bytes` 估算。
 - **超长单行没有页**——超过 `maxBytes` 的单行在包含它的每个窗口都以 `too-large` 失败，因为页按行而非按字节切。

@@ -147,5 +147,5 @@ Client 导出向 `ctx.resources` 注册一个 `ResourceProvider<'file'>`，存�
 ## Deferred
 
 - 给 `changes` 一代流的队列加上限。
-- `readBytes` 随包交付的消费方（图片与二进制预览）以及任何写入、搜索或媒体路由；本服务只读。
+- `readBytes` 随包交付的消费方（图片与二进制预览）以及任何搜索或媒体路由。`write` 方法作为受版本守卫、由人控制的整文件替换交付；流程归 [Sidebar 文件编辑](../feature/2026-09-28-sidebar-file-editing.zh.md) 所有。
 - 文件地址中 `session` 之外的作用域；语法留有余地，提供者只服务一个。

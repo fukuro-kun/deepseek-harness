@@ -9,6 +9,8 @@ own commits, newest first, each anchored to the upstream base it builds on.
 
 ### 2026-09-28
 
+- **feat(ui-sidebar-documentpreview + api-workspace-files)** — guarded human file editing in the right sidebar: new `workspaceFiles.write` Remote (full-text replace, `expectedVersion` freshness guard, full-access policy by design), `editable` flag on Document Preview definitions (code + plain text editable, Markdown/binary read-only), textarea-over-highlight editor, and an inline hunk-wise conflict resolver (`diff`) when the file changed underneath. (this commit)
+- **fix(locale-de)** — repository URL, vendor-rescope skip for the `cordis` locale key, and the missing runtime-invariant sentence in the package README pair; hygiene gates were red since the pack landed. (`9f6a065430` amended to `c5f0a1545d`)
 - **feat(ui-workspace)** — dedicated collapsed Archive section at the foot of the session list plus symmetric `workspace/unarchiveSession` through registry, Remote API, client model, and UI. Archived rows are inert (no open, no drag) and expose only "Restore session"; archiving stays a pure archive-set edit that preserves session log, identity, and workspace slot. Permanent deletion deliberately deferred. (`f730c23d59`, follow-up `ed5e18bdc4`)
 - **fix(ui-schedule)** — catalog spec's locale-contrast assertion no longer depends on the host locale (pre-existing environment-dependent failure). (`318b55e0f6`)
 - **fix(locale-de)** — the German language pack now conforms to the repository's documentation and build-graph gates: package-reference README pair (en/zh + sidecar), JSDoc on exports, `tsconfig.base.json` alias and `tsconfig.client.json` project reference so `lib/types` no longer goes stale. (`25b23dd7bd`)

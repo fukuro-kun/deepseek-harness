@@ -17,10 +17,11 @@
  * write to. A tab that never read has no bucket to forget.
  */
 import type { BoundActions } from '@deepseek-ai/dsh-client-store'
+import type { RemoteFailure } from '@deepseek-ai/dsh-api-remotes/client'
 import type { TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { ReadDocumentBytes, ReadWorkspaceFilePage, SessionFile } from './rpc.ts'
-import { documentFileBytes } from './rpc.ts'
+import type { ReadDocumentBytes, ReadWorkspaceFilePage, SessionFile, WriteWorkspaceFile } from './rpc.ts'
+import { documentFileBytes, documentFileText, failureMessage } from './rpc.ts'
 import type { TextStore } from './store.ts'
 import type { DocumentLoadMode } from './document/registry.ts'
 
@@ -64,6 +65,25 @@ export interface TextInjected {
    * @param observedVersion - metadata version observed at read start.
    */
   readonly reloadAll: (tabId: TabId, file: SessionFile, signal: AbortSignal, observedVersion?: string) => void
+  /**
+   * Open an edit session on the file: reads it whole, decodes UTF-8, and arms
+   * the draft. Non-text or oversized files fail instead of editing.
+   * @param tabId - the tab starting to edit.
+   * @param file - the session and workspace path the tab's address names.
+   * @param signal - the tab record's lifetime.
+   */
+  readonly startEdit: (tabId: TabId, file: SessionFile, signal: AbortSignal) => void
+  /**
+   * Write the draft back, guarded by the version it was read at. A refused
+   * write arms the conflict state with the fresh disk content; any other
+   * failure lands on the edit session.
+   * @param tabId - the tab being saved.
+   * @param file - the session and workspace path the tab's address names.
+   * @param text - the buffer to write — the draft, or the merged conflict result.
+   * @param expectedVersion - the freshness token the write guards on.
+   * @param signal - the tab record's lifetime.
+   */
+  readonly saveEdit: (tabId: TabId, file: SessionFile, text: string, expectedVersion: string, signal: AbortSignal) => void
 }
 
 /**
@@ -81,11 +101,13 @@ interface TabReads {
  * Bind the preview's face to one paged read and one complete-byte read.
  * @param read - the bound `workspaceFiles.read` call.
  * @param readAll - ordinary complete-byte Remote read.
+ * @param write - the bound `workspaceFiles.write` call the human edit flow guards with the loaded version.
  * @returns the Slot `inject` factory: bound actions in, face out. The slot's session id is unused because the address carries its own.
  */
 export function textFace(
   read: ReadWorkspaceFilePage,
   readAll: ReadDocumentBytes,
+  write: WriteWorkspaceFile,
 ): (sessionId: SessionId, actions: BoundActions<TextStore>) => TextInjected {
   return (_sessionId: SessionId, actions: BoundActions<TextStore>): TextInjected => {
     const tabs = new Map<TabId, TabReads>()
@@ -169,9 +191,75 @@ export function textFace(
       if (mode === 'text-pages') loadPage(tabId, file, 1, signal, observedVersion)
       else loadAll(tabId, file, signal, observedVersion)
     }
+    const startEdit = (tabId: TabId, file: SessionFile, signal: AbortSignal): void => {
+      if (signal.aborted) return
+      const reads = readsOf(tabId, signal)
+      void readAll(file, signal).then((result) => {
+        if (signal.aborted) return
+        if (!result.ok) {
+          actions.failed(tabId, result.error)
+          return
+        }
+        let text: string
+        try {
+          text = documentFileText(result.value)
+        } catch (error) {
+          // No edit session exists yet; the preview's read failure carries it.
+          actions.failed(tabId, internalFailure(failureMessage(error), error))
+          return
+        }
+        if (text.includes('\0')) {
+          actions.failed(tabId, internalFailure(`"${file.path}" is not UTF-8 text`))
+          return
+        }
+        reads.version = result.value.version
+        actions.editStarted(tabId, text, result.value.version)
+      })
+    }
+    const saveEdit = (tabId: TabId, file: SessionFile, text: string, expectedVersion: string, signal: AbortSignal): void => {
+      if (signal.aborted) return
+      const reads = readsOf(tabId, signal)
+      actions.saveStarted(tabId)
+      void write(file.sessionId, file.path, { text, expectedVersion }, signal).then((result) => {
+        if (signal.aborted) return
+        if (result.ok) {
+          reads.version = result.value.version
+          actions.saved(tabId, result.value.version)
+          // The change feed will re-report our write; restart reads the new
+          // content so the preview reflects exactly what landed.
+          restart(tabId, file, signal, result.value.version)
+          return
+        }
+        if (result.error.code !== 'workspace-file/stale-version') {
+          actions.saveFailed(tabId, result.error)
+          return
+        }
+        void readAll(file, signal).then((fresh) => {
+          if (signal.aborted) return
+          if (!fresh.ok) {
+            actions.saveFailed(tabId, fresh.error)
+            return
+          }
+          try {
+            actions.saveConflicted(tabId, text, documentFileText(fresh.value), fresh.value.version)
+          } catch (error) {
+            actions.saveFailed(tabId, internalFailure(failureMessage(error), error))
+          }
+        })
+      })
+    }
     return {
       loadPage, reloadPages: restart, loadAll,
       reloadAll: (tabId, file, signal, observedVersion) => { restart(tabId, file, signal, observedVersion, 'bytes-complete') },
+      startEdit, saveEdit,
     }
   }
+}
+
+/** The RemoteError-shaped failure a local guard reports through. */
+function internalFailure(message: string, cause?: unknown): RemoteFailure {
+  return Object.assign(
+    new Error(message, { cause }),
+    { name: 'RemoteError', isDSHRemoteError: true as const, code: 'gateway/internal' as const, details: {} },
+  )
 }

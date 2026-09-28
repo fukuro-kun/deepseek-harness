@@ -1,5 +1,5 @@
 ---
-description: "Workspace file service for the web GUI: bounded file reads through the composed filesystem, plus directory listing and instrumented filesystem observation inside the Session workspace root."
+description: "Workspace file service for the web GUI: bounded file reads and guarded full-text writes through the composed filesystem, plus directory listing and instrumented filesystem observation inside the Session workspace root."
 kind: "package-reference"
 ---
 
@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-Use this package to preview files readable through a Session's filesystem from the web client. It reads UTF-8 text by page, reads bounded byte windows or complete files, resolves related files from a base file's directory, and reports file metadata. File reads may target paths outside the workspace; directory listing and instrumented filesystem observations remain workspace-scoped. The service exposes no mutation operation.
+Use this package to preview files readable through a Session's filesystem from the web client. It reads UTF-8 text by page, reads bounded byte windows or complete files, resolves related files from a base file's directory, and reports file metadata. File reads may target paths outside the workspace; directory listing and instrumented filesystem observations remain workspace-scoped. A guarded `write` replaces a file's complete text over the same path reach, because the human at the UI — not the fenced agent — is its principal.
 
 ## Table of Contents
 
@@ -34,6 +34,7 @@ Mount the package beside `dsh-fs`, `dsh-sandbox-policy`, the Session store, and 
 | `readBytes(path, { offset?, length? })` | `WorkspaceFileBytes` = stat + `{ offset, data, eof }` | One window of raw bytes from any regular file, base64-encoded |
 | `readAll(path)` | `WorkspaceFileBytes` with `offset: 0`, `eof: true` | Complete raw bytes under `maxFileBytes`; oversized files fail instead of being truncated |
 | `readRelated(path, relativePath)` | `WorkspaceFileBytes` | Complete bytes of a file resolved from the base file's directory on the Host |
+| `write(path, edit)` | `WorkspaceFileWriteResult` = stat + `{ operation }` | Full-text replace of one regular file, guarded by `edit.expectedVersion` against a concurrent change |
 | `list(path)` | `WorkspaceDirectoryListing { path, entries, truncated }` | Direct children of one directory |
 | `changes()` | stream of `WorkspaceFileWatchFrame` | Subscription readiness, then filesystem observations inside the workspace root |
 
@@ -57,6 +58,10 @@ Every operation first uses `lstat` to reject a missing path, a final symlink, or
 
 `changes` is a `stream` Remote. A generation registers its observation queue and resolves the Session workspace root before yielding `{ kind: 'ready' }`. It then yields `{ kind: 'change', change }`, where `change` is `{ absolutePath, version }` for a present file or `{ absolutePath, absent: true }` for one observed gone. The source is `fs/observed`, filtered to targets inside that root; the operating system is not watched. Observations after the generation's first pull are queued, including while the root resolves. The generation ends on cancellation or plugin disposal.
 
+### Writes
+
+`write` replaces a regular file's complete text with `edit.text`, capped by `maxFileBytes` like a complete read, and returns the post-write stat. `edit.expectedVersion` carries the version token a read returned: while it still matches, the write applies; a mismatch fails with `workspace-file/stale-version` and writes nothing, so a concurrent change — an agent edit between the reader's load and save — is never silently overwritten. Omitting the token overwrites unconditionally. The write resolves its sandbox policy as `danger-full-access`, matching the read's path reach for the human operating the UI; the same `lstat` gates apply, so a missing path, a final symlink, or a non-regular file is still refused and `write` never creates a file.
+
 ### Configuration
 
 | Field | Default | Meaning |
@@ -70,7 +75,7 @@ The generated [configuration catalog](../../../docs/config-catalog.md#deepseek-a
 
 ### Failures
 
-Each failure is one `RemoteError` code with typed details, declared in [`src/types.ts`](src/types.ts): `workspace-file/not-found`, `workspace-file/outside-workspace` (directory listing only), `workspace-file/too-large` (with `limit`, the applicable page, window, or complete-file cap), `workspace-file/not-text`, `workspace-file/not-regular-file` (`kind`: `directory`, `symlink`, or `other`), and `workspace-file/not-directory` (`kind`: `file`, `symlink`, or `other`). Callers branch on the code, never on message text.
+Each failure is one `RemoteError` code with typed details, declared in [`src/types.ts`](src/types.ts): `workspace-file/not-found`, `workspace-file/outside-workspace` (directory listing only), `workspace-file/too-large` (with `limit`, the applicable page, window, or complete-file cap), `workspace-file/not-text`, `workspace-file/not-regular-file` (`kind`: `directory`, `symlink`, or `other`), and `workspace-file/not-directory` (`kind`: `file`, `symlink`, or `other`), `workspace-file/stale-version`, and `workspace-file/write-failed`. Callers branch on the code, never on message text.
 
 ### Client file resources
 
@@ -92,13 +97,13 @@ One supervised `changes` stream serves every followed file in a Session. Followe
 
 ### Design concept
 
-Reads through `ctx.fs` use the backend's read authority; the sandboxing backend fences writes and edits, not reads. A Typert lookup derives `WorkspaceFileScope` from a live Session header or the persistence service's header-only `stat`, so cold subagent Sessions need neither Agent activation nor event-body reads. The service adds regular-file checks and bounded transfer, while workspace containment belongs only to directory listing and change observation. A page is cut from `streamText`, which decodes and rejects non-UTF-8 chunk by chunk: the cutter counts lines before the window without keeping them, admits each in-window segment against the byte cap before buffering it, and returns at the first character past the window. One `stat` before the stream names the version and size the page reports.
+Reads through `ctx.fs` use the backend's read authority; the sandboxing backend fences writes and edits, not reads. A Typert lookup derives `WorkspaceFileScope` from a live Session header or the persistence service's header-only `stat`, so cold subagent Sessions need neither Agent activation nor event-body reads. The service adds regular-file checks and bounded transfer, while workspace containment belongs only to directory listing and change observation. `write` reuses the read gates and asks the sandbox policy for the human principal's `danger-full-access` scope, then lets the filesystem backend run its guarded atomic replace. A page is cut from `streamText`, which decodes and rejects non-UTF-8 chunk by chunk: the cutter counts lines before the window without keeping them, admits each in-window segment against the byte cap before buffering it, and returns at the first character past the window. One `stat` before the stream names the version and size the page reports.
 
 ### Source map
 
 | File | Role |
 |---|---|
-| [`src/index.ts`](src/index.ts) | `WorkspaceFiles`: the `workspaceFiles` service and Remote namespace, `Config`, the gates, the page cutter, `read`, `readBytes`, `readAll`, `readRelated`, `stat`, `list` |
+| [`src/index.ts`](src/index.ts) | `WorkspaceFiles`: the `workspaceFiles` service and Remote namespace, `Config`, the gates, the page cutter, `read`, `readBytes`, `readAll`, `readRelated`, `stat`, `list`, `write` |
 | [`src/changes.ts`](src/changes.ts) | `WorkspaceChangeFeed`: `fs/observed` subscription and one queue per open `changes` generation |
 | [`src/types.ts`](src/types.ts) | Wire types and the `RemoteErrorDetailsMap` codes, published as `./types` for Client packages |
 | [`src/client/index.ts`](src/client/index.ts), [`provider.ts`](src/client/provider.ts), [`change-feed.ts`](src/client/change-feed.ts) | Browser plugin, file metadata, and per-Session change feed |
@@ -137,6 +142,7 @@ None; this package neither assembles nor sends a provider request.
 <a id="known-limitations-and-deferred-work"></a>
 
 - **Instrumented operations only** — `changes` relays `fs/observed` emissions; a file changed by a subprocess, a shell command, or the user's editor produces no frame.
+- **Replace-only writes** — `write` rewrites the complete text of an existing regular file under the human principal's full-access policy; it creates nothing, follows no symlink, and bypasses the agent's `workspace-write` fencing by design.
 - **Directory scope only** — `list` and `changes` stay inside the Session workspace even though file preview reads may use any path readable by the filesystem backend.
 - **No total line count** — a page reports `eof`, not how many lines follow; a consumer that needs the total pages to the end or estimates from `bytes`.
 - **One giant line has no page** — a single line above `maxBytes` fails `too-large` at every window that includes it, because pages are cut by lines, not bytes.

@@ -8,7 +8,13 @@
  */
 import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceFileBytes, WorkspaceFileRange, WorkspaceFileText } from '@deepseek-ai/dsh-api-workspace-files/types'
+import type {
+  WorkspaceFileBytes,
+  WorkspaceFileRange,
+  WorkspaceFileText,
+  WorkspaceFileWrite,
+  WorkspaceFileWriteResult,
+} from '@deepseek-ai/dsh-api-workspace-files/types'
 import { parseFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
 
 /** The slice of the Client Remote this package calls. */
@@ -28,6 +34,32 @@ export interface WorkspaceFilesReadRemote {
       range: WorkspaceFileRange,
       signal?: AbortSignal,
     ): Promise<RemoteResult<WorkspaceFileText>>
+    /**
+     * Read the complete file as bytes.
+     * @param sessionId - the session whose workspace resolves `path`.
+     * @param path - workspace path, absolute or relative to the workspace root.
+     * @param signal - cancels the call.
+     * @returns the whole file, or the failure the Host declares.
+     */
+    readAll(
+      sessionId: SessionId,
+      path: string,
+      signal?: AbortSignal,
+    ): Promise<RemoteResult<WorkspaceFileBytes>>
+    /**
+     * Replace the file's complete text, optionally guarded by a version token.
+     * @param sessionId - the session whose workspace resolves `path`.
+     * @param path - workspace path, absolute or relative to the workspace root.
+     * @param edit - the new text and the optional freshness guard.
+     * @param signal - cancels the call.
+     * @returns the post-write identity, or the failure the Host declares.
+     */
+    write(
+      sessionId: SessionId,
+      path: string,
+      edit: WorkspaceFileWrite,
+      signal?: AbortSignal,
+    ): Promise<RemoteResult<WorkspaceFileWriteResult>>
   }
 }
 
@@ -79,6 +111,45 @@ export function hostFileOf(address: string): SessionFile {
  */
 export function createReadPage(remote: WorkspaceFilesReadRemote): ReadWorkspaceFilePage {
   return (sessionId, path, offset, signal) => remote.workspaceFiles.read(sessionId, path, { offset }, signal)
+}
+
+/**
+ * The guarded write one save performs, injected so the face stays host-free.
+ * A Remote call does not reject: the result carries the failure.
+ */
+export type WriteWorkspaceFile = (
+  sessionId: SessionId,
+  path: string,
+  edit: WorkspaceFileWrite,
+  signal: AbortSignal,
+) => Promise<RemoteResult<WorkspaceFileWriteResult>>
+
+/**
+ * Bind the guarded write to one Remote face.
+ * @param remote - the Client Remote carrying the `workspaceFiles` namespace.
+ * @returns the write the face performs.
+ */
+export function createWriteFile(remote: WorkspaceFilesReadRemote): WriteWorkspaceFile {
+  return (sessionId, path, edit, signal) => remote.workspaceFiles.write(sessionId, path, edit, signal)
+}
+
+/**
+ * The message an arbitrary thrown value carries, for a Remote-shaped failure.
+ * @param error - the caught value.
+ * @returns its message, or the value stringified.
+ */
+export function failureMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
+}
+
+/**
+ * Decode a complete-file byte result into UTF-8 text; malformed input throws.
+ * @param file - the complete-file read result carrying wire base64.
+ * @returns the decoded text.
+ */
+export function documentFileText(file: WorkspaceFileBytes): string {
+  const bytes = Uint8Array.from(atob(file.data), character => character.charCodeAt(0))
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
 }
 
 /** Complete document bytes borrowed read-only by renderers; copy before transferring to a Worker. */

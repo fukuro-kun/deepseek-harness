@@ -1,0 +1,229 @@
+/* The edit surface: a textarea, optionally over the code viewer's highlighted
+   underlay. Both layers share one font metric — declared once on .inner and
+   forced onto the underlay's pre — because the transparent overlay only aligns
+   while padding, line-height, and tab size agree exactly. */
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-bottom: 0.5px solid var(--dsw-alias-border-l3);
+  flex-shrink: 0;
+}
+
+.dirty {
+  flex: 1;
+  min-width: 0;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+}
+
+.tool {
+  font-family: inherit;
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  color: var(--dsw-alias-label-primary);
+  background: transparent;
+  border: 0.5px solid var(--dsw-alias-border-l2);
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
+.tool:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.tool:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.failure {
+  margin: 0;
+  padding: 6px 10px;
+  color: var(--dsw-alias-label-error, #c00);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l3);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+}
+
+.inner {
+  position: relative;
+  min-height: 100%;
+  /* Long unwrapped lines scroll horizontally on this box, so its width is the
+     widest child, never the viewport's. */
+  width: max-content;
+  min-width: 100%;
+  font-family: var(--dsw-font-mono, ui-monospace, monospace);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  line-height: 1.5;
+  tab-size: 4;
+}
+
+/* The sizer and the underlay are the in-flow children that size .inner; the
+   textarea is absolute and follows them. */
+.sizer {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  white-space: pre;
+  visibility: hidden;
+}
+
+.underlay {
+  pointer-events: none;
+}
+
+.underlay :global(.md-code-block) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.underlay :global([data-code-block-banner]) {
+  display: none;
+}
+
+.underlay :global(pre) {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  tab-size: inherit;
+  white-space: pre;
+  overflow: visible;
+  background: transparent !important;
+}
+
+.buffer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  tab-size: inherit;
+  white-space: pre;
+}
+
+/* Overlay mode: the underlay paints the glyphs; the buffer only owns the
+   caret and the selection. */
+.bufferOverlay {
+  color: transparent;
+  caret-color: var(--dsw-alias-label-primary);
+}
+
+.bufferOverlay::selection {
+  background: var(--dsw-alias-selection-bg, rgba(80, 140, 255, 0.35));
+  color: transparent;
+}
+
+/* Conflict resolution view */
+
+.conflictTitle {
+  flex: 1;
+  min-width: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  font-weight: 600;
+}
+
+.conflictHint {
+  margin: 0;
+  padding: 6px 10px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l3);
+}
+
+.same {
+  margin: 0;
+  padding: 0 10px;
+  color: var(--dsw-alias-label-tertiary);
+  font-family: var(--dsw-font-mono, ui-monospace, monospace);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 9em;
+  overflow: hidden;
+}
+
+.hunk {
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l2);
+  margin: 6px 0;
+}
+
+.hunkPick {
+  display: flex;
+  gap: 8px;
+  padding: 4px 10px;
+  background: var(--dsw-alias-bg-layer-2);
+}
+
+.pick {
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--dsw-alias-label-secondary);
+  background: transparent;
+  border: 0.5px solid var(--dsw-alias-border-l2);
+  border-radius: 4px;
+  padding: 1px 8px;
+  cursor: pointer;
+}
+
+.picked {
+  color: var(--dsw-alias-label-primary);
+  border-color: var(--dsw-alias-accent, #58a6ff);
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.theirs,
+.mine {
+  margin: 0;
+  padding: 0 10px;
+  font-family: var(--dsw-font-mono, ui-monospace, monospace);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.theirs {
+  color: var(--dsw-alias-label-secondary);
+  background: var(--dsw-alias-diff-removed-bg, rgba(248, 81, 73, 0.1));
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+.mine {
+  background: var(--dsw-alias-diff-added-bg, rgba(63, 185, 80, 0.12));
+}

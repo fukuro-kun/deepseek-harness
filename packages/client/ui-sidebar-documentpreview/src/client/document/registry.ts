@@ -18,6 +18,12 @@ export interface DocumentPreviewDefinition {
   readonly loading: DocumentLoadMode
   /** Whether the implementation consumes the document's wrap preference. */
   readonly wrap?: boolean
+  /**
+   * Whether the owner may offer text editing on this implementation. Editing
+   * needs the complete UTF-8 content, so only `text-pages` implementations
+   * qualify; binary viewers never set it.
+   */
+  readonly editable?: boolean
 }
 
 /**

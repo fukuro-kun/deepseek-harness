@@ -9,13 +9,14 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-Preview readable files in the right Sidebar and choose among registered renderers without opening another tab. Markdown and code receive accumulated text pages; PDF, HTML, and common images receive complete bytes; unknown file extensions use plain text. The tab owns loading, file status, renderer selection, wrap, and reload, while document bodies register through the same metadata registry and child slot. The Sidebar tab kind is `text`.
+Preview readable files in the right Sidebar and choose among registered renderers without opening another tab. Markdown and code receive accumulated text pages; PDF, HTML, and common images receive complete bytes; unknown file extensions use plain text. The tab owns loading, file status, renderer selection, wrap, reload, and — for text viewers that opt in — an edit mode that writes the buffer back under a version guard. Document bodies register through the same metadata registry and child slot. The Sidebar tab kind is `text`.
 
 ## Table of Contents
 
 - [What it registers](#what-it-registers)
 - [Addresses](#addresses)
 - [How it reads](#how-it-reads)
+- [Editing](#editing)
 - [Navigation](#navigation)
 - [Model Experience](#model-experience)
 - [Known Limitations and Deferred Work](#known-limitations-and-deferred-work)
@@ -28,9 +29,9 @@ Preview readable files in the right Sidebar and choose among registered renderer
 
 - **The type** — `ctx.sidebarRightTabs.register(...)` with id `@deepseek-ai/dsh-client-ui-sidebar-documentpreview` (this implementation's identity in the tab system, and the key its body registers under), kind `text`, pattern `dsh-resource://file/**`, band `fallback`. `canOpen` accepts only Session addresses, whose paths may be relative or absolute; bare `absolute` addresses are not claimed. A type registered at the `extension` or `builtin` band for a narrower pattern (say `*.png`) takes those addresses; other supported files land here. The whole address is the content identity, so two files with one name in different directories, or one path under two sessions, are two tabs; the decoded basename is the tab title, and the keyed `sidebar.right.pane.tab.title` seat places its extension-specific `FileTypeIcon` before that title.
 - **The body** — the keyed `sidebar.right.pane.tab` seat under the type's id. Its fixed header shows the Host's absolute path when available, otherwise the requested path; directories use tertiary label colour, the name uses primary label colour, and a clipped path retains and fades toward its final segment while its tooltip exposes the full value. A dropdown selects among matching renderers and plain text. A wrap toggle appears only when the selected renderer declares `wrap: true`; its glyph describes the mode the click selects, and the per-tab preference starts on. Reload stays in this header, not the Sidebar's tab strip. The body reaches every pane edge; each renderer owns its content inset and may own an inner scrollport. This intentionally differs from the Files tab's 2px right-side scrollbar offset: previews keep the full pane width so edge-to-edge HTML and code scrollports end at the pane edge.
-- **Shared loading and view state**, session-scoped and bucketed by tab id. The store holds accumulated pages or complete bytes, read and observed versions, loading/failure state, renderer choice, scroll offset, wrap, and the answered navigation revision. The ordinary inject face calls Remote readers and writes through declared store actions. Reloads and loading-mode changes retire older requests; the tab's abort signal forgets its state.
+- **Shared loading and view state**, session-scoped and bucketed by tab id. The store holds accumulated pages or complete bytes, read and observed versions, loading/failure state, renderer choice, scroll offset, wrap, the answered navigation revision, and an open edit session's draft and conflict state. The ordinary inject face calls Remote readers and writes through declared store actions. Reloads and loading-mode changes retire older requests; the tab's abort signal forgets its state.
 
-Document implementations register metadata with `ctx.documentPreviews.register({ id, extensions, priority, title, loading, wrap? })` and a body under the same `id` in the keyed, Session-scoped `sidebar.right.tab.document` child slot. Own both registrations with effects and wait for the child slot through `ctx.slots.inject`. Bodies receive `resourceAddress`, prepared `content`, `wrap`, `scrollportRef`, and the standard `useTabInfo`/`useResource` hooks; they do not receive a custom resource loader. A renderer that owns an inner scrolling element attaches `scrollportRef` to it, and the owner returns to the shared body when that element unmounts. Metadata declares `loading: 'text-pages'` or `'bytes-complete'`. The registry retains all matching alternatives: `extension` (the default) ranks above `builtin`, then longer suffixes rank first, then registration order. The dropdown preserves a selected implementation while it remains available; removing it selects the next candidate. Builtin bodies use these same registrations.
+Document implementations register metadata with `ctx.documentPreviews.register({ id, extensions, priority, title, loading, wrap?, editable? })` and a body under the same `id` in the keyed, Session-scoped `sidebar.right.tab.document` child slot. Own both registrations with effects and wait for the child slot through `ctx.slots.inject`. Bodies receive `resourceAddress`, prepared `content`, `wrap`, `scrollportRef`, and the standard `useTabInfo`/`useResource` hooks; they do not receive a custom resource loader. A renderer that owns an inner scrolling element attaches `scrollportRef` to it, and the owner returns to the shared body when that element unmounts. Metadata declares `loading: 'text-pages'` or `'bytes-complete'`. The registry retains all matching alternatives: `extension` (the default) ranks above `builtin`, then longer suffixes rank first, then registration order. The dropdown preserves a selected implementation while it remains available; removing it selects the next candidate. Builtin bodies use these same registrations.
 
 <a id="addresses"></a>
 ## Addresses
@@ -55,6 +56,13 @@ Shared copy comes from `sidebarDocumentPreview`; each builtin renderer owns its 
 
 Initial reads, additional pages, and HTML/PDF/image preparation share a loading indicator that respects reduced-motion preferences. Loaded pages stay visible while another page loads. PDF pages form one vertical, width-fitted sequence and render lazily near the viewport. Code previews show source line numbers by default without including them in copied text; plain text uses the same font size and line height as code. Code sits on the pane's own background rather than the chat card's fill; its banner is adjacent to a full-height inner scrollport, so both scrollbars begin below the copy control.
 
+<a id="editing"></a>
+## Editing
+
+Renderers that declare `editable: true` on their metadata — the builtin plain-text and code viewers — show an edit control in the header while not editing. Editing needs the complete file, so only `text-pages` renderers may opt in; Markdown and every `bytes-complete` renderer stay read-only. Starting an edit reads the whole file through `readAll`, decodes it as UTF-8, and arms a per-tab draft in the shared store; the buffer survives the body's unmount like the other view state. The editor draws a textarea over the code viewer's highlighted underlay (plain text uses an invisible sizer instead), and cancelling a changed buffer asks once before discarding.
+
+Saving calls `remote.workspaceFiles.write` with the draft and the base version as `expectedVersion`. A `workspace-file/stale-version` refusal re-reads the file and opens the conflict resolver: a line-granular diff between the draft (`mine`) and the fresh disk content (`theirs`), where each hunk keeps one side and the merged result retries the write guarded by the fresh version. Other write failures land on the edit session as a failure line. A successful write closes the session and re-reads the file, so the preview shows exactly what landed.
+
 <a id="navigation"></a>
 ## Navigation
 
@@ -72,7 +80,7 @@ No direct effect; what the user reads here never enters a model request.
 ## Known Limitations and Deferred Work
 
 <a id="known-limitations-and-deferred-work"></a>
-- **Preview, not editing.** The viewers provide no file editing or shared search interface; a directory address fails with `not-regular-file`. Unknown extensions use the plain-text reader and remain subject to its UTF-8/NUL checks.
+- **Editing is whole-buffer and text-only.** Only `text-pages` renderers may declare `editable`; Markdown, PDF, HTML, and image viewers stay read-only. The editor loads the complete file, so the Host's `maxFileBytes` cap applies, and `write` never creates a file — it replaces an existing regular file's text and reports a version conflict instead of overwriting a concurrent change. A directory address fails with `not-regular-file`. The viewers provide no shared search interface; unknown extensions use the plain-text reader and remain subject to its UTF-8/NUL checks.
 - **Sequential text and bounded complete files.** Deep source lines require the preceding pages; PDF, HTML, and images require a complete result within the Host's `maxFileBytes` cap.
 - **Byte-view scroll state is not restored.** PDF, HTML, and images can return to the top when their renderer remounts or reloads; image horizontal position is never restored, and HTML iframe scrolling belongs to its opaque browsing context.
 - **Finite local HTML dependencies.** Only direct classic `.js` and stylesheet `.css` references are packed. Browser-resolved resources retain browser origin and network restrictions; no runtime file-read bridge is exposed to the iframe.

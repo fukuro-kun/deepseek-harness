@@ -115,6 +115,29 @@ export interface WorkspaceDirectoryListing {
 }
 
 /**
+ * The edit body one `write` carries.
+ */
+export interface WorkspaceFileWrite {
+  /**
+   * The file's complete new content as UTF-8 text. The write is a full
+   * replacement, not a patch: partial content loses the rest of the file.
+   */
+  readonly text: string
+  /**
+   * Freshness guard: the write applies only while the file's version still
+   * equals this token, else the call fails with `workspace-file/stale-version`.
+   * Omit it to overwrite unconditionally.
+   */
+  readonly expectedVersion?: string
+}
+
+/** Result of a successful `write`: the file's post-write identity. */
+export interface WorkspaceFileWriteResult extends WorkspaceFileStat {
+  /** Whether the write created the file or replaced existing content. */
+  readonly operation: 'create' | 'update'
+}
+
+/**
  * One observation of a workspace file made by an instrumented filesystem
  * operation. Frames report observations, not deltas: a consumer already
  * holding `version` learns nothing new from the frame and can ignore it.
@@ -162,5 +185,13 @@ declare module '@deepseek-ai/dsh-typert-protocol' {
       readonly path: string
       readonly kind: 'file' | 'symlink' | 'other'
     }
+    /**
+     * The guarded write found the file's version no longer matches the token
+     * the caller loaded: someone changed the file in between. Re-read to get
+     * the current content and version.
+     */
+    'workspace-file/stale-version': { readonly path: string }
+    /** The write was denied at that path: the file is missing, not writable, or the content is not UTF-8-safe. */
+    'workspace-file/write-failed': { readonly path: string }
   }
 }

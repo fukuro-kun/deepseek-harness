@@ -9,9 +9,9 @@ import { describe, expect, it, onTestFinished, vi } from 'vitest'
 import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { sessionFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
-import type { WorkspaceFileBytes, WorkspaceFileText } from '@deepseek-ai/dsh-api-workspace-files/types'
+import type { WorkspaceFileBytes, WorkspaceFileText, WorkspaceFileWriteResult } from '@deepseek-ai/dsh-api-workspace-files/types'
 import { textFace } from '../src/client/face.ts'
-import type { DocumentFileBytes, ReadDocumentBytes, ReadWorkspaceFilePage } from '../src/client/rpc.ts'
+import type { DocumentFileBytes, ReadDocumentBytes, ReadWorkspaceFilePage, WriteWorkspaceFile } from '../src/client/rpc.ts'
 import { hostFileOf } from '../src/client/rpc.ts'
 import { createTextStore } from '../src/client/store.ts'
 import { ABSOLUTE_PATH, FILE, PATH, SESSION, failure, page } from './fixtures.client.ts'
@@ -82,19 +82,21 @@ function bench(sessionId = 'other-session' as SessionId) {
     return deferred.promise
   })
   const whole = readQueue<WorkspaceFileBytes>()
+  const writes = readQueue<WorkspaceFileWriteResult>()
   let sequence = 0
   const bytes = vi.fn<ReadDocumentBytes>(() => whole.request(++sequence))
+  const write = vi.fn<WriteWorkspaceFile>(() => writes.request(++sequence))
   const controller = new AbortController()
   onTestFinished(async () => {
     controller.abort()
     const remaining = pending.splice(0)
     for (const call of remaining) call.resolve(failure('workspace-file/outside-workspace', { path: PATH }))
-    await Promise.all([...remaining.map(call => call.promise), whole.close()])
+    await Promise.all([...remaining.map(call => call.promise), whole.close(), writes.close()])
   })
   // The store's own `forget`, counted: the record's end must forget a tab exactly once.
   const forget = vi.fn(instance.actions.forget)
   // Injected for another session on purpose: the address's session must win.
-  const face = textFace(read, bytes)(sessionId, { ...instance.actions, forget })
+  const face = textFace(read, bytes, write)(sessionId, { ...instance.actions, forget })
   /** Settle the oldest outstanding read, or the oldest one for `offset`. */
   const settle = async (result: RemoteResult<WorkspaceFileText>, offset?: number): Promise<void> => {
     const at = offset === undefined ? 0 : pending.findIndex(call => call.offset === offset)
@@ -104,12 +106,14 @@ function bench(sessionId = 'other-session' as SessionId) {
     await call.promise
   }
   return {
-    instance, read, face, forget, settle, bytes, controller,
+    instance, read, face, forget, settle, bytes, write, controller,
     settleAll: (result: RemoteResult<DocumentFileBytes>, key?: number) => whole.settle(result.ok
       ? { ok: true, value: { ...result.value, data: btoa(String.fromCharCode(...result.value.data)) } }
       : result, key),
     settleAllWire: whole.settle,
     outstandingAll: whole.outstanding,
+    settleWrite: writes.settle,
+    outstandingWrites: writes.outstanding,
     outstanding: () => pending.map(call => call.offset),
     tab: () => instance.getSnapshot().byTab[TAB_1],
   }
@@ -412,5 +416,188 @@ describe('textFace', () => {
     await second.settleAll(complete('v2'))
     expect(first.tab()?.version).toBe('v1')
     expect(second.tab()?.version).toBe('v2')
+  })
+})
+
+describe('textFace — editing', () => {
+  /** A complete read carrying UTF-8 text the way `readAll` wires it. */
+  const completeText = (version: string, text: string): RemoteResult<DocumentFileBytes> =>
+    complete(version, new TextEncoder().encode(text))
+  const writeOk = (version: string): RemoteResult<WorkspaceFileWriteResult> =>
+    ({ ok: true, value: { absolutePath: ABSOLUTE_PATH, version, operation: 'update' } })
+  const stale: RemoteResult<WorkspaceFileWriteResult> = {
+    ok: false,
+    error: {
+      name: 'RemoteError', isDSHRemoteError: true,
+      code: 'workspace-file/stale-version', message: 'changed since the loaded version', details: { path: PATH },
+    },
+  }
+
+  it('arms a draft from the complete file text and its version', async () => {
+    const { face, bytes, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    expect(bytes).toHaveBeenCalledExactlyOnceWith(FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'a\nb\n', baseVersion: 'v7', draft: 'a\nb\n', saving: false })
+  })
+
+  it('records a failed edit open on the tab, not on an edit session that never existed', async () => {
+    const { face, settleAllWire, tab } = bench()
+    face.startEdit(TAB_1, FILE, new AbortController().signal)
+    await settleAllWire(bytesFailure())
+    expect(tab()?.edit).toBeUndefined()
+    expect(tab()?.failure?.code).toBe('workspace-file/outside-workspace')
+  })
+
+  it('refuses to edit a file whose bytes are not UTF-8 text', async () => {
+    const { face, settleAll, tab } = bench()
+    face.startEdit(TAB_1, FILE, new AbortController().signal)
+    await settleAll(complete('v1', new Uint8Array([0xff, 0xfe])))
+    expect(tab()?.edit).toBeUndefined()
+    expect(tab()?.failure?.code).toBe('gateway/internal')
+  })
+
+  it('refuses to edit text that decodes but carries NUL bytes', async () => {
+    const { face, settleAll, tab } = bench()
+    face.startEdit(TAB_1, FILE, new AbortController().signal)
+    await settleAll(complete('v1', new TextEncoder().encode('a\0b\n')))
+    expect(tab()?.edit).toBeUndefined()
+    expect(tab()?.failure?.code).toBe('gateway/internal')
+  })
+
+  it('never opens a read for an edit whose record already ended', () => {
+    const { face, bytes } = bench()
+    const controller = new AbortController()
+    controller.abort()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    expect(bytes).not.toHaveBeenCalled()
+  })
+
+  it('drops an edit-open read that settles after its record ended', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    controller.abort()
+    await settleAll(completeText('v7', 'a\nb\n'))
+    expect(tab()).toBeUndefined()
+  })
+
+  it('never writes for a save whose record already ended', async () => {
+    const { face, write, settleAll } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    const ended = new AbortController()
+    ended.abort()
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', ended.signal)
+    expect(write).not.toHaveBeenCalled()
+  })
+
+  it('drops a write that settles after its record ended', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    controller.abort()
+    await settleWrite(writeOk('v8'))
+    expect(tab()).toBeUndefined()
+  })
+
+  it('saves the draft under its base version, then re-reads the file it landed as', async () => {
+    const { face, read, write, settleAll, settleWrite, settle, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'a\nchanged\n', 'v7', controller.signal)
+    expect(write).toHaveBeenCalledExactlyOnceWith(FILE.sessionId, FILE.path,
+      { text: 'a\nchanged\n', expectedVersion: 'v7' }, controller.signal)
+    expect(tab()?.edit?.saving).toBe(true)
+    await settleWrite(writeOk('v8'))
+    // The write landed: the session closes and the pages re-read what landed.
+    expect(tab()?.edit).toBeUndefined()
+    await settle(page(1, ['a', 'changed'], true, 'v8'))
+    expect(tab()).toMatchObject({ version: 'v8', pages: { 1: { text: 'a\nchanged' } } })
+    expect(read).toHaveBeenCalled()
+  })
+
+  it('arms the conflict with the fresh disk content when the write meets a changed file', async () => {
+    const { face, instance, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(stale)
+    // The refused write triggers a fresh complete read for the conflict view.
+    await settleAll(completeText('v9', 'theirs\n'))
+    expect(tab()?.edit?.saving).toBe(false)
+    expect(tab()?.edit?.conflict).toMatchObject({ mine: 'mine\n', theirs: 'theirs\n', version: 'v9' })
+    expect(tab()?.edit?.draft).toBe('mine\n')
+  })
+
+  it('drops a conflict re-read that settles after its record ended', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(stale)
+    controller.abort()
+    await settleAll(completeText('v9', 'theirs\n'))
+    expect(tab()).toBeUndefined()
+  })
+
+  it('reports a failed conflict re-read on the open edit session', async () => {
+    const { face, settleAll, settleAllWire, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(stale)
+    await settleAllWire(bytesFailure())
+    expect(tab()?.edit?.saving).toBe(false)
+    expect(tab()?.edit?.conflict).toBeUndefined()
+    expect(tab()?.edit?.failure?.code).toBe('workspace-file/outside-workspace')
+  })
+
+  it('reports an undecodable conflict re-read on the open edit session', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(stale)
+    await settleAll(complete('v9', new Uint8Array([0xff, 0xfe])))
+    expect(tab()?.edit?.saving).toBe(false)
+    expect(tab()?.edit?.failure?.code).toBe('gateway/internal')
+  })
+
+  it('records a non-conflict write failure on the open edit session', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite({
+      ok: false,
+      error: {
+        name: 'RemoteError', isDSHRemoteError: true,
+        code: 'workspace-file/write-failed', message: 'denied', details: { path: PATH },
+      },
+    })
+    expect(tab()?.edit?.saving).toBe(false)
+    expect(tab()?.edit?.conflict).toBeUndefined()
+    expect(tab()?.edit?.failure?.code).toBe('workspace-file/write-failed')
+  })
+
+  it('forgets the edit session with the tab when its record ends mid-edit', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    controller.abort()
+    expect(tab()).toBeUndefined()
   })
 })

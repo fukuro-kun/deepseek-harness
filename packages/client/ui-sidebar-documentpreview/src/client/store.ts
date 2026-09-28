@@ -29,6 +29,41 @@ export interface TextPage {
   readonly lines: number
 }
 
+/**
+ * One open edit session on a tab. The draft survives the body's unmount, so a
+ * reader who switches tabs mid-edit finds their work intact.
+ */
+export interface EditState {
+  /** The loaded file text the draft started from. */
+  readonly base: string
+  /** The version token `base` was read at — the write's freshness guard. */
+  readonly baseVersion: string
+  /** The current buffer content. */
+  draft: string
+  /** A guarded write is in flight. */
+  saving: boolean
+  /** Why the last save failed without a version conflict. */
+  failure: RemoteFailure | undefined
+  /**
+   * Set when the guarded write met a changed file: the fresh disk content,
+   * its version, and the reader's per-hunk choice between their buffer and
+   * the new content. Defaults favor the reader's edits.
+   */
+  conflict: EditConflict | undefined
+}
+
+/** The data a version conflict resolution works on. */
+export interface EditConflict {
+  /** The reader's edited buffer, as it was when the write was refused. */
+  readonly mine: string
+  /** The file's fresh disk content. */
+  readonly theirs: string
+  /** The fresh version token the merged write must guard on. */
+  readonly version: string
+  /** Per-hunk pick: 'mine' keeps the reader's text, 'theirs' the disk's. */
+  choices: Record<number, 'mine' | 'theirs'>
+}
+
 /** One tab's pages and view. */
 export interface TextTabState {
   /** Explicit viewer choice for this tab; absence follows automatic matching. */
@@ -55,6 +90,8 @@ export interface TextTabState {
   wrap: boolean
   /** The `navigation.revision` the body already answered; absent before the first. */
   revision: number | undefined
+  /** The open edit session; absent in view mode. */
+  edit?: EditState
 }
 
 /** Every tab's state, keyed by tab id. */
@@ -97,6 +134,15 @@ type TextActions = {
   toggledWrap: (draft: TextState, tabId: TabId) => void
   navigated: (draft: TextState, tabId: TabId, revision: number) => void
   forget: (draft: TextState, tabId: TabId) => void
+  editStarted: (draft: TextState, tabId: TabId, base: string, baseVersion: string) => void
+  editDraft: (draft: TextState, tabId: TabId, draftText: string) => void
+  editCancelled: (draft: TextState, tabId: TabId) => void
+  saveStarted: (draft: TextState, tabId: TabId) => void
+  saved: (draft: TextState, tabId: TabId, version: string) => void
+  saveConflicted: (draft: TextState, tabId: TabId, mine: string, theirs: string, version: string) => void
+  saveFailed: (draft: TextState, tabId: TabId, failure: RemoteFailure) => void
+  conflictChoice: (draft: TextState, tabId: TabId, hunk: number, side: 'mine' | 'theirs') => void
+  conflictClosed: (draft: TextState, tabId: TabId) => void
 }
 
 /**
@@ -220,6 +266,107 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
           if (id !== tabId) byTab[id] = state
         }
         d.byTab = byTab
+      },
+      /**
+       * Open the edit session on one tab.
+       * @param d - draft state.
+       * @param tabId - the tab being edited.
+       * @param base - the file text the edit starts from.
+       * @param baseVersion - the version that text was read at.
+       */
+      editStarted: (d, tabId: TabId, base: string, baseVersion: string) => {
+        bucket(d, tabId).edit = {
+          base, baseVersion, draft: base, saving: false, failure: undefined, conflict: undefined,
+        }
+      },
+      /**
+       * Track the buffer one keystroke produces.
+       * @param d - draft state.
+       * @param tabId - the tab being edited.
+       * @param draftText - the textarea's value.
+       */
+      editDraft: (d, tabId: TabId, draftText: string) => {
+        const edit = bucket(d, tabId).edit
+        if (edit !== undefined) edit.draft = draftText
+      },
+      /**
+       * Close the edit session, discarding the buffer.
+       * @param d - draft state.
+       * @param tabId - the tab that stops editing.
+       */
+      editCancelled: (d, tabId: TabId) => {
+        delete bucket(d, tabId).edit
+      },
+      /**
+       * Mark a guarded write as in flight and clear the last failure.
+       * @param d - draft state.
+       * @param tabId - the tab being saved.
+       */
+      saveStarted: (d, tabId: TabId) => {
+        const edit = bucket(d, tabId).edit
+        if (edit === undefined) return
+        edit.saving = true
+        edit.failure = undefined
+      },
+      /**
+       * Close the edit session after a successful write, adopting the new
+       * version so a stale banner does not fire on our own write.
+       * @param d - draft state.
+       * @param tabId - the tab that saved.
+       * @param version - the file's post-write version.
+       */
+      saved: (d, tabId: TabId, version: string) => {
+        const state = bucket(d, tabId)
+        delete state.edit
+        state.version = version
+        state.observedVersion = version
+      },
+      /**
+       * Record a refused guarded write: the buffer stays and the conflict view
+       * receives the fresh disk state to resolve against.
+       * @param d - draft state.
+       * @param tabId - the tab whose write was refused.
+       * @param mine - the reader's buffer.
+       * @param theirs - the fresh disk content.
+       * @param version - the fresh version token.
+       */
+      saveConflicted: (d, tabId: TabId, mine: string, theirs: string, version: string) => {
+        const edit = bucket(d, tabId).edit
+        if (edit === undefined) return
+        edit.saving = false
+        edit.conflict = { mine, theirs, version, choices: {} }
+      },
+      /**
+       * Record a save failure that is not a version conflict.
+       * @param d - draft state.
+       * @param tabId - the tab whose save failed.
+       * @param failure - the settled Remote failure.
+       */
+      saveFailed: (d, tabId: TabId, failure: RemoteFailure) => {
+        const edit = bucket(d, tabId).edit
+        if (edit === undefined) return
+        edit.saving = false
+        edit.failure = failure
+      },
+      /**
+       * Record one hunk's conflict choice.
+       * @param d - draft state.
+       * @param tabId - the tab resolving its conflict.
+       * @param hunk - the hunk's diff index.
+       * @param side - which side that hunk keeps.
+       */
+      conflictChoice: (d, tabId: TabId, hunk: number, side: 'mine' | 'theirs') => {
+        const conflict = bucket(d, tabId).edit?.conflict
+        if (conflict !== undefined) conflict.choices[hunk] = side
+      },
+      /**
+       * Leave the conflict view; the draft stays for further edits.
+       * @param d - draft state.
+       * @param tabId - the tab leaving its conflict.
+       */
+      conflictClosed: (d, tabId: TabId) => {
+        const edit = bucket(d, tabId).edit
+        if (edit !== undefined) edit.conflict = undefined
       },
     },
   })

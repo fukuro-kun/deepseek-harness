@@ -2964,6 +2964,12 @@ export const SERVICE_API: readonly ServiceApiEntry[] = [
         returns: 'the directory\'s children in the backend\'s stable name order, bounded by the entry cap.',
       },
       {
+        signature: '@Remote async write( workspaceFileScope: WorkspaceFileScope, path: string, edit: WorkspaceFileWrite, signal: AbortSignal, ): Promise<WorkspaceFileWriteResult>',
+        description: 'Replace one regular file\'s complete text, optionally guarded by the version token the caller loaded. The write runs under a full-access policy so the human at the UI shares the read\'s reach; `expectedVersion` still makes the write atomic against a concurrent change.',
+        parameters: [{ name: 'workspaceFileScope', description: 'header-derived workspace root for the Session identity on the wire.' }, { name: 'path', description: 'absolute path or path relative to the workspace root; the same reach `read` has.' }, { name: 'edit', description: 'the new text and the optional freshness guard.' }, { name: 'signal', description: 'caller cancellation.' }],
+        returns: 'the file\'s post-write path and version.',
+      },
+      {
         signature: '@Remote({ mode: \'stream\' }) changes(workspaceFileScope: WorkspaceFileScope, signal: AbortSignal): AsyncIterable<WorkspaceFileWatchFrame>',
         description: 'Stream every `fs/observed` observation of a file inside the Session\'s workspace. Only instrumented filesystem operations report here; the OS is not watched.',
         parameters: [{ name: 'workspaceFileScope', description: 'header-derived workspace root for the Session identity on the wire.' }, { name: 'signal', description: 'generation cancellation.' }],
@@ -6489,6 +6495,14 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   {
     name: 'WorkspaceFileWatchFrame',
     declaration: 'export type WorkspaceFileWatchFrame = {\n    readonly kind: \'ready\';\n} | {\n    readonly kind: \'change\';\n    readonly change: WorkspaceFileChange;\n};',
+  },
+  {
+    name: 'WorkspaceFileWrite',
+    declaration: 'export interface WorkspaceFileWrite {\n    readonly text: string;\n    readonly expectedVersion?: string;\n}',
+  },
+  {
+    name: 'WorkspaceFileWriteResult',
+    declaration: 'export interface WorkspaceFileWriteResult extends WorkspaceFileStat {\n    readonly operation: \'create\' | \'update\';\n}',
   },
   {
     name: 'WorkspaceFollowFrame',

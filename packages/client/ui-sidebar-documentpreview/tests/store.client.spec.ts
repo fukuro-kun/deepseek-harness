@@ -104,3 +104,28 @@ describe('read observation baseline', () => {
     expect(instance.getSnapshot().byTab[TAB_1]?.observedVersion).toBe('observed-3')
   })
 })
+describe('edit actions without an open session', () => {
+  const failure = { code: 'workspace-file/write-failed', message: 'x', details: {} } as unknown as RemoteFailure
+
+  it('ignores draft, save, and conflict actions on a tab that never opened the editor', () => {
+    const instance = createTextStore().create()
+    instance.actions.loading(TAB_1)
+    instance.actions.editDraft(TAB_1, 'x')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.saveConflicted(TAB_1, 'mine', 'theirs', 'v2')
+    instance.actions.saveFailed(TAB_1, failure)
+    instance.actions.conflictChoice(TAB_1, 0, 'theirs')
+    instance.actions.conflictClosed(TAB_1)
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toBeUndefined()
+  })
+
+  it('ignores a conflict pick and close on an edit session that has no conflict armed', () => {
+    const instance = createTextStore().create()
+    instance.actions.loading(TAB_1)
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.conflictChoice(TAB_1, 0, 'theirs')
+    instance.actions.conflictClosed(TAB_1)
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.conflict).toBeUndefined()
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.draft).toBe('a\n')
+  })
+})

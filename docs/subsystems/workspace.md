@@ -315,6 +315,19 @@ Host Remote file reads and workspace directory observations over the composed fi
 @Remote async list(workspaceFileScope: WorkspaceFileScope, path: string, signal: AbortSignal): Promise<WorkspaceDirectoryListing>
 
 /**
+ * Replace one regular file's complete text, optionally guarded by the
+ * version token the caller loaded. The write runs under a full-access
+ * policy so the human at the UI shares the read's reach; `expectedVersion`
+ * still makes the write atomic against a concurrent change.
+ * @param workspaceFileScope - header-derived workspace root for the Session identity on the wire.
+ * @param path - absolute path or path relative to the workspace root; the same reach `read` has.
+ * @param edit - the new text and the optional freshness guard.
+ * @param signal - caller cancellation.
+ * @returns the file's post-write path and version.
+ */
+@Remote async write( workspaceFileScope: WorkspaceFileScope, path: string, edit: WorkspaceFileWrite, signal: AbortSignal, ): Promise<WorkspaceFileWriteResult>
+
+/**
  * Stream every `fs/observed` observation of a file inside the Session's
  * workspace. Only instrumented filesystem operations report here; the OS is
  * not watched.

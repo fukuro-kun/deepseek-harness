@@ -1,5 +1,5 @@
 ---
-description: "右侧 Sidebar 的文档预览：共享文件加载与控件，可选 Markdown、代码、图片、PDF 和 HTML 渲染器，并以纯文本兜底。"
+description: "右侧 Sidebar 的文档预览：共享文件加载与控件，可选 Markdown、代码、图片、PDF 和 HTML 渲染器，并以纯文本兜底；文本查看器支持带守卫的原位编辑。"
 kind: "package-reference"
 ---
 
@@ -9,13 +9,14 @@ kind: "package-reference"
 
 ## 概述
 
-在右侧 Sidebar 预览可读文件，无需另开 tab 即可切换已注册的渲染器。Markdown 和代码接收累计文本页；PDF、HTML 和常见图片接收完整字节；未知文件扩展名使用纯文本。tab 负责加载、文件状态、渲染器选择、换行和重新载入，文档正文通过同一元数据注册表与子 slot 注册。Sidebar tab 的 kind 为 `text`。
+在右侧 Sidebar 预览可读文件，无需另开 tab 即可切换已注册的渲染器。Markdown 和代码接收累计文本页；PDF、HTML 和常见图片接收完整字节；未知文件扩展名使用纯文本。tab 负责加载、文件状态、渲染器选择、换行、重新载入，以及——对选择加入的文本查看器——在版本守卫下回写缓冲区的编辑模式。文档正文通过同一元数据注册表与子 slot 注册。Sidebar tab 的 kind 为 `text`。
 
 ## 目录
 
 - [注册了什么](#what-it-registers)
 - [地址](#addresses)
 - [怎么读](#how-it-reads)
+- [编辑](#editing)
 - [导航](#navigation)
 - [模型体验](#model-experience)
 - [已知限制与延期工作](#known-limitations-and-deferred-work)
@@ -28,9 +29,9 @@ kind: "package-reference"
 
 - **类型** —— `ctx.sidebarRightTabs.register(...)`，id 为 `@deepseek-ai/dsh-client-ui-sidebar-documentpreview`（这个实现在 tab 系统里的唯一键，也是其体注册所用的 key），kind `text`，pattern `dsh-resource://file/**`，档位 `fallback`。`canOpen` 只接受 Session 地址，其中路径可为相对或绝对路径；不认领裸 `absolute` 地址。在 `extension` 或 `builtin` 档以更窄 pattern（比如 `*.png`）注册的类型接走那些地址；其他受支持文件落到这里。整个地址就是内容身份，所以不同目录下同名的两个文件、或同一路径在两个会话之下，是两个 tab；解码后的 basename 是 tab 标题，keyed slot `sidebar.right.pane.tab.title` 会在标题前放置按扩展名选择的 `FileTypeIcon`。
 - **正文** —— keyed slot `sidebar.right.pane.tab`，键为类型的 id。固定头部在可用时显示 Host 的绝对路径，否则显示请求路径；目录使用三级标签色，文件名使用一级标签色，路径过长时保留末段并向开头淡出，提示中仍提供完整值。下拉菜单可在匹配的渲染器与纯文本间切换。仅当所选渲染器声明 `wrap: true` 时显示换行开关；图标表示点击后切换到的模式，该偏好按 tab 保存，初始开启。重新载入仍在此头部，不放入 Sidebar 的 tab 条。正文贴合格的每条边，各渲染器自行提供内容留白，并可拥有内部滚动区。这与 Files tab 右侧预留 2px 滚动条间距的布局有意不同：Preview 使用格的完整宽度，使贴边 HTML 与代码滚动区终止于格的边缘。
-- **共享加载与视图状态**，会话作用域、按 tab id 分桶。store 持有累计页或完整字节、读取与观察版本、加载/失败状态、渲染器选择、滚动位置、换行和已响应的导航 revision。普通 inject face 调用 Remote 读取，并经声明的 store action 写入。重新载入和加载模式变化会淘汰旧请求；tab 的中止信号清理其状态。
+- **共享加载与视图状态**，会话作用域、按 tab id 分桶。store 持有累计页或完整字节、读取与观察版本、加载/失败状态、渲染器选择、滚动位置、换行、已响应的导航 revision，以及打开的编辑会话的草稿与冲突状态。普通 inject face 调用 Remote 读取，并经声明的 store action 写入。重新载入和加载模式变化会淘汰旧请求；tab 的中止信号清理其状态。
 
-文档实现在 `ctx.documentPreviews.register({ id, extensions, priority, title, loading, wrap? })` 注册元数据，并以相同 `id` 向 keyed、Session 作用域的子 slot `sidebar.right.tab.document` 注册正文。两处注册都由 effect 持有，通过 `ctx.slots.inject` 等待子 slot。正文接收 `resourceAddress`、准备好的 `content`、`wrap`、`scrollportRef` 和标准 `useTabInfo`/`useResource` 钩子，不接收自定义资源加载器。拥有内部滚动元素的渲染器把 `scrollportRef` 挂到该元素上；该元素卸载后，owner 恢复使用共享正文。元数据声明 `loading: 'text-pages'` 或 `'bytes-complete'`。注册表保留所有匹配备选：`extension`（默认）优先于 `builtin`，随后按更长的后缀、再按注册顺序排列。所选实现仍可用时，下拉选择保持不变；移除后选择下一个候选。内置正文也使用相同注册方式。
+文档实现在 `ctx.documentPreviews.register({ id, extensions, priority, title, loading, wrap?, editable? })` 注册元数据，并以相同 `id` 向 keyed、Session 作用域的子 slot `sidebar.right.tab.document` 注册正文。两处注册都由 effect 持有，通过 `ctx.slots.inject` 等待子 slot。正文接收 `resourceAddress`、准备好的 `content`、`wrap`、`scrollportRef` 和标准 `useTabInfo`/`useResource` 钩子，不接收自定义资源加载器。拥有内部滚动元素的渲染器把 `scrollportRef` 挂到该元素上；该元素卸载后，owner 恢复使用共享正文。元数据声明 `loading: 'text-pages'` 或 `'bytes-complete'`。注册表保留所有匹配备选：`extension`（默认）优先于 `builtin`，随后按更长的后缀、再按注册顺序排列。所选实现仍可用时，下拉选择保持不变；移除后选择下一个候选。内置正文也使用相同注册方式。
 
 <a id="addresses"></a>
 ## 地址
@@ -55,6 +56,13 @@ PNG、JPEG、GIF、WebP、BMP、ICO 和 SVG 通过 Blob URL 在 `<img>` 静态�
 
 首次读取、追加页及 HTML/PDF/图片准备共用加载指示器，并遵循减少动态效果偏好。下一页加载期间保留已显示的内容。PDF 页面组成一个纵向、适配宽度的连续序列，并在接近视口时惰性渲染。代码预览默认显示源码行号，但复制文本不包含行号；纯文本与代码使用相同字号和行高。代码直接坐在分栏自身的背景上，而不是会话卡片的填充色；复制条与占满剩余高度的内部滚动区相邻，因此横纵滚动条都从复制控件下方开始。
 
+<a id="editing"></a>
+## 编辑
+
+在元数据中声明 `editable: true` 的渲染器——内置的纯文本与代码查看器——在未编辑时于头部显示编辑控件。编辑需要完整文件，所以只有 `text-pages` 渲染器可以选择加入；Markdown 与所有 `bytes-complete` 渲染器保持只读。开始编辑通过 `readAll` 读取整个文件、按 UTF-8 解码，并在共享 store 中为该 tab 挂上草稿；与其他视图状态一样，缓冲区在正文卸载后仍然保留。编辑器把 textarea 盖在代码查看器的高亮底层上（纯文本改用不可见的尺寸占位元素），取消已修改的缓冲区时会先询问一次再丢弃。
+
+保存以草稿和基准版本作为 `expectedVersion` 调用 `remote.workspaceFiles.write`。`workspace-file/stale-version` 拒绝会重读文件并打开冲突解决视图：草稿（`mine`）与磁盘新内容（`theirs`）之间的行级 diff，每个块保留一侧，合并结果再以新版本守卫重试写入。其他写入失败以失败行落在编辑会话上。成功的写入关闭会话并重读文件，使预览精确显示已落盘的内容。
+
 <a id="navigation"></a>
 ## 导航
 
@@ -72,7 +80,7 @@ PNG、JPEG、GIF、WebP、BMP、ICO 和 SVG 通过 Blob URL 在 `<img>` 静态�
 ## 已知限制与延期工作
 
 <a id="known-limitations-and-deferred-work"></a>
-- **预览而非编辑。** 查看器不提供文件编辑或共享搜索接口；目录地址以 `not-regular-file` 失败。未知扩展名使用纯文本读取，仍受其 UTF-8/NUL 检查限制。
+- **编辑是整缓冲区且仅限文本。** 只有 `text-pages` 渲染器可以声明 `editable`；Markdown、PDF、HTML 和图片查看器保持只读。编辑器加载完整文件，受 Host `maxFileBytes` 上限约束；`write` 绝不创建文件——它替换既有普通文件的文本，并在并发改动时报告版本冲突而不是覆盖。目录地址以 `not-regular-file` 失败。查看器不提供共享搜索接口；未知扩展名使用纯文本读取，仍受其 UTF-8/NUL 检查限制。
 - **文本顺序分页，完整文件受限。** 定位深处源码行需要先加载此前各页；PDF、HTML 和图片必须取得 Host `maxFileBytes` 上限内的完整结果。
 - **字节视图不恢复滚动位置。** PDF、HTML 与图片的渲染器重新挂载或重新载入时可能回到顶部；图片的横向位置始终不恢复，HTML iframe 的滚动属于其不透明浏览上下文。
 - **本地 HTML 依赖集合有限。** 只打包直接引用的经典 `.js` 脚本和 `.css` 样式表。浏览器解析的资源仍受浏览器源与网络规则限制；iframe 不获得运行时文件读取桥接。

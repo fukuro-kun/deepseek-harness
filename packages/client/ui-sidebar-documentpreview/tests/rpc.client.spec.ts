@@ -6,8 +6,8 @@
  */
 import { describe, expect, it, vi } from 'vitest'
 import { sessionFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
-import { createReadPage, documentFileBytes, hostFileOf } from '../src/client/rpc.ts'
-import type { ReadWorkspaceFilePage, WorkspaceFilesReadRemote } from '../src/client/index.ts'
+import { createReadPage, createWriteFile, documentFileBytes, failureMessage, hostFileOf } from '../src/client/rpc.ts'
+import type { ReadWorkspaceFilePage, WorkspaceFilesReadRemote, WriteWorkspaceFile } from '../src/client/index.ts'
 import { ADDRESS, FILE, PATH, SESSION, page } from './fixtures.client.ts'
 
 describe('hostFileOf', () => {
@@ -34,9 +34,34 @@ describe('createReadPage', () => {
   it('binds the paged read to the Remote with the offset as the only range', async () => {
     const read = vi.fn<WorkspaceFilesReadRemote['workspaceFiles']['read']>(() => Promise.resolve(page(4, ['d'], true)))
     const signal = new AbortController().signal
-    const readPage: ReadWorkspaceFilePage = createReadPage({ workspaceFiles: { read } })
+    const readPage: ReadWorkspaceFilePage = createReadPage({
+      workspaceFiles: { read, readAll: vi.fn(), write: vi.fn() },
+    })
     await expect(readPage(SESSION, PATH, 4, signal)).resolves.toEqual(page(4, ['d'], true))
     expect(read).toHaveBeenCalledWith(SESSION, PATH, { offset: 4 }, signal)
+  })
+})
+
+describe('createWriteFile', () => {
+  it('binds the guarded write to the Remote, passing the edit payload through', async () => {
+    const value = { absolutePath: '/workspace/notes.txt', version: 'v2', operation: 'update' as const }
+    const write = vi.fn<WorkspaceFilesReadRemote['workspaceFiles']['write']>(() => Promise.resolve({ ok: true, value }))
+    const signal = new AbortController().signal
+    const writeFile: WriteWorkspaceFile = createWriteFile({
+      workspaceFiles: { read: vi.fn(), readAll: vi.fn(), write },
+    })
+    await expect(writeFile(SESSION, PATH, { text: 'after\n', expectedVersion: 'v1' }, signal)).resolves.toEqual({ ok: true, value })
+    expect(write).toHaveBeenCalledWith(SESSION, PATH, { text: 'after\n', expectedVersion: 'v1' }, signal)
+  })
+})
+
+describe('failureMessage', () => {
+  it.each([
+    ['an Error', new Error('decode blew up'), 'decode blew up'],
+    ['a thrown string', 'raw refusal', 'raw refusal'],
+    ['a thrown number', 17, '17'],
+  ])('carries the message of %s', (_label, thrown, message) => {
+    expect(failureMessage(thrown)).toBe(message)
   })
 })
 

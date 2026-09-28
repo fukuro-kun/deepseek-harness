@@ -1,14 +1,20 @@
 /**
- * Workspace file service: read-only file previews, workspace directory
- * listings, and the filesystem-observation change feed, exposed as
- * `workspaceFiles`.
+ * Workspace file service: file previews, workspace directory
+ * listings, the filesystem-observation change feed, and guarded full-text
+ * writes, exposed as `workspaceFiles`.
  *
  * File reads follow the composed filesystem's read access, including paths
  * outside the workspace. The selected Session header supplies the base for
  * relative paths, with the sandbox policy root as its no-cwd fallback, not a
  * read-containment restriction. Directory listings and change observations
  * remain workspace-scoped. File-kind checks and configured read caps apply to
- * every preview; this service exposes no mutations.
+ * every preview and every write.
+ *
+ * `write` replaces a file's complete text. The human operating the UI is the
+ * principal, not the fenced agent, so the call resolves its sandbox policy as
+ * `danger-full-access`: the write boundary matches the read boundary. An
+ * `expectedVersion` token guards the write against a concurrent change; a
+ * mismatch fails with `workspace-file/stale-version` and nothing is written.
  *
  * A page is cut from `streamText`, which decodes and rejects non-UTF-8 as it
  * goes, so the file is read only up to the first character past the page and
@@ -23,7 +29,7 @@ import { posix, win32 } from 'node:path'
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
 import type {} from '@deepseek-ai/dsh-fs'
-import type { FsDirEntry, FsInfo, FsPathInfo, FsTarget } from '@deepseek-ai/dsh-fs'
+import type { FsDirEntry, FsInfo, FsPathInfo, FsTarget, FsVersion } from '@deepseek-ai/dsh-fs'
 import type {} from '@deepseek-ai/dsh-sandbox-policy'
 import type {} from '@deepseek-ai/dsh-session'
 import type {} from '@deepseek-ai/dsh-session-persistence'
@@ -39,6 +45,8 @@ import type {
   WorkspaceFileStat,
   WorkspaceFileText,
   WorkspaceFileWatchFrame,
+  WorkspaceFileWrite,
+  WorkspaceFileWriteResult,
 } from './types.ts'
 
 export type * from './types.ts'
@@ -353,6 +361,64 @@ export class WorkspaceFiles extends TypertRemoteService {
   }
 
   /**
+   * Replace one regular file's complete text, optionally guarded by the
+   * version token the caller loaded. The write runs under a full-access
+   * policy so the human at the UI shares the read's reach; `expectedVersion`
+   * still makes the write atomic against a concurrent change.
+   * @param workspaceFileScope - header-derived workspace root for the Session identity on the wire.
+   * @param path - absolute path or path relative to the workspace root; the same reach `read` has.
+   * @param edit - the new text and the optional freshness guard.
+   * @param signal - caller cancellation.
+   * @returns the file's post-write path and version.
+   */
+  @Remote
+  async write(
+    workspaceFileScope: WorkspaceFileScope,
+    path: string,
+    edit: WorkspaceFileWrite,
+    signal: AbortSignal,
+  ): Promise<WorkspaceFileWriteResult> {
+    if (Buffer.byteLength(edit.text, 'utf8') > this.config.maxFileBytes) {
+      throw new RemoteError(
+        'workspace-file/too-large',
+        `write of "${path}" exceeds the ${this.config.maxFileBytes} byte full-file cap`,
+        { path, limit: this.config.maxFileBytes },
+      )
+    }
+    const { target } = await this.locateFile(workspaceFileScope, path, signal)
+    const policy = this.ctx.sandboxPolicy.resolve({ mode: 'danger-full-access' })
+    // The wire token and the branded FsVersion are the same string; the cast
+    // only re-labels it.
+    const expected = edit.expectedVersion === undefined
+      ? undefined
+      : { kind: 'replaceIfVersion' as const, version: edit.expectedVersion as FsVersion }
+    try {
+      const outcome = await this.ctx.fs.writeText(target, edit.text, expected, signal, policy)
+      return {
+        absolutePath: this.ctx.fs.processPath(target),
+        version: outcome.version,
+        operation: outcome.operation,
+      }
+    } catch (error) {
+      if (isStaleRefusal(error)) {
+        throw new RemoteError('workspace-file/stale-version', `"${path}" changed since the loaded version`, { path })
+      }
+      let reason: string
+      /* v8 ignore else -- the filesystem boundary only ever throws Error subclasses; the string arm is defensive. */
+      if (error instanceof Error) {
+        reason = error.message
+      } else {
+        reason = String(error)
+      }
+      throw new RemoteError(
+        'workspace-file/write-failed',
+        `cannot write "${path}": ${reason}`,
+        { path },
+      )
+    }
+  }
+
+  /**
    * Stream every `fs/observed` observation of a file inside the Session's
    * workspace. Only instrumented filesystem operations report here; the OS is
    * not watched.
@@ -474,6 +540,15 @@ export class WorkspaceFiles extends TypertRemoteService {
  */
 function isNotTextRefusal(error: unknown): boolean {
   return typeof error === 'object' && error !== null && 'code' in error && error.code === 'FS_NOT_TEXT'
+}
+
+/**
+ * The backend's freshness refusal, recognized by its code alone for the same
+ * reason as {@link isNotTextRefusal}: no `FsError` class identity crosses the
+ * provider boundary.
+ */
+function isStaleRefusal(error: unknown): boolean {
+  return typeof error === 'object' && error !== null && 'code' in error && error.code === 'FS_STALE_VERSION'
 }
 
 export default WorkspaceFiles

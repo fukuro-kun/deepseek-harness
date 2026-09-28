@@ -147,5 +147,5 @@ Host specs in `packages/api/workspace-files/tests` exercise header-only scope re
 ## Deferred
 
 - A bound on a `changes` generation's queue.
-- The shipped consumer of `readBytes` (image and binary previews) and any write, search, or media route; the service is read-only.
+- The shipped consumer of `readBytes` (image and binary previews) and any search or media route. A `write` method ships as a guarded, human-controlled full-text replace; [Sidebar file editing](../feature/2026-09-28-sidebar-file-editing.md) owns that flow.
 - Scopes other than `session` in the file address; the grammar leaves room, the provider serves one.

@@ -15,7 +15,7 @@ import type { ReactNode, RefObject } from 'react'
 import clsx from 'clsx'
 import type { ObservableSnapshot } from '@deepseek-ai/dsh-client-store'
 import type { InjectFace, PropsLocale, PropsRenderSlots, PropsRuntime, PropsStore } from '@deepseek-ai/dsh-client-ui-slots'
-import { FileTypeIcon, IconRefreshOutline16, Menu, Tooltip, classifyFileType } from '@deepseek-ai/dsh-client-ui-primitives'
+import { FileTypeIcon, IconEditOutline16, IconRefreshOutline16, Menu, Tooltip, classifyFileType } from '@deepseek-ai/dsh-client-ui-primitives'
 import { pathPartsOf } from '@deepseek-ai/dsh-util-workspace-path'
 import type { TextInjected } from './face.ts'
 import { failureLine } from './failure-line.ts'
@@ -28,6 +28,9 @@ import { matchingDocumentPreviews } from './document/registry.ts'
 import type { DocumentPreviewDefinition } from './document/registry.ts'
 import { PLAIN_BODY_ID } from './text/index.ts'
 import { loadedPages, lastLineLoaded, scrollToLine } from './text/lines.ts'
+import { EditorBody } from './edit/EditorBody.tsx'
+import { mergeConflicts } from './edit/diff.ts'
+import { languageForPath } from './code/languages.ts'
 import css from './TextPreview.module.css'
 
 export { linesOf, loadedPages, lastLineLoaded, scrollToLine } from './text/lines.ts'
@@ -76,7 +79,7 @@ export type TextPreviewProps =
  */
 export function TextPreview({
   useTabInfo, useResource, useStore, actions, loadPage, reloadPages,
-  loadAll, reloadAll, useDocumentPreviews, renderSlot, t,
+  loadAll, reloadAll, startEdit, saveEdit, useDocumentPreviews, renderSlot, t,
 }: TextPreviewProps): ReactNode {
   const { tab } = useTabInfo()
   const { navigation, signal } = tab
@@ -182,6 +185,26 @@ export function TextPreview({
       </div>
     )
   }
+  const edit = state.edit
+  const editing = edit !== undefined
+  const editable = selected.editable === true && canRead
+  const highlighted = editing && selected.editable === true && selected.id !== PLAIN_BODY_ID
+  const beginEdit = (): void => { startEdit(tab.id, file, signal) }
+  const cancelEdit = (): void => {
+    if (edit !== undefined && edit.draft !== edit.base && !window.confirm(t('edit.discardConfirm'))) return
+    actions.editCancelled(tab.id)
+  }
+  const saveDraft = (): void => {
+    /* v8 ignore else -- the save control renders only while an edit session is open. */
+    if (edit !== undefined) saveEdit(tab.id, file, edit.draft, edit.baseVersion, signal)
+  }
+  const saveMerged = (): void => {
+    const conflict = edit?.conflict
+    /* v8 ignore if -- the merge control renders only while a conflict is armed. */
+    if (conflict === undefined) return
+    const merged = mergeConflicts(conflict.theirs, conflict.mine, hunk => conflict.choices[hunk] ?? 'mine')
+    saveEdit(tab.id, file, merged, conflict.version, signal)
+  }
   const next = loadedThrough + 1
   const { directory, name } = pathPartsOf(displayPath)
   const observedVersion = meta.value?.version
@@ -236,22 +259,37 @@ export function TextPreview({
             <span className={css.pathName}>{name}</span>
           </span>
         </div>
-        <Menu
-          open={menuOpen}
-          anchor={(
-            <button type="button" className={clsx(css.tool, css.viewerTool)} aria-label={t('openWith')} title={selected.title()} data-document-viewer-menu onClick={() => { setMenuOpen(value => !value) }}>
-              {selected.title()}
+        {editing || (
+          <Menu
+            open={menuOpen}
+            anchor={(
+              <button type="button" className={clsx(css.tool, css.viewerTool)} aria-label={t('openWith')} title={selected.title()} data-document-viewer-menu onClick={() => { setMenuOpen(value => !value) }}>
+                {selected.title()}
+              </button>
+            )}
+            items={candidates.map(candidate => ({ id: candidate.id, label: candidate.title() }))}
+            selectedId={selected.id}
+            onSelect={(id) => { actions.selected(tab.id, id); setMenuOpen(false) }}
+            onClose={() => { setMenuOpen(false) }}
+            align="end"
+            portal
+            dense
+          />
+        )}
+        {editable && !editing && (
+          <Tooltip label={t('edit.start')} side="bottom" delayMs={500}>
+            <button
+              type="button"
+              className={css.tool}
+              aria-label={t('edit.start')}
+              data-textpreview-tool="edit"
+              onClick={beginEdit}
+            >
+              <IconEditOutline16 />
             </button>
-          )}
-          items={candidates.map(candidate => ({ id: candidate.id, label: candidate.title() }))}
-          selectedId={selected.id}
-          onSelect={(id) => { actions.selected(tab.id, id); setMenuOpen(false) }}
-          onClose={() => { setMenuOpen(false) }}
-          align="end"
-          portal
-          dense
-        />
-        {selected.wrap === true && (
+          </Tooltip>
+        )}
+        {!editing && selected.wrap === true && (
           // The tooltip names the action while the stable aria name and
           // `aria-pressed` expose the control and its current state.
           <Tooltip label={t(state.wrap ? 'wrap.disable' : 'wrap.enable')} side="bottom" delayMs={500}>
@@ -267,22 +305,41 @@ export function TextPreview({
             </button>
           </Tooltip>
         )}
-        <Tooltip label={t('reload')} side="bottom" delayMs={500}>
-          <button
-            type="button"
-            className={css.tool}
-            aria-label={t('reload')}
-            data-textpreview-tool="reload"
-            onClick={reload}
-          >
-            <IconRefreshOutline16 />
-          </button>
-        </Tooltip>
+        {editing || (
+          <Tooltip label={t('reload')} side="bottom" delayMs={500}>
+            <button
+              type="button"
+              className={css.tool}
+              aria-label={t('reload')}
+              data-textpreview-tool="reload"
+              onClick={reload}
+            >
+              <IconRefreshOutline16 />
+            </button>
+          </Tooltip>
+        )}
       </div>
+      {editing && edit !== undefined && (
+        <EditorBody
+          edit={edit}
+          highlighted={highlighted}
+          lang={highlighted ? languageForPath(file.path) : undefined}
+          t={t}
+          scrollTop={state.scrollTop}
+          onScroll={(scrollTop) => { actions.scrolled(tab.id, scrollTop) }}
+          onDraft={(text) => { actions.editDraft(tab.id, text) }}
+          onSave={saveDraft}
+          onCancel={cancelEdit}
+          onChoice={(hunk, side) => { actions.conflictChoice(tab.id, hunk, side) }}
+          onMergeSave={saveMerged}
+          onConflictBack={() => { actions.conflictClosed(tab.id) }}
+        />
+      )}
       <div
         ref={bindBody}
         className={clsx(css.body, state.wrap && css.wrap)}
         data-textpreview-body
+        hidden={editing}
         data-textpreview-wrap={state.wrap ? '' : undefined}
         onScrollCapture={(event) => {
           const body = scrollportRef.current
