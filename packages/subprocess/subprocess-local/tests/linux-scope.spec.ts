@@ -205,12 +205,25 @@ describe('Linux scope establishment and quiescence', () => {
     expect(spawnSync).toHaveBeenCalledWith('/bin/systemctl', expect.arrayContaining([
       'kill', '--kill-whom=all', '--signal=SIGTERM',
     ]), expect.anything())
-    const direct = expect(result.direct).rejects.toThrow('before its bootstrap consumed')
+    const direct = expect(result.direct).resolves.toEqual({ exitCode: null, signal: 'SIGTERM' })
     child.exit(null, 'SIGTERM')
     await direct
     await expect(waiting).resolves.toBeUndefined()
     expect(existsSync(requestPath)).toBe(true)
     result.owner.cleanup?.()
+  })
+
+  it('stops a scope that never established so late registration cannot leak it', async () => {
+    const { child, result, spawnSync } = launch(async () => missingUnit())
+    const waiting = result.owner.waitForExit()
+    result.owner.signal('SIGTERM')
+    child.exit(null, 'SIGTERM')
+    await expect(result.direct).resolves.toEqual({ exitCode: null, signal: 'SIGTERM' })
+    await expect(waiting).resolves.toBeUndefined()
+    result.owner.cleanup?.()
+    expect(spawnSync).toHaveBeenCalledWith('/bin/systemctl', expect.arrayContaining([
+      'stop', '--no-block',
+    ]), expect.anything())
   })
 
   it('accepts request consumption followed by rapid --collect unload as stopped', async () => {

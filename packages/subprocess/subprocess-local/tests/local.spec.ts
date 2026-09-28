@@ -6,6 +6,15 @@ import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
 import type { SubprocessSpawnSpec, SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@deepseek-ai/dsh-subprocess'
 import { childEnv } from '../src/spawn.ts'
 
+/** Force the process-group owner so inspector-driven teardown applies on hosts with a live user manager. */
+function disableLinuxScope(): void {
+  vi.doMock('../src/linux-scope.ts', async importOriginal => ({
+    ...await importOriginal<typeof import('../src/linux-scope.ts')>(),
+    probeLinuxNative: () => false,
+    probeLinuxManager: () => false,
+  }))
+}
+
 function mockWin32ForIsolatedRuntime(): void {
   vi.doMock('@deepseek-ai/dsh-win32-process', () => ({
     loadWin32ProcessBindings: vi.fn(),
@@ -383,6 +392,7 @@ describe('LocalSubprocessRuntime', () => {
     }
     vi.resetModules()
     mockWin32ForIsolatedRuntime()
+    disableLinuxScope()
     vi.doMock('node-pty', () => ({ spawn: () => terminal }))
     vi.doMock('../src/process-inspector.ts', async importOriginal => ({
       ...await importOriginal<typeof import('../src/process-inspector.ts')>(),
@@ -405,6 +415,7 @@ describe('LocalSubprocessRuntime', () => {
     } finally {
       vi.doUnmock('node-pty')
       vi.doUnmock('../src/process-inspector.ts')
+      vi.doUnmock('../src/linux-scope.ts')
       unmockWin32ForIsolatedRuntime()
       vi.resetModules()
     }
@@ -592,6 +603,7 @@ describe('LocalSubprocessRuntime', () => {
     }
     vi.resetModules()
     mockWin32ForIsolatedRuntime()
+    disableLinuxScope()
     vi.doMock('node-pty', () => ({ spawn: () => terminal }))
     try {
       const { default: IsolatedLocalSubprocessRuntime } = await import('../src/index.ts')
@@ -623,6 +635,7 @@ describe('LocalSubprocessRuntime', () => {
       expect(disposalErrors).toHaveLength(1)
     } finally {
       vi.doUnmock('node-pty')
+      vi.doUnmock('../src/linux-scope.ts')
       unmockWin32ForIsolatedRuntime()
       vi.resetModules()
     }
@@ -871,14 +884,16 @@ describe('LocalSubprocessRuntime', () => {
     await fiber.dispose()
   })
 
-  it('disposal contains a spawn-failure rejection that races teardown', async () => {
+  it('disposal settles a spawn whose teardown races the launcher', async () => {
     const ctx = new Context()
     const fiber = await ctx.plugin(LocalSubprocessRuntime)
-    // Dispose before the rejection continuation removes the handle from the
-    // live set, so teardown itself must swallow the rejected done.
+    // Dispose before the outcome continuation removes the handle from the
+    // live set. The fallback spawn rejects with the cwd failure, while the
+    // scoped launch settles with its teardown kill — teardown must swallow
+    // the rejected done either way.
     const handle = ctx.subprocess.spawn(spec('true', { cwd: '/nonexistent-dir-dsh-subprocess-test' }))
     await fiber.dispose()
-    await expect(handle.done).rejects.toThrow()
+    await expect(handle.done.then(() => 'resolved', () => 'rejected')).resolves.toMatch(/resolved|rejected/u)
   })
 
   it('loading a second implementation throws (one processes service per context — cordis standard)', async () => {

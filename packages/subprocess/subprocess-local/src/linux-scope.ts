@@ -164,6 +164,7 @@ class SystemdScopeOwner implements BoundProcessOwner {
   private stopped = false
   private observation: Promise<void> | undefined
   private killFailure: Error | undefined
+  private killRequested = false
   private wakeGeneration = 0
   private wakeWaiter: { generation: number; resolve: () => void } | undefined
 
@@ -177,8 +178,14 @@ class SystemdScopeOwner implements BoundProcessOwner {
     private readonly sleep: (delayMs: number, signal?: AbortSignal) => Promise<void>,
   ) {}
 
+  /** Whether termination of this range was requested through the owner. */
+  wasKillRequested(): boolean {
+    return this.killRequested
+  }
+
   signal(signal: 'SIGTERM' | 'SIGKILL'): void {
     if (this.stopped) return
+    this.killRequested = true
     this.observeRequestConsumption()
     const directFallbackRequired = this.establishment === 'pending'
     if (directFallbackRequired && this.direct.running()) this.direct.signal(signal)
@@ -207,6 +214,7 @@ class SystemdScopeOwner implements BoundProcessOwner {
 
   terminateForHostExit(): void {
     if (this.stopped) return
+    this.killRequested = true
     try {
       if (this.direct.running()) this.direct.signal('SIGKILL')
     } catch { /* Continue with the native owner. */ }
@@ -279,6 +287,24 @@ class SystemdScopeOwner implements BoundProcessOwner {
           `systemctl returned unknown state for ${this.unit}: ${JSON.stringify({ loadState, activeState })}`,
         )
       }
+      if (this.establishment === 'pending' && !this.direct.running()) {
+        // The launcher is gone and the bootstrap never consumed the request,
+        // yet a scope registered anyway — a post-death artifact of a kill or
+        // exit racing the unit's registration. Nothing legitimate owns it and
+        // an empty scope never deactivates, so stop it and settle rather than
+        // observing an abandoned range forever.
+        try {
+          this.runSync(this.systemctl, [
+            '--user',
+            'stop',
+            '--no-block',
+            this.unit,
+          ], { env: quietSystemdEnvironment(), stdio: 'ignore', timeout: SYSTEMCTL_TIMEOUT_MS })
+        } catch {
+          // Reaping an abandoned range is best-effort; the range is over either way.
+        }
+        return false
+      }
       this.establishment = 'established'
       if (activeState === 'inactive' || activeState === 'failed') return false
       if (!['active', 'activating', 'reloading', 'deactivating'].includes(activeState)) {
@@ -337,6 +363,24 @@ class SystemdScopeOwner implements BoundProcessOwner {
   }
 
   cleanup(): void {
+    // A scope whose bootstrap never consumed the request can still register
+    // after the launcher died, and --collect rides on systemd-run's lifetime —
+    // nothing deactivates it. Stop the never-established unit so the manager
+    // reaps the empty range instead of leaking an `active` scope. An
+    // established unit was already observed and deactivates on its own.
+    this.observeRequestConsumption()
+    if (this.establishment === 'pending' && !this.direct.running()) {
+      try {
+        this.runSync(this.systemctl, [
+          '--user',
+          'stop',
+          '--no-block',
+          this.unit,
+        ], { env: quietSystemdEnvironment(), stdio: 'ignore', timeout: SYSTEMCTL_TIMEOUT_MS })
+      } catch {
+        // Reaping an abandoned range is best-effort.
+      }
+    }
     cleanupLinuxLaunchFiles(this.files)
   }
 }
@@ -359,6 +403,7 @@ function scopeArgs(unitBase: string, invocation: RunnerInvocation, argv: readonl
 function directOutcome(
   child: ReturnType<typeof spawn>,
   files: LinuxLaunchFiles,
+  wasKillRequested: () => boolean,
 ): Promise<SubprocessOutcome> {
   return new Promise((resolveOutcome, rejectOutcome) => {
     let settled = false
@@ -376,7 +421,11 @@ function directOutcome(
           rejectOutcome(deserializeRunnerError(startup.error))
           return
         }
-        if (existsSync(files.requestPath)) {
+        // An exit with the request still staged means the scope never ran its
+        // bootstrap — report the launch failure. A kill requested through the
+        // range owner explains the exit by itself and reports the real outcome;
+        // the owner still tracks any payload the scope may have started.
+        if (!wasKillRequested() && existsSync(files.requestPath)) {
           rejectOutcome(new Error('subprocess scope exited before its bootstrap consumed the launch request'))
           return
         }
@@ -424,24 +473,28 @@ export function prepareLinuxTerminalScope(
   const invocation = internals.runnerInvocation ?? spawnRunnerInvocation()
   const files = createLinuxLaunchFiles({ cwd: spec.cwd, env: targetEnv })
   const unitBase = unitStem('dsh-terminal')
+  let owner: SystemdScopeOwner | undefined
   return {
     command: internals.systemdRun ?? 'systemd-run',
     args: scopeArgs(unitBase, invocation, spec.argv),
     cwd: process.cwd(),
     env: runnerEnvironment(files.requestPath, invocation),
-    bindOwner: direct => new SystemdScopeOwner(
-      `${unitBase}.scope`,
-      files,
-      direct,
-      internals.systemctl ?? 'systemctl',
-      internals.spawnSync ?? spawnSync,
-      internals.systemctlQuery ?? querySystemctl,
-      internals.sleep ?? sleepWithAbort,
-    ),
+    bindOwner: (direct) => {
+      owner = new SystemdScopeOwner(
+        `${unitBase}.scope`,
+        files,
+        direct,
+        internals.systemctl ?? 'systemctl',
+        internals.spawnSync ?? spawnSync,
+        internals.systemctlQuery ?? querySystemctl,
+        internals.sleep ?? sleepWithAbort,
+      )
+      return owner
+    },
     resolveOutcome: (outcome) => {
       const startup = readLinuxStartupError(files.startupErrorPath)
       if (startup !== undefined) throw deserializeRunnerError(startup.error)
-      if (existsSync(files.requestPath)) {
+      if (owner?.wasKillRequested() !== true && existsSync(files.requestPath)) {
         throw new Error('terminal scope exited before its bootstrap consumed the launch request')
       }
       return outcome
@@ -497,7 +550,7 @@ export function launchLinuxScope(
     stdin: child.stdin,
     stdout: child.stdout,
     stderr: child.stderr,
-    direct: directOutcome(child, files),
+    direct: directOutcome(child, files, () => owner.wasKillRequested()),
     owner,
   }
 }
