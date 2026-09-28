@@ -10,7 +10,9 @@
 
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
-import { isAbsolute, resolve as resolvePath } from 'node:path'
+import { accessSync, constants, statSync } from 'node:fs'
+import { homedir } from 'node:os'
+import { isAbsolute, join, resolve as resolvePath } from 'node:path'
 import { defineTool, TOOL_ABORTED } from '@deepseek-ai/dsh-tools'
 import type { GenericCallView, TerminalCallView, ToolExecution, ToolResult, ToolResultView } from '@deepseek-ai/dsh-tools'
 import { HarnessError } from '@deepseek-ai/dsh-llm'
@@ -135,10 +137,35 @@ function presentBashResult(args: unknown, result: ToolResult): ToolResultView | 
 }
 
 /**
+ * Expand a leading `~` against the user's home. The spawn cwd is applied
+ * verbatim — no shell runs first — so a literal `~` would otherwise resolve
+ * as a nonexistent path segment inside the session workspace.
+ */
+function expandTilde(path: string): string {
+  if (path === '~') return homedir()
+  if (path.startsWith('~/')) return join(homedir(), path.slice(2))
+  return path
+}
+
+/** Whether the path can serve as a spawn cwd: an existing searchable directory. */
+function isUsableWorkdir(path: string): boolean {
+  try {
+    if (!statSync(path).isDirectory()) return false
+    accessSync(path, constants.X_OK)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
  * Resolve an explicit workdir first, making a relative one session-workspace-relative;
  * otherwise use the filesystem identity of the session cwd and leave executor
  * defaulting as the fallback. A resolved sandbox-policy root wins so workdir
- * and confinement use the exact same per-call identity.
+ * and confinement use the exact same per-call identity. A model-supplied `~`
+ * expands against the home directory, and an unusable directory is rejected
+ * here — otherwise Node reports the cwd failure as `spawn <argv0> ENOENT`,
+ * misidentifying the executable (e.g. the sandbox runner) as the missing file.
  */
 function resolveWorkdir(
   modelWorkdir: string | undefined,
@@ -148,10 +175,14 @@ function resolveWorkdir(
   const headerCwd = exec.agent?.session.header.cwd
   const sessionCwd = policyWorkspaceRoot ?? (headerCwd === undefined ? undefined : canonicalPath(headerCwd))
   if (modelWorkdir === undefined) return sessionCwd
-  if (sessionCwd !== undefined && !isAbsolute(modelWorkdir)) {
-    return resolvePath(sessionCwd, modelWorkdir)
+  const expanded = expandTilde(modelWorkdir)
+  const resolved = sessionCwd !== undefined && !isAbsolute(expanded)
+    ? resolvePath(sessionCwd, expanded)
+    : expanded
+  if (!isUsableWorkdir(resolved)) {
+    throw new Error(`invalid workdir: ${JSON.stringify(resolved)} is not an accessible directory`)
   }
-  return modelWorkdir
+  return resolved
 }
 
 /** Detach the executor DTO from readonly Service Definition types into plain JSON data. */
@@ -251,7 +282,7 @@ export function apply(ctx: Context, config: Config = {}): void {
           + '"git status" → "Show working tree status"; "npm install" → "Install package dependencies".',
       },
       timeoutMs: { type: 'number', description: 'Timeout in milliseconds. The executor applies its configured default and cap, and kills the command on expiry.' },
-      workdir: { type: 'string', description: 'Working directory for this command. Defaults to the session workspace; a relative path is resolved against it.' },
+      workdir: { type: 'string', description: 'Working directory for this command. Defaults to the session workspace; a relative path is resolved against it; a leading "~" expands to the home directory.' },
       ...backgroundEnabled ? {
         run_in_background: { type: 'boolean' as const, description: 'Run in the background and return a job id immediately (collect with job_output, stop with job_kill). No timeout applies.' },
       } : {},

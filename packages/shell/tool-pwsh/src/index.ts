@@ -19,7 +19,9 @@
  * @module @deepseek-ai/dsh-tool-pwsh
  */
 
-import { isAbsolute, resolve as resolvePath } from 'node:path'
+import { accessSync, constants, statSync } from 'node:fs'
+import { homedir } from 'node:os'
+import { isAbsolute, join, resolve as resolvePath } from 'node:path'
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
 import { defineTool, TOOL_ABORTED } from '@deepseek-ai/dsh-tools'
@@ -143,16 +145,45 @@ function pwshDescription(backgroundEnabled: boolean, escalationModes: readonly S
 }
 
 /**
+ * Expand a leading `~` against the user's home. The spawn cwd is applied
+ * verbatim — no shell runs first — so a literal `~` would otherwise resolve
+ * as a nonexistent path segment inside the session workspace.
+ */
+function expandTilde(path: string): string {
+  if (path === '~') return homedir()
+  if (path.startsWith('~/')) return join(homedir(), path.slice(2))
+  return path
+}
+
+/** Whether the path can serve as a spawn cwd: an existing searchable directory. */
+function isUsableWorkdir(path: string): boolean {
+  try {
+    if (!statSync(path).isDirectory()) return false
+    accessSync(path, constants.X_OK)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
  * Resolve an explicit workdir first, making a relative one session-workspace-relative;
  * otherwise use the session header cwd and leave executor defaulting as the fallback.
+ * A model-supplied `~` expands against the home directory, and an unusable
+ * directory is rejected here — otherwise Node reports the cwd failure as
+ * `spawn <argv0> ENOENT`, misidentifying the executable as the missing file.
  */
 function resolveWorkdir(modelWorkdir: string | undefined, exec: { agent?: Agent }): string | undefined {
   const headerCwd = exec.agent?.session.header.cwd
   if (modelWorkdir === undefined) return headerCwd
-  if (headerCwd !== undefined && !isAbsolute(modelWorkdir)) {
-    return resolvePath(headerCwd, modelWorkdir)
+  const expanded = expandTilde(modelWorkdir)
+  const resolved = headerCwd !== undefined && !isAbsolute(expanded)
+    ? resolvePath(headerCwd, expanded)
+    : expanded
+  if (!isUsableWorkdir(resolved)) {
+    throw new Error(`invalid workdir: ${JSON.stringify(resolved)} is not an accessible directory`)
   }
-  return modelWorkdir
+  return resolved
 }
 
 /** Detach the executor DTO from readonly Service Definition types into plain JSON data. */
@@ -261,7 +292,7 @@ export function apply(ctx: Context, config: Config = {}): void {
           + '"git status" → "Show working tree status"; "Get-Process" → "List running processes".',
       },
       timeoutMs: { type: 'number', description: 'Timeout in milliseconds. The executor applies its configured default and cap, and kills the command on expiry.' },
-      workdir: { type: 'string', description: 'Working directory for this command. Defaults to the session workspace; a relative path is resolved against it.' },
+      workdir: { type: 'string', description: 'Working directory for this command. Defaults to the session workspace; a relative path is resolved against it; a leading "~" expands to the home directory.' },
       ...backgroundEnabled ? {
         run_in_background: { type: 'boolean' as const, description: 'Run in the background and return a job id immediately (collect with job_output, stop with job_kill). No timeout applies.' },
       } : {},

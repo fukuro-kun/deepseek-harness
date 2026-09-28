@@ -12,8 +12,8 @@
 
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { mkdtempSync, realpathSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { chmodSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
+import { homedir, tmpdir } from 'node:os'
 import { join, resolve as resolvePath } from 'node:path'
 import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt, { renderPrompt } from '@deepseek-ai/dsh-system-prompt'
@@ -398,7 +398,9 @@ describe('execution through the bash seam', () => {
     const { ctx, bash } = await setup({}, dshHome)
     bash.handler = () => runResult('hi\n')
     const agent = registerFakeAgent(ctx, 'session-1')
-    Object.assign(agent.session.header, { cwd: '/sessions/s1' })
+    const sessionCwd = mkdtempSync(join(tmpdir(), 'dsh-tool-pwsh-cwd-'))
+    tempDirs.push(sessionCwd)
+    Object.assign(agent.session.header, { cwd: sessionCwd })
     const result = await call(ctx, 'pwsh', {
       command: 'Write-Output hi',
       description: 'say hi',
@@ -407,25 +409,60 @@ describe('execution through the bash seam', () => {
     expect(result.isError).toBe(false)
     const request = bash.requests[0]
     expect(request?.command).toBe('Write-Output hi')
-    expect(request?.workdir).toBe('/sessions/s1')
+    expect(request?.workdir).toBe(sessionCwd)
     expect(request?.timeoutMs).toBe(1234)
     expect(request?.dshEnv).toEqual({
       DSH_HOME: dshHome,
       DSH_SHELL: '1',
       DSH_SESSION_ID: 'session-1',
     })
-    expect(bash.specs[0]?.workdir).toBe('/sessions/s1')
+    expect(bash.specs[0]?.workdir).toBe(sessionCwd)
   })
 
   it('resolves a relative workdir against the session cwd, absolute ones verbatim', async () => {
     const { ctx, bash } = await setup()
     bash.handler = () => runResult('ok\n')
     const agent = registerFakeAgent(ctx, 'session-cwd')
-    Object.assign(agent.session.header, { cwd: '/sessions/s1' })
+    const sessionCwd = mkdtempSync(join(tmpdir(), 'dsh-tool-pwsh-cwd-'))
+    tempDirs.push(sessionCwd)
+    const absolute = mkdtempSync(join(tmpdir(), 'dsh-tool-pwsh-abs-'))
+    tempDirs.push(absolute)
+    Object.assign(agent.session.header, { cwd: sessionCwd })
+    mkdirSync(join(sessionCwd, 'sub', 'dir'), { recursive: true })
     await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: 'sub/dir' }, agent)
-    expect(bash.requests[0]?.workdir).toBe(resolvePath('/sessions/s1', 'sub/dir'))
-    await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: resolvePath('/abs/path') }, agent)
-    expect(bash.requests[1]?.workdir).toBe(resolvePath('/abs/path'))
+    expect(bash.requests[0]?.workdir).toBe(resolvePath(sessionCwd, 'sub/dir'))
+    await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: absolute }, agent)
+    expect(bash.requests[1]?.workdir).toBe(absolute)
+  })
+
+  it('expands "~" workdirs against the home directory', async () => {
+    const { ctx, bash } = await setup()
+    bash.handler = () => runResult('ok\n')
+    await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: '~' })
+    expect(bash.requests[0]?.workdir).toBe(homedir())
+    await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: '~/' })
+    expect(bash.requests[1]?.workdir).toBe(homedir())
+  })
+
+  it('rejects an unusable workdir with a clear error instead of a spawn ENOENT', async () => {
+    const { ctx, bash } = await setup()
+    const missing = await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: '/nonexistent-dsh' })
+    expect(missing.isError).toBe(true)
+    expect(text(missing)).toContain('"/nonexistent-dsh" is not an accessible directory')
+    const fileDir = mkdtempSync(join(tmpdir(), 'dsh-tool-pwsh-file-'))
+    tempDirs.push(fileDir)
+    const filePath = join(fileDir, 'regular.txt')
+    writeFileSync(filePath, 'x')
+    const asFile = await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: filePath })
+    expect(asFile.isError).toBe(true)
+    expect(text(asFile)).toContain('is not an accessible directory')
+    const lockedDir = join(fileDir, 'locked')
+    mkdirSync(lockedDir)
+    chmodSync(lockedDir, 0o000)
+    const locked = await call(ctx, 'pwsh', { command: 'pwd', description: 'cwd', workdir: lockedDir })
+    expect(locked.isError).toBe(true)
+    expect(text(locked)).toContain('is not an accessible directory')
+    expect(bash.requests).toHaveLength(0)
   })
 
   it('omits workdir and the session id without an agent, so executor defaulting applies', async () => {

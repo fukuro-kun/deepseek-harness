@@ -1,6 +1,6 @@
-import { mkdtempSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { homedir, tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
 import { ToolCallId } from '@deepseek-ai/dsh-llm'
@@ -307,11 +307,38 @@ describe('bash tool', () => {
     expect(text(result).trim()).toMatch(/\/tmp$/)
   })
 
-  it('surfaces spawn failures as isError', async () => {
+  it('rejects a nonexistent workdir with a clear error instead of a spawn ENOENT', async () => {
     const ctx = await setup()
     const result = await call(ctx, 'bash', { command: 'true', description: 'test command', workdir: '/nonexistent-dsh' })
     expect(result.isError).toBe(true)
-    expect(text(result)).toMatch(/ENOENT/)
+    expect(text(result)).toContain('"/nonexistent-dsh" is not an accessible directory')
+  })
+
+  it('rejects a file as workdir and a directory without search permission', async () => {
+    const ctx = await setup()
+    const fileDir = mkdtempSync(join(spillDir, 'file-as-workdir-'))
+    const filePath = join(fileDir, 'regular.txt')
+    writeFileSync(filePath, 'x')
+    const result = await call(ctx, 'bash', { command: 'true', description: 'test command', workdir: filePath })
+    expect(result.isError).toBe(true)
+    expect(text(result)).toContain('is not an accessible directory')
+    const lockedDir = join(fileDir, 'locked')
+    mkdirSync(lockedDir)
+    chmodSync(lockedDir, 0o000)
+    const locked = await call(ctx, 'bash', { command: 'true', description: 'test command', workdir: lockedDir })
+    expect(locked.isError).toBe(true)
+    expect(text(locked)).toContain('is not an accessible directory')
+  })
+
+  it('expands "~" and "~/" workdirs against the home directory', async () => {
+    const ctx = await setup()
+    const result = await call(ctx, 'bash', { command: 'pwd', description: 'test command', workdir: '~' })
+    expect(result.isError).toBe(false)
+    expect(text(result).trim()).toBe(homedir())
+    // Expansion precedes session-cwd resolution: a "~"-workdir never joins the session cwd.
+    const fakeAgent = { inject: () => undefined, session: { header: { version: 0, id: 'c', createdAt: 0, cwd: '/nonexistent-cwd' } } } as unknown as Agent
+    const relative = await call(ctx, 'bash', { command: 'pwd', description: 'test command', workdir: '~/..' }, fakeAgent)
+    expect(text(relative).trim()).toBe(dirname(homedir()))
   })
 
   it('surfaces foreground aborts as the structured TOOL_ABORTED error', async () => {

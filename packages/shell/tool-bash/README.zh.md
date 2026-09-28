@@ -93,7 +93,7 @@ kind: "package-reference"
 
 ### 请求解析
 
-工具在 `ctx.shell.resolve()` 运行前解析 workdir：显式的相对 `workdir` 相对会话 cwd 解析，沙箱策略的规范化 workspace root 优先，使约束与启动使用同一身份。沙箱策略通过 `ctx.sandboxPolicy` 按调用解析；升权请求在任何执行前经由 `ctx.approval`，若执行器会约束命令却没有挂载策略服务，工具在加载时失败。
+工具在 `ctx.shell.resolve()` 运行前解析 workdir：开头的 `~` 展开为用户主目录，相对 `workdir` 相对会话 cwd 解析，沙箱策略的规范化 workspace root 优先，使约束与启动使用同一身份。显式 workdir 若未指向一个存在且可搜索的目录，会在 spawn 前被拒绝——否则 Node 会把无效 cwd 报告为 `spawn <argv0> ENOENT`，把可执行文件（比如沙箱 runner）误标为缺失文件。沙箱策略通过 `ctx.sandboxPolicy` 按调用解析；升权请求在任何执行前经由 `ctx.approval`，若执行器会约束命令却没有挂载策略服务，工具在加载时失败。
 
 ### 渲染故事
 
