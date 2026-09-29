@@ -1,12 +1,13 @@
 /** The `changes` stream: driven by `fs/observed`, filtered by the workspace root, ended by its signal. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { join } from 'node:path'
+import { writeFile } from 'node:fs/promises'
 import type { Context } from '@deepseek-ai/cordis'
 import type { FsObservation } from '@deepseek-ai/dsh-fs'
 import { FsVersion } from '@deepseek-ai/dsh-fs'
 import { WorkspaceFiles } from '../src/index.ts'
 import type { WorkspaceFileWatchFrame } from '../src/types.ts'
-import { openWorkspace, type Harness } from './harness.ts'
+import { openWorkspace, signal, type Harness } from './harness.ts'
 
 let harness: Harness
 const closeStreams: Array<() => Promise<unknown>> = []
@@ -99,6 +100,23 @@ describe('workspaceFiles.changes — frames', () => {
     const pending = stream.next()
     const absolutePath = await observe(join(harness.workspace, 'gone.txt'), { kind: 'absent' })
     expect(await pending).toEqual({ done: false, value: { kind: 'change', change: { absolutePath, absent: true } } })
+  })
+
+  it('reports a workspaceFiles.write so sibling consumers of the feed stay current', async () => {
+    const service = harness.endpoint()
+    const file = join(harness.workspace, 'shared.txt')
+    await writeFile(file, 'before\n', 'utf8')
+    const stream = open(service)
+    await expect(stream.next()).resolves.toEqual({ done: false, value: { kind: 'ready' } })
+    const pending = stream.next()
+    const result = await service.write(harness.scope, 'shared.txt', { text: 'after\n' }, signal())
+    expect(await pending).toEqual({
+      done: false,
+      value: {
+        kind: 'change',
+        change: { absolutePath: harness.ctx.fs.processPath(await harness.ctx.fs.resolve(file)), version: result.version },
+      },
+    })
   })
 
   it('drops observations outside the workspace root', async () => {

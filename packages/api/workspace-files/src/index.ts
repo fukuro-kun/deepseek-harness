@@ -394,6 +394,9 @@ export class WorkspaceFiles extends TypertRemoteService {
       : { kind: 'replaceIfVersion' as const, version: edit.expectedVersion as FsVersion }
     try {
       const outcome = await this.ctx.fs.writeText(target, edit.text, expected, signal, policy)
+      // The human write is not an agent mutation, so it carries no actor: the
+      // feed still learns the landed version, while intent guards ignore it.
+      this.ctx.emit('fs/observed', target, { kind: 'present', version: outcome.version }, undefined)
       return {
         absolutePath: this.ctx.fs.processPath(target),
         version: outcome.version,

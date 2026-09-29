@@ -1,7 +1,8 @@
 /** The `write` endpoint: guarded full-text replacement and its refusals. */
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { chmod, mkdir, readFile, symlink, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import type { FsObservation, FsTarget } from '@deepseek-ai/dsh-fs'
 import { failureOf, openWorkspace, signal, type Harness } from './harness.ts'
 
 let harness: Harness
@@ -123,5 +124,46 @@ describe('workspaceFiles.write — the refusals', () => {
     } finally {
       await chmod(dir, 0o755)
     }
+  })
+})
+
+describe('workspaceFiles.write — the observation echo', () => {
+  /** Record every `fs/observed` emission the service raises. */
+  function record(): Array<{ target: FsTarget; observation: FsObservation; actor: unknown }> {
+    const seen: Array<{ target: FsTarget; observation: FsObservation; actor: unknown }> = []
+    harness.ctx.on('fs/observed', (target, observation, actor) => {
+      seen.push({ target, observation, actor })
+    })
+    return seen
+  }
+
+  it('emits a present observation carrying the post-write version, with no actor', async () => {
+    const seen = record()
+    await writeFile(join(workspace, 'notes.txt'), 'before\n', 'utf8')
+    const result = await endpoint().write(harness.scope, 'notes.txt', { text: 'after\n' }, signal())
+    expect(seen).toHaveLength(1)
+    const [emission] = seen
+    expect(emission?.target.displayPath.endsWith('notes.txt')).toBe(true)
+    expect(emission?.observation).toEqual({ kind: 'present', version: result.version })
+    expect(emission?.actor).toBeUndefined()
+  })
+
+  it('emits nothing when the freshness guard refuses', async () => {
+    const seen = record()
+    await writeFile(join(workspace, 'notes.txt'), 'before\n', 'utf8')
+    const stat = await endpoint().stat(harness.scope, 'notes.txt', signal())
+    await writeFile(join(workspace, 'notes.txt'), 'meanwhile\n', 'utf8')
+    const failure = await failureOf(endpoint().write(
+      harness.scope, 'notes.txt', { text: 'after\n', expectedVersion: stat.version }, signal(),
+    ))
+    expect(failure.code).toBe('workspace-file/stale-version')
+    expect(seen).toHaveLength(0)
+  })
+
+  it('resolves the write under the full-access policy, matching the read reach', async () => {
+    const resolve = vi.spyOn(harness.ctx.sandboxPolicy, 'resolve')
+    await writeFile(join(workspace, 'notes.txt'), 'before\n', 'utf8')
+    await endpoint().write(harness.scope, 'notes.txt', { text: 'after\n' }, signal())
+    expect(resolve).toHaveBeenCalledWith({ mode: 'danger-full-access' })
   })
 })

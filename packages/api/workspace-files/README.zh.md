@@ -60,7 +60,7 @@ kind: "package-reference"
 
 ### 写入
 
-`write` 以 `edit.text` 替换一个普通文件的完整文本，与完整读取一样受 `maxFileBytes` 上限约束，并返回写后的 stat。`edit.expectedVersion` 携带读取返回的版本令牌：令牌仍匹配时写入生效；不匹配则以 `workspace-file/stale-version` 失败且不落盘，所以并发改动——例如 Agent 在读取与保存之间的编辑——绝不会被静默覆盖。省略令牌则无条件覆盖。写入将沙箱策略解析为 `danger-full-access`，与 UI 前的人操作时的读取范围一致；同样的 `lstat` 关卡仍然适用，因此不存在的路径、末端符号链接或非普通文件仍被拒绝，`write` 也绝不创建文件。
+`write` 以 `edit.text` 替换一个普通文件的完整文本，与完整读取一样受 `maxFileBytes` 上限约束，并返回写后的 stat。`edit.expectedVersion` 携带读取返回的版本令牌：令牌仍匹配时写入生效；不匹配则以 `workspace-file/stale-version` 失败且不落盘，所以并发改动——例如 Agent 在读取与保存之间的编辑——绝不会被静默覆盖。省略令牌则无条件覆盖。写入将沙箱策略解析为 `danger-full-access`，与 UI 前的人操作时的读取范围一致；同样的 `lstat` 关卡仍然适用，因此不存在的路径、末端符号链接或非普通文件仍被拒绝，`write` 也绝不创建文件。成功的写入会以落地后的版本报告 `fs/observed`（不带 actor），因此 `changes` 的消费者——包括并排的预览——会像看到任何受观测的变更一样看到这次写入，而 Agent 的写意图守卫则忽略它。
 
 ### 配置
 
