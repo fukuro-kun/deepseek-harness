@@ -398,7 +398,7 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
        * echo does not read as an external change. The session stays open — the
        * editable surface is the file's presentation, not a mode to leave. A
        * merge write replaces the draft with the merged result; a plain write
-       * leaves it alone, so keystrokes landed during the flight survive.
+       * leaves it alone, so draft edits recorded during the flight survive.
        * @param d - draft state.
        * @param tabId - the tab that saved.
        * @param version - the file's post-write version.
