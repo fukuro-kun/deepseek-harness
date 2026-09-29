@@ -67,8 +67,10 @@ export interface WorkspaceFilesReadRemote {
  * The read one page performs, injected so the face stays host-free.
  *
  * The session travels with the call because the endpoint resolves the workspace
- * root from it: the same path means different files in different sessions. A
- * Remote call does not reject: the result carries the failure.
+ * root from it: the same path means different files in different sessions.
+ * Endpoint failures arrive inside the result; only assembly faults (an
+ * unmounted method, arity, a missing Context adapter) and a lost carrier
+ * reject, so callers still settle a rejection.
  */
 export type ReadWorkspaceFilePage = (
   sessionId: SessionId,
@@ -115,7 +117,9 @@ export function createReadPage(remote: WorkspaceFilesReadRemote): ReadWorkspaceF
 
 /**
  * The guarded write one save performs, injected so the face stays host-free.
- * A Remote call does not reject: the result carries the failure.
+ * Endpoint failures arrive inside the result; only assembly faults (an
+ * unmounted method, arity, a missing Context adapter) and a lost carrier
+ * reject, so callers still settle a rejection.
  */
 export type WriteWorkspaceFile = (
   sessionId: SessionId,

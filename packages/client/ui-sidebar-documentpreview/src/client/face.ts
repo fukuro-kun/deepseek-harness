@@ -17,7 +17,7 @@
  * write to. A tab that never read has no bucket to forget.
  */
 import type { BoundActions } from '@deepseek-ai/dsh-client-store'
-import type { RemoteFailure } from '@deepseek-ai/dsh-api-remotes/client'
+import type { RemoteFailure, RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
 import type { TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { ReadDocumentBytes, ReadWorkspaceFilePage, SessionFile, WriteWorkspaceFile } from './rpc.ts'
@@ -81,8 +81,8 @@ export interface TextInjected {
    * @param file - the session and workspace path the tab's address names.
    * @param signal - the tab record's lifetime.
    * @param observedVersion - the metadata version that reported the change; a
-   *   failed, undecodable, or epoch-retired read still flags it, so the buffer
-   *   tells the reader it no longer holds the file's current text.
+   *   failed, rejected, undecodable, or epoch-retired read still flags it, so
+   *   the buffer tells the reader it no longer holds the file's current text.
    */
   readonly refreshEdit: (tabId: TabId, file: SessionFile, signal: AbortSignal, observedVersion?: string) => void
   /**
@@ -165,7 +165,7 @@ export function textFace(
       const reads = modeOf(tabId, signal, 'text-pages')
       const { generation } = reads
       actions.loading(tabId, 'text-pages', observedVersion)
-      void read(file.sessionId, file.path, offset, signal).then((result) => {
+      void calling(() => read(file.sessionId, file.path, offset, signal)).then((result) => {
         if (signal.aborted || reads.generation !== generation) return
         if (!result.ok) {
           actions.failed(tabId, result.error)
@@ -179,6 +179,9 @@ export function textFace(
         }
         reads.version = result.value.version
         actions.page(tabId, result.value)
+      }, (error: unknown) => {
+        if (signal.aborted || reads.generation !== generation) return
+        actions.failed(tabId, carrierFailure(error))
       })
     }
     const loadAll = (tabId: TabId, file: SessionFile, signal: AbortSignal, observedVersion?: string): void => {
@@ -186,7 +189,7 @@ export function textFace(
       const reads = modeOf(tabId, signal, 'bytes-complete')
       const { generation } = reads
       actions.loading(tabId, 'bytes-complete', observedVersion)
-      void readAll(file, signal).then((result) => {
+      void calling(() => readAll(file, signal)).then((result) => {
         if (signal.aborted || reads.generation !== generation) return
         if (!result.ok) {
           actions.failed(tabId, result.error)
@@ -204,6 +207,9 @@ export function textFace(
         }
         reads.version = file.version
         actions.complete(tabId, file)
+      }, (error: unknown) => {
+        if (signal.aborted || reads.generation !== generation) return
+        actions.failed(tabId, carrierFailure(error))
       })
     }
     const restart = (
@@ -225,7 +231,7 @@ export function textFace(
       // Reopening epochs refreshes the same way a write does: a refresh issued
       // before this open must not adopt older content into the fresh session.
       ++reads.refreshSeq
-      void readAll(file, signal).then((result) => {
+      void calling(() => readAll(file, signal)).then((result) => {
         reads.editInFlight = false
         if (signal.aborted) return
         if (!result.ok) {
@@ -244,6 +250,10 @@ export function textFace(
           return
         }
         actions.editStarted(tabId, text, result.value.version)
+      }, () => {
+        reads.editInFlight = false
+        if (signal.aborted) return
+        actions.editFailed(tabId)
       })
     }
     const refreshEdit = (tabId: TabId, file: SessionFile, signal: AbortSignal, observedVersion?: string): void => {
@@ -253,7 +263,7 @@ export function textFace(
       // may adopt — an earlier settlement landing later would regress the file.
       const seq = ++reads.refreshSeq
       reads.refreshPending = seq
-      void readAll(file, signal).then((result) => {
+      const missed = (): void => {
         if (signal.aborted) return
         if (reads.refreshSeq !== seq) {
           // A save or reopen epoch retired this read with no successor: the
@@ -264,10 +274,14 @@ export function textFace(
           return
         }
         reads.refreshPending = 0
-        if (!result.ok) {
-          if (observedVersion !== undefined) actions.editRefreshMissed(tabId, observedVersion)
+        if (observedVersion !== undefined) actions.editRefreshMissed(tabId, observedVersion)
+      }
+      void calling(() => readAll(file, signal)).then((result) => {
+        if (!result.ok || signal.aborted || reads.refreshSeq !== seq) {
+          missed()
           return
         }
+        reads.refreshPending = 0
         let text: string
         try {
           text = documentFileText(result.value)
@@ -280,7 +294,7 @@ export function textFace(
           return
         }
         actions.editRefreshed(tabId, text, result.value.version)
-      })
+      }, missed)
     }
     const saveEdit = (tabId: TabId, file: SessionFile, text: string, expectedVersion: string, signal: AbortSignal): void => {
       if (signal.aborted) return
@@ -289,7 +303,11 @@ export function textFace(
       // pre-write content over what the write just landed.
       ++reads.refreshSeq
       actions.saveStarted(tabId)
-      void write(file.sessionId, file.path, { text, expectedVersion }, signal).then((result) => {
+      const saveRejected = (error: unknown): void => {
+        if (signal.aborted) return
+        actions.saveFailed(tabId, carrierFailure(error))
+      }
+      void calling(() => write(file.sessionId, file.path, { text, expectedVersion }, signal)).then((result) => {
         if (signal.aborted) return
         if (result.ok) {
           actions.saved(tabId, result.value.version, text)
@@ -299,7 +317,7 @@ export function textFace(
           actions.saveFailed(tabId, result.error)
           return
         }
-        void readAll(file, signal).then((fresh) => {
+        void calling(() => readAll(file, signal)).then((fresh) => {
           if (signal.aborted) return
           if (!fresh.ok) {
             actions.saveFailed(tabId, fresh.error)
@@ -315,8 +333,8 @@ export function textFace(
           } catch {
             actions.saveFailed(tabId, notTextFailure(file.path))
           }
-        })
-      })
+        }, saveRejected)
+      }, saveRejected)
     }
     return {
       loadPage, reloadPages: restart, loadAll,
@@ -324,6 +342,41 @@ export function textFace(
       startEdit, refreshEdit, saveEdit,
     }
   }
+}
+
+/**
+ * Run one Remote call so a throw inside its binding — an unmounted or
+ * mistyped method — reaches the caller as the failure result it would
+ * have shown anyway, instead of escaping the fire-and-forget call site.
+ */
+function calling<T>(call: () => Promise<RemoteResult<T>>): Promise<RemoteResult<T>> {
+  try {
+    return call()
+  } catch (error) {
+    return Promise.resolve({ ok: false, error: carrierFailure(error) })
+  }
+}
+
+/**
+ * Turn a thrown or rejected call into the failure its settlement reports.
+ * Remote calls answer failures as results, so carrier-level faults — the
+ * connection is gone, the method is not mounted — would otherwise leave a
+ * `saving`/`loading`/`editInFlight` flag wedged forever.
+ */
+function carrierFailure(error: unknown): RemoteFailure {
+  let message: string
+  try {
+    message = error instanceof Error ? error.message : String(error)
+  } catch {
+    message = 'remote call failed'
+  }
+  return Object.assign(
+    new Error(message),
+    {
+      name: 'RemoteError', isDSHRemoteError: true as const,
+      code: 'gateway/internal' as const, details: {},
+    },
+  )
 }
 
 /**

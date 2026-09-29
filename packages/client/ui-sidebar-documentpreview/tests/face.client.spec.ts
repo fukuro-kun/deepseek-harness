@@ -537,6 +537,17 @@ describe('textFace — editing', () => {
     expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: 'v8' })
   })
 
+  it('flags the reported version when its refresh read rejects', async () => {
+    const { face, settleAll, bytes, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    bytes.mockRejectedValueOnce(new Error('connection lost'))
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    await vi.waitFor(() => { expect(tab()?.edit?.externalVersion).toBe('v8') })
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7' })
+  })
+
   it('drops a superseded refresh failure without flagging its version', async () => {
     const { face, settleAll, settleAllWire, tab } = bench()
     const controller = new AbortController()
@@ -831,6 +842,132 @@ describe('textFace — editing', () => {
     expect(tab()?.edit?.saving).toBe(false)
     expect(tab()?.edit?.conflict).toBeUndefined()
     expect(tab()?.edit?.failure?.code).toBe('workspace-file/write-failed')
+  })
+
+  it('reports a write whose call rejects instead of settling', async () => {
+    const { face, settleAll, write, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    write.mockRejectedValueOnce('connection lost')
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await vi.waitFor(() => { expect(tab()?.edit?.saving).toBe(false) })
+    expect(tab()?.edit?.conflict).toBeUndefined()
+    expect(tab()?.edit?.failure?.code).toBe('gateway/internal')
+    expect(tab()?.edit?.failure?.message).toBe('connection lost')
+  })
+
+  it('reports a write whose call throws before answering', async () => {
+    const { face, settleAll, write, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    write.mockImplementationOnce(() => { throw new TypeError('remote.workspaceFiles.write is not a function') })
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await vi.waitFor(() => { expect(tab()?.edit?.saving).toBe(false) })
+    expect(tab()?.edit?.failure?.code).toBe('gateway/internal')
+    expect(tab()?.edit?.failure?.message).toContain('write is not a function')
+  })
+
+  it('reports a write whose rejection value resists stringification', async () => {
+    const { face, settleAll, write, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    write.mockRejectedValueOnce(Object.create(null) as Error)
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await vi.waitFor(() => { expect(tab()?.edit?.saving).toBe(false) })
+    expect(tab()?.edit?.failure?.code).toBe('gateway/internal')
+    expect(tab()?.edit?.failure?.message).toBe('remote call failed')
+  })
+
+  it('reports a conflict re-read that rejects on the open edit session', async () => {
+    const { face, settleAll, settleWrite, bytes, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    // The stale write's settlement issues the re-read; it must already reject
+    // when the write resolves, so arm it first.
+    bytes.mockRejectedValueOnce(new Error('connection lost'))
+    await settleWrite({
+      ok: false,
+      error: {
+        name: 'RemoteError', isDSHRemoteError: true,
+        code: 'workspace-file/stale-version', message: 'changed', details: { path: PATH },
+      },
+    })
+    await vi.waitFor(() => { expect(tab()?.edit?.failure?.code).toBe('gateway/internal') })
+    expect(tab()?.edit?.saving).toBe(false)
+  })
+
+  it('records a rejected page read as a failure instead of loading forever', async () => {
+    const { face, read, tab } = bench()
+    read.mockRejectedValueOnce(new Error('offline'))
+    face.loadPage(TAB_1, FILE, 1, new AbortController().signal)
+    await vi.waitFor(() => { expect(tab()?.failure?.code).toBe('gateway/internal') })
+    expect(tab()?.loading).toBe(false)
+  })
+
+  it('records a rejected complete read as a failure instead of loading forever', async () => {
+    const { face, bytes, tab } = bench()
+    bytes.mockRejectedValueOnce(new Error('offline'))
+    face.loadAll(TAB_1, FILE, new AbortController().signal)
+    await vi.waitFor(() => { expect(tab()?.failure?.code).toBe('gateway/internal') })
+    expect(tab()?.loading).toBe(false)
+  })
+
+  it('drops a rejected page read that a reload retired', async () => {
+    const { face, read, settle, tab } = bench()
+    const controller = new AbortController()
+    read.mockImplementationOnce(() => Promise.reject(new Error('stale carrier')))
+    face.loadPage(TAB_1, FILE, 1, controller.signal)
+    face.reloadPages(TAB_1, FILE, controller.signal)
+    await settle(page(1, ['fresh'], false))
+    await Promise.resolve().then(() => Promise.resolve())
+    expect(tab()?.failure).toBeUndefined()
+    expect(tab()?.pages[1]?.text).toBe('fresh')
+  })
+
+  it('records a rejected edit open as unavailable and frees the in-flight guard', async () => {
+    const { face, bytes, settleAll, tab } = bench()
+    const controller = new AbortController()
+    bytes.mockRejectedValueOnce(new Error('offline'))
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await vi.waitFor(() => { expect(tab()?.editUnavailable).toBe(true) })
+    expect(bytes).toHaveBeenCalledTimes(1)
+    face.startEdit(TAB_1, FILE, controller.signal)
+    expect(bytes).toHaveBeenCalledTimes(2)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    expect(tab()?.edit?.draft).toBe('a\nb\n')
+  })
+
+  it('drops read rejections arriving after the record ended', async () => {
+    const { face, read, bytes, tab } = bench()
+    const controller = new AbortController()
+    read.mockImplementationOnce(() => Promise.reject(new Error('gone')))
+    bytes.mockImplementationOnce(() => Promise.reject(new Error('gone')))
+    bytes.mockImplementationOnce(() => Promise.reject(new Error('gone')))
+    face.loadPage(TAB_1, FILE, 1, controller.signal)
+    face.loadAll(TAB_1, FILE, controller.signal)
+    face.startEdit(TAB_1, FILE, controller.signal)
+    controller.abort()
+    await Promise.resolve().then(() => Promise.resolve()).then(() => Promise.resolve())
+    expect(tab()).toBeUndefined()
+  })
+
+  it('drops save and refresh rejections arriving after the record ended', async () => {
+    const { face, bytes, write, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    write.mockImplementationOnce(() => Promise.reject(new Error('gone')))
+    bytes.mockImplementationOnce(() => Promise.reject(new Error('gone')))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v2')
+    controller.abort()
+    await Promise.resolve().then(() => Promise.resolve()).then(() => Promise.resolve())
+    expect(tab()).toBeUndefined()
   })
 
   it('forgets the edit session with the tab when its record ends mid-edit', async () => {
