@@ -14,7 +14,7 @@ import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react
 import { RemoteError } from '@deepseek-ai/dsh-client-test-runtime'
 import type { TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import type { RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
-import type { WorkspaceFileWriteResult } from '@deepseek-ai/dsh-api-workspace-files/types'
+import type { WorkspaceFileText, WorkspaceFileWriteResult } from '@deepseek-ai/dsh-api-workspace-files/types'
 import type { OwnerOf } from '@deepseek-ai/dsh-client-ui-slots'
 import { TextPreview } from '../src/client/TextPreview.tsx'
 import type { TextPreviewProps } from '../src/client/TextPreview.tsx'
@@ -22,7 +22,11 @@ import { CodeBody } from '../src/client/code/CodeBody.tsx'
 import type { DocumentPreviewDefinition } from '../src/client/document/registry.ts'
 import { TextBody } from '../src/client/text/TextBody.tsx'
 import { PLAIN_BODY_ID } from '../src/client/text/index.ts'
-import { ABSOLUTE_PATH, ADDRESS, PATH, SESSION, TAB_ID, failure, harness, page, settle } from './fixtures.client.ts'
+import {
+  ABSOLUTE_PATH, ADDRESS, FILE, PATH, SESSION, TAB_ID,
+  bytesFailure, completeTextWire, failure, harness, page, settle, staleWrite, writeOk,
+} from './fixtures.client.ts'
+import type { Harness } from './fixtures.client.ts'
 
 const LINE_HEIGHT = 20
 
@@ -214,7 +218,6 @@ describe('TextPreview — pages', () => {
     expect(view.container.querySelector('[data-textpreview-url]')?.getAttribute('data-textpreview-url')).toBe(ADDRESS)
     expect(view.container.textContent).toContain(PATH)
     expect(view.container.querySelector('[data-textpreview-more]')).not.toBeNull()
-    expect(view.container.querySelector('[data-textpreview-changed]')).toBeNull()
   })
 
   it('reads nothing on a remount while the store holds the pages', async () => {
@@ -289,19 +292,16 @@ describe('TextPreview — pages', () => {
     expect(view.container.querySelector('[data-textpreview-failed]')).toBeNull()
   })
 
-  it('announces a change and, on request, re-reads the pages keeping the reader\'s place', async () => {
+  it('applies a reported change at once, keeping the reader\'s place', async () => {
     const h = harness({ 1: page(1, ['a', 'b'], true) })
     const view = render(<TextPreview {...h.props()} />)
     await settle()
     fireEvent.scroll(body(view.container), { target: { scrollTop: 50 } })
+    h.script(1, page(1, ['A', 'B', 'C'], true, 'v2'))
     h.setVersion('v2')
     view.rerender(<TextPreview {...h.props()} />)
-    expect(view.container.querySelector('[data-textpreview-changed]')?.textContent).toContain('changed')
-    expect(lines(view.container)).toEqual(['a\n', 'b\n'])
-    h.script(1, page(1, ['A', 'B', 'C'], true, 'v2'))
-    click(view.container, '[data-textpreview-reload-now]')
-    expect(h.read).toHaveBeenCalledTimes(2)
     await settle()
+    expect(h.read).toHaveBeenCalledTimes(2)
     expect(h.read).toHaveBeenLastCalledWith(SESSION, PATH, 1, h.controller.signal)
     expect(lines(view.container)).toEqual(['A\n', 'B\n', 'C\n'])
     expect(body(view.container).scrollTop).toBe(50)
@@ -314,34 +314,40 @@ describe('TextPreview — the file\'s metadata', () => {
     const view = render(<TextPreview {...h.props()} />)
     await settle()
     expect(h.instance.getSnapshot().byTab[TAB_ID]).toMatchObject({ version: 'v2', observedVersion: 'v1' })
-    expect(view.container.querySelector('[data-textpreview-changed]')).toBeNull()
+    expect(h.read).toHaveBeenCalledTimes(1)
+    // A genuinely newer observation applies immediately, and so does the next.
+    h.script(1, page(1, ['refreshed'], true, 'v4'))
     h.setVersion('v3')
     view.rerender(<TextPreview {...h.props()} />)
-    expect(view.container.querySelector('[data-textpreview-changed]')).not.toBeNull()
-    h.script(1, page(1, ['refreshed'], true, 'v4'))
-    click(view.container, '[data-textpreview-reload-now]')
     await settle()
+    expect(h.read).toHaveBeenCalledTimes(2)
     expect(h.instance.getSnapshot().byTab[TAB_ID]).toMatchObject({ version: 'v4', observedVersion: 'v3' })
-    expect(view.container.querySelector('[data-textpreview-changed]')).toBeNull()
+    h.script(1, page(1, ['refreshed again'], true, 'v6'))
     h.setVersion('v5')
     view.rerender(<TextPreview {...h.props()} />)
-    expect(view.container.querySelector('[data-textpreview-changed]')).not.toBeNull()
+    await settle()
+    expect(h.read).toHaveBeenCalledTimes(3)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]).toMatchObject({ version: 'v6', observedVersion: 'v5' })
+    expect(lines(view.container)).toEqual(['refreshed again\n'])
   })
 
-  it('announces metadata that changes while the first content read is still pending', async () => {
+  it('re-reads at once when metadata changes while the first content read is still pending', async () => {
     const h = harness()
     const pending = Promise.withResolvers<ReturnType<typeof page>>()
     h.read.mockReturnValueOnce(pending.promise)
     const view = render(<TextPreview {...h.props()} />)
+    h.script(1, page(1, ['fresh'], true, 'v2'))
     h.setVersion('v2')
     view.rerender(<TextPreview {...h.props()} />)
+    // The announced change retires the pending read and asks again right away.
+    expect(h.read).toHaveBeenCalledTimes(2)
     await act(async () => { pending.resolve(page(1, ['read v1'], true)); await pending.promise })
-    expect(h.read).toHaveBeenCalledTimes(1)
-    expect(h.instance.getSnapshot().byTab[TAB_ID]).toMatchObject({ version: 'v1', observedVersion: 'v1' })
-    expect(view.container.querySelector('[data-textpreview-changed]')).not.toBeNull()
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]).toMatchObject({ version: 'v2', observedVersion: 'v2' })
+    expect(lines(view.container)).toEqual(['fresh\n'])
   })
 
-  it('refreshes one tab without acknowledging another tab on the same file and store', async () => {
+  it('refreshes each open tab on the same file and store on its own', async () => {
     const h = harness({ 1: page(1, ['old'], true) })
     const otherId = 'tab-2' as TabId
     const other = harness({}, otherId)
@@ -350,20 +356,17 @@ describe('TextPreview — the file\'s metadata', () => {
     const first = render(<TextPreview {...firstProps} />)
     const second = render(<TextPreview {...secondProps} />)
     await settle()
+    expect(h.read).toHaveBeenCalledTimes(2)
+    h.script(1, page(1, ['new'], true, 'v2'))
     h.setVersion('v2')
     first.rerender(<TextPreview {...firstProps} />)
     second.rerender(<TextPreview {...secondProps} />)
-    expect(first.container.querySelector('[data-textpreview-changed]')).not.toBeNull()
-    expect(second.container.querySelector('[data-textpreview-changed]')).not.toBeNull()
-    h.script(1, page(1, ['new'], true, 'v2'))
-    click(first.container, '[data-textpreview-reload-now]')
     await settle()
-    expect(first.container.querySelector('[data-textpreview-changed]')).toBeNull()
-    expect(second.container.querySelector('[data-textpreview-changed]')).not.toBeNull()
+    expect(h.read).toHaveBeenCalledTimes(4)
     expect(lines(first.container)).toEqual(['new\n'])
-    expect(lines(second.container)).toEqual(['old\n'])
+    expect(lines(second.container)).toEqual(['new\n'])
     expect(h.instance.getSnapshot().byTab[TAB_ID]).toMatchObject({ version: 'v2', observedVersion: 'v2' })
-    expect(h.instance.getSnapshot().byTab[otherId]).toMatchObject({ version: 'v1', observedVersion: 'v1' })
+    expect(h.instance.getSnapshot().byTab[otherId]).toMatchObject({ version: 'v2', observedVersion: 'v2' })
     expect(h.file?.version).toBe('v2')
   })
 
@@ -371,26 +374,23 @@ describe('TextPreview — the file\'s metadata', () => {
     const h = harness({ 1: page(1, ['a', 'b'], true) })
     const view = render(<TextPreview {...h.props()} />)
     await settle()
+    h.script(1, page(1, ['A'], true, 'v2'))
     h.setVersion('v2')
     h.setFailure(new RemoteError('workspace-file/not-found', 'gone', { path: PATH }))
     view.rerender(<TextPreview {...h.props()} />)
+    // The newer version still applies; the failure is metadata, not content.
+    await settle()
+    expect(h.read).toHaveBeenCalledTimes(2)
+    expect(lines(view.container)).toEqual(['A\n'])
     const bar = view.container.querySelector('[data-textpreview-meta-failed]')
     expect(bar?.getAttribute('data-textpreview-meta-failed')).toBe('workspace-file/not-found')
     expect(bar?.textContent).toContain('error.notFound')
-    expect(view.container.querySelector('[data-textpreview-changed]')).toBeNull()
-    expect(lines(view.container)).toEqual(['a\n', 'b\n'])
-    // Retrying content does not acknowledge or mutate the shared metadata failure.
-    h.script(1, page(1, ['A'], true, 'v2'))
-    click(view.container, '[data-textpreview-reload-now]')
-    expect(h.read).toHaveBeenCalledTimes(2)
-    await settle()
-    expect(lines(view.container)).toEqual(['A\n'])
     // A later provider frame independently clears the metadata failure.
     h.setVersion('v2')
     h.setFailure(undefined)
     view.rerender(<TextPreview {...h.props()} />)
     expect(view.container.querySelector('[data-textpreview-meta-failed]')).toBeNull()
-    expect(view.container.querySelector('[data-textpreview-changed]')).toBeNull()
+    expect(h.read).toHaveBeenCalledTimes(2)
   })
 
   it('says a metadata-and-read failure once and retries the content read', async () => {
@@ -588,7 +588,6 @@ describe('TextPreview — header controls', () => {
     const view = render(<TextPreview {...h.props()} />)
     await settle()
     expect(h.useResource).toHaveBeenCalledWith(ADDRESS)
-    expect(view.container.querySelector('[data-textpreview-changed]')).toBeNull()
     h.script(1, page(1, ['uno'], true, 'v2'))
     click(view.container, '[data-textpreview-tool="reload"]')
     expect(h.read).toHaveBeenCalledTimes(2)
@@ -623,48 +622,32 @@ describe('TextPreview — header controls', () => {
 })
 
 describe('TextPreview — editing', () => {
-  /** A complete read's wire result carrying UTF-8 text. */
-  const completeTextWire = (version: string, text: string) => {
-    const bytes = new TextEncoder().encode(text)
-    return {
-      ok: true as const,
-      value: {
-        absolutePath: ABSOLUTE_PATH, version, offset: 0, eof: true,
-        data: btoa(String.fromCharCode(...bytes)), bytes: bytes.byteLength,
-      },
-    }
-  }
-  const writeOk = (version: string) => ({
-    ok: true as const,
-    value: { absolutePath: ABSOLUTE_PATH, version, operation: 'update' as const },
-  })
-  const staleWrite: RemoteResult<WorkspaceFileWriteResult> = {
-    ok: false,
-    error: {
-      name: 'RemoteError', isDSHRemoteError: true,
-      code: 'workspace-file/stale-version', message: 'changed since the loaded version', details: { path: PATH },
-    },
-  }
+  /** The editable surface opens itself; `harness` with editing opted in. */
+  const editHarness = (script: Record<number, RemoteResult<WorkspaceFileText>> = {}): Harness =>
+    harness(script, TAB_ID, true)
 
-  async function openEditor(h: ReturnType<typeof harness>, text = 'one\ntwo\n') {
+  /** Render with the editable viewer; the buffer opens on its own. */
+  async function openEditor(h: Harness, text = 'one\ntwo\n') {
     h.bytes.mockResolvedValue(completeTextWire('v1', text))
     const view = render(<TextPreview {...h.props()} />)
-    await settle()
-    click(view.container, '[data-textpreview-tool="edit"]')
     await settle()
     return view
   }
 
-  it('offers the edit action on the plain viewer and opens the buffer over the read file', async () => {
-    const h = harness({ 1: page(1, ['one', 'two'], true) })
+  it('opens the buffer over the file on its own for an editable viewer', async () => {
+    const h = editHarness({ 1: page(1, ['one', 'two'], true) })
     const view = await openEditor(h)
+    expect(h.bytes).toHaveBeenCalledExactlyOnceWith(FILE, h.controller.signal)
     const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')
     expect(buffer?.value).toBe('one\ntwo\n')
-    expect(body(view.container).hidden).toBe(true)
     expect(view.container.querySelector('[data-textpreview-editing]')).not.toBeNull()
+    // The editor owns the body; the read-only view is not mounted underneath.
+    expect(view.container.querySelector('[data-textpreview-body]')).toBeNull()
+    expect(h.read).not.toHaveBeenCalled()
+    expect(view.container.querySelector('[data-textpreview-tool="edit"]')).toBeNull()
   })
 
-  it('offers no edit action on a viewer that is not editable', async () => {
+  it('keeps the read-only preview on a viewer that is not editable', async () => {
     const h = harness({ 1: page(1, ['one'], true) })
     const base = h.props()
     const rendered: DocumentPreviewDefinition = {
@@ -676,11 +659,177 @@ describe('TextPreview — editing', () => {
       renderSlot: () => null,
     }} />)
     await settle()
-    expect(view.container.querySelector('[data-textpreview-tool="edit"]')).toBeNull()
+    expect(h.bytes).not.toHaveBeenCalled()
+    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+    // The paged preview mounted and read the file instead of an edit session.
+    expect(h.read).toHaveBeenCalledTimes(1)
+    expect(view.container.querySelector('[data-textpreview-body]')).not.toBeNull()
   })
 
-  it('saves the edited buffer under the version it was read at, then closes', async () => {
-    const h = harness({ 1: page(1, ['one', 'two'], true) })
+  it('falls back to the read-only preview when the file cannot open for editing', async () => {
+    const h = editHarness({ 1: page(1, ['one'], true) })
+    h.bytes.mockResolvedValue(bytesFailure('workspace-file/not-text'))
+    const view = render(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.editUnavailable).toBe(true)
+    // One open attempt, no storm; the paged preview takes over and draws the file.
+    expect(h.bytes).toHaveBeenCalledTimes(1)
+    expect(h.read).toHaveBeenCalledTimes(1)
+    expect(lines(view.container)).toEqual(['one\n'])
+    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+  })
+
+  it('retries the edit open on a manual reload of the fallback', async () => {
+    const h = editHarness({ 1: page(1, ['one'], true) })
+    h.bytes.mockResolvedValue(bytesFailure('workspace-file/not-text'))
+    const view = render(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.editUnavailable).toBe(true)
+    // A reported change re-reads the pages but leaves the refused edit alone —
+    // one open attempt per bump would be wasted I/O on a file that stays binary.
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(1)
+    expect(h.read).toHaveBeenCalledTimes(2)
+    // A manual reload does retry: the file may have become text since.
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'now text\n'))
+    click(view.container, '[data-textpreview-tool="reload"]')
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+    expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('now text\n')
+  })
+
+  it('adopts a fresh disk version into a clean buffer at once', async () => {
+    const h = editHarness()
+    const view = await openEditor(h, 'old\n')
+    const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')!
+    // The caret is the reader's own state: it survives the buffer swapping text.
+    buffer.setSelectionRange(1, 2)
+    fireEvent.select(buffer)
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'new\n'))
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(buffer.value).toBe('new\n')
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({ base: 'new\n', baseVersion: 'v2' })
+    expect(buffer.selectionStart).toBe(1)
+    expect(buffer.selectionEnd).toBe(2)
+    expect(view.container.querySelector('[data-textpreview-remote-changed]')).toBeNull()
+    // A selection past the fresh end clamps to it; the buffer's own collapse
+    // already sits there, so the restore has nothing left to write.
+    buffer.setSelectionRange(4, 4)
+    fireEvent.select(buffer)
+    h.bytes.mockResolvedValue(completeTextWire('v3', 'x\n'))
+    h.setVersion('v3')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(buffer.value).toBe('x\n')
+    expect(buffer.selectionStart).toBe(2)
+    expect(buffer.selectionEnd).toBe(2)
+  })
+
+  it('marks a fresh disk version beside a dirty buffer without clobbering it', async () => {
+    const h = editHarness()
+    const view = await openEditor(h, 'old\n')
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\n' } })
+    await settle()
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'theirs\n'))
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    // The user's draft stands; the hint reports the disk change.
+    const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')
+    expect(buffer?.value).toBe('mine\n')
+    expect(view.container.querySelector('[data-textpreview-remote-changed]')).not.toBeNull()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({
+      base: 'old\n', baseVersion: 'v1', externalVersion: 'v2',
+    })
+    // The guarded save then arms the conflict view against the disk version.
+    h.write.mockResolvedValueOnce(staleWrite)
+    click(view.container, '[data-textpreview-save]')
+    await waitFor(() => {
+      expect(view.container.querySelector('[data-textpreview-conflict]')).not.toBeNull()
+    })
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit?.externalVersion).toBeUndefined()
+  })
+
+  it('scrolls the editor to a navigated line once per revision', async () => {
+    const h = editHarness()
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'a\nb\nc\nd\n'))
+    const view = render(<TextPreview {...h.props({ params: { line: 3 }, revision: 1 })} />)
+    await settle()
+    const scroller = view.container.querySelector<HTMLElement>('[data-textpreview-edit-scroll]')
+    // jsdom reports no line height; the fallback stands in for one.
+    expect(scroller?.scrollTop).toBe(2 * LINE_HEIGHT)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.revision).toBe(1)
+    // A measured line height the browser reports drives the next jump.
+    vi.stubGlobal('getComputedStyle', () => ({ lineHeight: '25px' }))
+    view.rerender(<TextPreview {...h.props({ params: { line: 2 }, revision: 2 })} />)
+    await settle()
+    expect(scroller?.scrollTop).toBe(25)
+  })
+
+  it('restores the reader\'s place on remount instead of jumping to the answered line again', async () => {
+    const h = editHarness()
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'a\nb\nc\nd\n'))
+    const first = render(<TextPreview {...h.props({ params: { line: 3 }, revision: 1 })} />)
+    await settle()
+    const scroller = first.container.querySelector<HTMLElement>('[data-textpreview-edit-scroll]')!
+    expect(scroller.scrollTop).toBe(2 * LINE_HEIGHT)
+    // The reader moved on; the store keeps their place over the answered line.
+    fireEvent.scroll(scroller, { target: { scrollTop: 7 } })
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.scrollTop).toBe(7)
+    first.unmount()
+    const second = render(<TextPreview {...h.props({ params: { line: 3 }, revision: 1 })} />)
+    await settle()
+    expect(second.container.querySelector<HTMLElement>('[data-textpreview-edit-scroll]')?.scrollTop).toBe(7)
+  })
+
+  it('performs a navigation after the conflict view yields the scroll surface', async () => {
+    const h = editHarness()
+    h.write.mockResolvedValueOnce(staleWrite)
+    const view = await openEditor(h, 'alpha\nkeep\n')
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\nkeep\n' } })
+    await settle()
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'theirs\nkeep\n'))
+    click(view.container, '[data-textpreview-save]')
+    await waitFor(() => {
+      expect(view.container.querySelector('[data-textpreview-conflict]')).not.toBeNull()
+    })
+    // The navigation cannot scroll the conflict view — it stays unanswered.
+    view.rerender(<TextPreview {...h.props({ params: { line: 2 }, revision: 2 })} />)
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.revision).not.toBe(2)
+    click(view.container, '[data-textpreview-conflict-back]')
+    await settle()
+    expect(view.container.querySelector<HTMLElement>('[data-textpreview-edit-scroll]')?.scrollTop).toBe(20)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.revision).toBe(2)
+  })
+
+  it('answers a line-less navigation without scrolling', async () => {
+    const h = editHarness()
+    const view = await openEditor(h)
+    // A revision that carries no line is answered at once, matching the paged
+    // body — the recorded revision must not lag the navigation stream.
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.revision).toBe(1)
+    view.rerender(<TextPreview {...h.props({ revision: 2 })} />)
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.revision).toBe(2)
+  })
+
+  it('wraps the buffer when the shared store wraps lines', async () => {
+    const h = editHarness()
+    const view = await openEditor(h)
+    const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')
+    expect(buffer?.getAttribute('wrap')).toBe('soft')
+    act(() => { h.instance.actions.toggledWrap(TAB_ID) })
+    expect(view.container.querySelector('[data-textpreview-buffer]')?.getAttribute('wrap')).toBe('off')
+  })
+
+  it('saves the edited buffer under its base version and keeps editing the result', async () => {
+    const h = editHarness({ 1: page(1, ['one', 'two'], true) })
     h.write.mockResolvedValue(writeOk('v2'))
     const view = await openEditor(h)
     const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')
@@ -691,30 +840,41 @@ describe('TextPreview — editing', () => {
     expect(h.write).toHaveBeenCalledExactlyOnceWith(
       SESSION, PATH, { text: 'one\nCHANGED\n', expectedVersion: 'v1' }, h.controller.signal,
     )
-    // After the write the edit session is gone and the body shows again.
-    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
-    expect(body(view.container).hidden).toBe(false)
+    // The session stays: the written buffer is the new base under the post-write
+    // version, and the change feed's own echo does not read as an external change.
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({
+      base: 'one\nCHANGED\n', baseVersion: 'v2', draft: 'one\nCHANGED\n', saving: false,
+    })
+    expect(view.container.querySelector('[data-textpreview-editing]')).not.toBeNull()
+    h.bytes.mockClear()
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.bytes).not.toHaveBeenCalled()
+    expect(view.container.querySelector('[data-textpreview-remote-changed]')).toBeNull()
   })
 
-  it('asks before discarding a changed buffer, and closes on confirmation', async () => {
+  it('asks before reverting a changed buffer, then reopens on the file', async () => {
     const confirm = vi.fn(() => false)
     vi.stubGlobal('confirm', confirm)
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     const view = await openEditor(h, 'one\n')
     fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'changed\n' } })
     await settle()
     click(view.container, '[data-textpreview-cancel]')
     await settle()
     expect(confirm).toHaveBeenCalledOnce()
-    expect(view.container.querySelector('[data-textpreview-editing]')).not.toBeNull()
+    expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('changed\n')
     confirm.mockReturnValue(true)
     click(view.container, '[data-textpreview-cancel]')
     await settle()
-    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+    // Reverting means the file's text again: the session reopens on the disk base.
+    expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('one\n')
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit?.draft).toBe('one\n')
   })
 
   it('resolves a refused write through the conflict view and saves the merge', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     h.write
       .mockResolvedValueOnce(staleWrite)
       .mockResolvedValueOnce(writeOk('v3'))
@@ -739,11 +899,42 @@ describe('TextPreview — editing', () => {
         SESSION, PATH, { text: 'theirs\nkeep\n', expectedVersion: 'v2' }, h.controller.signal,
       )
     })
-    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+    // The merged buffer is the new base; the session keeps editing it.
+    expect(view.container.querySelector('[data-textpreview-editing]')).not.toBeNull()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({ base: 'theirs\nkeep\n', baseVersion: 'v3' })
+    expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('theirs\nkeep\n')
+  })
+
+  it('shows a failed merge write inside the conflict view', async () => {
+    const h = editHarness({ 1: page(1, ['one'], true) })
+    h.write
+      .mockResolvedValueOnce(staleWrite)
+      .mockResolvedValueOnce({
+        ok: false,
+        error: {
+          name: 'RemoteError', isDSHRemoteError: true,
+          code: 'workspace-file/write-failed', message: 'denied', details: { path: PATH },
+        },
+      })
+    const view = await openEditor(h, 'alpha\n')
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\n' } })
+    await settle()
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'theirs\n'))
+    click(view.container, '[data-textpreview-save]')
+    await waitFor(() => {
+      expect(view.container.querySelector('[data-textpreview-conflict]')).not.toBeNull()
+    })
+    click(view.container, '[data-textpreview-merge-save]')
+    await settle()
+    // The conflict stays armed and the failure is visible there — the reader
+    // must not learn about the refused merge only after backing out.
+    const line = view.container.querySelector('[data-textpreview-conflict] [data-textpreview-edit-failed]')
+    expect(line?.textContent).toBe('error.unavailable(message=denied)')
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit?.conflict).toBeDefined()
   })
 
   it('reports the buffer\'s scroll position to the store', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     const view = await openEditor(h)
     const scroller = view.container.querySelector<HTMLElement>('[data-textpreview-edit-scroll]')!
     fireEvent.scroll(scroller, { target: { scrollTop: 42 } })
@@ -752,7 +943,7 @@ describe('TextPreview — editing', () => {
   })
 
   it('shows a save failure inside the editor and keeps the draft', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     h.write.mockResolvedValue({
       ok: false,
       error: {
@@ -766,12 +957,12 @@ describe('TextPreview — editing', () => {
     click(view.container, '[data-textpreview-save]')
     await settle()
     const line = view.container.querySelector('[data-textpreview-edit-failed]')
-    expect(line?.textContent).toBe('denied')
+    expect(line?.textContent).toBe('error.unavailable(message=denied)')
     expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('x\n')
   })
 
   it('sizes a plain buffer that does not end on a newline', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     const view = await openEditor(h, 'tail')
     const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')!
     expect(buffer.value).toBe('tail')
@@ -793,8 +984,6 @@ describe('TextPreview — editing', () => {
       renderSlot: () => null,
     }} />)
     await settle()
-    click(view.container, '[data-textpreview-tool="edit"]')
-    await settle()
     const buffer = view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')
     expect(buffer?.value).toBe('const x = 1\n')
     // The syntax underlay sits behind the transparent overlay buffer.
@@ -802,7 +991,7 @@ describe('TextPreview — editing', () => {
   })
 
   it('leaves the conflict view back to the editor keeping the draft', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     h.write.mockResolvedValueOnce(staleWrite)
     const view = await openEditor(h, 'alpha\nkeep\n')
     fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\nkeep\n' } })
@@ -819,7 +1008,7 @@ describe('TextPreview — editing', () => {
   })
 
   it('picks the mine side on a hunk explicitly and merges unchanged', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     h.write
       .mockResolvedValueOnce(staleWrite)
       .mockResolvedValueOnce(writeOk('v3'))
@@ -842,7 +1031,7 @@ describe('TextPreview — editing', () => {
   })
 
   it('merges with the mine side where no hunk was picked', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     h.write
       .mockResolvedValueOnce(staleWrite)
       .mockResolvedValueOnce(writeOk('v3'))
@@ -863,7 +1052,7 @@ describe('TextPreview — editing', () => {
   })
 
   it('reports an identical conflict when the fresh content matches the draft', async () => {
-    const h = harness({ 1: page(1, ['one'], true) })
+    const h = editHarness({ 1: page(1, ['one'], true) })
     h.write.mockResolvedValueOnce(staleWrite)
     const view = await openEditor(h, 'alpha\nkeep\n')
     fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\nkeep\n' } })
@@ -875,5 +1064,247 @@ describe('TextPreview — editing', () => {
     })
     expect(view.container.querySelector('[data-textpreview-hunk]')).toBeNull()
     expect(view.container.querySelector('[data-textpreview-conflict-rows] p')?.textContent).not.toBe('')
+  })
+
+  it('defers a file change reported while a write is out until it settles', async () => {
+    const h = editHarness()
+    let resolveWrite: (result: RemoteResult<WorkspaceFileWriteResult>) => void = () => {}
+    h.write.mockImplementation(() => new Promise<RemoteResult<WorkspaceFileWriteResult>>((resolve) => {
+      resolveWrite = resolve
+    }))
+    const view = await openEditor(h)
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\n' } })
+    await settle()
+    click(view.container, '[data-textpreview-save]')
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit?.saving).toBe(true)
+    // The version bump must not start a refresh read over an in-flight write.
+    h.bytes.mockClear()
+    h.setVersion('v9')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.bytes).not.toHaveBeenCalled()
+    // The reader keeps typing while the write is out, so the buffer is dirty
+    // when the deferred refresh lands and only records the newer version.
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\nmore\n' } })
+    h.bytes.mockResolvedValue(completeTextWire('v9', 'theirs\n'))
+    resolveWrite(writeOk('v2'))
+    await waitFor(() => {
+      expect(h.bytes).toHaveBeenCalledTimes(1)
+    })
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({
+      base: 'mine\n', baseVersion: 'v2', draft: 'mine\nmore\n', externalVersion: 'v9',
+    })
+  })
+
+  it('defers a file change reported while the conflict view is armed', async () => {
+    const h = editHarness()
+    h.write
+      .mockResolvedValueOnce(staleWrite)
+      .mockResolvedValueOnce(writeOk('v3'))
+    const view = await openEditor(h, 'alpha\n')
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\n' } })
+    await settle()
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'theirs\n'))
+    click(view.container, '[data-textpreview-save]')
+    await waitFor(() => {
+      expect(view.container.querySelector('[data-textpreview-conflict]')).not.toBeNull()
+    })
+    h.bytes.mockClear()
+    h.setVersion('v9')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.bytes).not.toHaveBeenCalled()
+    expect(view.container.querySelector('[data-textpreview-conflict]')).not.toBeNull()
+    // The armed view leaves the bump unconsumed: resolving the conflict lets
+    // the same frame drive a refresh against the rebased session. The buffer
+    // is clean after the merge write, so the fresh read is adopted outright.
+    h.bytes.mockResolvedValue(completeTextWire('v9', 'newest\n'))
+    click(view.container, '[data-textpreview-merge-save]')
+    await waitFor(() => {
+      expect(h.write).toHaveBeenCalledTimes(2)
+    })
+    await waitFor(() => {
+      expect(h.bytes).toHaveBeenCalledTimes(1)
+    })
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({
+      base: 'newest\n', baseVersion: 'v9', draft: 'newest\n', externalVersion: undefined,
+    })
+  })
+
+  it('reloads the editor by discarding the buffer and reopening on the file', async () => {
+    const h = editHarness()
+    const view = await openEditor(h, 'old\n')
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\n' } })
+    await settle()
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'fresh\n'))
+    const confirm = vi.fn(() => true)
+    vi.stubGlobal('confirm', confirm)
+    click(view.container, '[data-textpreview-tool="reload"]')
+    await settle()
+    // The dirty buffer asked, then the editable viewer re-opened on a fresh read.
+    expect(confirm).toHaveBeenCalledOnce()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+    expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('fresh\n')
+  })
+
+  it('re-reads a byte viewer when the file changes underneath it', async () => {
+    const h = harness()
+    const base = h.props()
+    const rendered: DocumentPreviewDefinition = {
+      id: 'raw', extensions: ['md'], title: () => 'Raw', loading: 'bytes-complete', wrap: false,
+    }
+    const props: TextPreviewProps = {
+      ...base,
+      useDocumentPreviews: <S,>(selector: (v: readonly DocumentPreviewDefinition[]) => S): S => selector([rendered]),
+      renderSlot: () => null,
+    }
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'x\n'))
+    const view = render(<TextPreview {...props} />)
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(1)
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'y\n'))
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...props} />)
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.complete?.version).toBe('v2')
+  })
+
+  it('re-reads a byte viewer on reload', async () => {
+    const h = harness()
+    const rendered: DocumentPreviewDefinition = {
+      id: 'raw', extensions: ['md'], title: () => 'Raw', loading: 'bytes-complete', wrap: false,
+    }
+    const props: TextPreviewProps = {
+      ...h.props(),
+      useDocumentPreviews: <S,>(selector: (v: readonly DocumentPreviewDefinition[]) => S): S => selector([rendered]),
+      renderSlot: () => null,
+    }
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'x\n'))
+    const view = render(<TextPreview {...props} />)
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(1)
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'y\n'))
+    click(view.container, '[data-textpreview-tool="reload"]')
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+  })
+
+  it('says the file is unavailable when its metadata is gone entirely', async () => {
+    const h = harness({ 1: page(1, ['one'], true) })
+    h.useResource.mockReturnValue({ status: 'none', value: undefined, failure: undefined })
+    const view = render(<TextPreview {...h.props()} />)
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-state]')?.textContent).toBe('resourceUnavailable')
+    expect(h.read).not.toHaveBeenCalled()
+  })
+
+  it('ignores the next-page and reload controls while the file is unavailable', async () => {
+    const h = harness({ 1: page(1, ['one', 'two'], false) })
+    const view = render(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.read).toHaveBeenCalledTimes(1)
+    h.useResource.mockReturnValue({ status: 'none', value: undefined, failure: undefined })
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    click(view.container, '[data-textpreview-tool="reload"]')
+    click(view.container, '[data-textpreview-more]')
+    await settle()
+    expect(h.read).toHaveBeenCalledTimes(1)
+  })
+
+  it('switches the viewer from the header menu', async () => {
+    const h = harness({ 1: page(1, ['one'], true) })
+    const definitions: DocumentPreviewDefinition[] = [
+      { id: 'markdown', extensions: ['md'], title: () => 'Markdown', loading: 'text-pages', wrap: false },
+      { id: PLAIN_BODY_ID, extensions: [], title: () => 'Plain text', loading: 'text-pages', wrap: true },
+    ]
+    const props: TextPreviewProps = {
+      ...h.props(),
+      useDocumentPreviews: <S,>(selector: (v: readonly DocumentPreviewDefinition[]) => S): S => selector(definitions),
+    }
+    const view = render(<TextPreview {...props} />)
+    await settle()
+    click(view.container, '[data-document-viewer-menu]')
+    const item = document.body.querySelector<HTMLElement>('[role="menuitem"]')
+    expect(item).not.toBeNull()
+    fireEvent.click(item!)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.rendererId).toBe('markdown')
+    expect(document.body.querySelector('[role="menuitem"]')).toBeNull()
+    // An open menu also leaves on Escape.
+    click(view.container, '[data-document-viewer-menu]')
+    expect(document.body.querySelector('[role="menuitem"]')).not.toBeNull()
+    fireEvent.keyDown(document, { key: 'Escape' })
+    await settle()
+    expect(document.body.querySelector('[role="menuitem"]')).toBeNull()
+  })
+
+  it('hands a paged-consumed version bump to the dormant edit session on return', async () => {
+    const h = editHarness({ 1: page(1, ['one'], true) })
+    const editable: DocumentPreviewDefinition = {
+      id: 'editor', extensions: ['md'], title: () => 'Editor', loading: 'text-pages', wrap: true, editable: true,
+    }
+    const markdown: DocumentPreviewDefinition = {
+      id: 'markdown', extensions: ['md'], title: () => 'Markdown', loading: 'text-pages', wrap: false,
+    }
+    const props: TextPreviewProps = {
+      ...h.props(),
+      useDocumentPreviews: <S,>(selector: (v: readonly DocumentPreviewDefinition[]) => S): S => selector([editable, markdown]),
+    }
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'one\n'))
+    const view = render(<TextPreview {...props} />)
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-editing]')).not.toBeNull()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit?.baseVersion).toBe('v1')
+    // The reader switches to a read-only viewer; the edit session stays dormant.
+    act(() => { h.instance.actions.selected(TAB_ID, 'markdown') })
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+    expect(h.read).toHaveBeenCalledTimes(1)
+    // A bump while paged: the paged surface consumes it and re-reads pages.
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...props} />)
+    await settle()
+    expect(h.read).toHaveBeenCalledTimes(2)
+    // Back on the editable viewer the dormant session still owes the bump a read.
+    h.bytes.mockResolvedValue(completeTextWire('v2', 'disk\n'))
+    act(() => { h.instance.actions.selected(TAB_ID, 'editor') })
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-editing]')).not.toBeNull()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({ base: 'disk\n', baseVersion: 'v2' })
+  })
+
+  it('flags a reported version whose refresh read a save retired', async () => {
+    const h = editHarness()
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'one\n'))
+    const view = render(<TextPreview {...h.props()} />)
+    await settle()
+    // The reported change's refresh read goes out and stays in flight.
+    let settleRefresh: ((result: ReturnType<typeof completeTextWire>) => void) | undefined
+    h.bytes.mockReturnValueOnce(new Promise((resolve) => { settleRefresh = resolve }))
+    h.setVersion('v2')
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+    // A save starting now epochs the refresh — its late settlement drops.
+    fireEvent.change(view.container.querySelector('[data-textpreview-buffer]')!, { target: { value: 'mine\n' } })
+    await settle()
+    h.write.mockResolvedValueOnce(writeOk('v3'))
+    click(view.container, '[data-textpreview-save]')
+    await settle()
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({ base: 'mine\n', baseVersion: 'v3' })
+    // The frame was consumed but never processed: the dropped settlement flags
+    // it through the save, so the buffer still reports the disk moved.
+    settleRefresh!(completeTextWire('v2', 'stale\n'))
+    await settle()
+    expect(h.bytes).toHaveBeenCalledTimes(2)
+    expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit).toMatchObject({
+      base: 'mine\n', baseVersion: 'v3', externalVersion: 'v2',
+    })
+    expect(view.container.querySelector('[data-textpreview-remote-changed]')).not.toBeNull()
   })
 })

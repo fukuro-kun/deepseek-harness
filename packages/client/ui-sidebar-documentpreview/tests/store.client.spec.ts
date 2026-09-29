@@ -107,16 +107,34 @@ describe('read observation baseline', () => {
 describe('edit actions without an open session', () => {
   const failure = { code: 'workspace-file/write-failed', message: 'x', details: {} } as unknown as RemoteFailure
 
-  it('ignores draft, save, and conflict actions on a tab that never opened the editor', () => {
+  it('ignores draft, refresh, save, and conflict actions on a tab that never opened the editor', () => {
     const instance = createTextStore().create()
     instance.actions.loading(TAB_1)
     instance.actions.editDraft(TAB_1, 'x')
+    instance.actions.editCancelled(TAB_1)
+    instance.actions.editRefreshed(TAB_1, 'disk\n', 'v2')
+    instance.actions.editRefreshMissed(TAB_1, 'v2')
     instance.actions.saveStarted(TAB_1)
     instance.actions.saveConflicted(TAB_1, 'mine', 'theirs', 'v2')
     instance.actions.saveFailed(TAB_1, failure)
+    instance.actions.saved(TAB_1, 'v2', 'disk\n')
+    instance.actions.editUnavailableCleared(TAB_1)
     instance.actions.conflictChoice(TAB_1, 0, 'theirs')
     instance.actions.conflictClosed(TAB_1)
     expect(instance.getSnapshot().byTab[TAB_1]?.edit).toBeUndefined()
+  })
+
+  it('ignores a write settlement on a session with no write in flight', () => {
+    const instance = createTextStore().create()
+    // A cancelled-and-reopened session holds no pending write; a settle from
+    // the discarded write must not rebase it.
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.saved(TAB_1, 'v2', 'stale\n')
+    instance.actions.saveConflicted(TAB_1, 'mine\n', 'theirs\n', 'v2')
+    instance.actions.saveFailed(TAB_1, failure)
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({
+      base: 'a\n', baseVersion: 'v1', draft: 'a\n', saving: false, conflict: undefined, failure: undefined,
+    })
   })
 
   it('ignores a conflict pick and close on an edit session that has no conflict armed', () => {
@@ -127,5 +145,149 @@ describe('edit actions without an open session', () => {
     instance.actions.conflictClosed(TAB_1)
     expect(instance.getSnapshot().byTab[TAB_1]?.edit?.conflict).toBeUndefined()
     expect(instance.getSnapshot().byTab[TAB_1]?.edit?.draft).toBe('a\n')
+  })
+})
+describe('edit session refresh and save lifecycle', () => {
+  it('marks a file that cannot open for editing; reset keeps it, an explicit retry clears it', () => {
+    const instance = createTextStore().create()
+    instance.actions.editFailed(TAB_1)
+    expect(instance.getSnapshot().byTab[TAB_1]?.editUnavailable).toBe(true)
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toBeUndefined()
+    // A re-read cannot turn a binary file into text; only a manual reload retries.
+    instance.actions.reset(TAB_1)
+    expect(instance.getSnapshot().byTab[TAB_1]?.editUnavailable).toBe(true)
+    instance.actions.editUnavailableCleared(TAB_1)
+    expect(instance.getSnapshot().byTab[TAB_1]?.editUnavailable).toBeUndefined()
+  })
+
+  it('adopts fresh disk content into a clean buffer', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editRefreshed(TAB_1, 'b\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({
+      base: 'b\n', baseVersion: 'v2', draft: 'b\n', externalVersion: undefined,
+    })
+  })
+
+  it('only records the newer version while the buffer is dirty, and resolves it on save', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    instance.actions.editRefreshed(TAB_1, 'theirs\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({
+      base: 'a\n', baseVersion: 'v1', draft: 'mine\n', externalVersion: 'v2',
+    })
+    // Back on the base text the next refresh adopts the disk state outright.
+    instance.actions.editDraft(TAB_1, 'a\n')
+    instance.actions.editRefreshed(TAB_1, 'theirs\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({ base: 'theirs\n', externalVersion: undefined })
+  })
+
+  it('leaves a saving or conflicted session alone on refresh', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.editRefreshed(TAB_1, 'disk\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v1', saving: true })
+    instance.actions.saveConflicted(TAB_1, 'mine\n', 'theirs\n', 'v3')
+    instance.actions.editRefreshed(TAB_1, 'newer\n', 'v4')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.conflict?.version).toBe('v3')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.base).toBe('a\n')
+  })
+
+  it('rebases the session on a successful write instead of closing it', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editDraft(TAB_1, 'changed\n')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.saved(TAB_1, 'v2', 'changed\n')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({
+      base: 'changed\n', baseVersion: 'v2', draft: 'changed\n', saving: false,
+    })
+    // The paged trackers keep the version of the pages held — the written
+    // version was never read into pages, so recording it would mask them.
+    expect(instance.getSnapshot().byTab[TAB_1]).toMatchObject({ version: undefined, observedVersion: undefined })
+  })
+
+  it('adopts the merged text as the draft after a conflict save', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.saveConflicted(TAB_1, 'mine\n', 'theirs\n', 'v2')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.saved(TAB_1, 'v3', 'theirs\n')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({
+      base: 'theirs\n', baseVersion: 'v3', draft: 'theirs\n', saving: false, conflict: undefined,
+    })
+  })
+
+  it('keeps a draft typed past a plain save in flight', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editDraft(TAB_1, 'changed\n')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.editDraft(TAB_1, 'changed more\n')
+    instance.actions.saved(TAB_1, 'v2', 'changed\n')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit).toMatchObject({
+      base: 'changed\n', baseVersion: 'v2', draft: 'changed more\n',
+    })
+  })
+
+  it('clears a recorded external version when the conflict flow takes over', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    instance.actions.editRefreshed(TAB_1, 'theirs\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBe('v2')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.saveConflicted(TAB_1, 'mine\n', 'theirs\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBeUndefined()
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.conflict).toBeDefined()
+  })
+
+  it('clears a recorded external version when the refresh lands back on the base version', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    instance.actions.editRefreshed(TAB_1, 'theirs\n', 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBe('v2')
+    // A stale replay at the base version means the disk is back at what the
+    // draft was cut from — there is no external change to flag.
+    instance.actions.editRefreshed(TAB_1, 'a\n', 'v1')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBeUndefined()
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.draft).toBe('mine\n')
+  })
+
+  it('flags a missed refresh read on an idle session and leaves a conflicted one alone', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.editRefreshMissed(TAB_1, 'v2')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBe('v2')
+    // A miss reporting the base version adds nothing.
+    instance.actions.editStarted(TAB_2, 'a\n', 'v1')
+    instance.actions.editRefreshMissed(TAB_2, 'v1')
+    expect(instance.getSnapshot().byTab[TAB_2]?.edit?.externalVersion).toBeUndefined()
+    // A miss mid-flight still lands; a save that lands another version keeps it.
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.editRefreshMissed(TAB_1, 'v3')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBe('v3')
+    instance.actions.saved(TAB_1, 'v4', 'mine\n')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBe('v3')
+    // A conflict already holds the disk state to resolve; a miss adds nothing.
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.saveConflicted(TAB_1, 'mine\n', 'theirs\n', 'v5')
+    instance.actions.editRefreshMissed(TAB_1, 'v6')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBeUndefined()
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.conflict?.version).toBe('v5')
+  })
+
+  it('clears a mid-flight miss flag when the write lands that very version', () => {
+    const instance = createTextStore().create()
+    instance.actions.editStarted(TAB_1, 'a\n', 'v1')
+    instance.actions.saveStarted(TAB_1)
+    instance.actions.editRefreshMissed(TAB_1, 'v2')
+    instance.actions.saved(TAB_1, 'v2', 'mine\n')
+    expect(instance.getSnapshot().byTab[TAB_1]?.edit?.externalVersion).toBeUndefined()
   })
 })

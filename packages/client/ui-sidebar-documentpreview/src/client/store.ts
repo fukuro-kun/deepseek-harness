@@ -35,9 +35,9 @@ export interface TextPage {
  */
 export interface EditState {
   /** The loaded file text the draft started from. */
-  readonly base: string
+  base: string
   /** The version token `base` was read at — the write's freshness guard. */
-  readonly baseVersion: string
+  baseVersion: string
   /** The current buffer content. */
   draft: string
   /** A guarded write is in flight. */
@@ -50,6 +50,14 @@ export interface EditState {
    * the new content. Defaults favor the reader's edits.
    */
   conflict: EditConflict | undefined
+  /**
+   * A file version the disk was reported at but the buffer never took: the
+   * draft was dirty, the refresh read failed or returned non-text, or a save
+   * or reopen epoch retired the read before it settled. The next guarded
+   * write decides through the conflict flow. Absent once the buffer holds the
+   * disk state again.
+   */
+  externalVersion: string | undefined
 }
 
 /** The data a version conflict resolution works on. */
@@ -90,8 +98,14 @@ export interface TextTabState {
   wrap: boolean
   /** The `navigation.revision` the body already answered; absent before the first. */
   revision: number | undefined
-  /** The open edit session; absent in view mode. */
+  /** The open edit session; absent while no editable renderer is active. */
   edit?: EditState
+  /**
+   * The file could not be opened for editing (not UTF-8 text, or the read
+   * failed): the tab falls back to the read-only preview and offers no edit
+   * surface until a reload clears the flag.
+   */
+  editUnavailable?: boolean
 }
 
 /** Every tab's state, keyed by tab id. */
@@ -135,10 +149,14 @@ type TextActions = {
   navigated: (draft: TextState, tabId: TabId, revision: number) => void
   forget: (draft: TextState, tabId: TabId) => void
   editStarted: (draft: TextState, tabId: TabId, base: string, baseVersion: string) => void
+  editFailed: (draft: TextState, tabId: TabId) => void
+  editUnavailableCleared: (draft: TextState, tabId: TabId) => void
+  editRefreshed: (draft: TextState, tabId: TabId, base: string, baseVersion: string) => void
+  editRefreshMissed: (draft: TextState, tabId: TabId, version: string) => void
   editDraft: (draft: TextState, tabId: TabId, draftText: string) => void
   editCancelled: (draft: TextState, tabId: TabId) => void
   saveStarted: (draft: TextState, tabId: TabId) => void
-  saved: (draft: TextState, tabId: TabId, version: string) => void
+  saved: (draft: TextState, tabId: TabId, version: string, text: string) => void
   saveConflicted: (draft: TextState, tabId: TabId, mine: string, theirs: string, version: string) => void
   saveFailed: (draft: TextState, tabId: TabId, failure: RemoteFailure) => void
   conflictChoice: (draft: TextState, tabId: TabId, hunk: number, side: 'mine' | 'theirs') => void
@@ -225,6 +243,10 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
         state.observedVersion = undefined
         state.loading = false
         state.failure = undefined
+        // `editUnavailable` survives: a re-read does not change whether the
+        // file is text, and dropping it would make every external change bump
+        // re-run the failing edit open beside the paged reload. A manual
+        // reload clears it through `editUnavailableCleared` instead.
       },
       /**
        * Record where one tab's body is scrolled to.
@@ -276,8 +298,70 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
        */
       editStarted: (d, tabId: TabId, base: string, baseVersion: string) => {
         bucket(d, tabId).edit = {
-          base, baseVersion, draft: base, saving: false, failure: undefined, conflict: undefined,
+          base, baseVersion, draft: base, saving: false, failure: undefined, conflict: undefined, externalVersion: undefined,
         }
+      },
+      /**
+       * The file would not open for editing; the read-only preview takes over.
+       * @param d - draft state.
+       * @param tabId - the tab whose file is not editable.
+       */
+      editFailed: (d, tabId: TabId) => {
+        bucket(d, tabId).editUnavailable = true
+      },
+      /**
+       * Lift the edit-open failure for an explicit retry: the auto-open effect
+       * re-runs `startEdit`, while a failed retry re-arms the flag.
+       * @param d - draft state.
+       * @param tabId - the tab whose edit may be retried.
+       */
+      editUnavailableCleared: (d, tabId: TabId) => {
+        delete bucket(d, tabId).editUnavailable
+      },
+      /**
+       * A fresh read of the file arrived while an edit session is open. A clean
+       * buffer adopts the disk state outright; a dirty one only records the
+       * newer version, because overwriting the draft would lose the reader's
+       * edits — the guarded write resolves the difference instead. A session
+       * mid-save or mid-conflict already owns a version decision and is left
+       * alone.
+       * @param d - draft state.
+       * @param tabId - the tab being refreshed.
+       * @param base - the fresh file text.
+       * @param baseVersion - the version the text was read at.
+       */
+      editRefreshed: (d, tabId: TabId, base: string, baseVersion: string) => {
+        const edit = bucket(d, tabId).edit
+        if (edit === undefined || edit.saving || edit.conflict !== undefined) return
+        if (edit.draft === edit.base) {
+          edit.base = base
+          edit.draft = base
+          edit.baseVersion = baseVersion
+          edit.externalVersion = undefined
+          edit.failure = undefined
+        } else {
+          // The hint belongs to a disk state that actually differs from the
+          // buffer's base; a refresh returning the base version (a stale
+          // replay, or a reverted change) clears it rather than raising it.
+          edit.externalVersion = baseVersion === edit.baseVersion ? undefined : baseVersion
+        }
+      },
+      /**
+       * The file changed on disk but the fresh read failed, was undecodable,
+       * or an epoch retired it before it settled: the buffer keeps its state
+       * and only flags the newer version, so the reader sees that what they
+       * hold is no longer current.
+       * @param d - draft state.
+       * @param tabId - the tab whose refresh missed.
+       * @param version - the version the metadata reported.
+       */
+      editRefreshMissed: (d, tabId: TabId, version: string) => {
+        const edit = bucket(d, tabId).edit
+        // A session under conflict already holds the fresher disk state to
+        // resolve against — a missed read adds nothing there. During a write
+        // the flag still lands: `saved` keeps what the write did not absorb.
+        if (edit === undefined || edit.conflict !== undefined) return
+        if (version !== edit.baseVersion) edit.externalVersion = version
       },
       /**
        * Track the buffer one keystroke produces.
@@ -309,17 +393,34 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
         edit.failure = undefined
       },
       /**
-       * Close the edit session after a successful write, adopting the new
-       * version so a stale banner does not fire on our own write.
+       * Rebase the edit session after a successful write: the written text
+       * becomes the new base under the post-write version, so the change feed's
+       * echo does not read as an external change. The session stays open — the
+       * editable surface is the file's presentation, not a mode to leave. A
+       * merge write replaces the draft with the merged result; a plain write
+       * leaves it alone, so keystrokes landed during the flight survive.
        * @param d - draft state.
        * @param tabId - the tab that saved.
        * @param version - the file's post-write version.
+       * @param text - the text the write committed.
        */
-      saved: (d, tabId: TabId, version: string) => {
-        const state = bucket(d, tabId)
-        delete state.edit
-        state.version = version
-        state.observedVersion = version
+      saved: (d, tabId: TabId, version: string, text: string) => {
+        const edit = bucket(d, tabId).edit
+        // Only a session with its write out may settle it: a write landing
+        // after its session was discarded must not rebase the reopened one.
+        if (edit === undefined || !edit.saving) return
+        // The paged trackers stay at the version of the pages held — the
+        // written version never entered them, and the edit buffer's own
+        // baseVersion already suppresses the change feed's echo.
+        if (edit.conflict !== undefined) edit.draft = text
+        edit.base = text
+        edit.baseVersion = version
+        edit.saving = false
+        edit.failure = undefined
+        edit.conflict = undefined
+        // A refresh miss flagged mid-flight survives unless the write landed
+        // exactly that version — the disk may still sit ahead of this write.
+        if (edit.externalVersion === version) edit.externalVersion = undefined
       },
       /**
        * Record a refused guarded write: the buffer stays and the conflict view
@@ -332,8 +433,9 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
        */
       saveConflicted: (d, tabId: TabId, mine: string, theirs: string, version: string) => {
         const edit = bucket(d, tabId).edit
-        if (edit === undefined) return
+        if (edit === undefined || !edit.saving) return
         edit.saving = false
+        edit.externalVersion = undefined
         edit.conflict = { mine, theirs, version, choices: {} }
       },
       /**
@@ -344,7 +446,7 @@ export function createTextStore(): EngineStoreHandle<TextState, TextActions> {
        */
       saveFailed: (d, tabId: TabId, failure: RemoteFailure) => {
         const edit = bucket(d, tabId).edit
-        if (edit === undefined) return
+        if (edit === undefined || !edit.saving) return
         edit.saving = false
         edit.failure = failure
       },

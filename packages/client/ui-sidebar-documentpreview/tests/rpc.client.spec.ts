@@ -6,7 +6,7 @@
  */
 import { describe, expect, it, vi } from 'vitest'
 import { sessionFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
-import { createReadPage, createWriteFile, documentFileBytes, failureMessage, hostFileOf } from '../src/client/rpc.ts'
+import { createReadPage, createWriteFile, documentFileBytes, hostFileOf } from '../src/client/rpc.ts'
 import type { ReadWorkspaceFilePage, WorkspaceFilesReadRemote, WriteWorkspaceFile } from '../src/client/index.ts'
 import { ADDRESS, FILE, PATH, SESSION, page } from './fixtures.client.ts'
 
@@ -52,16 +52,6 @@ describe('createWriteFile', () => {
     })
     await expect(writeFile(SESSION, PATH, { text: 'after\n', expectedVersion: 'v1' }, signal)).resolves.toEqual({ ok: true, value })
     expect(write).toHaveBeenCalledWith(SESSION, PATH, { text: 'after\n', expectedVersion: 'v1' }, signal)
-  })
-})
-
-describe('failureMessage', () => {
-  it.each([
-    ['an Error', new Error('decode blew up'), 'decode blew up'],
-    ['a thrown string', 'raw refusal', 'raw refusal'],
-    ['a thrown number', 17, '17'],
-  ])('carries the message of %s', (_label, thrown, message) => {
-    expect(failureMessage(thrown)).toBe(message)
   })
 })
 

@@ -14,7 +14,7 @@ import { createElement, useSyncExternalStore } from 'react'
 import type { RemoteFailure, RemoteResult } from '@deepseek-ai/dsh-api-remotes/client'
 import type { ResourceSnapshot } from '@deepseek-ai/dsh-client-resources/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type { WorkspaceFileStat, WorkspaceFileText } from '@deepseek-ai/dsh-api-workspace-files/types'
+import type { WorkspaceFileStat, WorkspaceFileText, WorkspaceFileWriteResult } from '@deepseek-ai/dsh-api-workspace-files/types'
 import type { TextPreviewProps } from '../src/client/TextPreview.tsx'
 import { textFace } from '../src/client/face.ts'
 import type { TextInjected } from '../src/client/face.ts'
@@ -44,6 +44,42 @@ export function page(offset: number, lines: readonly string[], eof: boolean, ver
 /** One failed page read. */
 export function failure(code: string, details: Record<string, unknown> = {}): RemoteResult<WorkspaceFileText> {
   return { ok: false, error: { code, message: 'boom', details } as unknown as RemoteFailure }
+}
+
+/** A complete read's wire result carrying UTF-8 text. */
+export function completeTextWire(version: string, text: string) {
+  const bytes = new TextEncoder().encode(text)
+  return {
+    ok: true as const,
+    value: {
+      absolutePath: ABSOLUTE_PATH, version, offset: 0, eof: true,
+      data: btoa(String.fromCharCode(...bytes)), bytes: bytes.byteLength,
+    },
+  }
+}
+
+/** One failed complete read. */
+export function bytesFailure(code = 'workspace-file/outside-workspace'): RemoteResult<never> {
+  return {
+    ok: false,
+    error: {
+      name: 'RemoteError', isDSHRemoteError: true, code, message: 'boom', details: { path: ABSOLUTE_PATH },
+    } as unknown as RemoteFailure,
+  }
+}
+
+/** A guarded write's success. */
+export function writeOk(version: string): RemoteResult<WorkspaceFileWriteResult> {
+  return { ok: true, value: { absolutePath: ABSOLUTE_PATH, version, operation: 'update' } }
+}
+
+/** A guarded write refused for a concurrent change. */
+export const staleWrite: RemoteResult<WorkspaceFileWriteResult> = {
+  ok: false,
+  error: {
+    name: 'RemoteError', isDSHRemoteError: true,
+    code: 'workspace-file/stale-version', message: 'changed since the loaded version', details: { path: PATH },
+  },
 }
 
 /** The `file` resource's metadata: live, or failed beside the last live value. */
@@ -108,9 +144,12 @@ export interface Harness {
  * One tab record's harness.
  * @param script - the page each offset resolves to; an unscripted offset fails `not-found`.
  * @param tabId - owning tab record.
+ * @param editable - whether the supplied viewer opts into editing; `false` the read-only preview, `true` the edit surface.
  * @returns the store, the scripted faces, and a props builder.
  */
-export function harness(script: Record<number, RemoteResult<WorkspaceFileText>> = {}, tabId = TAB_ID): Harness {
+export function harness(
+  script: Record<number, RemoteResult<WorkspaceFileText>> = {}, tabId = TAB_ID, editable = false,
+): Harness {
   const instance = createTextStore().create()
   const pages: Record<number, RemoteResult<WorkspaceFileText>> = { ...script }
   const read = vi.fn<ReadWorkspaceFilePage>((_session, _path, offset) =>
@@ -124,7 +163,7 @@ export function harness(script: Record<number, RemoteResult<WorkspaceFileText>> 
   const controller = new AbortController()
   onTestFinished(() => { controller.abort() })
   const tabActions = { openResource: vi.fn(), openTab: vi.fn(), close: vi.fn(), replace: vi.fn() }
-  const definitions = [textBodyDefinition(() => t('viewer.text'))]
+  const definitions = [{ ...textBodyDefinition(() => t('viewer.text')), editable }]
   const renderSlot: TextPreviewProps['renderSlot'] = (_key, owner, opts) => createElement(TextBody, {
     ...owner, useTabInfo: opts.hookContext, sessionId: SESSION, useResource,
   } as unknown as DocumentPreviewProps)
@@ -148,6 +187,7 @@ export function harness(script: Record<number, RemoteResult<WorkspaceFileText>> 
     loadAll: face.loadAll,
     reloadAll: face.reloadAll,
     startEdit: face.startEdit,
+    refreshEdit: face.refreshEdit,
     saveEdit: face.saveEdit,
     useDocumentPreviews: () => definitions,
     renderSlot,

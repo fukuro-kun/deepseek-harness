@@ -26,6 +26,14 @@
   font-size: var(--dsh-content-font-size-secondary, 13px);
 }
 
+/* The disk moved under a dirty buffer: the guarded write will arbitrate, the
+   hint only says why a save may come back as a conflict. */
+.remote {
+  flex: none;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+}
+
 .tool {
   font-family: inherit;
   font-size: var(--dsh-content-font-size-secondary, 13px);
@@ -74,6 +82,12 @@
   tab-size: 4;
 }
 
+/* Wrapped mode wraps at the viewport — the widest-child sizing is only the
+   unwrapped scroll geometry. */
+.inner.wrapped {
+  width: 100%;
+}
+
 /* The sizer and the underlay are the in-flow children that size .inner; the
    textarea is absolute and follows them. */
 .sizer {
@@ -89,6 +103,7 @@
 }
 
 .underlay :global(.md-code-block) {
+  margin: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -142,6 +157,15 @@
 .bufferOverlay::selection {
   background: var(--dsw-alias-selection-bg, rgba(80, 140, 255, 0.35));
   color: transparent;
+}
+
+/* Wrapped: every layer around the text agrees to break lines the same way,
+   so the overlay's transparent glyphs still sit on the underlay's. */
+.wrapped .sizer,
+.wrapped .underlay :global(pre),
+.wrapped .buffer {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* Conflict resolution view */

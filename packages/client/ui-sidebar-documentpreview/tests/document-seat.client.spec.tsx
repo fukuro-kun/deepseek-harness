@@ -99,9 +99,12 @@ describe('document extension seat', () => {
     async (path) => {
       const h = await boot()
       act(() => { h.rt.ctx.sidebarRight.openResource(sessionFileAddress('address-session', path)) })
-      await waitFor(() => { expect(h.view.container.querySelectorAll('[data-textpreview-line]')).toHaveLength(2) })
-      expect(h.read).toHaveBeenCalledExactlyOnceWith('address-session', path, { offset: 1 }, expect.any(AbortSignal))
-      expect(h.bytes).not.toHaveBeenCalled()
+      // The plain-text fallback is editable: the file opens as a buffer read whole.
+      await waitFor(() => {
+        expect(h.view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('all')
+      })
+      expect(h.bytes).toHaveBeenCalledExactlyOnceWith('address-session', path, expect.any(AbortSignal))
+      expect(h.read).not.toHaveBeenCalled()
     },
   )
 
@@ -120,15 +123,30 @@ describe('document extension seat', () => {
     expect(h.view.container.querySelector('[data-textpreview-state]')).toBeNull()
   })
 
-  it('uses the plain-text body for an unknown extension and loads another page at the scroll edge', async () => {
+  it('opens an editable plain-text buffer for an unknown extension', async () => {
     const h = await boot()
     h.open('notes.unknown')
-    await waitFor(() => { expect(h.view.container.querySelectorAll('[data-textpreview-line]')).toHaveLength(2) })
+    await waitFor(() => {
+      expect(h.view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('all')
+    })
     expect(h.view.container.querySelector('[data-document-preview]')?.getAttribute('data-document-preview')).toBe(PLAIN_BODY_ID)
+    expect(h.bytes).toHaveBeenCalledTimes(1)
+    expect(h.read).not.toHaveBeenCalled()
+  })
+
+  it('loads another page at the scroll edge for a viewer that stays paged', async () => {
+    const h = await boot()
+    await act(async () => { h.register('paged-reader', 'text-pages', 'extension') })
+    h.open('notes.md')
+    await waitFor(() => {
+      expect(h.view.container.querySelector('[data-renderer="paged-reader"]')?.textContent).toBe('first\nsecond')
+    })
     const body = h.view.container.querySelector<HTMLElement>('[data-textpreview-body]')!
     Object.defineProperties(body, { clientHeight: { configurable: true, value: 100 }, scrollHeight: { configurable: true, value: 200 } })
     fireEvent.scroll(body, { target: { scrollTop: 100 } })
-    await waitFor(() => { expect(h.view.container.querySelectorAll('[data-textpreview-line]')).toHaveLength(3) })
+    await waitFor(() => {
+      expect(h.view.container.querySelector('[data-renderer="paged-reader"]')?.textContent).toBe('first\nsecond\nthird')
+    })
     expect(h.read.mock.calls.map(([_sessionId, _path, range]) => range.offset)).toEqual([1, 3])
   })
 

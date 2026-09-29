@@ -21,7 +21,7 @@ import type { RemoteFailure } from '@deepseek-ai/dsh-api-remotes/client'
 import type { TabId } from '@deepseek-ai/dsh-client-ui-dockkit'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { ReadDocumentBytes, ReadWorkspaceFilePage, SessionFile, WriteWorkspaceFile } from './rpc.ts'
-import { documentFileBytes, documentFileText, failureMessage } from './rpc.ts'
+import { documentFileBytes, documentFileText } from './rpc.ts'
 import type { TextStore } from './store.ts'
 import type { DocumentLoadMode } from './document/registry.ts'
 
@@ -74,6 +74,18 @@ export interface TextInjected {
    */
   readonly startEdit: (tabId: TabId, file: SessionFile, signal: AbortSignal) => void
   /**
+   * Re-read the file an open edit session sits on, after the Host reported it
+   * changed. A clean buffer adopts the fresh text; a dirty one keeps editing
+   * and only records the newer version — the guarded write resolves it.
+   * @param tabId - the tab whose edit session refreshes.
+   * @param file - the session and workspace path the tab's address names.
+   * @param signal - the tab record's lifetime.
+   * @param observedVersion - the metadata version that reported the change; a
+   *   failed, undecodable, or epoch-retired read still flags it, so the buffer
+   *   tells the reader it no longer holds the file's current text.
+   */
+  readonly refreshEdit: (tabId: TabId, file: SessionFile, signal: AbortSignal, observedVersion?: string) => void
+  /**
    * Write the draft back, guarded by the version it was read at. A refused
    * write arms the conflict state with the fresh disk content; any other
    * failure lands on the edit session.
@@ -95,6 +107,20 @@ interface TabReads {
   generation: number
   version: string | undefined
   mode: DocumentLoadMode
+  /** An edit-session read is out; a second request returns without reading again. */
+  editInFlight: boolean
+  /**
+   * The refresh epoch: `refreshEdit` issues under the next value, and
+   * `saveEdit`/`startEdit` bump it to retire reads they supersede. Only a
+   * settlement matching the current value may adopt its result.
+   */
+  refreshSeq: number
+  /**
+   * The seq of the latest issued refresh read, or `0` after its settlement
+   * ran. A dropped settlement whose seq still matches was retired by an epoch
+   * bump, not by a successor — the frame it answered was never processed.
+   */
+  refreshPending: number
 }
 
 /**
@@ -116,7 +142,7 @@ export function textFace(
     const readsOf = (tabId: TabId, signal: AbortSignal): TabReads => {
       const held = tabs.get(tabId)
       if (held !== undefined) return held
-      const created: TabReads = { generation: 0, version: undefined, mode: 'text-pages' }
+      const created: TabReads = { generation: 0, version: undefined, mode: 'text-pages', editInFlight: false, refreshSeq: 0, refreshPending: 0 }
       tabs.set(tabId, created)
       signal.addEventListener('abort', () => {
         tabs.delete(tabId)
@@ -194,40 +220,79 @@ export function textFace(
     const startEdit = (tabId: TabId, file: SessionFile, signal: AbortSignal): void => {
       if (signal.aborted) return
       const reads = readsOf(tabId, signal)
+      if (reads.editInFlight) return
+      reads.editInFlight = true
+      // Reopening epochs refreshes the same way a write does: a refresh issued
+      // before this open must not adopt older content into the fresh session.
+      ++reads.refreshSeq
       void readAll(file, signal).then((result) => {
+        reads.editInFlight = false
         if (signal.aborted) return
         if (!result.ok) {
-          actions.failed(tabId, result.error)
+          actions.editFailed(tabId)
           return
         }
         let text: string
         try {
           text = documentFileText(result.value)
-        } catch (error) {
-          // No edit session exists yet; the preview's read failure carries it.
-          actions.failed(tabId, internalFailure(failureMessage(error), error))
+        } catch {
+          actions.editFailed(tabId)
           return
         }
         if (text.includes('\0')) {
-          actions.failed(tabId, internalFailure(`"${file.path}" is not UTF-8 text`))
+          actions.editFailed(tabId)
           return
         }
-        reads.version = result.value.version
         actions.editStarted(tabId, text, result.value.version)
+      })
+    }
+    const refreshEdit = (tabId: TabId, file: SessionFile, signal: AbortSignal, observedVersion?: string): void => {
+      if (signal.aborted) return
+      const reads = readsOf(tabId, signal)
+      // Two reported changes can overlap reads; only the last issued refresh
+      // may adopt — an earlier settlement landing later would regress the file.
+      const seq = ++reads.refreshSeq
+      reads.refreshPending = seq
+      void readAll(file, signal).then((result) => {
+        if (signal.aborted) return
+        if (reads.refreshSeq !== seq) {
+          // A save or reopen epoch retired this read with no successor: the
+          // frame it answered was consumed but never processed — flag it.
+          if (reads.refreshPending === seq && observedVersion !== undefined) {
+            actions.editRefreshMissed(tabId, observedVersion)
+          }
+          return
+        }
+        reads.refreshPending = 0
+        if (!result.ok) {
+          if (observedVersion !== undefined) actions.editRefreshMissed(tabId, observedVersion)
+          return
+        }
+        let text: string
+        try {
+          text = documentFileText(result.value)
+        } catch {
+          if (observedVersion !== undefined) actions.editRefreshMissed(tabId, observedVersion)
+          return
+        }
+        if (text.includes('\0')) {
+          if (observedVersion !== undefined) actions.editRefreshMissed(tabId, observedVersion)
+          return
+        }
+        actions.editRefreshed(tabId, text, result.value.version)
       })
     }
     const saveEdit = (tabId: TabId, file: SessionFile, text: string, expectedVersion: string, signal: AbortSignal): void => {
       if (signal.aborted) return
       const reads = readsOf(tabId, signal)
+      // A write epochs refreshes: a read issued before the save must not adopt
+      // pre-write content over what the write just landed.
+      ++reads.refreshSeq
       actions.saveStarted(tabId)
       void write(file.sessionId, file.path, { text, expectedVersion }, signal).then((result) => {
         if (signal.aborted) return
         if (result.ok) {
-          reads.version = result.value.version
-          actions.saved(tabId, result.value.version)
-          // The change feed will re-report our write; restart reads the new
-          // content so the preview reflects exactly what landed.
-          restart(tabId, file, signal, result.value.version)
+          actions.saved(tabId, result.value.version, text)
           return
         }
         if (result.error.code !== 'workspace-file/stale-version') {
@@ -241,9 +306,14 @@ export function textFace(
             return
           }
           try {
-            actions.saveConflicted(tabId, text, documentFileText(fresh.value), fresh.value.version)
-          } catch (error) {
-            actions.saveFailed(tabId, internalFailure(failureMessage(error), error))
+            const freshText = documentFileText(fresh.value)
+            if (freshText.includes('\0')) {
+              actions.saveFailed(tabId, notTextFailure(file.path))
+              return
+            }
+            actions.saveConflicted(tabId, text, freshText, fresh.value.version)
+          } catch {
+            actions.saveFailed(tabId, notTextFailure(file.path))
           }
         })
       })
@@ -251,15 +321,22 @@ export function textFace(
     return {
       loadPage, reloadPages: restart, loadAll,
       reloadAll: (tabId, file, signal, observedVersion) => { restart(tabId, file, signal, observedVersion, 'bytes-complete') },
-      startEdit, saveEdit,
+      startEdit, refreshEdit, saveEdit,
     }
   }
 }
 
-/** The RemoteError-shaped failure a local guard reports through. */
-function internalFailure(message: string, cause?: unknown): RemoteFailure {
+/**
+ * The file on disk turned out not to be text — the guarded-write flow reports
+ * it through the same code the Host would have used, so the failure line
+ * resolves localized instead of carrying a locally authored English message.
+ */
+function notTextFailure(path: string): RemoteFailure {
   return Object.assign(
-    new Error(message, { cause }),
-    { name: 'RemoteError', isDSHRemoteError: true as const, code: 'gateway/internal' as const, details: {} },
+    new Error('document file is not editable text'),
+    {
+      name: 'RemoteError', isDSHRemoteError: true as const,
+      code: 'workspace-file/not-text' as const, details: { path },
+    },
   )
 }

@@ -62,7 +62,8 @@
   color: var(--dsw-alias-label-primary);
 }
 
-/* Announced, not applied: the reader keeps the text they are looking at. */
+/* The file's metadata failed over content already read — announced, with the
+   same reload the header carries. */
 .changed {
   display: flex;
   flex: 0 0 auto;

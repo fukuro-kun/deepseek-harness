@@ -442,12 +442,13 @@ describe('textFace — editing', () => {
     expect(tab()?.edit).toMatchObject({ base: 'a\nb\n', baseVersion: 'v7', draft: 'a\nb\n', saving: false })
   })
 
-  it('records a failed edit open on the tab, not on an edit session that never existed', async () => {
+  it('marks the tab edit-unavailable when the open read fails, without a session or a page failure', async () => {
     const { face, settleAllWire, tab } = bench()
     face.startEdit(TAB_1, FILE, new AbortController().signal)
     await settleAllWire(bytesFailure())
     expect(tab()?.edit).toBeUndefined()
-    expect(tab()?.failure?.code).toBe('workspace-file/outside-workspace')
+    expect(tab()?.editUnavailable).toBe(true)
+    expect(tab()?.failure).toBeUndefined()
   })
 
   it('refuses to edit a file whose bytes are not UTF-8 text', async () => {
@@ -455,7 +456,8 @@ describe('textFace — editing', () => {
     face.startEdit(TAB_1, FILE, new AbortController().signal)
     await settleAll(complete('v1', new Uint8Array([0xff, 0xfe])))
     expect(tab()?.edit).toBeUndefined()
-    expect(tab()?.failure?.code).toBe('gateway/internal')
+    expect(tab()?.editUnavailable).toBe(true)
+    expect(tab()?.failure).toBeUndefined()
   })
 
   it('refuses to edit text that decodes but carries NUL bytes', async () => {
@@ -463,7 +465,111 @@ describe('textFace — editing', () => {
     face.startEdit(TAB_1, FILE, new AbortController().signal)
     await settleAll(complete('v1', new TextEncoder().encode('a\0b\n')))
     expect(tab()?.edit).toBeUndefined()
-    expect(tab()?.failure?.code).toBe('gateway/internal')
+    expect(tab()?.editUnavailable).toBe(true)
+  })
+
+  it('reads once while an edit open is already in flight', async () => {
+    const { face, bytes, settleAll, outstandingAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    face.startEdit(TAB_1, FILE, controller.signal)
+    expect(bytes).toHaveBeenCalledTimes(1)
+    expect(outstandingAll()).toEqual([1])
+    await settleAll(completeText('v7', 'a\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7' })
+    // A later open reads again: the in-flight guard only covers the request out.
+    face.startEdit(TAB_1, FILE, controller.signal)
+    expect(bytes).toHaveBeenCalledTimes(2)
+    await settleAll(completeText('v8', 'b\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'b\n', baseVersion: 'v8' })
+  })
+
+  it('adopts a refreshed read into a clean buffer, and only marks a dirty one', async () => {
+    const { face, instance, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v8', 'disk\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'disk\n', baseVersion: 'v8', draft: 'disk\n', externalVersion: undefined })
+    // A dirty draft keeps its text; the refresh only records the newer version.
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v9', 'newer\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'disk\n', draft: 'mine\n', externalVersion: 'v9' })
+  })
+
+  it('leaves a refresh alone while the session saves or resolves a conflict', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v8', 'disk\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', saving: true })
+    await settleWrite(stale)
+    await settleAll(completeText('v9', 'theirs\n'))
+    expect(tab()?.edit?.conflict).toBeDefined()
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v10', 'even newer\n'))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7' })
+    expect(tab()?.edit?.conflict?.version).toBe('v9')
+  })
+
+  it('ignores a refresh failure without an observed version: the open session keeps its base', async () => {
+    const { face, settleAll, settleAllWire, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAllWire(bytesFailure())
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: undefined })
+  })
+
+  it('flags the reported version when its refresh read fails', async () => {
+    const { face, settleAll, settleAllWire, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    await settleAllWire(bytesFailure())
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: 'v8' })
+  })
+
+  it('drops a superseded refresh failure without flagging its version', async () => {
+    const { face, settleAll, settleAllWire, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    // The newer report retires the older read; its failure must not flag v8
+    // when v9 is what the buffer will track.
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v9')
+    await settleAllWire(bytesFailure(), 2)
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: undefined })
+    await settleAll(completeText('v9', 'new\n'), 3)
+    expect(tab()?.edit).toMatchObject({ base: 'new\n', baseVersion: 'v9' })
+  })
+
+  it('flags the version a save-retired refresh carried, but skips a versionless one', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    // The save's epoch retires the in-flight refresh: no successor owns its
+    // frame, so the settlement flags the version it was issued for.
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(writeOk('v9'))
+    await settleAll(completeText('v8', 'stale\n'), 2)
+    expect(tab()?.edit).toMatchObject({ base: 'mine\n', baseVersion: 'v9', externalVersion: 'v8' })
+    // A refresh issued without a version has nothing to flag.
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    face.saveEdit(TAB_1, FILE, 'mine again\n', 'v9', controller.signal)
+    await settleWrite(writeOk('v10'))
+    await settleAll(completeText('v10', 'later\n'), 4)
+    expect(tab()?.edit).toMatchObject({ baseVersion: 'v10', externalVersion: 'v8' })
   })
 
   it('never opens a read for an edit whose record already ended', () => {
@@ -472,6 +578,111 @@ describe('textFace — editing', () => {
     controller.abort()
     face.startEdit(TAB_1, FILE, controller.signal)
     expect(bytes).not.toHaveBeenCalled()
+  })
+
+  it('drops an older refresh that settles after a newer one', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    // Two reported changes overlap their reads; the newer one lands first.
+    // Read keys count calls across the whole bench: startEdit took key 1.
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v9', 'newest\n'), 3)
+    expect(tab()?.edit).toMatchObject({ base: 'newest\n', baseVersion: 'v9' })
+    await settleAll(completeText('v8', 'stale\n'), 2)
+    expect(tab()?.edit).toMatchObject({ base: 'newest\n', baseVersion: 'v9' })
+  })
+
+  it('drops a refresh issued before the session was reopened', async () => {
+    const { face, instance, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    // The refresh read is still out when the reader cancels and the body
+    // re-opens the session — its settlement must not adopt older content.
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    instance.actions.editCancelled(TAB_1)
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v9', 'reopened\n'), 3)
+    expect(tab()?.edit).toMatchObject({ base: 'reopened\n', baseVersion: 'v9' })
+    await settleAll(completeText('v8', 'stale\n'), 2)
+    expect(tab()?.edit).toMatchObject({ base: 'reopened\n', baseVersion: 'v9' })
+  })
+
+  it('flags a refresh the reopen epoch retired after the new session opened', async () => {
+    const { face, instance, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    instance.actions.editCancelled(TAB_1)
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v9', 'reopened\n'), 3)
+    // The retired refresh's version never entered the reopened buffer — the
+    // flag stays conservative: the disk may still sit ahead of the new base.
+    await settleAll(completeText('v8', 'stale\n'), 2)
+    expect(tab()?.edit).toMatchObject({ base: 'reopened\n', baseVersion: 'v9', externalVersion: 'v8' })
+  })
+
+  it('never opens a refresh read for an edit whose record already ended', () => {
+    const { face, bytes } = bench()
+    const controller = new AbortController()
+    controller.abort()
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    expect(bytes).not.toHaveBeenCalled()
+  })
+
+  it('drops a refresh read that settles after its record ended', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    controller.abort()
+    await settleAll(completeText('v8', 'b\n'))
+    expect(tab()).toBeUndefined()
+  })
+
+  it('ignores a refresh read whose bytes cannot decode as edit text', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(complete('v8', new Uint8Array([0xff, 0xfe])))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: undefined })
+  })
+
+  it('flags the reported version when its refresh read cannot decode as text', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    await settleAll(complete('v8', new Uint8Array([0xff, 0xfe])))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: 'v8' })
+  })
+
+  it('flags the reported version when its refresh read turns binary', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal, 'v8')
+    await settleAll(complete('v8', new TextEncoder().encode('a\0b\n')))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: 'v8' })
+  })
+
+  it('ignores a binary refresh read whose settlement carried no version', async () => {
+    const { face, settleAll, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\n'))
+    face.refreshEdit(TAB_1, FILE, controller.signal)
+    await settleAll(complete('v8', new TextEncoder().encode('a\0b\n')))
+    expect(tab()?.edit).toMatchObject({ base: 'a\n', baseVersion: 'v7', externalVersion: undefined })
   })
 
   it('drops an edit-open read that settles after its record ended', async () => {
@@ -505,8 +716,23 @@ describe('textFace — editing', () => {
     expect(tab()).toBeUndefined()
   })
 
-  it('saves the draft under its base version, then re-reads the file it landed as', async () => {
-    const { face, read, write, settleAll, settleWrite, settle, tab } = bench()
+  it('drops a write settling onto a session that no longer owns it', async () => {
+    const { face, instance, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    // The write is still out when the reader cancels and the body re-opens:
+    // the settle belongs to the discarded session and must not rebase this one.
+    instance.actions.editCancelled(TAB_1)
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v9', 'fresh\n'), 3)
+    await settleWrite(writeOk('v8'))
+    expect(tab()?.edit).toMatchObject({ base: 'fresh\n', baseVersion: 'v9', saving: false })
+  })
+
+  it('saves the draft under its base version and rebases the session on what landed', async () => {
+    const { face, read, write, settleAll, settleWrite, tab } = bench()
     const controller = new AbortController()
     face.startEdit(TAB_1, FILE, controller.signal)
     await settleAll(completeText('v7', 'a\nb\n'))
@@ -515,11 +741,13 @@ describe('textFace — editing', () => {
       { text: 'a\nchanged\n', expectedVersion: 'v7' }, controller.signal)
     expect(tab()?.edit?.saving).toBe(true)
     await settleWrite(writeOk('v8'))
-    // The write landed: the session closes and the pages re-read what landed.
-    expect(tab()?.edit).toBeUndefined()
-    await settle(page(1, ['a', 'changed'], true, 'v8'))
-    expect(tab()).toMatchObject({ version: 'v8', pages: { 1: { text: 'a\nchanged' } } })
-    expect(read).toHaveBeenCalled()
+    // The session stays open, rebased on the post-write version — the editable
+    // surface is the file's presentation, not a mode the write exits.
+    expect(tab()?.edit).toMatchObject({ base: 'a\nchanged\n', baseVersion: 'v8', saving: false })
+    // The write's version stays out of the paged trackers: no page holds it,
+    // so the version the pages were read at must keep standing.
+    expect(tab()?.version).toBeUndefined()
+    expect(read).not.toHaveBeenCalled()
   })
 
   it('arms the conflict with the fresh disk content when the write meets a changed file', async () => {
@@ -571,7 +799,20 @@ describe('textFace — editing', () => {
     await settleWrite(stale)
     await settleAll(complete('v9', new Uint8Array([0xff, 0xfe])))
     expect(tab()?.edit?.saving).toBe(false)
-    expect(tab()?.edit?.failure?.code).toBe('gateway/internal')
+    expect(tab()?.edit?.failure?.code).toBe('workspace-file/not-text')
+  })
+
+  it('reports a conflict re-read that turns binary on the open edit session', async () => {
+    const { face, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(stale)
+    await settleAll(complete('v9', new TextEncoder().encode('a\0b\n')))
+    expect(tab()?.edit?.saving).toBe(false)
+    expect(tab()?.edit?.conflict).toBeUndefined()
+    expect(tab()?.edit?.failure?.code).toBe('workspace-file/not-text')
   })
 
   it('records a non-conflict write failure on the open edit session', async () => {

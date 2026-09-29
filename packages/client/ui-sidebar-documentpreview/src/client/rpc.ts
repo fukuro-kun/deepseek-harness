@@ -134,15 +134,6 @@ export function createWriteFile(remote: WorkspaceFilesReadRemote): WriteWorkspac
 }
 
 /**
- * The message an arbitrary thrown value carries, for a Remote-shaped failure.
- * @param error - the caught value.
- * @returns its message, or the value stringified.
- */
-export function failureMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error)
-}
-
-/**
  * Decode a complete-file byte result into UTF-8 text; malformed input throws.
  * @param file - the complete-file read result carrying wire base64.
  * @returns the decoded text.

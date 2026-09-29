@@ -19,7 +19,7 @@ function humanBytes(bytes: number): string {
  * Say what went wrong, in terms of the file rather than of the transport.
  * @param t - namespace-bound translate.
  * @param failure - the settled Remote failure.
- * @returns the line to show in place of the file.
+ * @returns the line to show for the failure — in place of the file, or beside the editor's own controls.
  */
 export function failureLine(t: TranslateNS<'sidebarDocumentPreview'>, failure: RemoteFailure): string {
   switch (failure.code) {

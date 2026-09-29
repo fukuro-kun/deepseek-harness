@@ -47,8 +47,8 @@ export function conflictRows(theirs: string, mine: string): readonly ConflictRow
     minePending = []
   }
   for (const change of diffLines(theirs, mine)) {
-    if (change.removed === true) { theirsPending = [...theirsPending, ...linesOf(change.value)]; continue }
-    if (change.added === true) { minePending = [...minePending, ...linesOf(change.value)]; continue }
+    if (change.removed) { theirsPending = [...theirsPending, ...linesOf(change.value)]; continue }
+    if (change.added) { minePending = [...minePending, ...linesOf(change.value)]; continue }
     flush()
     rows.push({ kind: 'same', lines: linesOf(change.value) })
   }
@@ -87,8 +87,8 @@ export function mergeConflicts(
     index += 1
   }
   for (const change of diffLines(theirs, mine)) {
-    if (change.removed === true) { theirsPending += change.value; continue }
-    if (change.added === true) { minePending += change.value; continue }
+    if (change.removed) { theirsPending += change.value; continue }
+    if (change.added) { minePending += change.value; continue }
     flush()
     out += change.value
   }
