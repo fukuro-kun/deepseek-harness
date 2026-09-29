@@ -21,12 +21,20 @@ describe('failureLine', () => {
     expect(failureLine(t, failure('workspace-file/not-found'))).toBe('error.notFound')
     expect(failureLine(t, failure('workspace-file/not-text'))).toBe('error.notText')
     expect(failureLine(t, failure('workspace-file/not-regular-file'))).toBe('error.notRegularFile')
+    expect(failureLine(t, failure('workspace-file/write-failed', {}, 'denied'))).toBe('error.writeFailed(message=denied)')
+    expect(failureLine(t, failure('workspace-file/stale-version'))).toBe('error.staleVersion')
+  })
+
+  it('words unmapped codes as a save failure in the write context', () => {
+    expect(failureLine(t, failure('gateway/internal', {}, 'socket closed'), 'write'))
+      .toBe('error.writeFailed(message=socket closed)')
   })
 
   it('states the byte cap the way a person reads one', () => {
     expect(failureLine(t, failure('workspace-file/too-large', { limit: 512 }))).toBe('error.tooLarge(limit=512 B)')
     expect(failureLine(t, failure('workspace-file/too-large', { limit: 4096 }))).toBe('error.tooLarge(limit=4 KB)')
     expect(failureLine(t, failure('workspace-file/too-large', { limit: 3 * 1024 * 1024 }))).toBe('error.tooLarge(limit=3 MB)')
+    expect(failureLine(t, failure('workspace-file/too-large', { limit: 4096 }), 'write')).toBe('error.tooLargeWrite(limit=4 KB)')
   })
 
   it('passes any other failure through in its own words', () => {

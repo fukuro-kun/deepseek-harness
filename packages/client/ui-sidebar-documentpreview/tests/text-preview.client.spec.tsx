@@ -929,7 +929,7 @@ describe('TextPreview — editing', () => {
     // The conflict stays armed and the failure is visible there — the reader
     // must not learn about the refused merge only after backing out.
     const line = view.container.querySelector('[data-textpreview-conflict] [data-textpreview-edit-failed]')
-    expect(line?.textContent).toBe('error.unavailable(message=denied)')
+    expect(line?.textContent).toBe('error.writeFailed(message=denied)')
     expect(h.instance.getSnapshot().byTab[TAB_ID]?.edit?.conflict).toBeDefined()
   })
 
@@ -957,7 +957,7 @@ describe('TextPreview — editing', () => {
     click(view.container, '[data-textpreview-save]')
     await settle()
     const line = view.container.querySelector('[data-textpreview-edit-failed]')
-    expect(line?.textContent).toBe('error.unavailable(message=denied)')
+    expect(line?.textContent).toBe('error.writeFailed(message=denied)')
     expect(view.container.querySelector<HTMLTextAreaElement>('[data-textpreview-buffer]')?.value).toBe('x\n')
   })
 
@@ -1214,6 +1214,46 @@ describe('TextPreview — editing', () => {
     click(view.container, '[data-textpreview-more]')
     await settle()
     expect(h.read).toHaveBeenCalledTimes(1)
+  })
+
+  it('says the file is unavailable instead of spinning when the provider leaves mid-edit', async () => {
+    const h = editHarness({ 1: page(1, ['one'], true) })
+    const view = await openEditor(h, 'one\n')
+    expect(view.container.querySelector('[data-textpreview-buffer]')).not.toBeNull()
+    // The provider detaching reports status 'none' with no failure: the edit
+    // buffer is parked in the store and the body must not claim a read runs.
+    h.useResource.mockReturnValue({ status: 'none', value: undefined, failure: undefined })
+    view.rerender(<TextPreview {...h.props()} />)
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+    expect(view.container.querySelector('[data-textpreview-body]')?.textContent).toContain('resourceUnavailable')
+  })
+
+  it('keeps the meta failure line over an edit session whose viewer turned read-only', async () => {
+    const h = harness({ 1: page(1, ['one'], true) })
+    const definitions: DocumentPreviewDefinition[] = [
+      { id: 'text', extensions: ['md'], title: () => 'Text', loading: 'text-pages', wrap: false, editable: true },
+      { id: 'markdown', extensions: ['md'], title: () => 'Markdown', loading: 'text-pages', wrap: false },
+    ]
+    const props: TextPreviewProps = {
+      ...h.props(),
+      useDocumentPreviews: <S,>(selector: (v: readonly DocumentPreviewDefinition[]) => S): S => selector(definitions),
+      renderSlot: () => null,
+    }
+    h.bytes.mockResolvedValue(completeTextWire('v1', 'one\n'))
+    const view = render(<TextPreview {...props} />)
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-buffer]')).not.toBeNull()
+    // Switching to a non-editable viewer parks the buffer without closing it;
+    // a metadata failure must still surface instead of hiding with the editor.
+    act(() => { h.instance.actions.selected(TAB_ID, 'markdown') })
+    view.rerender(<TextPreview {...props} />)
+    h.setFailure(new RemoteError('workspace-file/not-found', 'gone', { path: PATH }))
+    view.rerender(<TextPreview {...props} />)
+    await settle()
+    expect(view.container.querySelector('[data-textpreview-editing]')).toBeNull()
+    const bar = view.container.querySelector('[data-textpreview-meta-failed]')
+    expect(bar?.getAttribute('data-textpreview-meta-failed')).toBe('workspace-file/not-found')
   })
 
   it('switches the viewer from the header menu', async () => {

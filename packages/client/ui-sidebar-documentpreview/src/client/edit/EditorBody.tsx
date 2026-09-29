@@ -131,7 +131,7 @@ export function EditorBody({
         </button>
       </div>
       {edit.failure !== undefined && (
-        <p className={css.failure} data-textpreview-edit-failed={edit.failure.code}>{failureLine(t, edit.failure)}</p>
+        <p className={css.failure} data-textpreview-edit-failed={edit.failure.code}>{failureLine(t, edit.failure, 'write')}</p>
       )}
       <div
         className={css.scroll}
@@ -203,7 +203,7 @@ function ConflictView({
       </div>
       <p className={css.conflictHint}>{t('conflict.hint')}</p>
       {failure !== undefined && (
-        <p className={css.failure} data-textpreview-edit-failed={failure.code}>{failureLine(t, failure)}</p>
+        <p className={css.failure} data-textpreview-edit-failed={failure.code}>{failureLine(t, failure, 'write')}</p>
       )}
       <div className={css.scroll} data-textpreview-conflict-rows>
         {rows.map((row, rowIndex) => row.kind === 'same'
@@ -215,6 +215,7 @@ function ConflictView({
                   type="button"
                   className={clsx(css.pick, (conflict.choices[row.hunk.index] ?? 'mine') === 'mine' && css.picked)}
                   data-textpreview-pick="mine"
+                  disabled={saving}
                   onClick={() => { onChoice(row.hunk.index, 'mine') }}
                 >
                   {t('conflict.keepMine')}
@@ -223,6 +224,7 @@ function ConflictView({
                   type="button"
                   className={clsx(css.pick, conflict.choices[row.hunk.index] === 'theirs' && css.picked)}
                   data-textpreview-pick="theirs"
+                  disabled={saving}
                   onClick={() => { onChoice(row.hunk.index, 'theirs') }}
                 >
                   {t('conflict.takeTheirs')}

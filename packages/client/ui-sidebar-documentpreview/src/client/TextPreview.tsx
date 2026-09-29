@@ -292,10 +292,12 @@ export function TextPreview({
   }
   return (
     <div className={css.preview} data-textpreview-state="text" data-textpreview-url={tab.contentId} data-document-preview={selected.id}>
-      {meta.failure !== undefined && (hasContent || editing) && (
+      {meta.failure !== undefined && (hasContent || editing || edit !== undefined) && (
         // The file's metadata failed — gone, or its workspace unknown. With
         // nothing read and no buffer the body's own failure already says it,
-        // so the bar would only repeat the same line.
+        // so the bar would only repeat the same line. An open edit session
+        // counts as content too: a non-editable viewer selected mid-edit
+        // unsets `editing`, and without this bar the failure would vanish.
         <p className={css.changed} data-textpreview-meta-failed={meta.failure.code}>
           <span>{failureLine(t, meta.failure)}</span>
           <button
@@ -400,7 +402,12 @@ export function TextPreview({
           }}
         >
           {!hasContent && current?.failure === undefined && (
-            <LoadingIndicator className={css.statusLine} label={t('loading')} />
+            meta.status === 'none'
+              // The provider is gone (detached or never mounted): nothing is
+              // loading, so an endless spinner would claim otherwise. An open
+              // edit session survives in the store and remounts on return.
+              ? <p className={css.statusLine}>{t('resourceUnavailable')}</p>
+              : <LoadingIndicator className={css.statusLine} label={t('loading')} />
           )}
           {content !== undefined && renderSlot('sidebar.right.tab.document', {
             resourceAddress: tab.contentId, content, wrap: state.wrap, scrollportRef: bindScrollport,

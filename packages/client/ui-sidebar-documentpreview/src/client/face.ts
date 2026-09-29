@@ -268,8 +268,9 @@ export function textFace(
         if (reads.refreshSeq !== seq) {
           // A save or reopen epoch retired this read with no successor: the
           // frame it answered was consumed but never processed — flag it.
-          if (reads.refreshPending === seq && observedVersion !== undefined) {
-            actions.editRefreshMissed(tabId, observedVersion)
+          if (reads.refreshPending === seq) {
+            reads.refreshPending = 0
+            if (observedVersion !== undefined) actions.editRefreshMissed(tabId, observedVersion)
           }
           return
         }

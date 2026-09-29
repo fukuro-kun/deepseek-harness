@@ -139,12 +139,13 @@ export function createWriteFile(remote: WorkspaceFilesReadRemote): WriteWorkspac
 
 /**
  * Decode a complete-file byte result into UTF-8 text; malformed input throws.
+ * The BOM stays in the text so a later write puts it back unchanged.
  * @param file - the complete-file read result carrying wire base64.
  * @returns the decoded text.
  */
 export function documentFileText(file: WorkspaceFileBytes): string {
   const bytes = Uint8Array.from(atob(file.data), character => character.charCodeAt(0))
-  return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+  return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes)
 }
 
 /** Complete document bytes borrowed read-only by renderers; copy before transferring to a Worker. */

@@ -776,6 +776,25 @@ describe('textFace — editing', () => {
     expect(tab()?.edit?.draft).toBe('mine\n')
   })
 
+  it('re-arms the conflict when the merge save meets another disk change', async () => {
+    const { face, instance, settleAll, settleWrite, tab } = bench()
+    const controller = new AbortController()
+    face.startEdit(TAB_1, FILE, controller.signal)
+    await settleAll(completeText('v7', 'a\nb\n'))
+    instance.actions.editDraft(TAB_1, 'mine\n')
+    face.saveEdit(TAB_1, FILE, 'mine\n', 'v7', controller.signal)
+    await settleWrite(stale)
+    await settleAll(completeText('v9', 'theirs\n'))
+    // The merged buffer is guarded by the conflict's fresh version; a second
+    // stale refusal re-reads and re-arms against the newest disk content.
+    face.saveEdit(TAB_1, FILE, 'merged\n', 'v9', controller.signal)
+    await settleWrite(stale)
+    await settleAll(completeText('v10', 'newer\n'))
+    expect(tab()?.edit?.saving).toBe(false)
+    expect(tab()?.edit?.conflict).toMatchObject({ mine: 'merged\n', theirs: 'newer\n', version: 'v10' })
+    expect(tab()?.edit?.draft).toBe('mine\n')
+  })
+
   it('drops a conflict re-read that settles after its record ended', async () => {
     const { face, settleAll, settleWrite, tab } = bench()
     const controller = new AbortController()
