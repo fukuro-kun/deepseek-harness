@@ -12,7 +12,7 @@ Dokumentation: [https://deepseek-harness.github.io/deepseek-harness/](https://de
 
 DeepSeek Harness befindet sich in _Developer Preview_ und entwickelt sich schnell weiter. **ES WIRD KOMPATIBILITÄTSBRECHENDE ÄNDERUNGEN GEBEN.**
 
-Lies vor dem Ausführen des Projekts den [Sicherheitshinweis](SAFETY.md).
+Lies vor dem Ausführen des Projekts den [Sicherheitshinweis](SAFETY.de.md).
 
 ## Ausführen
 
@@ -24,7 +24,7 @@ Installiere `Node.js` und führe dann aus:
 npx @deepseek-ai/dsh web
 ```
 
-Der Befehl startet die Web-UI standardmäßig auf `http://127.0.0.1:3080` und öffnet sie beim lokalen Start im Standard-Browser. Bei einem Start über SSH wird nur die Host-URL ausgegeben, weil der SSH-Client oder Editor die lokal weitergeleitete Adresse besitzt. Mit `--no-open` läuft der Server, ohne einen Browser zu öffnen. Siehe [Web-UI-Anleitung](docs/user/guide/index.md).
+Der Befehl startet die Web-UI standardmäßig auf `http://127.0.0.1:3080` und öffnet sie beim lokalen Start im Standard-Browser. Bei einem Start über SSH wird nur die Host-URL ausgegeben, weil der SSH-Client oder Editor die lokal weitergeleitete Adresse besitzt. Mit `--no-open` läuft der Server, ohne einen Browser zu öffnen. Siehe [Web-UI-Anleitung](docs/user/guide/index.de.md).
 
 ### Aus dem Source-Checkout ausführen
 
@@ -48,11 +48,11 @@ pnpm dsh web
 
 ## Mitwirken
 
-Siehe [CONTRIBUTING.md](CONTRIBUTING.md).
+Siehe [CONTRIBUTING.md](CONTRIBUTING.de.md).
 
 ## Entwicklung
 
-Beginne mit dem [Development Guide](docs/development.md) und der [Architektur-Dokumentation](docs/architecture.md).
+Beginne mit dem [Development Guide](docs/development.de.md) und der [Architektur-Dokumentation](docs/architecture.de.md).
 
 Für Agents gelten die Regeln in [AGENTS.md](AGENTS.md).
 

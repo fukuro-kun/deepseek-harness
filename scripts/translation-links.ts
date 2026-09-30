@@ -1,4 +1,4 @@
-/** Locale-aware resolution and byte-preserving rewrites for bilingual Markdown links. */
+/** Locale-aware resolution and byte-preserving rewrites for trilingual Markdown links. */
 
 import { existsSync, statSync } from 'node:fs'
 import { posix, resolve } from 'node:path'
@@ -18,7 +18,7 @@ export interface TranslationLinkContext {
   repoRoot: string
   /** Repository-relative Markdown source path. */
   sourcePath: string
-  /** Whether an English Markdown path belongs to the active bilingual corpus. */
+  /** Whether an English Markdown path belongs to the active trilingual corpus. */
   isTranslationPairSource: (sourcePath: string) => boolean
   /** Selected content plane; defaults to regular files in the working tree. */
   repositoryFileExists?: (repoPath: string) => boolean
@@ -38,9 +38,21 @@ export interface TranslationLinkRewriteResult {
   rewritten: number
 }
 
+/** The languages a paired document may be authored in. */
+export type TranslationDocumentLanguage = 'en' | 'zh' | 'de'
+
+/** The span of one top-level language switcher immediately following the H1. */
+export interface LanguageSwitcherSpan {
+  /** Start offset of the switcher paragraph. */
+  start: number
+  /** End offset of the switcher paragraph. */
+  end: number
+}
+
 interface TranslationPairTarget {
   source: string
   zh: string
+  de: string
 }
 
 interface ResolvedTranslationLink {
@@ -49,7 +61,7 @@ interface ResolvedTranslationLink {
   suffix: string
   expectedPath: string
   expectedUrl: string
-  locale: 'en' | 'zh'
+  locale: TranslationDocumentLanguage
 }
 
 interface Replacement {
@@ -60,14 +72,32 @@ interface Replacement {
 
 type LinkNode = Extract<Nodes, { type: 'link' | 'definition' }>
 
-/** Offset of the one top-level switcher link immediately following the H1. */
-export function languageSwitcherLinkOffset(
+/**
+ * Canonical switcher line per own language and pair mode. The German side has
+ * no bilingual form: a `.de.md` file only exists as part of a converted pair.
+ */
+const SWITCHER_LINE: Record<TranslationDocumentLanguage, { bilingual: RegExp | null; trilingual: RegExp }> = {
+  en: {
+    bilingual: /^English \| \[中文\]\([^\n]+\)$/,
+    trilingual: /^English \| \[中文\]\([^\n]+\) \| \[Deutsch\]\([^\n]+\)$/,
+  },
+  zh: {
+    bilingual: /^\[English\]\([^\n]+\) \| 中文$/,
+    trilingual: /^\[English\]\([^\n]+\) \| 中文 \| \[Deutsch\]\([^\n]+\)$/,
+  },
+  de: {
+    bilingual: null,
+    trilingual: /^\[English\]\([^\n]+\) \| \[中文\]\([^\n]+\) \| Deutsch$/,
+  },
+}
+
+function findSwitcherParagraph(
   tree: Nodes,
   markdown: string,
-  acceptedTargets: string | readonly string[],
-): number | undefined {
+  pattern: RegExp,
+  linkCount: number,
+): { start: number; end: number; links: LinkNode[] } | undefined {
   if (tree.type !== 'root') return undefined
-  const accepted = new Set(typeof acceptedTargets === 'string' ? [acceptedTargets] : acceptedTargets)
   const headingIndex = tree.children.findIndex(node => node.type === 'heading' && node.depth === 1)
   if (headingIndex < 0) return undefined
   for (const node of tree.children.slice(headingIndex + 1)) {
@@ -76,11 +106,51 @@ export function languageSwitcherLinkOffset(
     const start = node.position.start.offset
     const end = node.position.end.offset
     if (start === undefined || end === undefined) continue
-    const authored = markdown.slice(start, end)
-    if (!/^(?:English \| \[中文\]\([^\n]+\)|\[English\]\([^\n]+\) \| 中文)$/.test(authored)) continue
-    const links = node.children.filter((child): child is Extract<Nodes, { type: 'link' }> => child.type === 'link')
-    if (links.length === 1 && accepted.has(links[0]?.url ?? '')) {
-      return links[0]?.position?.start.offset
+    if (!pattern.test(markdown.slice(start, end))) continue
+    const links: LinkNode[] = []
+    for (const child of node.children) {
+      if (child.type === 'link') links.push(child)
+    }
+    if (links.length !== linkCount) continue
+    return { start, end, links }
+  }
+  return undefined
+}
+
+/**
+ * Locate the canonical switcher of one language and pair mode, requiring every
+ * switcher link to target an accepted counterpart.
+ *
+ * @param tree - Parsed document tree.
+ * @param markdown - Source text the tree was parsed from.
+ * @param acceptedTargets - Relative or public-repository links accepted as switcher targets.
+ * @param ownLanguage - Language this document is authored in.
+ * @param trilingual - Whether the pair carries a German side.
+ * @returns The switcher paragraph span, or undefined when absent.
+ */
+export function languageSwitcherSpan(
+  tree: Nodes,
+  markdown: string,
+  acceptedTargets: string | readonly string[],
+  ownLanguage: TranslationDocumentLanguage,
+  trilingual: boolean,
+): LanguageSwitcherSpan | undefined {
+  const pattern = SWITCHER_LINE[ownLanguage][trilingual ? 'trilingual' : 'bilingual']
+  if (pattern === null) return undefined
+  const accepted = new Set(typeof acceptedTargets === 'string' ? [acceptedTargets] : acceptedTargets)
+  const found = findSwitcherParagraph(tree, markdown, pattern, trilingual ? 2 : 1)
+  if (found === undefined || !found.links.every(link => accepted.has(link.url ?? ''))) return undefined
+  return { start: found.start, end: found.end }
+}
+
+/** Locate the canonical switcher in any language and pair mode. */
+function detectLanguageSwitcherSpan(tree: Nodes, markdown: string): LanguageSwitcherSpan | undefined {
+  for (const ownLanguage of ['en', 'zh', 'de'] as const) {
+    for (const trilingual of [false, true] as const) {
+      const pattern = SWITCHER_LINE[ownLanguage][trilingual ? 'trilingual' : 'bilingual']
+      if (pattern === null) continue
+      const found = findSwitcherParagraph(tree, markdown, pattern, trilingual ? 2 : 1)
+      if (found !== undefined) return { start: found.start, end: found.end }
     }
   }
   return undefined
@@ -91,8 +161,10 @@ export function hasLanguageSwitcher(
   tree: Nodes,
   markdown: string,
   acceptedTargets: string | readonly string[],
+  ownLanguage: TranslationDocumentLanguage,
+  trilingual: boolean,
 ): boolean {
-  return languageSwitcherLinkOffset(tree, markdown, acceptedTargets) !== undefined
+  return languageSwitcherSpan(tree, markdown, acceptedTargets, ownLanguage, trilingual) !== undefined
 }
 
 function decodePath(path: string): string {
@@ -131,16 +203,30 @@ function resolveRepositoryTarget(
   const decoded = decodePath(rawPath)
   const exact = repositoryRelativePath(posix.join(posix.dirname(context.sourcePath), decoded))
   if (exact === undefined) return undefined
-  return repositoryFileExists(context, exact) ? exact : undefined
+  if (repositoryFileExists(context, exact)) return exact
+  // A pending conversion target resolves through its existing pair source: the
+  // locale sibling is what the rollout still owes, and canonicalization maps
+  // every side onto the source path.
+  const source = exact.replace(/\.(?:zh|de)\.md$/, '.md')
+  if (source !== exact && context.isTranslationPairSource(source)
+    && repositoryFileExists(context, source)) {
+    return exact
+  }
+  return undefined
 }
 
 function translationPairTarget(targetPath: string, context: TranslationLinkContext): TranslationPairTarget | undefined {
-  const source = targetPath.endsWith('.zh.md')
-    ? targetPath.replace(/\.zh\.md$/, '.md')
-    : targetPath.endsWith('.md') ? targetPath : undefined
-  if (source === undefined || !context.isTranslationPairSource(source)) return undefined
-  const zh = source.replace(/\.md$/, '.zh.md')
-  return { source, zh }
+  let source: string
+  if (targetPath.endsWith('.zh.md')) source = targetPath.replace(/\.zh\.md$/, '.md')
+  else if (targetPath.endsWith('.de.md')) source = targetPath.replace(/\.de\.md$/, '.md')
+  else if (targetPath.endsWith('.md')) source = targetPath
+  else return undefined
+  if (!context.isTranslationPairSource(source)) return undefined
+  return {
+    source,
+    zh: source.replace(/\.md$/, '.zh.md'),
+    de: source.replace(/\.md$/, '.de.md'),
+  }
 }
 
 function encodePathSegment(segment: string): string {
@@ -161,14 +247,22 @@ function relativeExpectedPath(
 
 function expectedLocalePath(
   rawPath: string,
-  locale: 'en' | 'zh',
+  locale: TranslationDocumentLanguage,
   context: TranslationLinkContext,
   expectedPath: string,
 ): string {
-  if (locale === 'zh' && rawPath.endsWith('.md') && !rawPath.endsWith('.zh.md')) {
-    return rawPath.replace(/\.md$/, '.zh.md')
+  if (rawPath.endsWith('.md') && !rawPath.endsWith('.zh.md') && !rawPath.endsWith('.de.md')) {
+    if (locale === 'zh') return rawPath.replace(/\.md$/, '.zh.md')
+    if (locale === 'de') return rawPath.replace(/\.md$/, '.de.md')
   }
-  if (locale === 'en' && rawPath.endsWith('.zh.md')) return rawPath.replace(/\.zh\.md$/, '.md')
+  if (rawPath.endsWith('.zh.md')) {
+    if (locale === 'en') return rawPath.replace(/\.zh\.md$/, '.md')
+    if (locale === 'de') return rawPath.replace(/\.zh\.md$/, '.de.md')
+  }
+  if (rawPath.endsWith('.de.md')) {
+    if (locale === 'en') return rawPath.replace(/\.de\.md$/, '.md')
+    if (locale === 'zh') return rawPath.replace(/\.de\.md$/, '.zh.md')
+  }
   return relativeExpectedPath(context, expectedPath, rawPath)
 }
 
@@ -185,8 +279,10 @@ function resolveTranslationLink(
   if (targetPath === undefined) return undefined
   const pair = translationPairTarget(targetPath, context)
   if (pair === undefined) return undefined
-  const locale = context.sourcePath.endsWith('.zh.md') ? 'zh' : 'en'
-  const expectedPath = locale === 'zh' ? pair.zh : pair.source
+  const locale: TranslationDocumentLanguage = context.sourcePath.endsWith('.de.md')
+    ? 'de'
+    : context.sourcePath.endsWith('.zh.md') ? 'zh' : 'en'
+  const expectedPath = locale === 'zh' ? pair.zh : locale === 'de' ? pair.de : pair.source
   return {
     pair,
     targetPath,
@@ -227,19 +323,21 @@ function applyReplacements(markdown: string, replacements: Replacement[]): strin
 
 function visitDocumentLinkNodes(
   markdown: string,
-  skipTargets: readonly string[],
   visitor: (node: LinkNode) => void,
 ): void {
   const tree = parseMarkdown(markdown)
-  const switcherOffset = languageSwitcherLinkOffset(tree, markdown, skipTargets)
+  const switcherSpan = detectLanguageSwitcherSpan(tree, markdown)
   const referencedIdentifiers = new Set<string>()
   const visitedDefinitions = new Set<string>()
   visitMarkdown(tree, (node) => {
     if (node.type === 'linkReference') referencedIdentifiers.add(node.identifier)
   })
   visitMarkdown(tree, (node) => {
-    if (node.type === 'link' && node.position?.start.offset === switcherOffset) return
     if (node.type === 'link') {
+      if (switcherSpan !== undefined
+        && node.position?.start.offset !== undefined
+        && node.position.start.offset >= switcherSpan.start
+        && node.position.start.offset < switcherSpan.end) return
       visitor(node)
     } else if (node.type === 'definition'
       && referencedIdentifiers.has(node.identifier)
@@ -253,10 +351,9 @@ function visitDocumentLinkNodes(
 function visitResolvedDocumentLinks(
   markdown: string,
   context: TranslationLinkContext,
-  skipTargets: readonly string[],
   visitor: (node: LinkNode, destination: MarkdownDestination, resolved: ResolvedTranslationLink) => void,
 ): void {
-  visitDocumentLinkNodes(markdown, skipTargets, (node) => {
+  visitDocumentLinkNodes(markdown, (node) => {
     if (isExternalOrAbsoluteMarkdownUrl(node.url)) return
     const destination = markdownDestination(markdown, node)
     const resolved = resolveTranslationLink(node.url, context, destination.url)
@@ -268,10 +365,9 @@ function visitResolvedDocumentLinks(
 export function translationLinkLocaleViolations(
   markdown: string,
   context: TranslationLinkContext,
-  skipTargets: readonly string[] = [],
 ): TranslationLinkLocaleViolation[] {
   const violations: TranslationLinkLocaleViolation[] = []
-  visitResolvedDocumentLinks(markdown, context, skipTargets, (node, destination, resolved) => {
+  visitResolvedDocumentLinks(markdown, context, (node, destination, resolved) => {
     if (hasExpectedLocale(resolved)) return
     violations.push({
       sourcePath: context.sourcePath,
@@ -287,10 +383,9 @@ export function translationLinkLocaleViolations(
 export function rewriteTranslationLinkLocales(
   markdown: string,
   context: TranslationLinkContext,
-  skipTargets: readonly string[] = [],
 ): TranslationLinkRewriteResult {
   const replacements: Replacement[] = []
-  visitResolvedDocumentLinks(markdown, context, skipTargets, (_node, destination, resolved) => {
+  visitResolvedDocumentLinks(markdown, context, (_node, destination, resolved) => {
     if (hasExpectedLocale(resolved)) return
     replacements.push(replacementFor(destination, resolved.expectedUrl))
   })
@@ -301,10 +396,9 @@ export function rewriteTranslationLinkLocales(
 export function normalizeTranslationMarkdownLinks(
   markdown: string,
   context: TranslationLinkContext,
-  skipTargets: readonly string[] = [],
 ): string {
   const replacements: Replacement[] = []
-  visitResolvedDocumentLinks(markdown, context, skipTargets, (_node, destination, resolved) => {
+  visitResolvedDocumentLinks(markdown, context, (_node, destination, resolved) => {
     replacements.push(replacementFor(
       destination,
       `dsh-translation-target:${resolved.pair.source}${resolved.suffix}`,

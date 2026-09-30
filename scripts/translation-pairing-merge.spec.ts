@@ -141,6 +141,20 @@ function record(root: string, path: string, source: string, zh: string): string 
   return content
 }
 
+function record3(root: string, path: string, source: string, zh: string, de: string): string {
+  const paths = translationPairPaths(path)
+  write(root, paths.source, source)
+  write(root, paths.zh, zh)
+  write(root, paths.de, de)
+  const content = renderTranslationPairingRecord(paths, {
+    sourceHash: storeGitBlob(root, Buffer.from(source)),
+    zhHash: storeGitBlob(root, Buffer.from(zh)),
+    deHash: storeGitBlob(root, Buffer.from(de)),
+  })
+  write(root, paths.meta, content)
+  return content
+}
+
 const baseSource = '# Guide\n\nEnglish | [中文](guide.zh.md)\n\nAlpha base.\n\nBeta base.\n'
 const baseZh = '# 指南\n\n[English](guide.md) | 中文\n\n甲基础。\n\n乙基础。\n'
 const currentSource = baseSource.replace('Alpha base.', 'Alpha current.')
@@ -161,6 +175,18 @@ const manualCurrentSource = manualBaseSource.replace('Alpha base.', 'Alpha curre
 const manualCurrentZh = manualBaseZh.replace('甲基础。', '甲当前。')
 const manualOtherSource = manualBaseSource.replace('Alpha base.', 'Alpha other.')
 const manualOtherZh = manualBaseZh.replace('甲基础。', '甲对侧。')
+const triBaseSource = baseSource.replace('English | [中文](guide.zh.md)', 'English | [中文](guide.zh.md) | [Deutsch](guide.de.md)')
+const triBaseZh = baseZh.replace('[English](guide.md) | 中文', '[English](guide.md) | 中文 | [Deutsch](guide.de.md)')
+const triBaseDe = '# Leitfaden\n\n[English](guide.md) | [中文](guide.zh.md) | Deutsch\n\nAlpha Basis.\n\nBeta Basis.\n'
+const triCurrentSource = triBaseSource.replace('Alpha base.', 'Alpha current.')
+const triCurrentZh = triBaseZh.replace('甲基础。', '甲当前。')
+const triCurrentDe = triBaseDe.replace('Alpha Basis.', 'Alpha aktuell.')
+const triOtherSource = triBaseSource.replace('Beta base.', 'Beta other.')
+const triOtherZh = triBaseZh.replace('乙基础。', '乙对侧。')
+const triOtherDe = triBaseDe.replace('Beta Basis.', 'Beta andere.')
+const triMergedSource = triCurrentSource.replace('Beta base.', 'Beta other.')
+const triMergedZh = triCurrentZh.replace('乙基础。', '乙对侧。')
+const triMergedDe = triCurrentDe.replace('Beta Basis.', 'Beta andere.')
 
 function commitPair(fixture: Fixture, source: string, zh: string, message: string): string {
   const sidecar = record(fixture.root, 'docs/guide.md', source, zh)
@@ -292,7 +318,7 @@ describe('translation pairing merge composition', { timeout: 90_000 }, () => {
       '',
       '',
       () => false,
-    )).toThrow('docs/guide.i18n.yaml is excluded from the active bilingual documentation corpus')
+    )).toThrow('docs/guide.i18n.yaml is excluded from the active trilingual documentation corpus')
   })
 
   it('merges the owner blobs named by three valid records', () => {
@@ -312,6 +338,65 @@ describe('translation pairing merge composition', { timeout: 90_000 }, () => {
     expect(result.zhContent.toString('utf8')).toBe(mergedZh)
     expect(result.sourceHash).toBe(gitBlobHash(Buffer.from(mergedSource)))
     expect(result.zhHash).toBe(gitBlobHash(Buffer.from(mergedZh)))
+  })
+
+  it('merges a trilingual pair and records all three blobs', () => {
+    const fixture = createFixture(false)
+    git(fixture, ['config', 'merge.default', 'text'])
+    const ancestor = record3(fixture.root, 'docs/guide.md', triBaseSource, triBaseZh, triBaseDe)
+    git(fixture, ['add', '.'])
+    git(fixture, ['commit', '-m', 'base'])
+    git(fixture, ['switch', '-c', 'current'])
+    const current = record3(fixture.root, 'docs/guide.md', triCurrentSource, triCurrentZh, triCurrentDe)
+    git(fixture, ['add', '.'])
+    git(fixture, ['commit', '-m', 'current'])
+    git(fixture, ['switch', 'master'])
+    const other = record3(fixture.root, 'docs/guide.md', triOtherSource, triOtherZh, triOtherDe)
+    git(fixture, ['add', '.'])
+    git(fixture, ['commit', '-m', 'other'])
+    git(fixture, ['switch', 'current'])
+
+    const result = mergeTranslationPairingRecords(
+      fixture.root,
+      'docs/guide.i18n.yaml',
+      ancestor,
+      current,
+      other,
+    )
+
+    expect(result.sourceContent.toString('utf8')).toBe(triMergedSource)
+    expect(result.zhContent.toString('utf8')).toBe(triMergedZh)
+    expect(result.deContent?.toString('utf8')).toBe(triMergedDe)
+    expect(result.deHash).toBe(gitBlobHash(Buffer.from(triMergedDe)))
+    expect(result.record).toBe(renderTranslationPairingRecord(translationPairPaths('docs/guide.md'), {
+      sourceHash: gitBlobHash(Buffer.from(triMergedSource)),
+      zhHash: gitBlobHash(Buffer.from(triMergedZh)),
+      deHash: gitBlobHash(Buffer.from(triMergedDe)),
+    }))
+  })
+
+  it('refuses to mix bilingual and trilingual records in one merge', () => {
+    const fixture = createFixture(false)
+    const ancestor = record(fixture.root, 'docs/guide.md', baseSource, baseZh)
+    git(fixture, ['add', '.'])
+    git(fixture, ['commit', '-m', 'base'])
+    git(fixture, ['switch', '-c', 'current'])
+    const current = record3(fixture.root, 'docs/guide.md', triCurrentSource, triCurrentZh, triCurrentDe)
+    git(fixture, ['add', '.'])
+    git(fixture, ['commit', '-m', 'current'])
+    git(fixture, ['switch', 'master'])
+    const other = record(fixture.root, 'docs/guide.md', otherSource, otherZh)
+    git(fixture, ['add', '.'])
+    git(fixture, ['commit', '-m', 'other'])
+    git(fixture, ['switch', 'current'])
+
+    expect(() => mergeTranslationPairingRecords(
+      fixture.root,
+      'docs/guide.i18n.yaml',
+      ancestor,
+      current,
+      other,
+    )).toThrow('mixes bilingual and trilingual records')
   })
 
   it('accepts locale-specific paths to the same paired document', () => {

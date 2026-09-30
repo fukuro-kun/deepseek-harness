@@ -229,11 +229,15 @@ function applyMechanical(counterpartPath: string, sourceCurrent: string, result:
       parseTranslationMarkdown(sourceCurrent),
       counterpartBase,
       { repoRoot: root, sourcePath, isTranslationPairSource, markdown: sourceCurrent },
+      'en',
+      false,
     ),
     translationStructureSignature(
       parseTranslationMarkdown(result),
       sourceBase,
       { repoRoot: root, sourcePath: counterpartPath, isTranslationPairSource, markdown: result },
+      'zh',
+      false,
     ),
   )
   if (errors.length > 0) {

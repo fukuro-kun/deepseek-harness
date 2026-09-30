@@ -1,4 +1,4 @@
-/** Regression tests for bilingual snapshots, corpus scope, and structure. */
+/** Regression tests for trilingual snapshots, corpus scope, and structure. */
 
 import { execFileSync, spawnSync } from 'node:child_process'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
@@ -19,6 +19,7 @@ import {
 import {
   blobHash,
   isTranslationPairingManifestExcluded,
+  isTranslationPairingManifestPendingGerman,
   isTranslationScopeFile,
   languageSwitcherTargets,
   pairAnchorOfArgument,
@@ -42,6 +43,8 @@ function signature(markdown: string) {
       repoRoot: process.cwd(), sourcePath: 'counterpart.md',
       isTranslationPairSource: fixturePairSource, repositoryFileExists: () => true, markdown,
     },
+    'en',
+    false,
   )
 }
 
@@ -50,11 +53,15 @@ function fixtureSignature(
   sourcePath: string,
   markdown: string,
   switcherTarget: string,
+  ownLanguage: 'en' | 'zh' | 'de' = 'en',
+  trilingual = false,
 ) {
   return translationStructureSignature(
     parseTranslationMarkdown(markdown),
     switcherTarget,
     { repoRoot: root, sourcePath, isTranslationPairSource: fixturePairSource, markdown },
+    ownLanguage,
+    trilingual,
   )
 }
 
@@ -166,14 +173,18 @@ describe('translation pairing snapshots', () => {
 })
 
 describe('translation pairing manifest', () => {
-  it('accepts an exclusions-only manifest', () => {
+  it('accepts a manifest with exclusions and the pending-german conversion list', () => {
     const manifest = parseTranslationPairingManifest(JSON.stringify({
       excluded: ['docs/generated/'],
+      'pending-german': ['docs/guide.md'],
     }))
     expect(manifest).toEqual({
       excluded: ['docs/generated/'],
+      pendingGerman: ['docs/guide.md'],
     })
     expect(isTranslationPairingManifestExcluded('docs/generated/page.md', manifest)).toBe(true)
+    expect(isTranslationPairingManifestPendingGerman('docs/guide.md', manifest)).toBe(true)
+    expect(isTranslationPairingManifestPendingGerman('docs/other.md', manifest)).toBe(false)
     expect(translationPairSourcePredicate(manifest)('docs/generated/page.md')).toBe(false)
     expect(translationPairSourcePredicate(manifest)('docs/guide.md')).toBe(true)
     expect(translationPairSourcePredicate(manifest)('packages/example/guide.md')).toBe(false)
@@ -186,15 +197,21 @@ describe('translation pairing manifest', () => {
   ] as const)('rejects obsolete policy field %s instead of accepting an inert requirement', (field, value) => {
     expect(() => parseTranslationPairingManifest(JSON.stringify({
       excluded: [],
+      'pending-german': [],
       [field]: value,
     }))).toThrow(`unsupported field(s): ${field}; every in-scope document is required`)
   })
 
-  it('rejects a missing or non-string exclusion list', () => {
+  it('rejects a missing or non-string string-array field', () => {
     expect(() => parseTranslationPairingManifest('{}')).toThrow('excluded must be an array of strings')
     expect(() => parseTranslationPairingManifest(JSON.stringify({
       excluded: [42],
+      'pending-german': [],
     }))).toThrow('excluded must be an array of strings')
+    expect(() => parseTranslationPairingManifest(JSON.stringify({
+      excluded: [],
+      'pending-german': [42],
+    }))).toThrow('pending-german must be an array of strings')
   })
 })
 
@@ -219,13 +236,13 @@ describe('translation pairing switchers', () => {
       sourcePath: 'python/sdk/README.md',
       isTranslationPairSource: fixturePairSource,
       markdown: canonicalMarkdown,
-    }).links).toEqual([])
+    }, 'en', false).links).toEqual([])
     expect(translationStructureSignature(wrongPath, targets, {
       repoRoot: process.cwd(),
       sourcePath: 'python/sdk/README.md',
       isTranslationPairSource: fixturePairSource,
       markdown: wrongMarkdown,
-    }).links).toEqual([
+    }, 'en', false).links).toEqual([
       'https://github.com/deepseek-ai/deepseek-harness/blob/master/other/README.zh.md',
     ])
   })
@@ -243,7 +260,33 @@ describe('translation pairing switchers', () => {
           repoRoot: root, sourcePath: 'guide.zh.md',
           isTranslationPairSource: fixturePairSource, markdown,
         },
+        'zh',
+        false,
       ).links).toEqual(['dsh-translation-target:guide.md'])
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  it('excludes the trilingual header switcher from all three sides', () => {
+    const root = mkdtempSync(join(tmpdir(), 'dsh-translation-switcher-'))
+    try {
+      writeFileSync(join(root, 'guide.md'), '# Guide\n')
+      writeFileSync(join(root, 'guide.zh.md'), '# 指南\n')
+      writeFileSync(join(root, 'guide.de.md'), '# Leitfaden\n')
+      const en = '# Guide\n\nEnglish | [中文](guide.zh.md) | [Deutsch](guide.de.md)\n'
+      const zh = '# 指南\n\n[English](guide.md) | 中文 | [Deutsch](guide.de.md)\n'
+      const de = '# Leitfaden\n\n[English](guide.md) | [中文](guide.zh.md) | Deutsch\n'
+      const linkContext = (sourcePath: string, markdown: string) => ({
+        repoRoot: root, sourcePath,
+        isTranslationPairSource: fixturePairSource, repositoryFileExists: () => true, markdown,
+      })
+      const enTargets = [...languageSwitcherTargets('guide.zh.md'), ...languageSwitcherTargets('guide.de.md')]
+      const zhTargets = [...languageSwitcherTargets('guide.md'), ...languageSwitcherTargets('guide.de.md')]
+      const deTargets = [...languageSwitcherTargets('guide.md'), ...languageSwitcherTargets('guide.zh.md')]
+      expect(translationStructureSignature(parseTranslationMarkdown(en), enTargets, linkContext('guide.md', en), 'en', true).links).toEqual([])
+      expect(translationStructureSignature(parseTranslationMarkdown(zh), zhTargets, linkContext('guide.zh.md', zh), 'zh', true).links).toEqual([])
+      expect(translationStructureSignature(parseTranslationMarkdown(de), deTargets, linkContext('guide.de.md', de), 'de', true).links).toEqual([])
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
@@ -285,6 +328,12 @@ describe('translation pairing records', () => {
     expect(parseTranslationPairingRecord(renderTranslationPairingRecord(paths, record), paths)).toEqual(record)
   })
 
+  it('round-trips the canonical three-hash record', () => {
+    const trilingualRecord = { ...record, deHash: '3'.repeat(40) }
+    expect(parseTranslationPairingRecord(renderTranslationPairingRecord(paths, trilingualRecord), paths))
+      .toEqual(trilingualRecord)
+  })
+
   it('rejects duplicate or unexpected keys', () => {
     expect(parseTranslationPairingRecord([
       `foo.md: ${'1'.repeat(40)}`,
@@ -295,6 +344,13 @@ describe('translation pairing records', () => {
     expect(parseTranslationPairingRecord([
       `foo.md: ${'1'.repeat(40)}`,
       `bar.zh.md: ${'2'.repeat(40)}`,
+      '',
+    ].join('\n'), paths)).toBeUndefined()
+    expect(parseTranslationPairingRecord([
+      `foo.md: ${'1'.repeat(40)}`,
+      `foo.zh.md: ${'2'.repeat(40)}`,
+      `foo.de.md: ${'3'.repeat(40)}`,
+      `bar.de.md: ${'4'.repeat(40)}`,
       '',
     ].join('\n'), paths)).toBeUndefined()
   })
@@ -315,6 +371,7 @@ describe('translation scope discovery', () => {
     'apps/cli/README.md',
     'future/subtree/readme.md',
     'packages/example/README.zh.md',
+    'packages/example/README.de.md',
     'native/example/README.i18n.yaml',
     '.agents/notes/proposed/feature.md',
     'docs/guide.md',
@@ -392,6 +449,8 @@ describe('translation structural signature', () => {
           repoRoot: root, sourcePath: 'guide.md',
           isTranslationPairSource: fixturePairSource, markdown,
         },
+        'en',
+        false,
       ).links).toEqual(['dsh-translation-target:reference.md'])
     } finally {
       rmSync(root, { recursive: true, force: true })
@@ -452,13 +511,14 @@ describe('pair CLI arguments', () => {
   it('normalizes any pair file or bare stem to the English anchor', () => {
     expect(pairAnchorOfArgument('docs/foo.md')).toBe('docs/foo.md')
     expect(pairAnchorOfArgument('docs/foo.zh.md')).toBe('docs/foo.md')
+    expect(pairAnchorOfArgument('docs/foo.de.md')).toBe('docs/foo.md')
     expect(pairAnchorOfArgument('docs/foo.i18n.yaml')).toBe('docs/foo.md')
     expect(pairAnchorOfArgument('docs/foo')).toBe('docs/foo.md')
     expect(pairAnchorOfArgument('.\\docs\\foo.zh.md')).toBe('docs/foo.md')
   })
 
-  it('scopes a check to named pairs and dedupes the three spellings', () => {
-    expect(parseTranslationPairingCliArgs(['docs/foo.zh.md', 'docs/foo.i18n.yaml', 'docs/bar.md'])).toEqual({
+  it('scopes a check to named pairs and dedupes the four spellings', () => {
+    expect(parseTranslationPairingCliArgs(['docs/foo.zh.md', 'docs/foo.de.md', 'docs/foo.i18n.yaml', 'docs/bar.md'])).toEqual({
       input: 'worktree',
       mode: 'check',
       scope: 'pairs',

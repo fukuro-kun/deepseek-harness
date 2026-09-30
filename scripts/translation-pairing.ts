@@ -1,5 +1,5 @@
 /**
- * Pure parsing and structural helpers for the bilingual-document pairing
+ * Pure parsing and structural helpers for the trilingual-document pairing
  * gate. Kept separate from the CLI so corpus discovery and signature behavior
  * can be regression-tested without reading or mutating the repository tree.
  * Also the one home of the generated-region grammar and the pair-record
@@ -13,8 +13,9 @@ import { gfmFromMarkdown } from 'mdast-util-gfm'
 import { gfm } from 'micromark-extension-gfm'
 import type { Nodes } from 'mdast'
 import {
-  languageSwitcherLinkOffset,
+  languageSwitcherSpan,
   semanticTranslationLinkNodeTarget,
+  type TranslationDocumentLanguage,
   type TranslationLinkContext,
 } from './translation-links.ts'
 
@@ -125,12 +126,18 @@ export function renderPairMeta(source: string, sourceHash: string, zh: string, z
 
 /** Validated fields of `scripts/translation-pairing.manifest.json`. */
 export interface TranslationPairingManifest {
-  /** Source documents exempt from pairing because they are generated, instructional, or bilingual by construction. */
+  /** Source documents exempt from pairing because they are generated, instructional, or trilingual by construction. */
   excluded: string[]
+  /**
+   * Source documents not yet converted to German. Each entry is valid as an
+   * English/Chinese pair until its German side lands; the list shrinks as the
+   * conversion proceeds and must end empty.
+   */
+  pendingGerman: string[]
 }
 
-const README_ARTIFACT = /(?:^|\/)readme(?:\.md|\.zh\.md|\.i18n\.yaml)$/i
-const ROOT_PAIRED_DOCUMENT_ARTIFACT = /^(?:brand_guidelines|contributing|safety)(?:\.md|\.zh\.md|\.i18n\.yaml)$/i
+const README_ARTIFACT = /(?:^|\/)readme(?:\.md|\.zh\.md|\.de\.md|\.i18n\.yaml)$/i
+const ROOT_PAIRED_DOCUMENT_ARTIFACT = /^(?:brand_guidelines|contributing|safety)(?:\.md|\.zh\.md|\.de\.md|\.i18n\.yaml)$/i
 const NON_SOURCE_DIRECTORIES = new Set([
   'node_modules',
   'lib',
@@ -191,31 +198,31 @@ export function isTranslationScopeFile(file: string): boolean {
     || file.startsWith('python/'))
 }
 
-/** Read the manifest exclusion list or fail before enforcement starts. */
-function excludedField(record: Record<string, unknown>): string[] {
-  const value = record.excluded
+/** Read one manifest string-array field or fail before enforcement starts. */
+function stringArrayField(record: Record<string, unknown>, field: 'excluded' | 'pending-german'): string[] {
+  const value = record[field]
   if (!Array.isArray(value)) {
-    throw new Error('translation-pairing.manifest.json: excluded must be an array of strings')
+    throw new Error(`translation-pairing.manifest.json: ${field} must be an array of strings`)
   }
   const entries: unknown[] = value
   if (!entries.every((entry): entry is string => typeof entry === 'string')) {
-    throw new Error('translation-pairing.manifest.json: excluded must be an array of strings')
+    throw new Error(`translation-pairing.manifest.json: ${field} must be an array of strings`)
   }
   return entries
 }
 
-/** Parse and validate the checked-in bilingual manifest. */
+/** Parse and validate the checked-in trilingual manifest. */
 export function parseTranslationPairingManifest(content: string): TranslationPairingManifest {
   const value: unknown = JSON.parse(content)
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     throw new Error('translation-pairing.manifest.json: expected an object')
   }
   const record = value as Record<string, unknown>
-  const unsupported = Object.keys(record).filter(field => field !== 'excluded')
+  const unsupported = Object.keys(record).filter(field => field !== 'excluded' && field !== 'pending-german')
   if (unsupported.length > 0) {
     throw new Error(`translation-pairing.manifest.json: unsupported field(s): ${unsupported.join(', ')}; every in-scope document is required`)
   }
-  return { excluded: excludedField(record) }
+  return { excluded: stringArrayField(record, 'excluded'), pendingGerman: stringArrayField(record, 'pending-german') }
 }
 
 /** Whether a manifest entry excludes one exact file or a directory subtree. */
@@ -224,6 +231,14 @@ export function isTranslationPairingManifestExcluded(
   manifest: TranslationPairingManifest,
 ): boolean {
   return manifest.excluded.some(entry => (entry.endsWith('/') ? file.startsWith(entry) : file === entry))
+}
+
+/** Whether one English source is still pending its German conversion. */
+export function isTranslationPairingManifestPendingGerman(
+  source: string,
+  manifest: TranslationPairingManifest,
+): boolean {
+  return manifest.pendingGerman.includes(source)
 }
 
 /** Build the active bilingual-source predicate shared by every link consumer. */
@@ -236,8 +251,8 @@ export function translationPairSourcePredicate(
 
 /**
  * Normalize one CLI pair argument to its English anchor path: any of the
- * pair's three files (`foo.md`, `foo.zh.md`, `foo.i18n.yaml`) or the bare
- * `foo` stem names the same pair, and platform separators are accepted.
+ * pair's files (`foo.md`, `foo.zh.md`, `foo.de.md`, `foo.i18n.yaml`) or the
+ * bare `foo` stem names the same pair, and platform separators are accepted.
  *
  * @param argument - Repo-relative path as passed on a command line.
  * @returns The pair's `foo.md` anchor path with `/` separators.
@@ -245,6 +260,7 @@ export function translationPairSourcePredicate(
 export function pairAnchorOfArgument(argument: string): string {
   const normalized = argument.split('\\').join('/').replace(/^\.\//, '')
   if (normalized.endsWith('.zh.md')) return `${normalized.slice(0, -'.zh.md'.length)}.md`
+  if (normalized.endsWith('.de.md')) return `${normalized.slice(0, -'.de.md'.length)}.md`
   if (normalized.endsWith('.i18n.yaml')) return `${normalized.slice(0, -'.i18n.yaml'.length)}.md`
   if (normalized.endsWith('.md')) return normalized
   return `${normalized}.md`
@@ -352,13 +368,18 @@ export function requiresSourceLanguageSwitcher(source: string): boolean {
   ].includes(source)
 }
 
-/** Collect the ordered structural signature, skipping accepted switcher targets. */
+/**
+ * Collect the ordered structural signature, skipping the switcher paragraph
+ * of the given language and pair mode.
+ */
 export function translationStructureSignature(
   tree: Nodes,
   switcherTargets: string | readonly string[],
   linkContext: TranslationLinkContext & { markdown: string },
+  ownLanguage: TranslationDocumentLanguage,
+  trilingual: boolean,
 ): TranslationStructureSignature {
-  const switcherOffset = languageSwitcherLinkOffset(tree, linkContext.markdown, switcherTargets)
+  const switcherSpan = languageSwitcherSpan(tree, linkContext.markdown, switcherTargets, ownLanguage, trilingual)
   const sig: TranslationStructureSignature = { headings: [], code: [], tables: [], lists: [], links: [] }
   const definitions = new Map<string, Extract<Nodes, { type: 'definition' }>>()
   const collectDefinitions = (node: Nodes): void => {
@@ -387,11 +408,15 @@ export function translationStructureSignature(
           ? `ordered:start=${node.start ?? 1}:items=${node.children.length}`
           : `bullet:items=${node.children.length}`)
         break
-      case 'link':
-        if (node.position?.start.offset !== switcherOffset) {
-          sig.links.push(linkTarget(node))
-        }
+      case 'link': {
+        const offset = node.position?.start.offset
+        const inSwitcher = switcherSpan !== undefined
+          && offset !== undefined
+          && offset >= switcherSpan.start
+          && offset < switcherSpan.end
+        if (!inSwitcher) sig.links.push(linkTarget(node))
         break
+      }
       case 'linkReference': {
         const definition = definitions.get(node.identifier)
         if (definition !== undefined) {

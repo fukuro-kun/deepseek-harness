@@ -1,4 +1,4 @@
-/** Fail-closed composition of bilingual pairing records during Git merges. */
+/** Fail-closed composition of trilingual pairing records during Git merges. */
 
 import { spawnSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
@@ -44,6 +44,8 @@ export interface TranslationPairingMergeResult extends TranslationPairingRecord 
   sourceContent: Buffer
   /** Clean three-way merge of the Simplified Chinese owner. */
   zhContent: Buffer
+  /** Clean three-way merge of the German owner; absent for a pending pair. */
+  deContent?: Buffer
 }
 
 interface UnmergedStages {
@@ -79,8 +81,8 @@ function readMergeDefault(root: string): string | undefined {
 function assertDefaultTextMerge(root: string, paths: TranslationPairPaths): void {
   const output = runGit(
     root,
-    ['check-attr', '-z', 'merge', '--', paths.source, paths.zh],
-    'checking bilingual owner merge attributes',
+    ['check-attr', '-z', 'merge', '--', paths.source, paths.zh, paths.de],
+    'checking trilingual owner merge attributes',
   ).toString('utf8')
   const fields = output.split('\0')
   fields.pop()
@@ -159,12 +161,13 @@ function loadRecordOwners(
   label: string,
   content: string,
   paths: TranslationPairPaths,
-): { source: Buffer; zh: Buffer } {
+): { source: Buffer; zh: Buffer; de?: Buffer } {
   const record = parseTranslationPairingRecord(content, paths)
-  if (record === undefined) throw new Error(`${label} ${paths.meta} is not a valid two-hash pairing record`)
+  if (record === undefined) throw new Error(`${label} ${paths.meta} is not a valid pairing record`)
   return {
     source: readGitBlob(root, record.sourceHash, `${label} ${paths.source}`),
     zh: readGitBlob(root, record.zhHash, `${label} ${paths.zh}`),
+    ...(record.deHash === undefined ? {} : { de: readGitBlob(root, record.deHash, `${label} ${paths.de}`) }),
   }
 }
 
@@ -173,60 +176,68 @@ function assertMergedPairStructure(
   paths: TranslationPairPaths,
   source: Buffer,
   zh: Buffer,
+  de: Buffer | undefined,
   isTranslationPairSource: (sourcePath: string) => boolean,
 ): void {
+  const trilingual = de !== undefined
   const sourceText = source.toString('utf8')
   const zhText = zh.toString('utf8')
+  const deText = trilingual ? de.toString('utf8') : ''
   const sourceTree = parseTranslationMarkdown(sourceText)
   const zhTree = parseTranslationMarkdown(zhText)
+  const deTree = trilingual ? parseTranslationMarkdown(deText) : undefined
   const indexFiles = gitMergeInputPaths(root)
   const repositoryFileExists = (path: string): boolean => indexFiles.has(path)
-  const sourceSwitcherTargets = languageSwitcherTargets(paths.source)
-  const zhSwitcherTargets = languageSwitcherTargets(paths.zh)
+  const sourceSwitcherTargets = trilingual
+    ? [...languageSwitcherTargets(paths.zh), ...languageSwitcherTargets(paths.de)]
+    : languageSwitcherTargets(paths.zh)
+  const zhSwitcherTargets = trilingual
+    ? [...languageSwitcherTargets(paths.source), ...languageSwitcherTargets(paths.de)]
+    : languageSwitcherTargets(paths.source)
+  const deSwitcherTargets = [...languageSwitcherTargets(paths.source), ...languageSwitcherTargets(paths.zh)]
   if (requiresSourceLanguageSwitcher(paths.source)
-    && !hasLanguageSwitcher(sourceTree, sourceText, zhSwitcherTargets)) {
-    throw new Error(`${paths.source} clean merge lost its language-switcher link to ${basename(paths.zh)}`)
+    && !hasLanguageSwitcher(sourceTree, sourceText, sourceSwitcherTargets, 'en', trilingual)) {
+    throw new Error(`${paths.source} clean merge lost its language-switcher link to ${basename(paths.zh)}${trilingual ? ` and ${basename(paths.de)}` : ''}`)
   }
-  if (!hasLanguageSwitcher(zhTree, zhText, sourceSwitcherTargets)) {
-    throw new Error(`${paths.zh} clean merge lost its language-switcher link to ${basename(paths.source)}`)
+  if (!hasLanguageSwitcher(zhTree, zhText, zhSwitcherTargets, 'zh', trilingual)) {
+    throw new Error(`${paths.zh} clean merge lost its language-switcher link to ${basename(paths.source)}${trilingual ? ` and ${basename(paths.de)}` : ''}`)
   }
+  if (trilingual && deTree !== undefined
+    && !hasLanguageSwitcher(deTree, deText, deSwitcherTargets, 'de', true)) {
+    throw new Error(`${paths.de} clean merge lost its language-switcher link to ${basename(paths.source)} and ${basename(paths.zh)}`)
+  }
+  const linkContext = (sourcePath: string, markdown: string) => ({
+    repoRoot: root,
+    sourcePath,
+    isTranslationPairSource,
+    repositoryFileExists,
+    markdown,
+  })
   const localeViolations = [
-    ...translationLinkLocaleViolations(sourceText, {
-      repoRoot: root,
-      sourcePath: paths.source,
-      isTranslationPairSource,
-      repositoryFileExists,
-    }, zhSwitcherTargets),
-    ...translationLinkLocaleViolations(zhText, {
-      repoRoot: root,
-      sourcePath: paths.zh,
-      isTranslationPairSource,
-      repositoryFileExists,
-    }, sourceSwitcherTargets),
+    ...translationLinkLocaleViolations(sourceText, linkContext(paths.source, sourceText)),
+    ...translationLinkLocaleViolations(zhText, linkContext(paths.zh, zhText)),
+    ...(trilingual ? translationLinkLocaleViolations(deText, linkContext(paths.de, deText)) : []),
   ]
   if (localeViolations.length > 0) {
     const violation = localeViolations[0]
     if (violation === undefined) throw new Error('translation locale violation disappeared')
     throw new Error(`${violation.sourcePath}:${violation.line} clean merge uses ${JSON.stringify(violation.url)}; expected ${JSON.stringify(violation.expectedUrl)}`)
   }
-  const divergences = translationStructureDiff(
-    translationStructureSignature(sourceTree, zhSwitcherTargets, {
-      repoRoot: root,
-      sourcePath: paths.source,
-      isTranslationPairSource,
-      repositoryFileExists,
-      markdown: sourceText,
-    }),
-    translationStructureSignature(zhTree, sourceSwitcherTargets, {
-      repoRoot: root,
-      sourcePath: paths.zh,
-      isTranslationPairSource,
-      repositoryFileExists,
-      markdown: zhText,
-    }),
-  )
+  const sourceSignature = translationStructureSignature(sourceTree, sourceSwitcherTargets, linkContext(paths.source, sourceText), 'en', trilingual)
+  const zhSignature = translationStructureSignature(zhTree, zhSwitcherTargets, linkContext(paths.zh, zhText), 'zh', trilingual)
+  const divergences = translationStructureDiff(sourceSignature, zhSignature)
   if (divergences.length > 0) {
     throw new Error(`${paths.source} and ${paths.zh} clean merges diverge structurally: ${divergences.join('; ')}`)
+  }
+  if (trilingual && deTree !== undefined) {
+    const deSignature = translationStructureSignature(deTree, deSwitcherTargets, linkContext(paths.de, deText), 'de', true)
+    const deDivergences = [
+      ...translationStructureDiff(sourceSignature, deSignature).map(divergence => `${paths.source} and ${paths.de}: ${divergence}`),
+      ...translationStructureDiff(zhSignature, deSignature).map(divergence => `${paths.zh} and ${paths.de}: ${divergence}`),
+    ]
+    if (deDivergences.length > 0) {
+      throw new Error(`${paths.de} clean merge diverges structurally: ${deDivergences.join('; ')}`)
+    }
   }
 }
 
@@ -264,27 +275,46 @@ export function mergeTranslationPairingRecords(
 ): TranslationPairingMergeResult {
   const normalizedMeta = normalizeMetaPath(root, metaPath)
   if (!isTranslationScopeFile(normalizedMeta)) {
-    throw new Error(`${normalizedMeta} is outside the active bilingual documentation corpus`)
+    throw new Error(`${normalizedMeta} is outside the active trilingual documentation corpus`)
   }
   const paths = translationPairPathsFromMeta(normalizedMeta)
   if (!isTranslationPairSource(paths.source)) {
-    throw new Error(`${normalizedMeta} is excluded from the active bilingual documentation corpus`)
+    throw new Error(`${normalizedMeta} is excluded from the active trilingual documentation corpus`)
   }
   assertDefaultTextMerge(root, paths)
   const ancestor = loadRecordOwners(root, 'ancestor', ancestorRecord, paths)
   const current = loadRecordOwners(root, 'current', currentRecord, paths)
   const other = loadRecordOwners(root, 'other', otherRecord, paths)
+  const trilingual = [ancestor, current, other].some(owner => owner.de !== undefined)
+  if (trilingual && [ancestor, current, other].some(owner => owner.de === undefined)) {
+    throw new Error(`${paths.meta} mixes bilingual and trilingual records; convert the pair to a complete triplet before merging`)
+  }
   const sourceContent = mergeBlobTriplet(root, paths.source, ancestor.source, current.source, other.source)
   const zhContent = mergeBlobTriplet(root, paths.zh, ancestor.zh, current.zh, other.zh)
-  assertMergedPairStructure(root, paths, sourceContent, zhContent, isTranslationPairSource)
+  const deContent = trilingual
+    ? mergeBlobTriplet(root, paths.de, ancestor.de as Buffer, current.de as Buffer, other.de as Buffer)
+    : undefined
+  assertMergedPairStructure(root, paths, sourceContent, zhContent, deContent, isTranslationPairSource)
   const sourceHash = storeGitBlob(root, sourceContent)
   const zhHash = storeGitBlob(root, zhContent)
+  if (deContent === undefined) {
+    return {
+      record: renderTranslationPairingRecord(paths, { sourceHash, zhHash }),
+      sourceContent,
+      sourceHash,
+      zhContent,
+      zhHash,
+    }
+  }
+  const deHash = storeGitBlob(root, deContent)
   return {
-    record: renderTranslationPairingRecord(paths, { sourceHash, zhHash }),
+    record: renderTranslationPairingRecord(paths, { sourceHash, zhHash, deHash }),
     sourceContent,
     sourceHash,
     zhContent,
     zhHash,
+    deContent,
+    deHash,
   }
 }
 
@@ -381,7 +411,15 @@ export function resolveTranslationPairingConflicts(
       if (readGitIndexBlob(root, paths.zh)?.objectId !== result.zhHash) {
         throw new Error(`${paths.zh} staged merge does not match the pairing driver's clean merge`)
       }
-      for (const [path, expected] of [[paths.source, result.sourceHash], [paths.zh, result.zhHash]] as const) {
+      if (result.deHash !== undefined && readGitIndexBlob(root, paths.de)?.objectId !== result.deHash) {
+        throw new Error(`${paths.de} staged merge does not match the pairing driver's clean merge`)
+      }
+      const stagedOwners: [string, string][] = [
+        [paths.source, result.sourceHash],
+        [paths.zh, result.zhHash],
+        ...(result.deHash === undefined ? [] : [[paths.de, result.deHash]] as [string, string][]),
+      ]
+      for (const [path, expected] of stagedOwners) {
         if (gitBlobHash(readFileSync(join(root, path))) !== expected) {
           throw new Error(`${path} has unstaged content; refusing to confirm bytes outside the merge result`)
         }

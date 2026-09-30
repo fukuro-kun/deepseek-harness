@@ -5,13 +5,19 @@
  * URL and root-absolute targets are excluded; query strings do not affect
  * resolution against the source file. The checker never rewrites, and
  * symlinked instruction files are deduped.
+ *
+ * A missing `.de.md` target is accepted while its English source is a
+ * translation-pair source still pending its German conversion: the pairing
+ * contract sanctions linking the locale sibling before the rollout owes it,
+ * and the anchor is judged once the file exists.
  */
 
 import { existsSync, readFileSync } from 'node:fs'
-import { dirname, relative, resolve } from 'node:path'
+import { dirname, join, relative, resolve, sep } from 'node:path'
 import type { Nodes } from 'mdast'
 import { markdownHeadingLines, parseMarkdown, visitMarkdown } from './markdown.ts'
 import { isArchivedAgentNotePath, uniqueRepoFiles } from './repo-files.ts'
+import { parseTranslationPairingManifest, translationPairSourcePredicate } from './translation-pairing.ts'
 
 const root = resolve(import.meta.dirname, '..')
 
@@ -158,12 +164,15 @@ export function anchorCache(): (absPath: string) => Set<string> {
  * @param absPath - absolute path of the Markdown source to scan.
  * @param anchorsOf - anchor lookup shared across files for cross-link checks.
  * @param scanRoot - repository root violations are reported relative to.
+ * @param pendingGermanTarget - names a missing `.de.md` target the trilingual
+ *   rollout still owes (its pair source exists), so the link is not a violation.
  * @returns one entry per broken link, in document order.
  */
 export function findViolations(
   absPath: string,
   anchorsOf: (abs: string) => Set<string>,
   scanRoot: string = root,
+  pendingGermanTarget: (resolved: string) => boolean = () => false,
 ): Violation[] {
   const file = relative(scanRoot, absPath)
   const dir = dirname(absPath)
@@ -176,6 +185,7 @@ export function findViolations(
     const target = pathPart(url)
     const resolved = target === '' ? absPath : resolve(dir, target)
     if (!existsSync(resolved)) {
+      if (pendingGermanTarget(resolved)) return
       out.push({ file, line: node.position?.start.line ?? 0, url, reason: 'target' })
       return
     }
@@ -194,11 +204,31 @@ export function findViolations(
   return out
 }
 
+/**
+ * Build the pending-conversion acceptance predicate from the pairing
+ * manifest: a missing `.de.md` file is owed by the trilingual rollout while
+ * its English source is an active translation-pair source.
+ * @param repoRoot - the repository root holding the manifest.
+ * @returns the predicate handed to `findViolations`.
+ */
+export function pendingGermanTargetPredicate(repoRoot: string): (resolved: string) => boolean {
+  const manifest = parseTranslationPairingManifest(
+    readFileSync(join(repoRoot, 'scripts/translation-pairing.manifest.json'), 'utf8'),
+  )
+  const isPairSource = translationPairSourcePredicate(manifest)
+  return (resolved: string) => {
+    if (!resolved.endsWith('.de.md')) return false
+    const source = resolved.replace(/\.de\.md$/, '.md')
+    const repoPath = relative(repoRoot, source).split(sep).join('/')
+    return isPairSource(repoPath) && existsSync(source)
+  }
+}
+
 if (process.argv[1] && import.meta.filename === resolve(process.argv[1])) {
   // Archived notes remain valid link targets, but their historical outbound links are frozen.
   const files = uniqueRepoFiles(root, PATTERNS, isArchivedAgentNotePath)
   const anchorsOf = anchorCache()
-  const all = files.flatMap(file => findViolations(file.abs, anchorsOf))
+  const all = files.flatMap(file => findViolations(file.abs, anchorsOf, root, pendingGermanTargetPredicate(root)))
   const checked = files.length
 
   if (all.length === 0) {

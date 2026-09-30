@@ -1,4 +1,4 @@
-/** Regression coverage for locale-aware bilingual Markdown links. */
+/** Regression coverage for locale-aware trilingual Markdown links. */
 
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -25,8 +25,10 @@ function fixture(): string {
   mkdirSync(join(root, 'packages'), { recursive: true })
   writeFileSync(join(root, 'docs/guide.md'), '# Guide\n')
   writeFileSync(join(root, 'docs/guide.zh.md'), '# 指南\n')
+  writeFileSync(join(root, 'docs/guide.de.md'), '# Leitfaden\n')
   writeFileSync(join(root, 'docs/reference.md'), '# Overview\n')
   writeFileSync(join(root, 'docs/reference.zh.md'), '# 概览\n')
+  writeFileSync(join(root, 'docs/reference.de.md'), '# Übersicht\n')
   writeFileSync(join(root, 'docs/unpaired.md'), '# Only\n')
   writeFileSync(join(root, 'docs/section/index.md'), '# Section\n')
   writeFileSync(join(root, 'docs/section/index.zh.md'), '# 章节\n')
@@ -125,6 +127,24 @@ describe('translation link locale validation', () => {
     })
   })
 
+  it('requires German sources to use the German sibling', () => {
+    const root = fixture()
+    expect(translationLinkLocaleViolations(
+      '[Referenz](reference.md)\n',
+      linkContext(root, 'docs/guide.de.md'),
+    )[0]).toMatchObject({
+      url: 'reference.md',
+      expectedUrl: 'reference.de.md',
+    })
+    expect(rewriteTranslationLinkLocales(
+      '[Referenz](reference.md)\n',
+      linkContext(root, 'docs/guide.de.md'),
+    )).toEqual({
+      content: '[Referenz](reference.de.md)\n',
+      rewritten: 1,
+    })
+  })
+
   it('does not infer an index page from a directory target', () => {
     const root = fixture()
     const input = '[Section](section/)\n'
@@ -133,12 +153,27 @@ describe('translation link locale validation', () => {
       .toEqual({ content: input, rewritten: 0 })
   })
 
-  it('exempts the language switcher target explicitly', () => {
+  it('exempts the language switcher line automatically', () => {
     const root = fixture()
     expect(translationLinkLocaleViolations(
       '# 指南\n\n[English](guide.md) | 中文\n',
       linkContext(root, 'docs/guide.zh.md'),
-      ['guide.md'],
+    )).toEqual([])
+  })
+
+  it('exempts the trilingual switcher line on every side', () => {
+    const root = fixture()
+    expect(translationLinkLocaleViolations(
+      '# Guide\n\nEnglish | [中文](guide.zh.md) | [Deutsch](guide.de.md)\n',
+      linkContext(root, 'docs/guide.md'),
+    )).toEqual([])
+    expect(translationLinkLocaleViolations(
+      '# 指南\n\n[English](guide.md) | 中文 | [Deutsch](guide.de.md)\n',
+      linkContext(root, 'docs/guide.zh.md'),
+    )).toEqual([])
+    expect(translationLinkLocaleViolations(
+      '# Leitfaden\n\n[English](guide.md) | [中文](guide.zh.md) | Deutsch\n',
+      linkContext(root, 'docs/guide.de.md'),
     )).toEqual([])
   })
 
@@ -148,7 +183,6 @@ describe('translation link locale validation', () => {
     expect(translationLinkLocaleViolations(
       markdown,
       linkContext(root, 'docs/guide.zh.md'),
-      ['guide.md'],
     )).toEqual([{
       sourcePath: 'docs/guide.zh.md',
       line: 5,
@@ -158,8 +192,24 @@ describe('translation link locale validation', () => {
     expect(rewriteTranslationLinkLocales(
       markdown,
       linkContext(root, 'docs/guide.zh.md'),
-      ['guide.md'],
     ).content).toBe('# 指南\n\n[English](guide.md) | 中文\n\n[正文](guide.zh.md)\n')
+  })
+
+  it('resolves a pending locale sibling through its existing pair source', () => {
+    const root = fixture()
+    const staged = new Set(['docs/reference.md', 'docs/reference.zh.md'])
+    const context = linkContext(root, 'docs/guide.de.md', path => staged.has(path))
+    expect(translationLinkLocaleViolations('[Referenz](reference.de.md)\n', context)).toEqual([])
+    expect(normalizeTranslationMarkdownLinks('[Referenz](reference.de.md)\n', context))
+      .toBe('[Referenz](dsh-translation-target:docs/reference.md)\n')
+  })
+
+  it('keeps a dead locale sibling link unresolved when the pair source is absent', () => {
+    const root = fixture()
+    const context = linkContext(root, 'docs/guide.de.md', path => path === 'docs/guide.de.md')
+    expect(translationLinkLocaleViolations('[Referenz](reference.de.md)\n', context)).toEqual([])
+    expect(normalizeTranslationMarkdownLinks('[Referenz](reference.de.md)\n', context))
+      .toBe('[Referenz](reference.de.md)\n')
   })
 
   it('uses the selected content plane for target existence without deriving scope from siblings', () => {

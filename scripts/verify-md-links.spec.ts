@@ -9,7 +9,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { anchorCache, documentAnchors, findViolations, githubSlug } from './verify-md-links.ts'
+import { anchorCache, documentAnchors, findViolations, githubSlug, pendingGermanTargetPredicate } from './verify-md-links.ts'
 
 const roots: string[] = []
 afterEach(() => {
@@ -26,9 +26,16 @@ function layout(files: Record<string, string>): string {
   return root
 }
 
-function violationsIn(root: string, rel: string): { url: string; reason: string }[] {
-  return findViolations(join(root, rel), anchorCache(), root).map(({ url, reason }) => ({ url, reason }))
+function violationsIn(
+  root: string,
+  rel: string,
+  pendingGermanTarget?: (resolved: string) => boolean,
+): { url: string; reason: string }[] {
+  return findViolations(join(root, rel), anchorCache(), root, pendingGermanTarget ?? (() => false))
+    .map(({ url, reason }) => ({ url, reason }))
 }
+
+const repoRoot = join(import.meta.dirname, '..')
 
 describe('documentAnchors', () => {
   it('slugs rendered heading text, suffixes repeats, and reads explicit <a id> anchors', () => {
@@ -104,5 +111,50 @@ describe('findViolations fragments', () => {
   it('still rejects a missing target file, reported as target not anchor', () => {
     const root = layout({ 'a.md': '# A\n\n[ghost](missing.md#anything)\n' })
     expect(violationsIn(root, 'a.md')).toEqual([{ url: 'missing.md#anything', reason: 'target' }])
+  })
+})
+
+describe('findViolations pending German targets', () => {
+  const anyGerman = (resolved: string) => resolved.endsWith('.de.md')
+
+  it('accepts a missing .de.md target the rollout still owes', () => {
+    const root = layout({ 'a.md': '# A\n\n[de](b.de.md)\n', 'b.md': '# B\n' })
+    expect(violationsIn(root, 'a.md', anyGerman)).toEqual([])
+  })
+
+  it('accepts a fragment onto a missing .de.md target without judging the anchor', () => {
+    const root = layout({ 'a.md': '# A\n\n[de](b.de.md#any-fragment)\n', 'b.md': '# B\n' })
+    expect(violationsIn(root, 'a.md', anyGerman)).toEqual([])
+  })
+
+  it('still rejects a missing .de.md target the predicate does not accept', () => {
+    const root = layout({ 'a.md': '# A\n\n[de](b.de.md)\n', 'b.md': '# B\n' })
+    expect(violationsIn(root, 'a.md', () => false)).toEqual([{ url: 'b.de.md', reason: 'target' }])
+  })
+
+  it('does not extend the pending treatment to other locales', () => {
+    const root = layout({ 'a.md': '# A\n\n[zh](b.zh.md)\n', 'b.md': '# B\n' })
+    expect(violationsIn(root, 'a.md', anyGerman)).toEqual([{ url: 'b.zh.md', reason: 'target' }])
+  })
+
+  it('still judges anchors on an existing .de.md target', () => {
+    const root = layout({
+      'a.md': '# A\n\n[de](b.de.md#missing-anchor)\n',
+      'b.md': '# B\n',
+      'b.de.md': '# B\n\n## Real heading\n',
+    })
+    expect(violationsIn(root, 'a.md', anyGerman)).toEqual([{ url: 'b.de.md#missing-anchor', reason: 'anchor' }])
+  })
+})
+
+describe('pendingGermanTargetPredicate', () => {
+  it('derives the pending set from the repository manifest', () => {
+    const pending = pendingGermanTargetPredicate(repoRoot)
+    // docs/config-catalog.md is an active in-scope pair source whose German side is still owed.
+    expect(pending(join(repoRoot, 'docs/config-catalog.de.md'))).toBe(true)
+    // The predicate only speaks for the German locale.
+    expect(pending(join(repoRoot, 'docs/config-catalog.zh.md'))).toBe(false)
+    // A .de.md whose English source is not in the tree is not owed.
+    expect(pending(join(repoRoot, 'docs/no-such-pair.de.md'))).toBe(false)
   })
 })

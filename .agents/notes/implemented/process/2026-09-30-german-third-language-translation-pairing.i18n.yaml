@@ -1,0 +1,7 @@
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-09-30-german-third-language-translation-pairing.md
+2026-09-30-german-third-language-translation-pairing.md: 57eea964f18b796fe322769e2a0910ebe4fbba05
+2026-09-30-german-third-language-translation-pairing.zh.md: 1c75194380c33c1f088ada66c5a79721f23a3244
+2026-09-30-german-third-language-translation-pairing.de.md: 2b01f42b9333638703f91c9bd42130492624ff2d

@@ -2,11 +2,11 @@
 
 Status: implemented
 
-English | [中文](2026-08-08-automatic-translation-pairing-merges.zh.md)
+English | [中文](2026-08-08-automatic-translation-pairing-merges.zh.md) | [Deutsch](2026-08-08-automatic-translation-pairing-merges.de.md)
 
 ## Problem
 
-A bilingual consistency record contains the two owner files' exact blob hashes. Two branches that independently update different parts of the same confirmed pair therefore conflict on both hash lines even when Git cleanly composes both Markdown owners. Selecting either side leaves stale hashes, while regenerating the record by hand repeats a deterministic operation and prevents an otherwise automatic merge.
+A pairing consistency record contains the owner files' exact blob hashes — two for a pending bilingual pair, three for a trilingual pair. Two branches that independently update different parts of the same confirmed pair therefore conflict on both hash lines even when Git cleanly composes both Markdown owners. Selecting either side leaves stale hashes, while regenerating the record by hand repeats a deterministic operation and prevents an otherwise automatic merge.
 
 ## Decision
 
@@ -14,7 +14,7 @@ A bilingual consistency record contains the two owner files' exact blob hashes. 
 
 The installer loads the exact Node/tsx entrypoint before publishing worktree integration. Git invokes a checked-in shell launcher that does not require Node and repeats this probe before every driver execution. When the runtime or entrypoint is unavailable, the launcher materializes Git's ordinary three-way text result in the sidecar but returns a conflict even when that text merge is clean, so Git retains the unmerged index stages and never accepts unverified metadata.
 
-The driver parses the ancestor, current, and other records and loads the six owner blobs named by their hashes. It independently runs Git's default three-way text merge for the English and Chinese triplets, requires both merges to be clean, verifies language switchers and the pairing structural signature, stores the two merged blobs, and writes their hashes as the canonical record. This composes confirmations already present in both parents; it never records an ordinary one-sided documentation edit.
+The driver parses the ancestor, current, and other records and loads the owner blobs named by their hashes. It independently runs Git's default three-way text merge for each recorded owner-blob triplet, refuses a merge that mixes a two-hash record with a three-hash record, requires every merge to be clean, verifies language switchers and the pairing structural signature, stores the merged blobs, and writes their hashes as the canonical record. This composes confirmations already present in both parents; it never records an ordinary one-sided documentation edit.
 
 The driver fails with an ordinary unresolved sidecar when a record is malformed, an object is missing, an owner uses another merge strategy (including a non-text `merge.default` inherited by an otherwise unspecified path), either owner has content conflicts, or the merged pair violates structural checks. Add/delete and rename shapes remain manual because their path ownership is not the same three-record operation.
 
@@ -36,7 +36,7 @@ An installer rollback failure reports both the original installation error and e
 
 ## Verification
 
-Script tests exercise clean composition through the installed launcher, missing-runtime and broken-entrypoint text fallback, installer probe rollback, a rejecting `pre-merge-commit` hook, explicit recovery from an unresolved index, mixed safe and owner-conflicted pairs, edited sidecars, non-text default merge configuration, record parsing, and worktree-local installation. The existing corpus verifier continues to prove that a committed record matches its two owners.
+Script tests exercise clean composition through the installed launcher, missing-runtime and broken-entrypoint text fallback, installer probe rollback, a rejecting `pre-merge-commit` hook, explicit recovery from an unresolved index, mixed safe and owner-conflicted pairs, edited sidecars, non-text default merge configuration, record parsing, and worktree-local installation. The existing corpus verifier continues to prove that a committed record matches its owners.
 
 ## Alternatives considered
 
