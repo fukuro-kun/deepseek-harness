@@ -4,10 +4,10 @@
  *
  * The list is the profile's `models` array as the card holds it: an empty list
  * means "serve this route's built-in catalog", and any entry replaces that
- * catalog, so a row is only ever added deliberately. Fetching asks the endpoint
- * **the form currently shows** — including a key typed but not yet saved — so
- * adding a provider is one pass instead of save-then-return; the reply is
- * candidates the user picks from, never configuration written behind them.
+ * catalog. Fetching asks the endpoint **the form currently shows** — including
+ * a key typed but not yet saved — so adding a provider is one pass instead of
+ * save-then-return; the reply is candidates the user reviews and applies, never
+ * configuration written before that confirmation.
  *
  * A provider that cannot be interrogated (an unreachable endpoint, a protocol
  * with no readable listing) is not a dead end: the failure is shown next to the
@@ -245,12 +245,15 @@ export function ModelListEditor(props: ModelListEditorProps): ReactNode {
         setFailure(t('fetchEmpty'))
         return
       }
-      // Everything already configured starts unchecked, so adopting a
-      // selection never silently rewrites a capacity the user corrected.
-      const known = new Set(models.map(model => textOf(model, 'id')))
+      const known = new Map(models.map(model => [textOf(model, 'id'), model]))
       setCandidateQuery('')
       setCandidates(found)
-      setPicked(new Set(found.filter(model => !known.has(model.id)).map(model => model.id)))
+      setPicked(new Set(found.filter((candidate) => {
+        const current = known.get(candidate.id)
+        return current === undefined
+          || (candidate.contextWindow !== undefined && candidate.contextWindow !== numberOf(current, 'contextWindow'))
+          || (candidate.maxTokens !== undefined && candidate.maxTokens !== numberOf(current, 'maxTokens'))
+      }).map(model => model.id)))
     } finally {
       setBusy(false)
     }
@@ -268,11 +271,12 @@ export function ModelListEditor(props: ModelListEditorProps): ReactNode {
     const byId = new Map(models.map(model => [textOf(model, 'id'), model]))
     for (const candidate of candidates) {
       if (!picked.has(candidate.id)) continue
-      // A row the user already tuned wins over the provider's own numbers.
-      // Keyed by id, so a half-typed row whose id is still empty is not a
-      // match and the candidate joins as its own row — correct, since a row
-      // without an id is not yet a model and the create/apply gates refuse it.
-      byId.set(candidate.id, byId.get(candidate.id) ?? adopt(candidate))
+      const current = byId.get(candidate.id)
+      byId.set(candidate.id, current === undefined ? adopt(candidate) : {
+        ...current,
+        ...candidate.contextWindow === undefined ? {} : { contextWindow: candidate.contextWindow },
+        ...candidate.maxTokens === undefined ? {} : { maxTokens: candidate.maxTokens },
+      })
     }
     onChange([...byId.values()])
     closePicker()
@@ -292,6 +296,7 @@ export function ModelListEditor(props: ModelListEditorProps): ReactNode {
     ? activeCandidates
     : activeCandidates.filter(candidate => candidate.id.toLowerCase().includes(normalizedCandidateQuery)
       || candidate.name?.toLowerCase().includes(normalizedCandidateQuery) === true)
+  const configuredIds = new Set(models.map(model => textOf(model, 'id')))
   const allVisibleCandidatesPicked = visibleCandidates.length > 0
     && visibleCandidates.every(candidate => picked.has(candidate.id))
 
@@ -491,10 +496,24 @@ export function ModelListEditor(props: ModelListEditorProps): ReactNode {
                       checked={picked.has(candidate.id)}
                       onChange={() => { toggle(candidate.id) }}
                     />
-                    {/* The id alone: it is the string adoption writes, and the
-                        capacities the endpoint reported are adopted with it and
-                        editable in the row that appears. */}
-                    <span className={styles['candidateId']}>{candidate.id}</span>
+                    <div className={styles['candidateContent']}>
+                      <div className={styles['candidateHeading']}>
+                        <span className={styles['candidateId']}>{candidate.id}</span>
+                        {configuredIds.has(candidate.id) && (
+                          <span className={styles['candidateStatus']}>{t('fetchConfigured')}</span>
+                        )}
+                      </div>
+                      {(candidate.contextWindow !== undefined || candidate.maxTokens !== undefined) && (
+                        <div className={styles['candidateCapacities']}>
+                          {candidate.contextWindow !== undefined && (
+                            <span>{t('modelContextWindow')}: {formatCapacity(candidate.contextWindow)}</span>
+                          )}
+                          {candidate.maxTokens !== undefined && (
+                            <span>{t('modelMaxTokens')}: {formatCapacity(candidate.maxTokens)}</span>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </label>
                 </li>
               ))}

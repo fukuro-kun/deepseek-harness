@@ -1,5 +1,6 @@
 /** Stored catalog drift remains repairable through the assembled Models settings page. */
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { createServer, type Server } from 'node:http'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -12,24 +13,53 @@ import {
 import { saveFailureShot, ZH_BROWSER_LOCALE } from './support.ts'
 
 const EXPECTED = fileURLToPath(new URL('./expected/models-settings-recovery/stored-error.expected.md', import.meta.url))
+const REFRESH_EXPECTED = fileURLToPath(new URL('./expected/models-settings-recovery/capability-refresh-picker.expected.md', import.meta.url))
 const FAILURE = 'llm-pi-ai: provider "openrouter" model "111" needs an api; '
   + 'the installed catalog does not describe it, so set the route\'s api to the wire protocol its endpoint speaks'
 const CUSTOM_FAILURE = 'llm-pi-ai: provider "acme-gateway" model "custom-model" needs an api; '
   + 'the installed catalog does not describe it, so set the route\'s api to the wire protocol its endpoint speaks'
+
+async function startCapabilityRouter(): Promise<{ server: Server; baseURL: string }> {
+  const server = createServer((request, response) => {
+    const body = request.url === '/v1/models'
+      ? { object: 'list', data: [{ id: 'existing-model', object: 'model', owned_by: 'router' }] }
+      : request.url === '/endpoints'
+        ? { endpoints: [{ model: 'existing-model', healthy: true, n_ctx: 65_536, max_tokens_cap: 4096 }] }
+        : undefined
+    response.writeHead(body === undefined ? 404 : 200, { 'content-type': 'application/json' })
+    response.end(JSON.stringify(body ?? { error: 'not found' }))
+  })
+  await new Promise<void>((resolve, reject) => {
+    server.once('error', reject)
+    server.listen(0, '127.0.0.1', () => {
+      server.off('error', reject)
+      resolve()
+    })
+  })
+  const address = server.address()
+  if (address === null || typeof address === 'string') throw new Error('capability router did not bind a TCP port')
+  return { server, baseURL: `http://127.0.0.1:${address.port}/v1` }
+}
 
 describe('web e2e: repairs a stored provider after catalog drift', () => {
   let home: string
   let scaffold: WebScaffold
   let browser: Browser
   let page: Page
+  let capabilityRouter: Server | undefined
   let tripwire: ReturnType<typeof watchConsole>
 
   beforeAll(async () => {
+    const router = await startCapabilityRouter()
+    capabilityRouter = router.server
     home = await mkdtemp(join(tmpdir(), 'dsh-models-recovery-'))
     await writeFile(join(home, 'settings.yaml'), [
       'llm-pi-ai:', '  providers:', '    openrouter:', '      models:',
       '        - id: "111"', '    zai: {}', '    acme-gateway:',
-      '      baseURL: https://gateway.example/v1', '      models:', '        - id: "custom-model"', '',
+      '      baseURL: https://gateway.example/v1', '      models:', '        - id: "custom-model"',
+      '    capability-refresh:', '      api: openai-completions', `      baseURL: "${router.baseURL}"`,
+      '      models:', '        - id: existing-model', '          name: User label',
+      '          contextWindow: 4096', '          maxTokens: 1024', '',
     ].join('\n'))
     scaffold = await launchWebScaffold({ harnessHome: home })
     browser = await chromium.launch()
@@ -47,9 +77,18 @@ describe('web e2e: repairs a stored provider after catalog drift', () => {
       await browser?.close()
     } finally {
       try {
-        await scaffold?.close()
+        if (capabilityRouter !== undefined) {
+          const router = capabilityRouter
+          await new Promise<void>((resolve) => {
+            router.close(() => { resolve() })
+          })
+        }
       } finally {
-        if (home !== undefined) await rm(home, { recursive: true, force: true })
+        try {
+          await scaffold?.close()
+        } finally {
+          if (home !== undefined) await rm(home, { recursive: true, force: true })
+        }
       }
     }
   })
@@ -89,6 +128,36 @@ describe('web e2e: repairs a stored provider after catalog drift', () => {
     const repaired = await readFile(join(home, 'settings.yaml'), 'utf8')
     expect(repaired).not.toContain('111')
     expect(repaired).toContain('baseURL: https://gateway.example/v1')
+    expect(tripwire.pageErrors).toEqual([])
+  })
+
+  it('refreshes selected existing model capacities through the assembled page', async () => {
+    onTestFailed(() => saveFailureShot(page, 'models-settings-capability-refresh'))
+    const dialog = page.getByRole('dialog', { name: '设置' })
+    await dialog.getByRole('button', { name: '编辑 capability-refresh', exact: true }).click()
+    await dialog.getByText('自定义设置', { exact: true }).click()
+    await dialog.getByRole('button', { name: '获取可用模型', exact: true }).click()
+    const picker = page.locator('[class*="fetchDialog"]')
+    await picker.waitFor()
+    const candidate = picker.getByRole('checkbox', { name: /existing-model/ })
+    expect(await candidate.isChecked()).toBe(true)
+    const pickerText = await picker.innerText()
+    expect(pickerText).toContain('65536')
+    expect(pickerText).toContain('4096')
+    await compareOrRefreshGolden(
+      REFRESH_EXPECTED,
+      await captureStableAria(page, '[class*="fetchDialog"]', scaffold.workspaceCwd),
+      webSnapshotMode(),
+    )
+
+    await picker.getByRole('button', { name: '应用所选', exact: true }).click()
+    await dialog.getByRole('button', { name: '保存', exact: true }).click()
+    await dialog.getByText('已保存 capability-refresh。', { exact: true }).waitFor()
+    const saved = await readFile(join(home, 'settings.yaml'), 'utf8')
+    expect(saved).toContain('name: User label')
+    expect(saved).toMatch(/contextWindow:\s*65536/)
+    expect(saved).toMatch(/maxTokens:\s*4096/)
+    expect(saved).not.toContain('name: existing-model')
     expect(tripwire.pageErrors).toEqual([])
   })
 })

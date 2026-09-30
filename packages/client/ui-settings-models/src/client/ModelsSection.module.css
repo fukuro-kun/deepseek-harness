@@ -676,11 +676,42 @@ select.input {
   cursor: pointer;
 }
 
+.candidateContent {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.candidateHeading {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
 .candidateId {
   flex: 1 1 auto;
   font-family: var(--ds-font-family-code);
   font-size: 13px;
   overflow-wrap: anywhere;
+}
+
+.candidateStatus,
+.candidateCapacities {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+}
+
+.candidateStatus {
+  flex: 0 0 auto;
+}
+
+.candidateCapacities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 10px;
 }
 
 .candidateEmpty {

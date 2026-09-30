@@ -646,7 +646,6 @@
     "packages/llm/README.md",
     "packages/llm/deepseek-llm-api-extensions/README.md",
     "packages/llm/llm-deepseek/README.md",
-    "packages/llm/llm-pi-ai/README.md",
     "packages/llm/llm-retry/README.md",
     "packages/llm/llm/README.md",
     "packages/llm/plugin-package-inventory-deepseek/README.md",

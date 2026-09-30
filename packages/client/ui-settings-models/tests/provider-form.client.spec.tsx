@@ -527,7 +527,7 @@ describe('endpoint interrogation', () => {
     })
   })
 
-  it('adopts only the picked candidates, keeping a row the user already tuned', async () => {
+  it('lets the user deselect an existing candidate while adding selected new models', async () => {
     const discover = vi.fn(() => Promise.resolve(ok([
       { id: 'kept', contextWindow: 999 },
       { id: 'fresh', contextWindow: 4096, maxTokens: 2048, name: 'Fresh' },
@@ -540,9 +540,10 @@ describe('endpoint interrogation', () => {
 
     fireEvent.click(screen.getByText(en.fetchModels))
     await screen.findByText(en.fetchTitle)
-    // The already-configured row starts unchecked; the new one starts checked.
+    // Both the changed configured row and the new row start selected.
     const boxes = [...document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')]
-    expect(boxes.map(box => box.checked)).toEqual([false, true])
+    expect(boxes.map(box => box.checked)).toEqual([true, true])
+    fireEvent.click(boxes[0]!)
     fireEvent.click(screen.getByText(en.fetchAdopt))
 
     expect(screen.getByLabelText<HTMLInputElement>(`${en.modelId} 2`).value).toBe('fresh')
@@ -556,6 +557,54 @@ describe('endpoint interrogation', () => {
     expect(firstMutate(mutate).ops[0]?.value).toEqual([
       { id: 'kept', contextWindow: 111 },
       { id: 'fresh', contextWindow: 4096, maxTokens: 2048, name: 'Fresh' },
+    ])
+  })
+
+  it('refreshes reported capacities on selected existing rows and keeps their other fields', async () => {
+    const discover = vi.fn(() => Promise.resolve(ok([
+      { id: 'context-refresh', name: 'Context provider label', contextWindow: 999 },
+      { id: 'max-refresh', name: 'Output provider label', maxTokens: 256 },
+      { id: 'stable', contextWindow: 999 },
+    ])))
+    const { mutate } = await mountSection({
+      discover,
+      providers: {
+        openai: {
+          baseURL: 'https://proxy.example/v1',
+          models: [
+            { id: 'context-refresh', name: 'Context label', contextWindow: 111, maxTokens: 64, futureField: { keep: true } },
+            { id: 'max-refresh', name: 'Output label', contextWindow: 999, maxTokens: 64, futureField: { keep: true } },
+            { id: 'stable', name: 'Stable label', contextWindow: 999, maxTokens: 64 },
+          ],
+        },
+      },
+    })
+    openEditor('openai')
+
+    fireEvent.click(screen.getByText(en.fetchModels))
+    await screen.findByText(en.fetchTitle)
+    const dialog = screen.getByRole('dialog')
+    expect(dialog.textContent).toContain(`${en.modelContextWindow}: 999`)
+    expect(dialog.textContent).toContain(`${en.modelMaxTokens}: 256`)
+    expect(dialog.textContent).toContain(en.fetchConfigured)
+    expect([...dialog.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')].map(box => box.checked))
+      .toEqual([true, true, false])
+    fireEvent.click(screen.getByText(en.fetchAdopt))
+
+    expect(screen.getByLabelText<HTMLInputElement>(`${en.modelName} 1`).value).toBe('Context label')
+    expect(screen.getByLabelText<HTMLInputElement>(`${en.modelName} 2`).value).toBe('Output label')
+    expandModel(1)
+    expect(screen.getByLabelText<HTMLInputElement>(`${en.modelContextWindow} 1`).value).toBe('999')
+    expect(screen.getByLabelText<HTMLInputElement>(`${en.modelMaxTokens} 1`).value).toBe('64')
+    expandModel(2)
+    expect(screen.getByLabelText<HTMLInputElement>(`${en.modelContextWindow} 2`).value).toBe('999')
+    expect(screen.getByLabelText<HTMLInputElement>(`${en.modelMaxTokens} 2`).value).toBe('256')
+    fireEvent.click(screen.getByText(en.apply))
+    await waitFor(() => { expect(mutate).toHaveBeenCalled() })
+    expect(firstMutate(mutate).ops[0]?.value).toEqual([
+      { id: 'context-refresh', name: 'Context label', contextWindow: 999, maxTokens: 64, futureField: { keep: true } },
+      { id: 'max-refresh', name: 'Output label', contextWindow: 999, maxTokens: 256, futureField: { keep: true } },
+      { id: 'stable', name: 'Stable label', contextWindow: 999, maxTokens: 64 },
     ])
   })
 

@@ -19,6 +19,14 @@
  * Every other protocol reports that it cannot be interrogated so the surface
  * falls back to hand-entry rather than guessing its response fields.
  *
+ * A listing that answers only ids may still leave capacities discoverable:
+ * after a thin reply, one sibling-path probe asks `{root}/endpoints` — the
+ * router-administration listing InferenzQuelle-style gateways expose — for
+ * the context window and configured output cap of each served model. The probe
+ * is enrichment, never a requirement: unreachable, absent, redirected, or
+ * unreadable metadata leaves the thin listing exactly as the endpoint
+ * reported it.
+ *
  * @module dsh-llm-pi-ai/discovery
  */
 
@@ -47,6 +55,12 @@ const ANTHROPIC_VERSION = '2023-06-01'
 
 /** Largest model-list page accepted by Anthropic's public endpoint; discovery reads one page and does not follow `has_more`. */
 const ANTHROPIC_MODEL_LIMIT = 1000
+
+/** Maximum time for the model-listing request and response body. */
+const MODEL_LISTING_TIMEOUT_MS = 10_000
+
+/** Ceiling on a best-effort `/endpoints` capability probe; a stalled router must not stall the button. */
+const CAPABILITY_PROBE_TIMEOUT_MS = 3_000
 
 /**
  * Endpoint replies larger than this are refused. The endpoint is whatever URL
@@ -127,7 +141,7 @@ function listingUrl(baseURL: string, api: string): string {
  * anything; the accumulated total is what actually enforces the bound, because
  * a server that under-declares (or streams) tells us nothing up front.
  */
-async function readBounded(response: Response, url: string): Promise<string> {
+async function readBounded(response: Response, url: string, signal: AbortSignal): Promise<string> {
   const oversized = (): LlmError =>
     new LlmError(`${url} answered with more than ${MAX_RESPONSE_BYTES} bytes`, 'DISCOVERY_FAILED')
   const declared = Number(response.headers.get('content-length') ?? Number.NaN)
@@ -140,15 +154,21 @@ async function readBounded(response: Response, url: string): Promise<string> {
   const reader = response.body.getReader()
   const chunks: Uint8Array[] = []
   let total = 0
+  let rejectAbort: ((reason: unknown) => void) | undefined
+  const abortRead = new Promise<never>((_, reject) => { rejectAbort = reject })
+  const onAbort = (): void => { rejectAbort?.(signal.reason) }
+  signal.addEventListener('abort', onAbort, { once: true })
   try {
+    signal.throwIfAborted()
     for (;;) {
-      const { done, value } = await reader.read()
-      if (done) break
-      total += value.byteLength
+      const result = await Promise.race([reader.read(), abortRead])
+      if (result.done) break
+      total += result.value.byteLength
       if (total > MAX_RESPONSE_BYTES) throw oversized()
-      chunks.push(value)
+      chunks.push(result.value)
     }
   } finally {
+    signal.removeEventListener('abort', onAbort)
     /* v8 ignore next 4 -- cancel() after a completed or abandoned read settles without rejecting; unobserved best-effort cleanup. */
     await reader.cancel().catch(() => {
       // Cancel after a drained read, or after this function walked away from
@@ -262,9 +282,11 @@ export interface StoredModelDiscoveryProfile {
  * @param storedProfile - Host-owned headers and lazy credential resolution for
  *   the named route. It is read only on the path that reaches the network; the
  *   credential is resolved only when the draft carries none.
- * @returns the advertised models in endpoint order.
+ * @returns advertised models in endpoint order, with optional router
+ *   capacities filling fields the model listing omitted.
  * @throws LlmError when the protocol has no readable listing, the endpoint
- *   refuses or fails the request, or the reply is not a model listing.
+ *   refuses, fails, or times out, or the reply is not a model listing; caller
+ *   cancellation rejects with `ABORTED`.
  */
 export async function discoverModels(
   request: LlmModelDiscoveryOperation,
@@ -312,25 +334,34 @@ export async function discoverModels(
   const stored = storedProfile?.()
   const supplied = request.apiKey ?? await stored?.resolveApiKey()
   const apiKey = supplied === undefined ? undefined : usableProbeKey(supplied)
+  const headers = new Headers(stored?.headers === undefined ? undefined : Object.entries(stored.headers))
+  headers.set('accept', 'application/json')
+  if (api === 'anthropic-messages') {
+    headers.set('anthropic-version', ANTHROPIC_VERSION)
+    if (apiKey !== undefined) headers.set('x-api-key', apiKey)
+  } else if (apiKey !== undefined) {
+    headers.set('authorization', `Bearer ${apiKey}`)
+  }
+  for (const [name, value] of Object.entries(attributionHeaders())) headers.set(name, value)
+  const listingSignal = AbortSignal.any(
+    request.signal === undefined
+      ? [AbortSignal.timeout(MODEL_LISTING_TIMEOUT_MS)]
+      : [request.signal, AbortSignal.timeout(MODEL_LISTING_TIMEOUT_MS)],
+  )
   let response: Response
   try {
-    const headers = new Headers(stored?.headers === undefined ? undefined : Object.entries(stored.headers))
-    headers.set('accept', 'application/json')
-    if (api === 'anthropic-messages') {
-      headers.set('anthropic-version', ANTHROPIC_VERSION)
-      if (apiKey !== undefined) headers.set('x-api-key', apiKey)
-    } else if (apiKey !== undefined) {
-      headers.set('authorization', `Bearer ${apiKey}`)
-    }
-    for (const [name, value] of Object.entries(attributionHeaders())) headers.set(name, value)
     response = await fetch(url, {
       method: 'GET',
       headers,
-      ...request.signal === undefined ? {} : { signal: request.signal },
+      redirect: 'error',
+      signal: listingSignal,
     })
   } catch (error: unknown) {
     if (request.signal?.aborted) {
       throw new LlmError('model discovery aborted by caller', 'ABORTED', { cause: error })
+    }
+    if (listingSignal.aborted) {
+      throw new LlmError(`model listing timed out after ${MODEL_LISTING_TIMEOUT_MS} ms: ${url}`, 'DISCOVERY_FAILED', { cause: error })
     }
     throw new LlmError(`could not reach ${url}`, 'DISCOVERY_FAILED', { cause: error })
   }
@@ -342,13 +373,16 @@ export async function discoverModels(
   }
   let text: string
   try {
-    text = await readBounded(response, url)
+    text = await readBounded(response, url, listingSignal)
   } catch (error: unknown) {
     // Cancellation during the body read rejects with the abort reason, which
     // may be any value; the caller gets the same coded failure it would have
     // for a cancellation before the request went out.
     if (request.signal?.aborted) {
       throw new LlmError('model discovery aborted by caller', 'ABORTED', { cause: error })
+    }
+    if (listingSignal.aborted) {
+      throw new LlmError(`model listing timed out after ${MODEL_LISTING_TIMEOUT_MS} ms: ${url}`, 'DISCOVERY_FAILED', { cause: error })
     }
     throw error
   }
@@ -358,5 +392,125 @@ export async function discoverModels(
   } catch (error: unknown) {
     throw new LlmError(`${url} did not answer with JSON`, 'DISCOVERY_FAILED', { cause: error })
   }
-  return readListing(body)
+  const models = readListing(body)
+  // A listing that disclosed both capacities for every entry is complete;
+  // anything thinner may still be enriched by a sibling-path capability
+  // listing. Only fields the endpoint itself left blank are filled — what it
+  // did say about a model stays authoritative.
+  if (!models.some(model => model.contextWindow === undefined || model.maxTokens === undefined)) return models
+  const capabilities = await probeEndpointCapabilities(request.baseURL, headers, request.signal)
+  if (capabilities === undefined) return models
+  return models.map((model) => {
+    const found = capabilities.get(model.id)
+    if (found === undefined) return model
+    return {
+      ...model,
+      ...model.contextWindow === undefined && found.contextWindow !== undefined
+        ? { contextWindow: found.contextWindow }
+        : {},
+      ...model.maxTokens === undefined && found.maxTokens !== undefined ? { maxTokens: found.maxTokens } : {},
+    }
+  })
+}
+
+/** One serving endpoint of a sibling-path router-administration listing. */
+interface EndpointsReplyEntry {
+  /** Model id as `/models` reports it. */
+  model?: unknown
+  /** Whether the router currently serves requests through this endpoint. */
+  healthy?: unknown
+  /** Context window this endpoint serves. */
+  n_ctx?: unknown
+  /** Endpoint-enforced maximum output tokens, when configured. */
+  max_tokens_cap?: unknown
+}
+
+/** Per-model capacities a sibling-path capability listing can supply. */
+interface EndpointCapabilities {
+  contextWindow?: number
+  maxTokens?: number
+}
+
+/**
+ * Read a router-administration `GET /endpoints` reply into per-model
+ * capacities, or `undefined` when the reply is not that listing. Only healthy
+ * endpoints count. The largest reported context window describes the largest
+ * prompt the router can place on a healthy endpoint; a model-wide output cap
+ * is reported only when every healthy endpoint supplies one, using the
+ * smallest cap so the candidate does not overstate the shared limit.
+ */
+function readEndpointCapabilities(body: unknown): ReadonlyMap<string, EndpointCapabilities> | undefined {
+  const endpoints = (body as { readonly endpoints?: unknown } | null)?.endpoints
+  if (!Array.isArray(endpoints)) return undefined
+  const healthy = new Map<string, EndpointsReplyEntry[]>()
+  for (const raw of endpoints) {
+    if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) continue
+    const entry = raw as EndpointsReplyEntry
+    if (entry.healthy !== true) continue
+    const model = label(entry.model)
+    if (model === undefined) continue
+    const entries = healthy.get(model) ?? []
+    entries.push(entry)
+    healthy.set(model, entries)
+  }
+  if (healthy.size === 0) return undefined
+  const found = new Map<string, EndpointCapabilities>()
+  for (const [model, entries] of healthy) {
+    const contexts = entries.map(entry => capacity(entry.n_ctx)).filter((value): value is number => value !== undefined)
+    const caps = entries.map(entry => capacity(entry.max_tokens_cap))
+    const contextWindow = contexts.length === 0 ? undefined : Math.max(...contexts)
+    const maxTokens = caps.every((value): value is number => value !== undefined) ? Math.min(...caps) : undefined
+    if (contextWindow !== undefined || maxTokens !== undefined) {
+      found.set(model, {
+        ...contextWindow === undefined ? {} : { contextWindow },
+        ...maxTokens === undefined ? {} : { maxTokens },
+      })
+    }
+  }
+  return found
+}
+
+/**
+ * Ask `{root}/endpoints` — the router-administration listing InferenzQuelle-
+ * style gateways expose beside the OpenAI-compatible API — for per-model
+ * capacities, where the root is the listing base without one trailing `/v1`
+ * segment. Best-effort enrichment only: every failure — unreachable, refused,
+ * redirected, stalled past the probe's short timeout, or a reply that is not
+ * that listing — answers `undefined` and leaves the thin listing as it was.
+ * `redirect: 'error'` keeps the route's credential headers from following a
+ * redirect to an origin the deployment never configured.
+ */
+async function probeEndpointCapabilities(
+  baseURL: string,
+  headers: Headers,
+  signal: AbortSignal | undefined,
+): Promise<ReadonlyMap<string, EndpointCapabilities> | undefined> {
+  const base = baseURL.replace(/\/+$/, '')
+  const root = base.endsWith('/v1') ? base.slice(0, -3) : base
+  const url = `${root}/endpoints`
+  const probeSignal = AbortSignal.any(
+    signal === undefined
+      ? [AbortSignal.timeout(CAPABILITY_PROBE_TIMEOUT_MS)]
+      : [signal, AbortSignal.timeout(CAPABILITY_PROBE_TIMEOUT_MS)],
+  )
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+      redirect: 'error',
+      signal: probeSignal,
+    })
+    if (!response.ok) {
+      await response.body?.cancel()
+      return undefined
+    }
+    return readEndpointCapabilities(JSON.parse(await readBounded(response, url, probeSignal)))
+  } catch (error: unknown) {
+    if (signal?.aborted) {
+      throw new LlmError('model discovery aborted by caller', 'ABORTED', { cause: error })
+    }
+    // The capability path is optional; transport, timeout, and parser failures
+    // leave the model listing usable without enrichment.
+    return undefined
+  }
 }

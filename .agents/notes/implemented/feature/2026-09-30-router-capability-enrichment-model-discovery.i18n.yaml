@@ -1,0 +1,7 @@
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-30-router-capability-enrichment-model-discovery.md
+2026-09-30-router-capability-enrichment-model-discovery.md: a728837326bc11b7b21b943bf90b7687af149c00
+2026-09-30-router-capability-enrichment-model-discovery.zh.md: d84b5841ae5e59f3f9bed2e3bfc50a482ea0a5db
+2026-09-30-router-capability-enrichment-model-discovery.de.md: 31d0c1e8a2f42891b419a49df105230bc7af8ff0

@@ -1,0 +1,13 @@
+- dialog "添加模型或刷新容量":
+  - heading "添加模型或刷新容量" [level=2]
+  - button "关闭":
+    - img
+  - paragraph: 新模型和容量有变化的已配置模型会默认选中。应用前请检查选择；已有模型的名称和已报告容量以外的字段都会保留。
+  - searchbox "搜索模型"
+  - button "取消全选"
+  - list:
+    - listitem:
+      - 'checkbox "existing-model 已配置 上下文窗口: 65536 最大输出 token: 4096" [checked]'
+      - text: "existing-model 已配置 上下文窗口: 65536 最大输出 token: 4096"
+  - button "取消"
+  - button "应用所选"
