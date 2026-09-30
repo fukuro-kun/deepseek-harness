@@ -381,7 +381,6 @@
     "docs/deepseek-llm-api-wire-extensions.md",
     "docs/defensive-patterns.md",
     "docs/development.md",
-    "docs/event-producer-consumer.md",
     "docs/glossary.md",
     "docs/graph-atlas.md",
     "docs/module-graph.md",
