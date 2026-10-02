@@ -5,6 +5,8 @@ kind: "package-reference"
 
 # @deepseek-ai/dsh-command-compact
 
+
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 English | [中文](README.zh.md)
 
 ## Summary
