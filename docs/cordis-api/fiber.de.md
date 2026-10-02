@@ -1,11 +1,11 @@
-<!-- 英文源文件由 scripts/gen-cordis-catalog.ts 生成；本中文文件是通过双语配对维护的经评审对侧。
-     更新时先运行 `pnpm run gen-cordis-catalog` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/cordis-api/fiber.md` 重新记录配对。 -->
+<!-- Die englische Quelldatei wird von scripts/gen-cordis-catalog.ts generiert; diese deutsche Datei ist die per双语配对 gepflegte, reviewte Gegenüber.
+     Zum Aktualisieren zuerst `pnpm run gen-cordis-catalog` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/cordis-api/fiber.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
 # Fiber
 
-[English](fiber.md) | 中文 | [Deutsch](fiber.de.md)
+[English](fiber.md) | [中文](fiber.zh.md) | Deutsch
 
-fiber 是一个已加载的插件实例，包含其生命周期状态、经过校验的配置以及已注册的作用。`ctx.fiber` 是当前 fiber，`ctx.effect()` 会将调用委托给它。
+Ein Fiber ist eine geladene Plugin-Instanz: ihr Lifecycle-Zustand, ihre validierte Config und ihre registrierten Effects. `ctx.fiber` ist der aktuelle Fiber, und `ctx.effect()` delegiert an ihn.
 
 ### ctx.effect(execute, label?)
 
@@ -27,16 +27,16 @@ effect(execute: () => SyncEffect, label?: string): Disposable<Promise<void>>
 effect(execute: () => Effect, label?: string): AsyncDisposable<Promise<void>>
 ```
 
-在此 fiber 上注册一个支持清理的作用。
+Registriert einen Cleanup-fähigen Effect auf diesem Fiber.
 
-`execute` 会立即运行；它产生的清理函数将被收集，并在调用返回的清理函数或卸载 fiber 时按相反顺序运行，以先发生者为准。重复调用清理函数不会产生任何效果。如果 fiber 已经 dispose（资源释放），则抛出 `CordisError('INACTIVE_EFFECT')`；如果结构无效，则抛出 `TypeError`，表示 `execute` 返回了不受支持的结果。
+`execute` läuft sofort; die von ihm erzeugten Disposer werden gesammelt und (in umgekehrter Reihenfolge) ausgeführt, sobald der zurückgegebene Disposer aufgerufen wird oder der Fiber entladen wird — je nachdem, was zuerst eintritt. Ein zweiter Aufruf des Disposers ist ein No-Op. Wirft `CordisError('INACTIVE_EFFECT')`, wenn der Fiber bereits disposed ist, und `TypeError`, wenn `execute` eine ungültige Shape zurückgibt.
 
-- `execute`：作用主体；可接受的结构见 `Effect`。
-- `label`：在 `getEffects()` 诊断信息中显示的作用标签。
+- `execute` — der Effect-Body; akzeptierte Shapes siehe `Effect`.
+- `label` — Effect-Label, das in `getEffects()`-Diagnosen angezeigt wird.
 
-**返回**一个用于撤销该作用的清理函数，并在清理完成后结算。
+**Gibt** einen Disposer zurück, der den Effect abbaut und nach Abschluss settle.
 
-[源码](../../vendor/cordis/src/fiber.ts#L415)
+[Quelle](../../vendor/cordis/src/fiber.ts#L415)
 
 ### ctx.fiber
 
@@ -45,17 +45,17 @@ effect(execute: () => Effect, label?: string): AsyncDisposable<Promise<void>>
 fiber: Fiber
 ```
 
-拥有此上下文的 fiber（插件运行时实例）。
+Der Fiber (Plugin-Runtime-Instanz), der diesen Context besitzt.
 
-[源码](../../vendor/cordis/src/fiber.ts#L12)
+[Quelle](../../vendor/cordis/src/fiber.ts#L12)
 
-## Fiber 类
+## Die Fiber-Klasse
 
-单次插件应用的运行时实例。
+Runtime-Instanz einer Plugin-Anwendung.
 
-fiber 会跟踪 `ctx.plugin()` 返回的插件上下文所对应的依赖状态、经过校验的配置、生命周期作用和清理操作。
+Ein Fiber verfolgt Abhängigkeitszustand, validierte Config, Lifecycle-Effects und Cleanup für den Plugin-Context, den `ctx.plugin()` zurückgibt.
 
-[源码](../../vendor/cordis/src/fiber.ts#L184)
+[Quelle](../../vendor/cordis/src/fiber.ts#L184)
 
 ### fiber.uid
 
@@ -64,9 +64,9 @@ fiber 会跟踪 `ctx.plugin()` 返回的插件上下文所对应的依赖状态�
 public uid: number | null
 ```
 
-在注册表中的唯一 id；根 fiber 的 id 为 0，dispose 后为 `null`。
+Eindeutige id innerhalb der Registry; 0 für den Root-Fiber, `null` sobald disposed.
 
-[源码](../../vendor/cordis/src/fiber.ts#L186)
+[Quelle](../../vendor/cordis/src/fiber.ts#L186)
 
 ### fiber.ctx
 
@@ -75,9 +75,9 @@ public uid: number | null
 public readonly ctx: Context
 ```
 
-此 fiber 的插件运行所在的上下文（扩展自父上下文）。
+Der Context, in dem das Plugin dieses Fibers läuft (erweitert den Parent-Context).
 
-[源码](../../vendor/cordis/src/fiber.ts#L188)
+[Quelle](../../vendor/cordis/src/fiber.ts#L188)
 
 ### fiber.config
 
@@ -86,9 +86,9 @@ public readonly ctx: Context
 public config: any
 ```
 
-经过校验的插件配置（由 `update()` 更新）。
+Die validierte Plugin-Config (wird durch `update()` aktualisiert).
 
-[源码](../../vendor/cordis/src/fiber.ts#L190)
+[Quelle](../../vendor/cordis/src/fiber.ts#L190)
 
 ### fiber.state
 
@@ -97,9 +97,9 @@ public config: any
 public state
 ```
 
-当前生命周期状态；状态转换会发出 `internal/status`。
+Aktueller Lifecycle-Zustand; Übergänge emittieren `internal/status`.
 
-[源码](../../vendor/cordis/src/fiber.ts#L194)
+[Quelle](../../vendor/cordis/src/fiber.ts#L194)
 
 ### fiber.dispose
 
@@ -108,9 +108,9 @@ public state
 public readonly dispose: () => Promise<void>
 ```
 
-dispose 此 fiber：卸载插件，并在清理完成后结算。
+Disposed diesen Fiber: entlädt das Plugin und settle, sobald Cleanup abgeschlossen ist.
 
-[源码](../../vendor/cordis/src/fiber.ts#L196)
+[Quelle](../../vendor/cordis/src/fiber.ts#L196)
 
 ### fiber.store
 
@@ -119,9 +119,9 @@ dispose 此 fiber：卸载插件，并在清理完成后结算。
 public store: Dict<Impl> | undefined
 ```
 
-加载期间所需服务实现的快照；其他情况下为 `undefined`。
+Snapshot der benötigten Service-Implementierungen während geladen; andernfalls `undefined`.
 
-[源码](../../vendor/cordis/src/fiber.ts#L198)
+[Quelle](../../vendor/cordis/src/fiber.ts#L198)
 
 ### fiber.inertia
 
@@ -130,9 +130,9 @@ public store: Dict<Impl> | undefined
 public inertia: Promise<void> | undefined
 ```
 
-当前正在进行的加载或卸载转换；如果没有此类转换，则为 undefined。
+Die laufende Load-/Unload-Transition, falls gerade eine ausgeführt wird.
 
-[源码](../../vendor/cordis/src/fiber.ts#L200)
+[Quelle](../../vendor/cordis/src/fiber.ts#L200)
 
 ### fiber.name
 
@@ -141,9 +141,9 @@ public inertia: Promise<void> | undefined
 get name()
 ```
 
-插件的显示名称，继承自最近的具名祖先；如果不存在，则为 `'root'`。
+Der Anzeigename des Plugins, geerbt vom nächsten benannten Vorfahren, sonst `'root'`.
 
-[源码](../../vendor/cordis/src/fiber.ts#L336)
+[Quelle](../../vendor/cordis/src/fiber.ts#L336)
 
 ### fiber.assertActive()
 
@@ -157,11 +157,11 @@ get name()
 assertActive()
 ```
 
-如果 fiber 已经 dispose，则抛出异常。
+Wirft, wenn der Fiber bereits disposed wurde.
 
-**返回**：fiber 仍处于活动状态时不返回任何内容。
+**Gibt** nichts zurück, wenn der Fiber noch aktiv ist.
 
-[源码](../../vendor/cordis/src/fiber.ts#L351)
+[Quelle](../../vendor/cordis/src/fiber.ts#L351)
 
 ### fiber.effect(execute, label?)
 
@@ -183,16 +183,16 @@ effect(execute: () => SyncEffect, label?: string): Disposable<Promise<void>>
 effect(execute: () => Effect, label?: string): AsyncDisposable<Promise<void>>
 ```
 
-在此 fiber 上注册一个支持清理的作用。
+Registriert einen Cleanup-fähigen Effect auf diesem Fiber.
 
-`execute` 会立即运行；它产生的清理函数将被收集，并在调用返回的清理函数或卸载 fiber 时按相反顺序运行，以先发生者为准。重复调用清理函数不会产生任何效果。如果 fiber 已经 dispose，则抛出 `CordisError('INACTIVE_EFFECT')`；如果结构无效，则抛出 `TypeError`，表示 `execute` 返回了不受支持的结果。
+`execute` läuft sofort; die von ihm erzeugten Disposer werden gesammelt und (in umgekehrter Reihenfolge) ausgeführt, sobald der zurückgegebene Disposer aufgerufen wird oder der Fiber entladen wird — je nachdem, was zuerst eintritt. Ein zweiter Aufruf des Disposers ist ein No-Op. Wirft `CordisError('INACTIVE_EFFECT')`, wenn der Fiber bereits disposed ist, und `TypeError`, wenn `execute` eine ungültige Shape zurückgibt.
 
-- `execute`：作用主体；可接受的结构见 `Effect`。
-- `label`：在 `getEffects()` 诊断信息中显示的作用标签。
+- `execute` — der Effect-Body; akzeptierte Shapes siehe `Effect`.
+- `label` — Effect-Label, das in `getEffects()`-Diagnosen angezeigt wird.
 
-**返回**一个用于撤销该作用的清理函数，并在清理完成后结算。
+**Gibt** einen Disposer zurück, der den Effect abbaut und nach Abschluss settle.
 
-[源码](../../vendor/cordis/src/fiber.ts#L415)
+[Quelle](../../vendor/cordis/src/fiber.ts#L415)
 
 ### fiber.getEffects()
 
@@ -205,11 +205,11 @@ effect(execute: () => Effect, label?: string): AsyncDisposable<Promise<void>>
 getEffects()
 ```
 
-返回当前已注册作用的元数据。
+Gibt Metadaten für aktuell registrierte Effects zurück.
 
-**返回**：每个带标签的活动作用对应一棵 `EffectMeta` 树。
+**Gibt** pro gelabeltem Live-Effect einen `EffectMeta`-Baum zurück.
 
-[源码](../../vendor/cordis/src/fiber.ts#L568)
+[Quelle](../../vendor/cordis/src/fiber.ts#L568)
 
 ### fiber.await()
 
@@ -223,11 +223,11 @@ getEffects()
 async await()
 ```
 
-等待当前生命周期工作完成，并重新抛出启动错误。
+Wartet auf aktuelle Lifecycle-Arbeit und wirft Startup-Fehler erneut.
 
-**返回**：进入稳定状态后的此 fiber。
+**Gibt** diesen Fiber zurück, sobald er einen stabilen Zustand erreicht hat.
 
-[源码](../../vendor/cordis/src/fiber.ts#L704)
+[Quelle](../../vendor/cordis/src/fiber.ts#L704)
 
 ### fiber.restart()
 
@@ -241,11 +241,11 @@ async await()
 async restart()
 ```
 
-dispose 此插件，并立即使用其当前配置重新加载。
+Disposed und lädt dieses Plugin sofort mit seiner aktuellen Config neu.
 
-**返回**一个在重新加载完成后兑现的 promise。
+**Gibt** ein Promise zurück, das eingelöst wird, sobald das Neuladen settle.
 
-[源码](../../vendor/cordis/src/fiber.ts#L718)
+[Quelle](../../vendor/cordis/src/fiber.ts#L718)
 
 ### fiber.update(config, noSave?)
 
@@ -264,22 +264,22 @@ dispose 此插件，并立即使用其当前配置重新加载。
 update(config: any, noSave = false)
 ```
 
-校验并应用新配置，然后重新启动插件。
+Validiert und wendet neue Config an und startet das Plugin dann neu.
 
-首先运行 `internal/update` waterfall（瀑布式事件），因此更新钩子（以及 HMR（热模块替换））可以否决或取代重新启动操作。
+Läuft zuerst den `internal/update`-Waterfall, sodass Update-Hooks (und HMR) den Neustart vetoen oder ersetzen können.
 
-- `config`：新的原始配置；在任何内容重新启动前进行校验。
-- `noSave`：提示持久化钩子不要写回此变更。
+- `config` — die neue rohe Config; wird validiert, bevor etwas neu startet.
+- `noSave` — Hinweis für Persistence-Hooks, die Änderung nicht zurückzuschreiben.
 
-**返回**更新 waterfall 的结果；默认的重新启动操作返回一个 promise。
+**Gibt** das Ergebnis des Update-Waterfalls zurück; der Standard-Neustart gibt ein Promise zurück.
 
-[源码](../../vendor/cordis/src/fiber.ts#L736)
+[Quelle](../../vendor/cordis/src/fiber.ts#L736)
 
 ## Effect
 
-`ctx.effect()` 和插件启动所接受的作用主体结果。
+Effect-Body-Ergebnis, das von `ctx.effect()` und Plugin-Startup akzeptiert wird.
 
-可以是单个清理函数、兑现为清理函数的 promise，或生成多个清理函数的（可能为异步的）可迭代对象。生成器作用会在每个清理函数产生时将其注册。
+Entweder ein einzelner Disposer, ein Promise auf einen, oder ein (möglicherweise asynchrones) Iterable, das mehrere liefert — Generator-Effects registrieren jeden gelieferten Disposer, sobald er erzeugt wird.
 
 ```ts cordis-catalog
 /**
@@ -294,13 +294,13 @@ type Effect<T = any> =
   | AsyncEffect<T>
 ```
 
-[源码](../../vendor/cordis/src/fiber.ts#L83)
+[Quelle](../../vendor/cordis/src/fiber.ts#L83)
 
 ## Disposable
 
-作用返回的函数，用于在资源释放期间释放资源。
+Funktion, die von einem Effect zurückgegeben wird, um während des Disposens Ressourcen freizugeben.
 
-拥有该函数的 fiber 卸载时，清理函数会按注册的相反顺序运行；清理函数可以是异步的，此时卸载过程会等待其完成。
+Disposer laufen in umgekehrter Registrierungsreihenfolge, wenn der besitzende Fiber entladen wird; sie können asynchron sein, woraufhin das Entladen auf sie wartet.
 
 ```ts cordis-catalog
 /**
@@ -312,11 +312,11 @@ type Effect<T = any> =
 type Disposable<T = any> = () => T
 ```
 
-[源码](../../vendor/cordis/src/fiber.ts#L74)
+[Quelle](../../vendor/cordis/src/fiber.ts#L74)
 
 ## EffectMeta
 
-用于在诊断信息中公开嵌套作用标签的树节点。
+Baumknoten, der verschachtelte Effect-Labels für Diagnosen verfügbar macht.
 
 ```ts cordis-catalog
 /** Tree node used to expose nested effect labels for diagnostics. */
@@ -328,11 +328,11 @@ interface EffectMeta {
 }
 ```
 
-[源码](../../vendor/cordis/src/fiber.ts#L96)
+[Quelle](../../vendor/cordis/src/fiber.ts#L96)
 
 ## CordisError
 
-具有稳定机器可读错误码的框架错误。
+Framework-Fehler mit einem stabilen, maschinenlesbaren Code.
 
 ```ts cordis-catalog
 /** Framework error with a stable machine-readable code. */
@@ -354,11 +354,11 @@ namespace CordisError {
 }
 ```
 
-[源码](../../vendor/cordis/src/fiber.ts#L157)
+[Quelle](../../vendor/cordis/src/fiber.ts#L157)
 
 ## ValidationError
 
-插件配置未通过 standard-schema 校验时抛出的错误。
+Fehler, der erhoben wird, wenn die Plugin-Config die Standard-Schema-Validierung nicht besteht.
 
 ```ts cordis-catalog
 /** Error raised when plugin configuration fails standard-schema validation. */
@@ -374,4 +374,4 @@ class ValidationError extends TypeError {
 }
 ```
 
-[源码](../../vendor/cordis/src/fiber.ts#L19)
+[Quelle](../../vendor/cordis/src/fiber.ts#L19)
