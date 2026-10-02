@@ -6,6 +6,8 @@ The web access seam — a [capability seam](../../.agents/notes/implemented/arch
 
 Source: [`packages/web/web/src/types.ts`](../../packages/web/web/src/types.ts)
 
+English | [中文](web.zh.md) | [Deutsch](web.de.md)
+
 ## Why one capability has two operations
 
 Search and fetch share no request schema and no business logic, but they are deliberately one `ctx.web` middle layer: one provider-selection policy owner, one abort/error vocabulary, and one product-facing "how this harness reaches the web" configuration API. The cost is the parallel `searchX`/`fetchX` method pairs on the service; that parallelism is intentional, not a missed extraction. Providers register **capabilities** (a `WebSearchProvider` or `WebFetchProvider`), not tools; the model-facing names, schemas, prompt guidance, and presentation all live in the single `dsh-tool-web` consumer.

@@ -1,14 +1,12 @@
 # Agent Teams
 
-English | [中文](agent-team.zh.md)
+[English](agent-team.md) | [中文](agent-team.zh.md) | Deutsch
 
-Types shared by the experimental implicit-root Team domain, model tools, and host adapters. The [Agent Teams Agent Note](../../.agents/notes/implemented/feature/2026-08-05-agent-teams.md) owns identity, mailbox, task, and shared-checkout decisions; this page records the literal durable forms from [`packages/experimental/agent-team/src/types.ts`](../../packages/experimental/agent-team/src/types.ts).
+Typen, die sich die experimentelle implizit-root Team-Domäne, Model-Tools und Host-Adapter teilen. Der [Agent-Teams-Agent-Note](../../.agents/notes/implemented/feature/2026-08-05-agent-teams.de.md) hält die Entscheidungen zu Identität, Mailbox, Tasks und gemeinsamem Checkout; diese Seite hält die buchstäblichen durable Formen aus [`packages/experimental/agent-team/src/types.ts`](../../packages/experimental/agent-team/src/types.ts) fest.
 
-## Identity and roster
+## Identität und Roster
 
-English | [中文](agent-team.zh.md) | [Deutsch](agent-team.de.md)
-
-`TeamId` is the root `SessionId` under a distinct [brand](core.md#branded-ids). `TeamTaskId` is Team-local and monotonically allocated as `task-<n>`; `TeamMessageId` is globally random. A teammate's Session id remains its persistent identity, while `name` is an immutable model/UI label.
+`TeamId` ist die root `SessionId` unter einer eigenen [brand](core.de.md#branded-ids). `TeamTaskId` ist Team-lokal und wird monoton als `task-<n>` vergeben; `TeamMessageId` ist global zufällig. Die Session-id eines teammate bleibt seine persistente Identität, während `name` ein unveränderliches Modell-/UI-Label ist.
 
 ```ts type-equiv
 /** Whole durable value written on every teammate lifecycle change. */
@@ -23,11 +21,11 @@ interface TeamMemberSnapshot {
 }
 ```
 
-Every member starts in `provisioning` and reaches exactly one terminal roster phase, `active` or `failed`. Runtime `running`/`idle`/`inactive` status is derived separately and never rewrites this record.
+Jedes Mitglied beginnt in `provisioning` und erreicht genau eine terminale Roster-Phase, `active` oder `failed`. Der Laufzeitstatus `running`/`idle`/`inactive` wird separat abgeleitet und überschreibt diesen Datensatz nie.
 
-## Durable mailbox
+## Durable Mailbox
 
-The Lead Session first stores the complete queued message. A target receipt is acknowledged only after its pending inbox item or recorded user message is durable, leaving queued-minus-delivered as the recovery mailbox.
+Die Lead-Session speichert zuerst die vollständige queued message. Ein Zielempfang wird erst bestätigt, nachdem sein pending inbox-Eintrag oder seine aufgezeichnete user message durable ist; queued-minus-delivered bleibt dadurch die Recovery-Mailbox.
 
 ```ts type-equiv
 /** One peer message retained until its target Session records it. */
@@ -40,9 +38,9 @@ interface TeamMessageSnapshot {
 }
 ```
 
-Every message attempts Steer delivery. A running target receives it at the nearest step boundary, an idle target starts a turn, and an inactive teammate cold-resumes. Scheduling is not stored in the durable record because callers cannot select another mode.
+Jede Nachricht versucht eine Steer-Zustellung. Ein laufendes Ziel empfängt sie an der nächsten Schrittgrenze, ein idle-Ziel startet eine Runde (turn), und ein inaktiver teammate macht einen cold-resume. Das Scheduling wird nicht im durable Datensatz gespeichert, weil Aufrufer keinen anderen Modus wählen können.
 
-The target Session keeps message identity and sender attribution on both the pending inbox item and the eventual user message. Folding that source across inbox and history is the target-side de-duplication key; the model-visible framing repeats the id and sender.
+Die Ziel-Session bewahrt Nachrichtenidentität und Senderzuschreibung sowohl auf dem pending inbox-Eintrag als auch auf der späteren user message. Das Zusammenfalten dieser Quelle über Inbox und History hinweg ist der Deduplikationsschlüssel auf der Zielseite; das modell-sichtbare Framing wiederholt id und Sender.
 
 ```ts type-equiv
 /** Source retained by the target Session for durable mailbox de-duplication. */
@@ -55,9 +53,9 @@ interface TeamMessageSource {
 }
 ```
 
-## Shared task DAG
+## Gemeinsamer Task-DAG
 
-Every task event stores a complete snapshot. `revision` is the compare-and-set value and increments by one per mutation. `blockedBy` edges must name non-deleted tasks and keep the graph acyclic. `writeScopes` are normalized advisory path prefixes rather than locks.
+Jedes Task-Event speichert einen vollständigen Snapshot. `revision` ist der compare-and-set-Wert und erhöht sich pro Mutation um eins. `blockedBy`-Kanten müssen nicht gelöschte Tasks benennen und den Graph azyklisch halten. `writeScopes` sind normalisierte beratende Pfadpräfixe, keine Locks.
 
 ```ts type-equiv
 /** Whole durable task snapshot; every mutation increments {@link revision}. */
@@ -73,11 +71,11 @@ interface TeamTaskSnapshot {
 }
 ```
 
-`pending` is unstarted or released, `in_progress` carries an owner, `completed` satisfies blockers, and `deleted` is a retained tombstone. Views add owner name, readiness, and write-scope overlap warnings without changing the durable snapshot.
+`pending` ist unbegonnen oder freigegeben, `in_progress` trägt einen owner, `completed` erfüllt Blocker, und `deleted` ist ein aufbewahrter tombstone. Views ergänzen owner name, readiness und write-scope-Overlap-Warnungen, ohne den durable Snapshot zu verändern.
 
 ## Replay
 
-`foldTeam()` replays one root Session into the roster, task board, and queued-minus-delivered mailbox that every Team operation reads. It selects records by `TeamId`, so events inherited by an ordinary fork retain the ancestor id and never enter the new root's state. Session event `seq` and `time` remain the ordering and timing record; Team snapshots do not duplicate them. Roster and task reads reach callers as views; pending mail stays internal to delivery and recovery. The package [README](../../packages/experimental/agent-team/README.md) owns operation, authorization, recovery, and limit behavior.
+`foldTeam()` replayt eine root Session zu dem Roster, dem Task-Board und der queued-minus-delivered-Mailbox, die jede Team-Operation liest. Es wählt Datensätze nach `TeamId` aus, sodass von einem gewöhnlichen fork vererbte Events die ancestor id behalten und nie in den Zustand der neuen root gelangen. Session-Event-`seq` und `time` bleiben die Ordnungs- und Zeitaufzeichnung; Team-Snapshots duplizieren sie nicht. Roster- und Task-Lesevorgänge erreichen Aufrufer als Views; pending mail bleibt intern für Zustellung und Recovery. Das Package-[README](../../packages/experimental/agent-team/README.de.md) hält Betrieb, Autorisierung, Recovery und Limit-Verhalten.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -85,7 +83,7 @@ interface TeamTaskSnapshot {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxagentteams--teamservice"></a>
 
@@ -203,7 +201,7 @@ tryMembership(agent: Agent): TeamMembership | undefined
 @Remote('updateTask') remoteUpdateTask(agent: Agent, request: UpdateTeamTaskRequest): Promise<TeamTaskMutationResult>
 ```
 
-Types: [Agent](core.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/experimental/agent-team/src/index.ts`](../../packages/experimental/agent-team/src/index.ts)
 <!-- END GENERATED cordis-surface -->

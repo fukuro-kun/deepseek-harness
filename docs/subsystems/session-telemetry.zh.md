@@ -11,6 +11,8 @@
 ```ts type-equiv
 /**
  * Severity of a telemetry record, pre-mapped at capture so a receiver can
+
+[English](session-telemetry.md) | 中文 | [Deutsch](session-telemetry.de.md)
  * alert with zero configuration: `error` for events whose own outcome flag
  * says so (the tool-result block's `isError`, `turn/end` error reasons) and for
  * `agent-error` operational records. Captured events otherwise default to

@@ -1,14 +1,12 @@
 # SessionTelemetryBackend
 
-English | [中文](session-telemetry.zh.md)
+[English](session-telemetry.md) | [中文](session-telemetry.zh.md) | Deutsch
 
-Outbound session reporting is split as a [capability seam](../capability-seams.md): the Service Definition and capture coordinator ([dsh-session-telemetry](../../packages/session/session-telemetry), `ctx.sessionTelemetry`) own complete canonical-event capture, the `session-telemetry/record` redaction waterfall, the handoff cursor, and the minimal backend contract; the Service Provider a deployment loads ([dsh-session-telemetry-otel](../../packages/session/session-telemetry-otel)) is the OpenTelemetry JS SDK's log pipeline configured verbatim. It is one optional capability, not part of the agent-loop spine, and nothing here reaches a model request. The boundary axiom — the harness's aspect ends at `emit()`; batching, retry, queueing, and loss policy belong to the reporting SDK — and the rejected alternatives are pinned in the [revival Agent Note](../../.agents/notes/implemented/feature/2026-07-23-session-telemetry-otel-revival.md); the capture and cursor contracts live in the [Service Definition README](../../packages/session/session-telemetry/README.md).
+Die ausgehende Session-Berichterstattung ist als [capability seam](../capability-seams.de.md) aufgeteilt: Service Definition und Capture-Koordinator ([dsh-session-telemetry](../../packages/session/session-telemetry), `ctx.sessionTelemetry`) besitzen die vollständige Erfassung kanonischer Events, den `session-telemetry/record`-Redaktions-waterfall, den Handoff-Cursor und den minimalen Backend-Contract; der Service Provider, den ein Deployment lädt ([dsh-session-telemetry-otel](../../packages/session/session-telemetry-otel)), ist die wortgetreu konfigurierte Log-Pipeline des OpenTelemetry JS SDK. Es ist eine optionale Fähigkeit, nicht Teil der agent-loop-Spine, und nichts davon erreicht einen Model-Request. Das Boundary-Axiom — die Zuständigkeit des Harness endet bei `emit()`; Batching, Retry, Queueing und Verlustpolitik gehören dem Reporting-SDK — und die verworfenen Alternativen sind im [Revival-Agent-Note](../../.agents/notes/implemented/feature/2026-07-23-session-telemetry-otel-revival.de.md) festgehalten; die Capture- und Cursor-Contracts stehen im [Service-Definition-README](../../packages/session/session-telemetry/README.de.md).
 
-Source: [`packages/session/session-telemetry/src/index.ts`](../../packages/session/session-telemetry/src/index.ts)
+Quelle: [`packages/session/session-telemetry/src/index.ts`](../../packages/session/session-telemetry/src/index.ts)
 
-English | [中文](session-telemetry.zh.md) | [Deutsch](session-telemetry.de.md)
-
-## The logical record
+## Der logische Datensatz
 
 ```ts type-equiv
 /**
@@ -57,11 +55,11 @@ interface SessionTelemetryRecord {
 }
 ```
 
-Every canonical [session event](session.md), including each `assistant/message` or `assistant/attempt` with its complete compact stream and every plugin-merged type the seam never heard of, passes through whole as one ordered ledger record. Process-local `agent/assistant-stream` frames do not enter this durable feed. A new Session object starts at its lifecycle boundary unless the backend selects `includeHistory`; re-adopting the same object resumes after its handoff cursor. Delivery is best-effort: the cursor marks handed-off, not delivered, and records can be lost (crash, reload window) or duplicated (new-object replay, SDK retries), so receivers dedupe ledger records on `(session.id, session.format_version, event.seq)`; ops records deliberately omit that identity — they are signals to alert on, not entries to sum, and tolerate duplicates instead.
+Jedes kanonische [Session-Event](session.de.md) — einschließlich jeder `assistant/message` oder `assistant/attempt` mit ihrem vollständigen kompakten Stream und jedes vom Plugin zusammengeführten Typs, den der seam nie kannte — passiert vollständig als ein geordneter Ledger-Datensatz. Prozesslokale `agent/assistant-stream`-Frames gelangen nicht in dieses durable Feed. Ein neues Session-Objekt beginnt an seiner Lebenszyklusgrenze, es sei denn, das Backend wählt `includeHistory`; die erneute Übernahme desselben Objekts setzt nach seinem Handoff-Cursor fort. Die Zustellung ist best-effort: Der Cursor markiert übergeben, nicht zugestellt, und Datensätze können verloren gehen (Absturz, Reload-Fenster) oder dupliziert werden (Replay eines neuen Objekts, SDK-Retries), daher deduplizieren Empfänger Ledger-Datensätze anhand von `(session.id, session.format_version, event.seq)`; Ops-Datensätze lassen diese Identität absichtlich weg — sie sind Signale zum Alerten, keine Einträge zum Summieren, und tolerieren Duplikate.
 
-## The sharing disclosure
+## Die Sharing-Offenlegung
 
-Every backend exposes its deployment-selected mode through the required abstract `sharing` member on `ctx.sessionTelemetry` ([Service Definition README](../../packages/session/session-telemetry/README.md#the-sharing-disclosure)). This is neither a per-Session admission decision nor a delivery receipt. The `/feedback` acknowledgement does not consult it.
+Jedes Backend legt seinen vom Deployment gewählten Modus über das erforderliche abstrakte `sharing`-Member auf `ctx.sessionTelemetry` offen ([Service-Definition-README](../../packages/session/session-telemetry/README.de.md#the-sharing-disclosure)). Es ist weder eine admission-Entscheidung pro Session noch eine Zustellbestätigung. Die `/feedback`-Bestätigung konsultiert sie nicht.
 
 ```ts type-equiv
 /**
@@ -70,7 +68,7 @@ Every backend exposes its deployment-selected mode through the required abstract
 type SessionTelemetrySharingStatus = 'full' | 'feedback-only' | 'disabled'
 ```
 
-## Capture policy
+## Erfassungsrichtlinie
 
 ```ts type-equiv
 /** Whether capture follows live events or reads the canonical log only when requested. */
@@ -87,9 +85,9 @@ interface SessionTelemetryCaptureOptions {
 }
 ```
 
-`includeHistory` permits stored and inherited records but does not itself authorize capture. The [OTel backend](../../packages/session/session-telemetry-otel/README.md) uses on-demand capture and requires new own explicit feedback; it releases only the complete prefix through that feedback, for every provider.
+`includeHistory` erlaubt gespeicherte und vererbte Datensätze, autorisiert aber selbst keine Erfassung. Das [OTel-Backend](../../packages/session/session-telemetry-otel/README.de.md) nutzt On-Demand-Erfassung und verlangt ein neues eigenes explizites Feedback; es gibt nur das vollständige Präfix bis zu diesem Feedback frei, für jeden provider.
 
-## The backend contract
+## Der Backend-Contract
 
 ```ts type-equiv
 /**
@@ -137,11 +135,11 @@ interface SessionTelemetrySink {
 }
 ```
 
-`SessionTelemetryBackend` (`ctx.sessionTelemetry`, [signatures](#ctxsessiontelemetry--sessiontelemetrybackend-abstract-seam)) is the contract's loadable form — one implementation per context, duplicate load throws — and a backend composes the seam's `SessionTelemetryCoordinator` in its constructor to install the capture side.
+`SessionTelemetryBackend` (`ctx.sessionTelemetry`, [Signaturen](#ctxsessiontelemetry--sessiontelemetrybackend-abstract-seam)) ist die ladbare Form des Contracts — eine Implementierung pro Kontext, doppeltes Laden wirft — und ein Backend komponiert den `SessionTelemetryCoordinator` des seam in seinem Konstruktor, um die Capture-Seite zu installieren.
 
-## The redact waterfall: `session-telemetry/record`
+## Der Redact-waterfall: `session-telemetry/record`
 
-Every record passes the `session-telemetry/record` [waterfall](../cordis-primer.md#cordis-waterfall-semantics) between the canonical-event copy and `emit()` ([event entry](#session-telemetryrecord--waterfall)). The seam ships NO rules of its own: with no listener mounted, records reach the backend exactly as captured, so exported data is precisely as clean as the rules a deployment mounts. Listeners stack by transforming `next()`'s return value; returning without `next()` replaces everything beneath; a throwing listener withholds that one record fail-closed inside the coordinator's containment. Redaction applies to the exported copy only — the canonical session log is never rewritten.
+Jeder Datensatz durchläuft den `session-telemetry/record`-[waterfall](../cordis-primer.de.md#cordis-waterfall-semantics) zwischen der Kopie des kanonischen Events und `emit()` ([Event-Eintrag](#session-telemetryrecord--waterfall)). Der seam liefert KEINE eigenen Regeln: Ohne gemountete Listener erreichen die Datensätze das Backend exakt wie erfasst, sodass exportierte Daten genau so sauber sind wie die Regeln, die ein Deployment mountet. Listener stapeln sich, indem sie den Rückgabewert von `next()` transformieren; ein Return ohne `next()` ersetzt alles darunter; ein werfender Listener hält diesen einen Datensatz fail-closed innerhalb der Containment des Koordinators zurück. Die Redaktion gilt nur für die exportierte Kopie — das kanonische Session-Log wird nie umgeschrieben.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -149,7 +147,7 @@ Every record passes the `session-telemetry/record` [waterfall](../cordis-primer.
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsessiontelemetry--sessiontelemetrybackend-abstract-seam"></a>
 

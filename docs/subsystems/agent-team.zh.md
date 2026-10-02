@@ -11,6 +11,8 @@
 ```ts type-equiv
 /** Whole durable value written on every teammate lifecycle change. */
 interface TeamMemberSnapshot {
+
+[English](agent-team.md) | 中文 | [Deutsch](agent-team.de.md)
   readonly id: SessionId
   readonly name: string
   readonly description: string

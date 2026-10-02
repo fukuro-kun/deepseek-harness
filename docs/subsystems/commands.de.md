@@ -1,18 +1,16 @@
-# 用户命令
+# Benutzerbefehle
 
-[English](commands.md) | 中文
+[English](commands.md) | [中文](commands.zh.md) | Deutsch
 
-[`dsh-commands`](../../packages/interaction/commands) 提供的用户命令注册表服务。交互式适配器用它发现插件拥有的命令，并针对确切的 agent（智能体）直接执行这些命令，而不创建模型消息。[命令 Agent Note](../../.agents/notes/implemented/feature/2026-07-19-plugin-command-registration.zh.md) 负责分发与生命周期的决策依据；[包 README](../../packages/interaction/commands/README.zh.md) 负责组合方式与限制。
+Der Benutzerbefehls-Registry-Service aus [`dsh-commands`](../../packages/interaction/commands). Interaktive Adapter nutzen ihn, um plugin-eigene Befehle zu entdecken und für einen exakten agent direkt auszuführen, ohne eine Modellnachricht zu erzeugen. Der [Befehls-Agent-Note](../../.agents/notes/implemented/feature/2026-07-19-plugin-command-registration.de.md) hält die Entscheidungen zu Dispatch und Lebenszyklus; das [Package-README](../../packages/interaction/commands/README.de.md) hält Komposition und Einschränkungen.
 
-来源：[`packages/interaction/commands/src/index.ts`](../../packages/interaction/commands/src/index.ts)
+Quelle: [`packages/interaction/commands/src/index.ts`](../../packages/interaction/commands/src/index.ts)
 
-## 输入元数据
+## Eingabemetadaten
 
-该服务公开一个可选的非结构化输入描述符：提示文本加附件接受标志。命令的可用性由插件组合决定：每个消费注册表的适配器都会看到全部生效定义。
+Der Service stellt einen optionalen Deskriptor für unstrukturierte Eingaben bereit: einen Hint plus ein Attachment-Annahme-Flag. Die Verfügbarkeit von Befehlen folgt der Plugin-Komposition: Jeder Adapter, der die Registry konsumiert, sieht jede wirksame Definition.
 
 ```ts type-equiv
-
-[English](commands.md) | 中文 | [Deutsch](commands.de.md)
 /** Immutable metadata for a command's optional unstructured input. */
 interface CommandInputDescriptor {
   /** Placeholder shown before the user supplies free-form input. */
@@ -28,9 +26,9 @@ interface CommandInputDescriptor {
 }
 ```
 
-## 定义
+## Definition
 
-`CommandDefinition` 是由插件编写的注册定义。注册表会验证并冻结一份与原始注册对象脱离的生效定义。
+`CommandDefinition` ist die vom Plugin erstellte Registrierung. Die Registry validiert eine losgelöste wirksame Definition und friert sie ein.
 
 ```ts type-equiv
 /** Plugin-owned command registration. */
@@ -52,9 +50,9 @@ interface CommandDefinition {
 }
 ```
 
-## 调用与结果
+## Aufruf und Ergebnis
 
-取消由适配器负责，适配器会传入确切的目标 agent。`rawInput` 紧接在解析后的名称之后，并保留适配器传入的分隔符与后缀。结果会直接呈现给 UI，而不是工具结果或会话事件。
+Der Adapter besitzt die Abbruchsteuerung und übergibt den exakten Ziel-agent. `rawInput` beginnt unmittelbar nach dem geparsten Namen und behält das vom Adapter gelieferte Trennzeichen und Suffix. Ergebnisse sind direkte UI-Ausgaben, keine Tool Results oder Session Events.
 
 ```ts type-equiv
 /** Invocation passed to one registered command handler. */
@@ -90,11 +88,11 @@ type CommandResult =
   | { readonly kind: 'error'; readonly text: string }
 ```
 
-`sourceEventSeq` 是可选字段，且只用于成功结果。存在时，它指向接收会话日志中更早的一条非命令事件；`command/done` 会持久化同一引用，让客户端能够将命令生命周期与该领域投影合并，而无须解析 `text` 或依赖相邻行。
+`sourceEventSeq` ist optional und nur für Erfolge vorgesehen. Wenn vorhanden, benennt es ein früheres Nicht-Befehls-Event im empfangenden Session-Log; `command/done` persistiert dieselbe Referenz, damit ein Client den Befehlslebenszyklus mit dieser Domänenprojektion kombinieren kann, ohne `text` zu parsen oder sich auf benachbarte Zeilen zu verlassen.
 
-## 发现与解析视图
+## Discovery- und Parse-Views
 
-作用域解析后，适配器会获得不含处理器的不可变描述符。`parseCommand()` 在注册表解析前返回 `ParsedCommand`；语法有效的输入仍可能指向不可用的命令。
+Adapter erhalten nach der Scope-Auflösung handlerlose unveränderliche Deskriptoren. `parseCommand()` liefert `ParsedCommand` vor der Registry-Auflösung; syntaktisch gültige Eingaben können trotzdem einen nicht verfügbaren Befehl benennen.
 
 ```ts type-equiv
 /** Handler-free immutable command view returned to UI adapters. */
@@ -124,7 +122,7 @@ interface ParsedCommand {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxcommands--commandruntime"></a>
 
@@ -193,7 +191,7 @@ find(agent: Agent, name: string): CommandDefinition | undefined
 @Remote async execute( agent: Agent, line: string, submittedAttachments: readonly CommandSubmitAttachment[], signal: AbortSignal, ): Promise<CommandExecution | undefined>
 ```
 
-Types: [Agent](core.zh.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/interaction/commands/src/index.ts`](../../packages/interaction/commands/src/index.ts)
 

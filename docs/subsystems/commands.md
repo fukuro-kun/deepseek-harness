@@ -6,6 +6,8 @@ The human-command registry service from [`dsh-commands`](../../packages/interact
 
 Source: [`packages/interaction/commands/src/index.ts`](../../packages/interaction/commands/src/index.ts)
 
+English | [中文](commands.zh.md) | [Deutsch](commands.de.md)
+
 ## Input metadata
 
 The service exposes one optional unstructured-input descriptor: a hint plus an attachment-acceptance flag. Command availability follows plugin composition: every adapter consuming the registry sees every effective definition.
