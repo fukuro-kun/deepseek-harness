@@ -11,6 +11,8 @@ kind: "package-reference"
 
 `dsh-credentials-local` 把 API 密钥和其他机密保存在 harness home 下的私有文件中。你可以通过配置界面保存凭据，也可以直接编辑文件；变更会自动重载，保存的值也会跨重启保留。凭据查找采用固定优先级：启动环境优先，其次是存储文件、项目 `.env` 和 harness home 的 `.env`；新保存的值会立即覆盖 `.env` 中的旧值。只有你的 OS 用户能读取该文件，但 agent（智能体）的工具进程以同一用户身份运行，因此该存储无法向 agent 隔离机密。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
