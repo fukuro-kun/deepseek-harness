@@ -12,6 +12,8 @@
 
 数据形式以一张可合并扩展的键 map 挂载到枢纽上：
 
+[English](storage.md) | 中文 | [Deutsch](storage.de.md)
+
 ```ts type-equiv
 /**
  * Data forms mountable on the hub, keyed by form name. Form owners extend
