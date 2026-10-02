@@ -1,16 +1,14 @@
-# Persistent PTY Sessions
+# Persistente PTY-Sessions
 
-English | [中文](terminal.zh.md)
+[English](terminal.md) | [中文](terminal.zh.md) | Deutsch
 
-Types shared by PTY backends, `ctx.terminals`, and the model-facing consumer. The [persistent PTY Agent Note](../../.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.md) owns the rationale; this page records the cross-package vocabulary from [`packages/terminal/terminal/src/types.ts`](../../packages/terminal/terminal/src/types.ts).
+Typen, die PTY-Backends, `ctx.terminals` und der modellseitige Consumer gemeinsam nutzen. Die [Persistent-PTY-Agent-Note](../../.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.de.md) trägt die Begründung; diese Seite hält das paketübergreifende Vokabular aus [`packages/terminal/terminal/src/types.ts`](../../packages/terminal/terminal/src/types.ts) fest.
 
-## Identity and readiness
+## Identität und Bereitschaft
 
-English | [中文](terminal.zh.md) | [Deutsch](terminal.de.md)
+`TerminalSessionId` ist eine vom Service geprägte branded id. Optionale Namen sind owner-lokale Anzeige-Metadaten; die Autorisierung vergleicht den exakt besitzenden `Agent`, nicht einen Namen oder eine geratene id.
 
-`TerminalSessionId` is a service-minted branded id. Optional names are owner-local display metadata; authorization compares the exact owning `Agent`, not a name or guessed id.
-
-`TerminalWaitReason` says why one send returned. It is independent from `TerminalSessionStatus`: silence or timeout may return while the top-level shell remains alive, while `session_exit` means that shell exited rather than an arbitrary foreground child.
+`TerminalWaitReason` sagt, warum ein Send zurückgekehrt ist. Er ist unabhängig von `TerminalSessionStatus`: Silence oder Timeout können zurückkehren, während die Top-Level-Shell weiter lebt, während `session_exit` bedeutet, dass diese Shell beendet wurde — nicht ein beliebiger Foreground-Child-Prozess.
 
 ```ts type-equiv
 /** Why one interactive send returned control to its caller. */
@@ -24,9 +22,9 @@ type TerminalSessionStatus =
   | { kind: 'exited'; exitCode: number | null; signal: NodeJS.Signals | null }
 ```
 
-## Backend and live session
+## Backend und Live-Session
 
-A backend owns how one registered type starts and detects readiness. `TerminalSessionService` publishes the returned session only after setup succeeds, then owns id authorization and cleanup. A backend that cannot clean partial startup resources rejects with `TerminalBackendCleanupError`, allowing disposal to retain the cleanup failure without replacing the caller's cancellation reason. A backend session owns terminal state and captured-resource quiescence.
+Ein Backend legt fest, wie ein registrierter Typ startet und Bereitschaft erkennt. `TerminalSessionService` publiziert die zurückgegebene Session erst nach erfolgreichem Setup und besitzt danach die id-Autorisierung und das Cleanup. Ein Backend, das partielle Startup-Ressourcen nicht aufräumen kann, rejected mit `TerminalBackendCleanupError`; so kann das Disposal den Cleanup-Fehler behalten, ohne den Cancellation-Grund des Aufrufers zu ersetzen. Eine Backend-Session besitzt den Terminal-Zustand und das Quiescence der erfassten Ressourcen.
 
 ```ts type-equiv
 /** Replaceable provider for one PTY session type. */
@@ -58,9 +56,9 @@ interface TerminalBackendSession {
 }
 ```
 
-## Send and retained output
+## Send und zurückbehaltene Ausgabe
 
-One live session accepts one active send. Its operation exposes a consuming output cursor for generic background jobs and one terminal result for a foreground caller. `TerminalReadResult` separately pages the bounded session scrollback.
+Eine Live-Session akzeptiert genau einen aktiven Send. Dessen Operation stellt einen konsumierenden Ausgabe-Cursor für generische Background Jobs und ein finales Ergebnis für einen Foreground-Caller bereit. `TerminalReadResult` paginiert separat den begrenzten Session-Scrollback.
 
 ```ts type-equiv
 /** Live backend-owned send; exactly one may be active per PTY session. */
@@ -88,9 +86,9 @@ interface TerminalSendResult {
 }
 ```
 
-## Ownership and durability
+## Ownership und Dauerhaftigkeit
 
-`TerminalSessionService` attaches one awaited cleanup to the exact owner scope, rejects foreign operations, and keeps sessions alive across backend or tool-plugin reload. PTY state and raw bytes remain process-local. Model input and bounded returned output are durable through the existing `tool/call`, `tool/result`, and task-result paths rather than duplicate PTY session events.
+`TerminalSessionService` hängt ein awaited Cleanup an den exakten Owner-Scope, weist fremde Operationen ab und hält Sessions über ein Backend- oder Tool-Plugin-Reload hinweg am Leben. PTY-Status und Roh-Bytes bleiben prozesslokal. Modelleingabe und begrenzte Rückgabeausgabe sind über die bestehenden `tool/call`-, `tool/result`- und Task-Result-Pfade durable, statt über duplizierte PTY-Session-Events.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -98,7 +96,7 @@ interface TerminalSendResult {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxterminals--terminalsessionservice"></a>
 
@@ -180,7 +178,7 @@ async kill(owner: Agent, id: TerminalSessionId, reason: string = 'model request'
 list(owner: Agent): TerminalSessionSnapshot[]
 ```
 
-Types: [Agent](core.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/terminal/terminal/src/index.ts`](../../packages/terminal/terminal/src/index.ts)
 <!-- END GENERATED cordis-surface -->

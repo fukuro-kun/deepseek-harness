@@ -11,6 +11,8 @@ PTY 后端、`ctx.terminals` 与面向模型的消费方共享的类型。[持�
 `TerminalWaitReason` 说明一次发送为何返回。它与 `TerminalSessionStatus` 无关：一次发送可能因静默或超时而返回，但顶层 shell 仍然存活；`session_exit` 表示该 shell 已退出，而不是某个任意的前台子进程已退出。
 
 ```ts type-equiv
+
+[English](terminal.md) | 中文 | [Deutsch](terminal.de.md)
 /** Why one interactive send returned control to its caller. */
 type TerminalWaitReason = 'stdin_read' | 'inferred_idle' | 'timeout' | 'session_exit'
 ```

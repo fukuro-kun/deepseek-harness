@@ -1,18 +1,16 @@
-# 同会话目标
+# Same-Session Goals
 
-[English](goal.md) | 中文
+[English](goal.md) | [中文](goal.zh.md) | Deutsch
 
-事件溯源目标服务及其策略消费方共享的类型。[目标领域 Agent Note](../../.agents/notes/implemented/feature/2026-07-19-persisted-same-session-goal-domain.zh.md) 负责记录持久化与激活决策；本页记录 [`packages/goal/goal/src/types.ts`](../../packages/goal/goal/src/types.ts) 中的确切字段和变体。
+Typen, die der event-sourced Goal-Service und seine Policy-Consumer gemeinsam nutzen. Die [Goal-Domain-Agent-Note](../../.agents/notes/implemented/feature/2026-07-19-persisted-same-session-goal-domain.de.md) ist für die Persistenz- und Aktivierungsentscheidungen zuständig; diese Seite hält die exakten Felder und Varianten aus [`packages/goal/goal/src/types.ts`](../../packages/goal/goal/src/types.ts) fest.
 
-## 标识与生命周期
+## Identität und Lebenszyklus
 
-`GoalId` 是[品牌化 id](core.zh.md#branded-ids)。调用方通过 `GoalRef` 修改一个确切修订版本；每次获准的持久变更都会递增修订号。
+`GoalId` ist eine [branded id](core.de.md#branded-ids). Ein Aufrufer mutiert eine exakte Revision über `GoalRef`; jede akzeptierte durable Mutation inkrementiert die Revision.
 
 ```ts type-equiv
 /** Compare-and-set identity for one exact goal revision. */
 interface GoalRef {
-
-[English](goal.md) | 中文 | [Deutsch](goal.de.md)
   /** Stable goal identity. */
   readonly id: GoalId
   /** Positive revision; every durable mutation increments it. */
@@ -20,7 +18,7 @@ interface GoalRef {
 }
 ```
 
-持久阶段回答目标发生了什么。进程本地激活状态则另行回答续跑消费方能否开始另一个 Round。
+Die durable Phase beantwortet, was mit dem Objective geschehen ist. Die prozesslokale Aktivierung beantwortet separat, ob ein Continuation-Consumer einen weiteren Round starten darf.
 
 ```ts type-equiv
 /** Durable continuation phase. Activation is process-local and separate. */
@@ -31,7 +29,7 @@ type GoalPhase =
   | 'complete'
 ```
 
-阻塞是唯一表示「因问题而停止」的持久状态。由策略负责的阻塞原因会携带一个用于路由、稳定且采用 lower-kebab-case 的代码，以及一段供人和模型阅读的自由文本说明。
+Blocked ist der einzige durable Zustand "durch ein Problem gestoppt". Sein policy-verwalteter Grund trägt einen stabilen lower-kebab-case-Code für Routing und eine Freitext-Erklärung für Menschen und Modelle.
 
 ```ts type-equiv
 /** Machine-routable and human-readable explanation for a blocked goal. */
@@ -71,7 +69,7 @@ interface GoalView extends GoalSnapshot {
 }
 ```
 
-服务还会在不改变持久状态的情况下发布进程本地 activation 边沿；客户端消费该事件获得实时状态。
+Der Service publiziert außerdem prozesslokale Aktivierungsflanken, ohne den durable State zu verändern; Clients konsumieren dieses Event für den Live-Status.
 
 ```ts type-equiv
 /** Live process-local activation update forwarded to UI clients. */
@@ -90,9 +88,9 @@ interface GoalActivationChanged {
 }
 ```
 
-## 持久变更
+## Durable Änderungen
 
-每次变更都是持久的 `goal/change` 会话事件，其载荷要么是变更后的完整快照，要么是清除墓碑。严格折叠与持久投影只从这些事件派生生命周期状态；inbox 变更不会影响 goal 状态。
+Jede Mutation ist ein durables `goal/change`-Session-Event, dessen Payload entweder ein vollständiger Post-Mutation-Snapshot oder ein Clear-Tombstone ist. Der strikte Fold und die persistierte Projektion leiten den Lebenszyklus-Status ausschließlich aus diesen Events ab; Inbox-Mutationen beeinflussen den Goal-Status nicht.
 
 ```ts type-equiv
 /** Full-snapshot goal mutation committed by a durable `goal/change` event. */
@@ -118,7 +116,7 @@ interface GoalClearChangeMeta {
 }
 ```
 
-续跑消费方会为每个获准的用户消息轮次标注正数且连续的 Round 编号和当前修订号；只有这些获准的 `user/message` 事件会推进 `roundsStarted`。回放会拒绝非正数 Round、编号缺口、陈旧修订号、已停止阶段和超出上限。
+Ein Continuation-Consumer attribuiert jede zugelassene User-Message-Turn mit einer positiven, sequenziellen Round-Nummer und der aktuellen Revision; nur diese zugelassenen `user/message`-Events erhöhen `roundsStarted`. Das Replay lehnt nicht-positive Rounds, Lücken, stale Revisionen, gestoppte Phasen und Überschreitungen des Caps ab.
 
 ```ts type-equiv
 /** Message attribution for admitted continuation rounds. */
@@ -131,9 +129,9 @@ interface GoalMessageSource {
 }
 ```
 
-## 请求与通知
+## Requests und Notifications
 
-创建操作会区分调用方省略字段与采用部署配置值这两种情况，`create()` 会在内部解析后者。编辑是局部替换，其运行时校验器要求至少提供一个字段。每条变更通知都会携带获准的操作和确切修订号；清除操作不带 `goal`。
+Beim Erstellen wird das Weglassen eines Felds durch den Aufrufer von der Deployment-Entscheidung unterschieden, die `create()` intern auflöst. Ein Edit ist ein partielles Ersetzen, dessen Laufzeit-Validator mindestens ein Feld verlangt. Jede Mutations-Notification trägt die akzeptierte Operation und die exakte Revision; Clear lässt `goal` weg.
 
 ```ts type-equiv
 /** Input whose omitted round cap is resolved by the service configuration. */
@@ -161,9 +159,9 @@ interface GoalChanged {
 }
 ```
 
-## 服务行为
+## Service-Verhalten
 
-[`GoalService`](../../packages/goal/goal/src/index.ts) 解析创建默认值、从可选注册的 `goal` 投影读取严格回放结果、校验传入的 agent（智能体）是注册表中的确切活跃实例、以比较并设置方式执行变更，并发出 `goal/changed` 通知；监听器故障会被隔离。注册表或 key 缺失时，第一次依赖它们的访问会失败。包 [README](../../packages/goal/goal/README.zh.md) 定义可调用 API 和面向模型的约定。
+[`GoalService`](../../packages/goal/goal/src/index.ts) löst Create-Defaults auf, liest das strikte Replay aus der optional registrierten `goal`-Projektion, erzwingt die Identität des exakten Live-Agents sowie Compare-and-Set-Mutationen und sendet abgekapselte `goal/changed`-Notifications. Der erste abhängige Zugriff schlägt fehl, wenn die Projektions-Registry oder der Schlüssel fehlt. Das Package-[README](../../packages/goal/goal/README.de.md) definiert die aufrufbare API und den modellseitigen Vertrag.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -171,7 +169,7 @@ interface GoalChanged {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxgoals--goalservice"></a>
 
@@ -266,7 +264,7 @@ block(agent: Agent, ref: GoalRef, reason: GoalBlockReason): GoalView
 @Remote('create') remoteExportCreate(agent: Agent, request: CreateGoalRequest): CreateGoalResult
 ```
 
-Types: [Agent](core.zh.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/goal/goal/src/index.ts`](../../packages/goal/goal/src/index.ts)
 
@@ -309,7 +307,7 @@ Goal mutation accepted by one live agent. The matching `goal/change` session eve
 'goal/changed'(this: import('@deepseek-ai/dsh-scope').Scoped<Agent>, payload: { agent: Agent; change: GoalChanged }): void
 ```
 
-Types: [Agent](core.zh.md) · [Scoped](scope.zh.md)
+Types: [Agent](core.de.md) · [Scoped](scope.de.md)
 
 Source: [`packages/goal/goal/src/domain.ts`](../../packages/goal/goal/src/domain.ts)
 <!-- END GENERATED cordis-surface -->

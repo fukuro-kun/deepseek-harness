@@ -6,6 +6,8 @@ Types shared by the event-sourced goal service and its policy consumers. The [go
 
 ## Identity and lifecycle
 
+English | [中文](goal.zh.md) | [Deutsch](goal.de.md)
+
 `GoalId` is a [branded id](core.md#branded-ids). A caller mutates one exact revision through `GoalRef`; every accepted durable mutation increments the revision.
 
 ```ts type-equiv

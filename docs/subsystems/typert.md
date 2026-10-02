@@ -6,6 +6,8 @@ Types shared by generated Remote artifacts, the Host Gateway, and consumer API a
 
 ## Lookup and Context declarations
 
+English | [中文](typert.zh.md) | [Deutsch](typert.de.md)
+
 Business-object packages extend two empty maps through declaration merging. A lookup associates one Host object type with its wire identity; a Context declaration associates one scoped Context kind with its wire identity. Generated descriptors name these keys, while runtime providers supply the live resolution behavior.
 
 ```ts type-equiv
