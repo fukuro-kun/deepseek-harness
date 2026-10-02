@@ -6,6 +6,8 @@ The right Sidebar is the Web Client's per-Session docking surface: a column of p
 
 This page is the reference for the subsystem's contracts: addresses, tab-type registration, the navigation service, the extension slots and their owner props, the resource model, the Workspace Files service, the shipped types, and what is deliberately not built. How the layout engine, the frame, and the surface fit together is in the [Agent Note](../../.agents/notes/implemented/feature/2026-09-04-right-sidebar-docking-infrastructure.md); slot mechanics are in the [Slots reference](slots.md).
 
+English | [中文](sidebar-right.zh.md) | [Deutsch](sidebar-right.de.md)
+
 ## Position and ownership
 
 One docking surface exists per Session, held in a session-scoped slot store and drawn by `rightbar.session`. The root-scoped `rightbar` controller mounts that seat only while Conversation is selected; a reload returns every session to the collapsed default, and switching sessions keeps each surface where it was ([state](../../packages/client/ui-sidebar-right/README.md#state)). The surface's every change is one recorded history entry computed by the kit's pure planners; a docked pane never stays empty, and an empty root pane receives the default page selected from registered guide entries.

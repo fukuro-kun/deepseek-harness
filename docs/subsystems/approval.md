@@ -6,6 +6,8 @@ The user-approval seam of [dsh-user-approval](../../packages/interaction/user-ap
 
 Source: [`packages/interaction/user-approval/src/index.ts`](../../packages/interaction/user-approval/src/index.ts)
 
+English | [中文](approval.zh.md) | [Deutsch](approval.de.md)
+
 ## Identity and outcome
 
 Every request receives a fresh `ApprovalRequestId`. The brand pairs the `approval/asked` and `approval/decided` audit events without making approval ids interchangeable with tool-call or agent/session ids.

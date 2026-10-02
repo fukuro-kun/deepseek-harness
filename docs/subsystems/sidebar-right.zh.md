@@ -12,6 +12,8 @@
 
 一个 tab 类型是共用定义 `id` 的两次注册：在 `ctx.sidebarRightTabs` 里的静态定义说明其 `kind` 打开哪些地址，一次 keyed slot 注册提供它的正文。框架注入 `useTabInfo()` 以读取 Sidebar、窗格和标签的实时信息；各类型把自身状态放在 slot store 里。各包之间只以类型形式引用彼此的声明。
 
+[English](sidebar-right.md) | 中文 | [Deutsch](sidebar-right.de.md)
+
 | 包 | 职责 |
 |---|---|
 | [`client/ui-sidebar-right`](../../packages/client/ui-sidebar-right/README.zh.md) | 面板与栏席位、布局 store、`ctx.sidebarRightTabs`、`ctx.sidebarRight`、Tab 域、引导类型 |

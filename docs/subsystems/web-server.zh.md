@@ -11,6 +11,8 @@
 ```ts type-equiv
 /** Route match kind: 'exact' matches the pathname verbatim; 'prefix' p matches p and p/<anything>. */
 type WebRouteKind = 'exact' | 'prefix'
+
+[English](web-server.md) | 中文 | [Deutsch](web-server.de.md)
 ```
 
 ```ts type-equiv

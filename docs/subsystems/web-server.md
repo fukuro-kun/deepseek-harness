@@ -6,6 +6,8 @@ English | [中文](web-server.zh.md)
 
 Source: [`packages/host/webserver/src/index.ts`](../../packages/host/webserver/src/index.ts)
 
+English | [中文](web-server.zh.md) | [Deutsch](web-server.de.md)
+
 ## Routes
 
 ```ts type-equiv
