@@ -5,6 +5,8 @@ kind: "package-library"
 
 # @deepseek-ai/dsh-sandbox-windows-acl
 
+
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 English | [中文](README.zh.md)
 
 ## Summary
