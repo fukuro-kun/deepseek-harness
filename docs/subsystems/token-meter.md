@@ -6,6 +6,8 @@ English | [中文](token-meter.zh.md)
 
 Source: [`packages/llm/token-meter/src/types.ts`](../../packages/llm/token-meter/src/types.ts)
 
+English | [中文](token-meter.zh.md) | [Deutsch](token-meter.de.md)
+
 ## `TokenMeasurement`
 
 ```ts type-equiv

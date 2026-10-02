@@ -1,18 +1,16 @@
 # Extensions
 
-English | [中文](extensions.zh.md)
+[English](extensions.md) | [中文](extensions.zh.md) | Deutsch
 
-The extensions subsystem lets an agent define versioned Cordis packages, run their host and browser halves, and query approved runtime metadata before writing code. Package lifecycle and sandbox behavior belong to the [`packages/extensions`](../../packages/extensions/README.md) package group.
+Das Extensions-Subsystem erlaubt einem Agent, versionierte Cordis-Packages zu definieren, ihre Host- und Browser-Hälften auszuführen und freigegebene Runtime-Metadaten abzufragen, bevor Code geschrieben wird. Package-Lifecycle und Sandbox-Verhalten gehören zur Package-Gruppe [`packages/extensions`](../../packages/extensions/README.de.md).
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
-
-English | [中文](extensions.zh.md) | [Deutsch](extensions.de.md)
 
 <a id="cordis-surface"></a>
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxcordisinspect--cordisinspectregistryservice"></a>
 
@@ -62,7 +60,7 @@ async query( platform: CordisInspectPlatform, providerId: string, methodName: st
 resolveClientQuery( agent: Agent, requestId: CordisInspectRequestId, resolution: CordisInspectQueryResolution, ): CordisInspectResolveAck
 ```
 
-Types: [Agent](core.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/extensions/cordis-host-runner/src/inspect-registry.ts`](../../packages/extensions/cordis-host-runner/src/inspect-registry.ts)
 
@@ -254,7 +252,7 @@ inspectPackage( agent: Agent, pluginId: CordisDynamicPluginId, packageId: Cordis
 @Remote('invoke') async invoke( pluginId: CordisDynamicPluginId, pluginRunId: CordisDynamicPluginRunId, method: string, args: JsonValue, ): Promise<DynamicCordisInvokeResult>
 ```
 
-Types: [Agent](core.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/extensions/cordis-host-runner/src/index.ts`](../../packages/extensions/cordis-host-runner/src/index.ts)
 

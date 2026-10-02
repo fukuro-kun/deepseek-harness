@@ -1,18 +1,16 @@
-# Token 计量
+# Token-Meter
 
-[English](token-meter.md) | 中文
+[English](token-meter.md) | [中文](token-meter.zh.md) | Deutsch
 
-`@deepseek-ai/dsh-token-meter` 公开一个独立的回放快照，用于表示请求压力与按位置计算的表层定价。`logRevision` 表示生成该计量中每个字段时所消费的持久事件数量。
+`@deepseek-ai/dsh-token-meter` stellt einen losgelösten Replay-Snapshot für Request-Druck und positionsbezogene Surface-Bepreisung bereit. `logRevision` ist die Anzahl persistenter Events, die für jedes Feld der Messung konsumiert wurden.
 
-来源：[`packages/llm/token-meter/src/types.ts`](../../packages/llm/token-meter/src/types.ts)
+Source: [`packages/llm/token-meter/src/types.ts`](../../packages/llm/token-meter/src/types.ts)
 
 ## `TokenMeasurement`
 
 ```ts type-equiv
 /** Detached immutable request-pressure and surface snapshot at one consumed log revision. */
 interface TokenMeasurement {
-
-[English](token-meter.md) | 中文 | [Deutsch](token-meter.de.md)
   /** Number of durable events consumed; equal to the next unread event seq. */
   readonly logRevision: SessionLogOffset
   /** Provider or heuristic anchor used for this measurement. */
@@ -28,7 +26,7 @@ interface TokenMeasurement {
 }
 ```
 
-每次计量都会通过 `ctx.llm` 把生效信封的路由 provider/model 解析为该路由声明的请求图片定价，因此图片出现处按请求实际发送的视觉 token 加模型可见文本计价；未声明定价的路由与组合保持固定启发式规则。`baseline.kind === 'usage'` 表示最近一次成功的提供方调用具有相同的规范请求 envelope，且该调用的总量不低于其完整路由定价锚点。`estimated` 表示不存在可复用的保守 usage 锚点，因此服务自行对完整信封和表层定价。后续成功请求会替换早先的锚点；有符号的 `surfaceDeltaTokens` 会保留相对于匹配锚点的增长与缩减，且两侧按同一路由重新定价。`totalTokens` 仍表示请求与响应压力，`surfaceTokens` 则是表层的路由定价总量，等于所有节点价格之和。
+Jede Messung löst Provider und Modell der gerouteten Route des effektiven Envelopes über `ctx.llm` auf die für diese Route deklarierte Request-Image-Bepreisung auf, sodass Image-Vorkommen mit den visuellen Tokens plus dem modellsichtbaren Text bemessen werden, die der Request tatsächlich sendet; Routen und Kompositionen ohne deklarierte Bepreisung behalten die feste Heuristik. `baseline.kind === 'usage'` bedeutet, dass der letzte erfolgreiche Provider-Call denselben kanonischen Request-Envelope hat und seine Summe nicht unter dem vollständig routenbepreisten Anker dieses Calls liegt. `estimated` bedeutet, dass kein wiederverwendbarer konservativer Usage-Anker existiert und der Dienst den vollständigen Envelope und die Surface selbst bepreist hat. Ein späterer erfolgreicher Request ersetzt den früheren Anker; das vorzeichenbehaftete `surfaceDeltaTokens` erhält Wachstum und Schrumpfung relativ zu einem passenden Anker und bepreist beide Seiten unter derselben Route neu. `totalTokens` bleibt der Request-und-Response-Druck, während `surfaceTokens` die nur auf die Surface bezogene routenbepreiste Summe ist und der Summe der Node-Preise entspricht.
 
 ## `TokenSurfaceNode`
 
@@ -53,7 +51,7 @@ interface TokenSurfaceNode {
 }
 ```
 
-表层顺序具有权威性；替换节点的持久 seq 可能高于位置排在其后的节点。该快照不可变，不会随底层回放折叠推进而增长。
+Die Surface-Reihenfolge ist maßgeblich; Replacement-Nodes können höhere persistente Seq-Werte tragen als positionell spätere Nodes. Der Snapshot ist immutable und wächst nicht, wenn der zugrunde liegende Replay-Fold fortschreitet.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -61,7 +59,7 @@ interface TokenSurfaceNode {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxtokenmeter--tokenmeter"></a>
 
@@ -102,7 +100,7 @@ measure(session: Session, requestHeader?: EpochHeader): TokenMeasurement
 estimateMessage(message: Message): number
 ```
 
-Types: [EpochHeader](session.zh.md) · [Message](llm-streaming.zh.md) · [Session](session.zh.md)
+Types: [EpochHeader](session.de.md) · [Message](llm-streaming.de.md) · [Session](session.de.md)
 
 Source: [`packages/llm/token-meter/src/index.ts`](../../packages/llm/token-meter/src/index.ts)
 <!-- END GENERATED cordis-surface -->

@@ -11,6 +11,8 @@
 `SessionProjectionStateMap` 是 host 侧折叠状态的 merge-extensible 类型表，`SessionProjectionMap` 则继续表示客户端可见的全量值。领域为每个状态 key 贡献一个 `ProjectionDefinition`；`wire` 块使该 key 对客户端可见，渲染归 slot 体系管，永远不归本层：
 
 ```ts type-equiv
+
+[English](session-projection.md) | 中文 | [Deutsch](session-projection.de.md)
 /**
  * One domain's state-driven computation unit: a pure synchronous fold plus
  * declarations and an optional client view — never an opaque getter. The framework drives
