@@ -11,6 +11,8 @@ kind: "package-reference"
 
 运行一段纯 JavaScript 编排脚本，将工作扇出给 subagent，并返回脚本的最终 JSON 值。脚本可以使用 `agent()`、`parallel()`、`pipeline()`、`phase()` 和 `log()`；模型通常通过 `workflow` 工具访问它们。每次运行都归调用方所有，将每个子 agent 归属于调用它的 agent，在失败或取消时以结果兑现而不拒绝，并在有界宽限期内完成 dispose。调用方必须提供执行引擎，因此可以更换隔离策略而不改变可见行为。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

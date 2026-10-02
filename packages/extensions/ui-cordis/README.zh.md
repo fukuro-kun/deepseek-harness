@@ -11,6 +11,8 @@ kind: "package-reference"
 
 `dsh-client-ui-cordis` 为 web 客户端中的动态 Cordis 包提供框架级控制面板、会话工具卡片与 `@pluginId` 补全。人可以从任意会话批准或拒绝阻塞模型的请求、运行、停止或移除定义，并查看其实时状态。会话卡片会回放已记录的调用与结果。本包不增加模型可见内容或会话事件；页面刷新后，定义必须重新运行。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
