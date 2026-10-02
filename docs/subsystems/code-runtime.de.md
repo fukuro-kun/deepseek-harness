@@ -1,18 +1,16 @@
-# 代码运行时
+# Code Runtime
 
-[English](code-runtime.md) | 中文
+[English](code-runtime.md) | [中文](code-runtime.zh.md) | Deutsch
 
-代码执行 seam 是一个[能力 seam](../../.agents/notes/implemented/architecture/2026-06-13-capability-seams.zh.md)：其 Service Definition（[dsh-code-runtime](../../packages/code-runtime/code-runtime)，`ctx.codeRuntime`）使用宿主提供的异步绑定运行一段模型编写的程序，并报告其打印内容与返回值。代码执行是**一项可选能力**，不属于 agent loop（智能体循环）主干，因此其词汇定义在此而非 [core.md](core.zh.md) 中。各后端的执行基底与源语言不同，这两项均为服务上的只读描述符；worker-thread Service Provider 与工具注册表 Consumer 的约定见 [PTC mode 基础设计](../../.agents/notes/implemented/feature/2026-06-15-ptc.zh.md) 和[类型化返回约定](../../.agents/notes/implemented/feature/2026-07-20-ptc-typed-tool-returns.zh.md)。
+Der Code-Ausführungs-Seam — ein [Capability Seam](../../.agents/notes/implemented/architecture/2026-06-13-capability-seams.de.md), dessen Service Definition ([dsh-code-runtime](../../packages/code-runtime/code-runtime), `ctx.codeRuntime`) ein vom Modell geschriebenes Programm gegen host-seitige asynchrone Bindings ausführt und berichtet, was es ausgegeben und zurückgegeben hat. Code-Ausführung ist **eine optionale Capability**, nicht Teil der Agent-Loop-Spine — deshalb lebt ihr Vokabular hier und nicht in [core.md](core.de.md). Backends unterscheiden sich in Ausführungssubstrat und Quellsprache, beides Readonly-Deskriptoren auf dem Service; der Worker-Thread-Service-Provider und der Tool-Registry-Consumer sind in der [PTC-Mode-Grundlage](../../.agents/notes/implemented/feature/2026-06-15-ptc.de.md) und dem [Typed-Return-Vertrag](../../.agents/notes/implemented/feature/2026-07-20-ptc-typed-tool-returns.de.md) spezifiziert.
 
-源码：[`packages/code-runtime/code-runtime/src/types.ts`](../../packages/code-runtime/code-runtime/src/types.ts)
+Quelle: [`packages/code-runtime/code-runtime/src/types.ts`](../../packages/code-runtime/code-runtime/src/types.ts)
 
-## 运行：请求进，结果出
+## Der Lauf: Request rein, Result raus
 
-`CodeRunRequest` 携带**运行时要处理的一切内容**。按照「包边界处显式优于隐式」的规则，默认值（时间预算、输出上限）来自实现的已校验配置，绝不是 `run()` 内部隐藏的 `??`：
+Ein `CodeRunRequest` trägt **alles, worauf die Runtime wirkt** — gemäß der Regel „explizit > implizit an Package-Grenzen" ist die Default-Belegung (Zeitbudgets, Ausgabelimits) validierte Config der Implementierung, niemals ein verstecktes `??` innerhalb von `run()`:
 
 ```ts type-equiv
-
-[English](code-runtime.md) | 中文 | [Deutsch](code-runtime.de.md)
 /**
  * One run: the program source plus everything the runtime acts on. Per the
  * explicit-over-implicit convention, defaulting (time budgets, output caps)
@@ -38,7 +36,7 @@ interface CodeRunRequest {
 }
 ```
 
-结果将错误报告为一个**字段**，而不是让 `run()` 返回被拒绝的 Promise。报告程序失败是调用方的职责，不走异常路径（与 `ShellExecutor.run` 失败时仍正常完成的约定一致）：
+Das Ergebnis meldet einen Fehler als **Feld**, niemals als Rejection von `run()` — ein fehlgeschlagenes Programm zu melden ist Aufgabe des Aufrufers, kein Ausnahmepfad (entsprechend dem Resolve-on-Failure-Vertrag von `ShellExecutor.run`):
 
 ```ts type-equiv
 /**
@@ -65,9 +63,9 @@ interface CodeRunResult {
 }
 ```
 
-## 绑定：宿主函数作为程序全局变量
+## Bindings: Host-Funktionen als Programm-Globale
 
-每个 `CodeBindingNamespace` 在程序内成为一个由异步可调用函数组成的全局对象（PTC mode Consumer 传入一个：`tools`）。参数与返回值必须是无损 JSON，且跨越边界时不受 seam 层字节上限约束；运行时可以通过结构化克隆桥接它们。命名空间可以声明程序可见的错误类，而无需让运行时知道 Consumer 的名称：运行时会注入真实构造函数，并将被拒绝的调用转为该类的实例。运行时也将绑定名视为不可信输入（`__proto__` 是普通自有属性，绝不会发生原型碰撞）：
+Jedes `CodeBindingNamespace` wird innerhalb des Programms zu einem globalen Objekt asynchroner Callables (der PTC-Mode-Consumer übergibt eines: `tools`). Argumente und Auflösungswerte müssen verlustfreies JSON sein und queren die Grenze ohne Seam-Level-Byte-Limit; die Runtime darf sie per Structured Clone überbrücken. Ein Namespace darf eine programmsichtbare Fehlerklasse deklarieren, ohne dass die Runtime die Namen des Consumers kennt: Die Runtime injiziert den echten Konstruktor und wandelt verworfene Aufrufe in dessen Instanzen um. Eine Runtime behandelt Binding-Namen außerdem als feindliche Eingabe (`__proto__` ist eine gewöhnliche eigene Property, niemals eine Prototyp-Kollision):
 
 ```ts type-equiv
 /**
@@ -135,11 +133,11 @@ type CodeJsonValue = null | boolean | number | string | CodeJsonValue[] | { [key
 type CodeBindingFunction = (args: unknown) => Promise<CodeJsonValue>
 ```
 
-## 捕获的输出与失败分类体系
+## Erfasste Ausgabe und die Fehler-Taxonomie
 
-日志是纯字符串。每个来源通道保留自身的发出顺序；由于通道元数据不属于 seam，相互独立的通道如何交错由后端决定。运行时捕获程序的 console 与流输出，Consumer 只渲染文本。实现会对序列化后的外层日志数组，以及完成值或失败消息的组合载荷设置上限；固定的结果封装语法与 Consumer 展示空白不计入这份可变载荷计量。超限会显式失败，而不会在值中插入替代内容。
+Logs sind einfache Strings. Jeder Quellkanal bewahrt die Emissionsreihenfolge; das Interleaving zwischen unabhängigen Kanälen ist backend-abhängig, weil Kanal-Metadaten nicht Teil des Seams sind. Die Runtime erfasst die Console- und Stream-Ausgabe des Programms, und Consumer rendern nur den Text. Implementierungen begrenzen die serialisierte äußere Log-Liste plus die Nutzlast aus Completion-Value oder Failure-Message; die feste Result-Envelope-Syntax und das Consumer-Darstellungs-Whitespace gehören nicht zu dieser variablen Nutzlast-Bilanz. Überlauf ist ein expliziter Fehler statt einer In-Band-Wertsubstitution.
 
-失败类型是**正交的结果，独立报告**（见 [defensive-patterns](../defensive-patterns.zh.md)）：预算耗尽不是异常，中止不是超时，基底崩溃（如 OOM）也不是二者中的任何一个：
+Fehlerarten sind **orthogonale, unabhängig gemeldete Ergebnisse** (per [defensive-patterns](../defensive-patterns.de.md)): Ein abgelaufenes Budget ist keine Exception, ein Abort ist kein Timeout, und ein Substrat-Tod (z. B. OOM) ist keines von beiden:
 
 ```ts type-equiv
 /**
@@ -162,9 +160,9 @@ interface CodeRunFailure {
 }
 ```
 
-## 服务
+## Der Service
 
-`CodeRuntime`（`ctx.codeRuntime`，抽象服务，定义于 [`packages/code-runtime/code-runtime/src/index.ts`](../../packages/code-runtime/code-runtime/src/index.ts)）由 `run(request)` 加两个只读描述符组成：`language`（程序必须使用的语言，已知值为 `'typescript'` 与 `'python'`，即 `dsh-tools` 能呈现的那些，TypeScript 后端已发布、Python 后端为实验性且私有（未发布）；生成语言相关展示的 Consumer 据此切换，遇到无法展示的语言时应显式报错）和 `isolation`（执行基底，`'worker-thread'`、`'process'`、`'container'`；仅为诊断标签，**不构成安全承诺**）。实现必须保证各次运行彼此隔离（无跨运行状态），并在 dispose（资源释放）时等待系统完全停稳：teardown 要等到所有进行中的运行均已终止并结算后才完成。
+`CodeRuntime` (`ctx.codeRuntime`, abstrakt — definiert in [`packages/code-runtime/code-runtime/src/index.ts`](../../packages/code-runtime/code-runtime/src/index.ts)) besteht aus `run(request)` plus zwei Readonly-Deskriptoren: `language` (die Sprache, in der das Programm geschrieben sein muss — `'typescript'` und `'python'` sind die bekannten Werte, die `dsh-tools` präsentiert; das TypeScript-Backend ist veröffentlicht, das Python-Backend experimentell und privat (nicht publiziert); ein Consumer, der sprachspezifische Darstellung erzeugt, schaltet darauf und schlägt bei einer nicht darstellbaren Sprache laut fehl) und `isolation` (das Ausführungssubstrat — `'worker-thread'`, `'process'`, `'container'`; eine Diagnose-Marke, **kein Sicherheitsversprechen**). Implementierungen müssen Läufe voneinander isolieren (kein run-übergreifender Zustand) und bis zur Quieszenz dispose: In-flight-Läufe werden terminiert und abgewartet, bevor der Teardown abschließt.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -172,7 +170,7 @@ interface CodeRunFailure {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxcoderuntime--coderuntime-abstract-seam"></a>
 

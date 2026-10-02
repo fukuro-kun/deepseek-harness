@@ -6,6 +6,8 @@ Schedule owns durable reminders that return to the original live Session as ordi
 
 ## Durable records
 
+English | [中文](schedule.zh.md) | [Deutsch](schedule.de.md)
+
 `ScheduleId` is a [branded id](core.md#branded-ids), unique and never reused within one Session. Version 1 supports a positive safe-integer `after_seconds` delay, an explicit absolute `at` target, or a safe-integer `every_seconds` interval of at least five minutes. Creation canonicalizes every first target into a four-digit-year RFC 3339 UTC `scheduledAt`; an `after` record retains its submitted delay, an `at` record stores only the resulting instant, and an `every` record retains its fixed interval and next target.
 
 ```ts type-equiv

@@ -105,17 +105,17 @@ Eine erstellte Session ist in diesem Prozess ab dem Moment beobachtbar, in dem `
 
 `session/event` ist eine *synchron*e Benachrichtigung; der montierte Backend leitet sie nach Session-id in das begrenzte write-behind-Fenster des aktiven Write-Handles weiter, ohne den Produzenten zu blockieren (der Backend installiert diese Listener einmal, weil die Persistenz bereits ein aktives Write-Handle pro id durchsetzt). Das erste ausstehende Event startet ein festes internes Batch-Fenster, und spätere Events treten ein, ohne seine Deadline zurückzusetzen. Die Ablaufzeit startet einen dauerhaften `append` durch das Write-Handle der Session; während dieses Schreibvorgangs zugelassene Events erhalten ihre eigene Deadline und bilden ein Folge-Batch. `session/flush` bricht das Warten ab und leert bis zur Quiescence, daher nutzt die Schleife es weiterhin als Orderings- und Fehlerbeobachtungs-Checkpoint, bevor sie den nächsten gewöhnlichen Turn beansprucht. Ein abgelehnter Hintergrund-Schreibvorgang behält seine Events in der Reihenfolge, pausiert den automatischen Weg und wird über den Logger berichtet; der nächste explizite Flush wiederholt und lehnt laut gegenüber seinem Aufrufer ab. `session/disposed` führt denselben abschließenden Drain durch und schließt das Handle, und `close()` selbst leert den geleiteten Puffer durch den noch offenen Speicher, sodass die Close-Sweep des Backend-Teardowns nichts verliert. Das Fenster begrenzt nur das bewusste Batch-Warten, nicht die Event-Loop-Scheduling oder die Durability-Latenz des Backends.
 
-## Crash recovery preserves an interrupted turn
+## Crash-Wiederherstellung erhält einen unterbrochenen Turn
 
-A log crashed mid-turn ends with an open `turn/start` and no `turn/end`. Persistence does **not** truncate or repair it — a single turn can be huge in a long-horizon task (many steps, large tool output), and those events were durably appended before the crash. It returns the physically valid contiguous log; only the incomplete fragment of a torn physical tail, belonging to an append that never resolved, is discarded — complete records recovered from it (the JSONL backend partially decodes a torn Zstandard frame) are durably rewritten by the write path before the handle's first new append. Repair is the reader's job: resume (agent-loop) reads the stored log through its write handle, computes `interruptedTurnClosers` — missing tool errors, any open `step/end`, and a synthetic `turn/end { reason: { kind: 'interrupted' } }` — and appends them through the same handle as an ordinary batch before publishing the Session. `interrupted` is the one `TurnEndReason` no loop emits (see [session.md](session.md#why-a-turn-ended-turnendreasonmap)).
+Ein Log, das mitten im Turn gecrasht ist, endet mit einem offenen `turn/start` und ohne `turn/end`. Die Persistenz truncatiert es **nicht** und repariert es nicht — ein einzelner Turn kann in einer Long-Horizon-Aufgabe riesig sein (viele Steps, große Tool-Outputs), und diese Events wurden vor dem Crash dauerhaft angehängt. Sie gibt das physisch gültige zusammenhängende Log zurück; nur das unvollständige Fragment eines zerrissenen physischen Schwanzes, das zu einem nie aufgelösten Append gehört, wird verworfen — vollständige Aufzeichnungen, die daraus wiederhergestellt werden (der JSONL-Backend dekodiert einen zerrissenen Zstandard-Frame teilweise), werden vom Schreibweg vor dem ersten neuen Append des Handles dauerhaft neu geschrieben. Reparatur ist die Aufgabe des Lesers: resume (agent-loop) liest das gespeicherte Log durch sein Write-Handle, berechnet `interruptedTurnClosers` — fehlende Tool-Fehler, jedes offene `step/end` und ein synthetisches `turn/end { reason: { kind: 'interrupted' } }` — und hängt sie durch dasselbe Handle als gewöhnliches Batch an, bevor er die Session veröffentlicht. `interrupted` ist der eine `TurnEndReason`, den keine Schleife emittiert (siehe [session.md](session.de.md#why-a-turn-ended-turnendreasonmap)).
 
-Repair therefore writes only under write ownership: a live session's write handle is held by its lifecycle owner, so a concurrent `open(id, 'write')` rejects with `SessionAlreadyOwnedError` instead of racing repair against a live turn. Read-only observers (session-query) balance an interrupted cold log with the same closers in memory only, writing nothing back.
+Reparatur schreibt daher nur unter Write-Ownership: Das Write-Handle einer live Session wird von ihrem Lifecycle-Owner gehalten, daher lehnt ein gleichzeitiges `open(id, 'write')` mit `SessionAlreadyOwnedError` ab, statt dass die Reparatur mit einem live Turn konkurriert. Read-only-Beobachter (session-query) balancieren ein unterbrochenes kaltes Log nur in Memory mit denselben Closers und schreiben nichts zurück.
 
-Read-only observation is `open(id, 'read')`: the handle serves validated contiguous prefix slices, never a torn tail, and repeated reads on one handle never observe an older state than a prior read. There is no persistence-side prepared-Session cache: session-query owns its cold-read cache, keying one balanced cold Session per id on the `stat().revision` change token and re-reading only when the token changes. The [handle-based persistence Agent Note](../../.agents/notes/implemented/architecture/2026-08-27-handle-based-session-persistence.md) owns this lifecycle; the archived [Session preparation record](../../.agents/notes/archived/architecture/2026-08-05-session-preparation.md) documents the original publication-boundary `SessionPreparation` decision.
+Read-only-Beobachtung ist `open(id, 'read')`: Das Handle dient validierte zusammenhängende Präfix-Slices, nie einen zerrissenen Schwanz, und wiederholte Lesungen auf einem Handle beobachten nie einen älteren Zustand als eine frühere Lesung. Es gibt keinen persistence-seitigen prepared-Session-Cache: session-query besitzt seinen Cold-Read-Cache, keyt eine balancierte kalte Session pro id auf dem `stat().revision`-Change-Token und liest nur neu, wenn sich das Token ändert. Die [handle-based persistence Agent Note](../../.agents/notes/implemented/architecture/2026-08-27-handle-based-session-persistence.de.md) besitzt diesen Lifecycle; die archivierte [Session preparation record](../../.agents/notes/archived/architecture/2026-08-05-session-preparation.md) dokumentiert die ursprüngliche publication-boundary-`SessionPreparation`-Entscheidung.
 
-## `SessionLocation` — refusal-diagnostics artifact target
+## `SessionLocation` — Artefakt-Ziel der Refusal-Diagnostik
 
-`SessionLocation` is not a consumer-facing query: log access goes through a session handle's `read`. It survives only as refusal diagnostics, letting a `SessionFormatUnsupportedError` name the raw log a build refused to interpret. JSONL supplies the absolute transcript path inside its project/session directory; a backend without one artifact per session supplies nothing.
+`SessionLocation` ist keine consumer-facing Query: Der Log-Zugriff geht durch das `read` eines Session-Handles. Es überdauert nur als Refusal-Diagnostik, indem es einem `SessionFormatUnsupportedError` erlaubt, das rohe Log zu benennen, das ein Build nicht zu interpretieren bereit war. JSONL liefert den absoluten Transcript-Pfad innerhalb seines project/session-Verzeichnisses; ein Backend ohne ein Artefakt pro Session liefert nichts.
 
 ```ts type-equiv
 /**
@@ -134,9 +134,9 @@ interface SessionLocation {
 
 <a id="sessionheader--metadata-beside-the-log"></a>
 
-## `SessionHeader` — metadata beside the log
+## `SessionHeader` — Metadaten neben dem Log
 
-Per-session metadata travels **separately** from the event log: the header carries format version, cwd, and the `isSeeded` lineage bit, while body-bearing storage values carry the exact inherited cut beside it. Neither belongs to `SessionEventMap` or reaches `deriveMessages()`. The logical header is attached through `session.header`; the Session exposes its cut as `inheritedEventCount`.
+Pro-Session-Metadaten reisen **getrennt** vom Event-Log: Der Header trägt die Format-Version, den cwd und das `isSeeded`-Lineage-Bit, während body-tragende Speicher-Werte den exakten ererbten Cut daneben tragen. Keines gehört zu `SessionEventMap` oder erreicht `deriveMessages()`. Der logische Header wird über `session.header` angehängt; die Session exponiert ihren Cut als `inheritedEventCount`.
 
 Source: [`packages/core/session/src/types.ts`](../../packages/core/session/src/types.ts)
 
@@ -184,13 +184,13 @@ interface SessionHeader {
 }
 ```
 
-## Format refusal — logs a build cannot faithfully read
+## Format-Refusal — Logs, die ein Build nicht treu lesen kann
 
-A backend refuses a log it cannot faithfully interpret with `SessionFormatUnsupportedError`, distinct from `SessionPersistenceCorruptionError` because nothing is damaged. `stat` and `list` classify the highest canonical generation and translate a supported historical header without reading or mutating its body. Historical `open` calls share one per-session migration preparation before returning current logical values and leave every source path, byte, and inode unchanged. The JSONL provider returns a read handle from that in-memory result without publishing; a write open holds its single-writer claim and file lease while it reuses the preparation, exclusively publishes the final current generation, and only then returns the writable handle. A future highest generation refuses even when an older readable generation remains. Current-format restoration retains installed extensions and unknown events carrying `ignorable: true`; historical v0/v1/v2 migration refuses an unknown type even when marked ignorable. The message appends the selected raw log path when the backend keeps one artifact per session. An out-of-tree backend must enforce equivalent current-only handle values and direction-aware refusals at its physical-format entry. The [released-format migration decision](../../.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.md) owns the chain and immutable-publication rules.
+Ein Backend lehnt ein Log, das es nicht treu interpretieren kann, mit `SessionFormatUnsupportedError` ab, getrennt von `SessionPersistenceCorruptionError`, weil nichts beschädigt ist. `stat` und `list` klassifizieren die höchste kanonische Generation und übersetzen einen unterstützten historischen Header, ohne seinen Body zu lesen oder zu verändern. Historische `open`-Aufrufe teilen eine pro-Session-Migrationsvorbereitung, bevor sie aktuelle logische Werte zurückgeben, und lassen jeden Quell-Pfad, jedes Byte und jede Inode unverändert. Der JSONL-Provider gibt ein Read-Handle aus diesem in-memory-Ergebnis zurück, ohne zu publizieren; ein Write-Open hält seinen Single-Writer-Anspruch und sein Datei-Lease, während er die Vorbereitung wiederverwendet, publiziert exklusiv die finale aktuelle Generation und gibt erst dann das schreibbare Handle zurück. Eine zukünftige höchste Generation lehnt ab, selbst wenn eine ältere lesbare Generation bleibt. Die Wiederherstellung im aktuellen Format behält installierte Erweiterungen und unbekannte Events mit `ignorable: true` bei; die historische v0/v1/v2-Migration lehnt einen unbekannten Typ ab, selbst wenn er als ignoriert markiert ist. Die Nachricht hängt den gewählten rohen Log-Pfad an, wenn der Backend ein Artefakt pro Session hält. Ein Out-of-Tree-Backend muss äquivalente current-only-Handle-Werte und richtungs-bewusste Ablehnungen an seinem physical-format-Eingang durchsetzen. Die [released-format migration decision](../../.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.de.md) besitzt die Kette und die immutable-publication-Regeln.
 
-## `CreateSessionOptions` — seeding and metadata
+## `CreateSessionOptions` — Seeding und Metadaten
 
-Creating a `Session` through the store takes a `seed` (initial replay or fork history), an optional exact `inheritedEventCount`, and `meta` (the storage-level fields the store folds into a `SessionHeader`). The store fills in `version`/`id` and defaults `createdAt`; the caller may supply the validated absolute `cwd`, `parentSession` lineage, `isSeeded` lineage bit, optional coarse `origin`, `delegationDepth`, `agentPreset`, and an existing `createdAt`. A seeded creation requires an explicit seed equal to its inherited prefix and an exact cut; the constructor appends the child-owned tagged end-seed marker at that cut before setup adds child-owned events. `origin: 'subagent'` lets product navigation hide duplicate child rows; it does not prove that a descriptor is valid or that the child can resume.
+Das Erstellen einer `Session` durch den Store nimmt ein `seed` (anfänglicher Replay oder Fork-Historie), ein optionales exaktes `inheritedEventCount` und `meta` (die storage-level-Felder, die der Store in einen `SessionHeader` faltet). Der Store füllt `version`/`id` aus und setzt `createdAt` auf den Default; der Aufrufer kann den validierten absoluten `cwd`, die `parentSession`-Lineage, das `isSeeded`-Lineage-Bit, das optionale grobe `origin`, `delegationDepth`, `agentPreset` und ein bestehendes `createdAt` liefern. Eine geseedete Erstellung erfordert ein explizites seed, das seinem ererbten Präfix entspricht, und einen exakten Cut; der Constructor hängt den child-eigenen markierten end-seed-Marker an diesem Cut an, bevor setup child-eigene Events hinzufügt. `origin: 'subagent'` erlaubt der Produkt-Navigation, doppelte Child-Rows zu verstecken; es beweist nicht, dass ein Descriptor gültig ist oder dass das Kind resumed werden kann.
 
 ```ts type-equiv
 /**
@@ -223,11 +223,11 @@ interface CreateSessionOptions {
 }
 ```
 
-Replay/fork is therefore `ctx.agents.create({ sessionId, seed, meta })` — a fork additionally supplies `inheritedEventCount` with `meta.isSeeded: true`, and only agent-loop-published sessions persist, and the loop stores the seed through the new session's write handle before publication; resuming a *persisted* session into a live agent is `ctx.agents.resume({ resumeSessionId })`.
+Replay/Fork ist daher `ctx.agents.create({ sessionId, seed, meta })` — ein Fork liefert zusätzlich `inheritedEventCount` mit `meta.isSeeded: true`, und nur von agent-loop publizierte Sessions persistieren, und die Schleife speichert das seed durch das Write-Handle der neuen Session vor der Publikation; das Resumieren einer *persistierten* Session in einen live Agent ist `ctx.agents.resume({ resumeSessionId })`.
 
-## Preparation and restoration ownership
+## Vorbereitung und Ownership der Wiederherstellung
 
-`SessionStore.prepare()` accepts ordinary creation options or an adoptable seed through `RestoredSessionOptions`. Its `eventState` says whether event values are independently owned or shared only after deep freezing; the producer establishes that state, and slicing does not infer a different state from result length. Restoration validates and adopts those values without another copy or freeze pass. `SessionPreparation` then owns the exact unpublished Session until publication or rollback; disposal is synchronous and idempotent. agent-loop's resume reads this result through the session's write handle and appends independently owned `interruptedTurnClosers` before preparation.
+`SessionStore.prepare()` akzeptiert gewöhnliche Creation-Options oder ein adoptierbares seed durch `RestoredSessionOptions`. Sein `eventState` sagt, ob Event-Werte unabhängig besessen sind oder nur nach tiefem Freezing geteilt werden; der Produignant etabliert diesen Zustand, und Slicing leitet keinen anderen Zustand aus der Ergebnis-Länge ab. Wiederherstellung validiert und adoptiert diese Werte ohne eine weitere Kopie oder Freeze-Passage. `SessionPreparation` besitzt dann die exakte unveröffentlichte Session bis zur Publikation oder Rollback; Disposal ist synchron und idempotent. Das resume von agent-loop liest dieses Ergebnis durch das Write-Handle der Session und hängt unabhängig besessene `interruptedTurnClosers` vor der Vorbereitung an.
 
 ```ts type-equiv
 /**
@@ -291,9 +291,9 @@ declare class SessionPreparation implements Disposable {
 }
 ```
 
-## Lightweight source revisions
+## Leichtgewichtige Source-Revisions
 
-Consumers of derived read models compare a cheap opaque revision before loading a full event log. The revision is a per-backend-instance change token from `stat`/`list`: equal revisions may be treated as an unchanged log; unequal revisions promise nothing, and write-ownership churn never changes one. session-query keys its cold-read cache on it; the token plays no part in open, read, or resume.
+Consumer abgeleiteter Read-Model vergleichen eine billige opake Revision, bevor sie ein vollständiges Event-Log laden. Die Revision ist ein per-Backend-Instanz-Change-Token aus `stat`/`list`: Gleiche Revisionen dürfen als unverändertes Log behandelt werden; ungleiche Revisionen versprechen nichts, und Write-Ownership-Churn verändert nie eine. session-query keyt seinen Cold-Read-Cache darauf; das Token spielt keine Rolle in open, read oder resume.
 
 ```ts type-equiv
 /**
@@ -320,13 +320,13 @@ interface SessionPersistenceSnapshot {
 }
 ```
 
-The optional `eventCount`/`sizeBytes` fields remain cheap backend observations for consumers that explicitly need them. Session listing does not use either field to open cold logs: it reads headers plus identity-checked projection-cache hints only, so a cache or Session-format upgrade never turns startup into a body scan.
+Die optionalen `eventCount`/`sizeBytes`-Felder bleiben billige Backend-Beobachtungen für Consumer, die sie explizit benötigen. Die Session-Liste verwendet kein Feld, um kalte Logs zu öffnen: Sie liest nur Header plus identity-geprüfte projection-cache-Hinweise, sodass ein Cache- oder Session-Format-Upgrade den Start nie in einen Body-Scan verwandelt.
 
-## The backend
+## Der Backend
 
-The shipped provider implements the abstract `SessionPersistence` contract (`create`/`open`/`stat`/`list`, with per-session `SessionHandle`s carrying `read`/`append`/`flush`/`close` and optional cancellation throughout) and passes the shared persistence contract suite:
+Der ausgelieferte Provider implementiert den abstrakten `SessionPersistence`-Contract (`create`/`open`/`stat`/`list`, mit pro-Session-`SessionHandle`s, die `read`/`append`/`flush`/`close` tragen und durchgängig optionale Cancellation) und besteht die geteilte persistence contract suite:
 
-- **[dsh-session-persistence-jsonl](../../packages/session/session-persistence-jsonl)** — an append-only logical JSONL log per session, stored as checksummed concatenated Zstandard frames by default or raw lines by configuration, with crash-safe atomic materialization, per-batch `fsync` appends, and torn-tail truncation before the first new append. `stat`/`list` carry `sizeBytes` and a best-effort `fs.stat`-derived revision.
+- **[dsh-session-persistence-jsonl](../../packages/session/session-persistence-jsonl)** — ein append-only logisches JSONL-Log pro Session, standardmäßig als geprüfte, konkatentierte Zstandard-Frames gespeichert oder nach Konfiguration als rohe Zeilen, mit crash-sicherer atomarer Materialisierung, per-Batch-`fsync`-Appends und zerrissenen-Schwanz-Trunkation vor dem ersten neuen Append. `stat`/`list` tragen `sizeBytes` und eine best-effort-`fs.stat`-abgeleitete Revision.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -334,7 +334,7 @@ The shipped provider implements the abstract `SessionPersistence` contract (`cre
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsessionpersistence--sessionpersistence-abstract-seam"></a>
 
@@ -410,7 +410,7 @@ abstract stat(id: SessionId, options?: SessionPersistenceStatOptions): Promise<S
 abstract list(options?: SessionPersistenceListOptions): Promise<readonly SessionPersistenceSnapshot[]>
 ```
 
-Types: [SessionId](core.md)
+Types: [SessionId](core.de.md)
 
 Source: [`packages/session/session-persistence/src/index.ts`](../../packages/session/session-persistence/src/index.ts)
 <!-- END GENERATED cordis-surface -->

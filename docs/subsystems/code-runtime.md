@@ -6,6 +6,8 @@ The code-execution seam — a [capability seam](../../.agents/notes/implemented/
 
 Source: [`packages/code-runtime/code-runtime/src/types.ts`](../../packages/code-runtime/code-runtime/src/types.ts)
 
+English | [中文](code-runtime.zh.md) | [Deutsch](code-runtime.de.md)
+
 ## The run: request in, result out
 
 A `CodeRunRequest` carries **everything the runtime acts on** — per the "explicit > implicit at package boundaries" rule, defaulting (time budgets, output caps) is the implementation's validated config, never a hidden `??` inside `run()`:

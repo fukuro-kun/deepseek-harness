@@ -1,16 +1,14 @@
-# Session Titles
+# Session-Titel
 
-English | [中文](session-title.zh.md)
+[English](session-title.md) | [中文](session-title.zh.md) | Deutsch
 
-Durable latest-wins title state and the optional asynchronous provider vocabulary owned by [`@deepseek-ai/dsh-session-title`](../../packages/session/session-title). The shared LLM helper owns the exact auxiliary request record. Package READMEs own timing, fallback, failure, and fork behavior; the generated [persistence catalog](../persistence-catalog.md) owns the complete event declarations.
+Der von [`@deepseek-ai/dsh-session-title`](../../packages/session/session-title) verwaltete dauerhafte Titelstatus mit Last-Write-Wins-Semantik sowie das Vokabular des optionalen asynchronen Providers. Der gemeinsame LLM-Helfer besitzt den exakten Hilfsanfrage-Datensatz. Timing, Fallback-, Fehler- und Fork-Verhalten sind in den Package-READMEs definiert; der generierte [Persistenzkatalog](../persistence-catalog.de.md) besitzt die vollständigen Event-Deklarationen.
 
-Sources: [`packages/session/session-title/src/index.ts`](../../packages/session/session-title/src/index.ts), [`packages/session/session-title-llm/src/index.ts`](../../packages/session/session-title-llm/src/index.ts)
+Quellen: [`packages/session/session-title/src/index.ts`](../../packages/session/session-title/src/index.ts), [`packages/session/session-title-llm/src/index.ts`](../../packages/session/session-title-llm/src/index.ts)
 
-English | [中文](session-title.zh.md) | [Deutsch](session-title.de.md)
+## Dauerhafter Titelstatus
 
-## Durable title state
-
-`SessionTitleProviderId` is recorded for provider-produced revisions. `SessionTitleEventData` lists the exact human-message seqs used for the title, while `SessionTitleSnapshot` adds the durable event envelope facts returned by `ctx.sessionTitle.get()` and `foldSessionTitle()`. The `title` projection keeps its version-1 state and client view as only the title string or `null`, so existing persisted cache rows remain readable.
+Für vom Provider erzeugte Revisionen wird `SessionTitleProviderId` aufgezeichnet. `SessionTitleEventData` listet die exakten für den Titel verwendeten Human-Message-Seqs, während `SessionTitleSnapshot` die dauerhaften Envelope-Fakten des Events ergänzt, die `ctx.sessionTitle.get()` und `foldSessionTitle()` zurückgeben. Die `title`-Projection behält ihren Version-1-Status und ihre Client-Ansicht als nur den Titelstring oder `null`, sodass bestehende persistierte Cache-Zeilen lesbar bleiben.
 
 ```ts type-equiv
 /** Identifies one session-title provider registration. */
@@ -64,9 +62,9 @@ interface SessionTitleSnapshot extends SessionTitleEventData {
 }
 ```
 
-## Auxiliary request record
+## Hilfsanfrage-Datensatz
 
-The shared LLM helper records each validated, dispatchable title request before calling the model. The payload reproduces the model-visible system and message input, routing, output limit, provider ownership, and source-message attribution even when generation later fails.
+Der gemeinsame LLM-Helfer zeichnet jede validierte, auslieferbare Titelanfrage auf, bevor das Modell aufgerufen wird. Die Nutzlast reproduziert die modellsichtbare System- und Nachrichteneingabe, das Routing, das Ausgabelimit, die Provider-Zugehörigkeit und die Quellnachrichten-Attribution – auch wenn die Generierung später fehlschlägt.
 
 ```ts type-equiv
 /** Exact model-visible request recorded before one auxiliary title dispatch. */
@@ -86,9 +84,9 @@ interface SessionTitleLlmRequestEventData {
 }
 ```
 
-## Provider input and output
+## Provider-Eingabe und -Ausgabe
 
-The service snapshots eligible messages through one revision. A provider returns only seqs from that request; service-owned acceptance verifies ordering, normalizes the title, enforces the byte limit, and appends the title with its source-message seqs and source kind.
+Der Service erstellt einen Snapshot der infrage kommenden Nachrichten bis zu einer Revision. Ein Provider gibt nur Seqs aus dieser Anfrage zurück; die service-seitige Annahme prüft die Reihenfolge, normalisiert den Titel, erzwingt das Byte-Limit und hängt den Titel mit seinen Quellnachrichten-Seqs und der Quellart an.
 
 ```ts type-equiv
 /** One eligible human text message exposed to title providers. */
@@ -153,7 +151,7 @@ interface SessionTitleProvider {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsessiontitle--sessiontitleservice"></a>
 
@@ -200,7 +198,7 @@ async refresh(session: Session, signal?: AbortSignal): Promise<SessionTitleSnaps
 register(provider: SessionTitleProvider): () => Promise<void>
 ```
 
-Types: [Session](session.md)
+Types: [Session](session.de.md)
 
 Source: [`packages/session/session-title/src/index.ts`](../../packages/session/session-title/src/index.ts)
 <!-- END GENERATED cordis-surface -->

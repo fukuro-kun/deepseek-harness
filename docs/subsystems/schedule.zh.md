@@ -11,6 +11,8 @@ Schedule 拥有持久提醒；这些提醒会作为普通的后续对话轮次�
 ```ts type-equiv
 /** Durable one-shot reminder created from a positive delay. */
 interface AfterScheduleRecord {
+
+[English](schedule.md) | 中文 | [Deutsch](schedule.de.md)
   /** Session-local stable identity. */
   readonly id: ScheduleId
   /** Rule discriminator for a delayed one-shot reminder. */

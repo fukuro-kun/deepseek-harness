@@ -11,6 +11,8 @@
 提供方生成修订时会记录 `SessionTitleProviderId`。`SessionTitleEventData` 列出生成标题时使用的精确人类消息 seq，`SessionTitleSnapshot` 则加入 `ctx.sessionTitle.get()` 与 `foldSessionTitle()` 返回的持久事件封装信息。`title` 投影的版本 1 状态与客户端视图都只保留标题字符串或 `null`，因此既有持久化缓存行仍可读取。
 
 ```ts type-equiv
+
+[English](session-title.md) | 中文 | [Deutsch](session-title.de.md)
 /** Identifies one session-title provider registration. */
 type SessionTitleProviderId = Branded<'SessionTitleProviderId'>
 ```

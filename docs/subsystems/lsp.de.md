@@ -1,16 +1,14 @@
-# LSP navigation
+# LSP-Navigation
 
-English | [中文](lsp.zh.md)
+[English](lsp.md) | [中文](lsp.zh.md) | Deutsch
 
-The LSP seam — a [capability seam](../glossary.md#capability-seam) exposing semantic code navigation on one `ctx.lsp` service, split across packages: Service Definition ([dsh-lsp](../../packages/lsp/lsp), `ctx.lsp` + the provider registry), a generic Service Provider ([dsh-lsp-stdio](../../packages/lsp/lsp-stdio), a configured stdio language-server host), and Consumer ([dsh-tool-lsp](../../packages/lsp/tool-lsp), the `lsp` tool schema). LSP is **one optional capability**, not part of the agent-loop spine — so its vocabulary lives here, not in [core.md](core.md). A provider swap does not change how the model asks for navigation.
+Der LSP-Seam — ein [Capability Seam](../glossary.de.md#capability-seam), der semantische Code-Navigation über einen einzigen `ctx.lsp`-Service bereitstellt und auf mehrere Packages aufgeteilt ist: Service Definition ([dsh-lsp](../../packages/lsp/lsp), `ctx.lsp` + die Provider-Registry), ein generischer Service Provider ([dsh-lsp-stdio](../../packages/lsp/lsp-stdio), ein konfigurierter stdio-Language-Server-Host) und Consumer ([dsh-tool-lsp](../../packages/lsp/tool-lsp), das `lsp`-Tool-Schema). LSP ist **eine optionale Capability**, nicht Teil der Agent-Loop-Spine — deshalb lebt sein Vokabular hier und nicht in [core.md](core.de.md). Ein Provider-Wechsel ändert nichts daran, wie das Modell Navigation anfordert.
 
-Source: [`packages/lsp/lsp/src/types.ts`](../../packages/lsp/lsp/src/types.ts)
+Quelle: [`packages/lsp/lsp/src/types.ts`](../../packages/lsp/lsp/src/types.ts)
 
-English | [中文](lsp.zh.md) | [Deutsch](lsp.de.md)
+## Operationen und Koordinaten
 
-## Operations and coordinates
-
-The seam and model expose exactly four semantic queries; the union is closed, so adding one is a compile-enforced change across the seam, providers, and the tool. Positions and ranges are zero-based UTF-16, matching the protocol; the model-facing tool owns the one-based cursor convention and converts on the way in and out.
+Der Seam und das Modell stellen genau vier semantische Abfragen bereit; die Union ist geschlossen, daher erzwingt eine neue Operation eine Compile-erzwungene Änderung über Seam, Provider und Tool hinweg. Positionen und Bereiche sind nullbasierte UTF-16-Koordinaten wie im Protokoll; das modellseitige Tool besitzt die einsbasierte Cursor-Konvention und konvertiert bei Ein- und Ausgabe.
 
 ```ts type-equiv
 /**
@@ -39,9 +37,9 @@ interface LspRange {
 }
 ```
 
-## Request
+## Anfrage
 
-Every field is required: `workspaceRoot` is caller-supplied, `languageId` comes from the provider's registration (not the request), and consumers own timeouts and result limits — so no field needs implementation defaulting and there is no `resolve()` step. The provider receives the caller's request plus the derived `languageId`, which only synchronizes the transient document and never participates in selection.
+Jedes Feld ist erforderlich: `workspaceRoot` liefert der Aufrufer, `languageId` kommt aus der Provider-Registrierung (nicht aus der Anfrage), und Timeouts sowie Ergebnislimits gehören den Consumern — kein Feld braucht also implementierungsseitige Defaults, und es gibt keinen `resolve()`-Schritt. Der Provider erhält die Aufruferanfrage plus das abgeleitete `languageId`, das nur das transiente Dokument synchronisiert und niemals an der Auswahl beteiligt ist.
 
 ```ts type-equiv
 /**
@@ -73,9 +71,9 @@ interface LspProviderQuery extends LspQueryRequest {
 }
 ```
 
-## Result
+## Ergebnis
 
-A CLOSED discriminated union: navigation operations normalize to `locations`, `hover` to content or `null`. Consumers `switch` on `kind` to exhaustiveness so a new arm breaks compilation until handled. `findReferences` always includes declarations — the provider enforces this internally, so callers get no flag. The `locations` variant carries `resolvedWorkspaceUri`, the provider's canonical workspace `file:` URI. A caller relativizing location URIs uses that coordinate rather than applying host-platform path rules to the possibly-symlinked request root.
+Eine geschlossene diskriminierte Union: Navigationsoperationen normalisieren zu `locations`, `hover` zu Inhalt oder `null`. Consumer schalten per `switch` auf `kind` bis zur Erschöpfung, sodass ein neuer Zweig die Kompilierung bricht, bis er behandelt ist. `findReferences` enthält immer Deklarationen — der Provider erzwingt das intern, Aufrufer bekommen also kein Flag. Die `locations`-Variante trägt `resolvedWorkspaceUri`, die kanonische Workspace-`file:`-URI des Providers. Ein Aufrufer, der Location-URIs relativiert, verwendet diese Koordinate, statt Host-Plattform-Pfadregeln auf den möglicherweise symlink-behafteten Request-Root anzuwenden.
 
 ```ts type-equiv
 /** One resolved location: a document URI and the range within it. */
@@ -113,9 +111,9 @@ type LspQueryResult =
   | { readonly kind: 'hover'; readonly hover: LspHover | null }
 ```
 
-## Provider and service
+## Provider und Service
 
-A provider owns a stable branded `id` and an exclusive lowercase leading-dot extension map. `registerProvider` reserves the id and every extension atomically — an invalid or conflicting registration publishes nothing — and its disposer releases all reservations. Selection is per query and order-independent; no match throws `LspError` `LSP_UNAVAILABLE`. The seam exposes no protocol types, process/document controls, or generic JSON-RPC escape hatch.
+Ein Provider besitzt eine stabile gebrandete `id` und eine exklusive Map von kleingeschriebenen Extensions mit führendem Punkt. `registerProvider` reserviert die id und jede Extension atomar — eine ungültige oder konfliktbehaftete Registrierung publiziert nichts — und ihr Disposer gibt alle Reservierungen frei. Die Auswahl erfolgt pro Abfrage und ist reihenfolgeunabhängig; ohne Treffer wird `LspError` `LSP_UNAVAILABLE` geworfen. Der Seam stellt keine Protokolltypen, Prozess-/Dokumentsteuerung oder generische JSON-RPC-Escape-Luke bereit.
 
 ```ts type-equiv
 /**
@@ -164,7 +162,7 @@ interface LspService {
 }
 ```
 
-`LspProviderId` is the seam's branded id (`Branded<'LspProviderId'>` from [dsh-brand](../../packages/util/brand)); `LspError` extends `HarnessError` with stable codes such as `LSP_INVALID_PROVIDER`, `LSP_CONFLICT`, `LSP_UNAVAILABLE`, `LSP_DISPOSED`, `LSP_UNSUPPORTED_OPERATION`, and `LSP_MALFORMED_RESPONSE`, which callers route on instead of parsing `message`.
+`LspProviderId` ist die gebrandete id des Seams (`Branded<'LspProviderId'>` aus [dsh-brand](../../packages/util/brand)); `LspError` erweitert `HarnessError` um stabile Codes wie `LSP_INVALID_PROVIDER`, `LSP_CONFLICT`, `LSP_UNAVAILABLE`, `LSP_DISPOSED`, `LSP_UNSUPPORTED_OPERATION` und `LSP_MALFORMED_RESPONSE`, auf die Aufrufer routen, statt `message` zu parsen.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -172,7 +170,7 @@ interface LspService {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxlsp--lspservice"></a>
 

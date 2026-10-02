@@ -11,6 +11,8 @@ LSP seam 是一个[能力 seam](../glossary.zh.md#capability-seam)：它在单�
 seam 与模型恰好公开 4 项语义查询；该联合是闭合的，因此新增一项查询会通过编译强制要求同步修改 seam、提供方和工具。位置与范围采用从零开始的 UTF-16 坐标，与协议一致；面向模型的工具采用从 1 开始的光标约定，并在输入和输出时进行转换。
 
 ```ts type-equiv
+
+[English](lsp.md) | 中文 | [Deutsch](lsp.de.md)
 /**
  * The four semantic queries the seam and model expose. A closed union: adding an operation is a
  * compile-enforced change across the seam, providers, and the tool. Symbols and call hierarchy are
