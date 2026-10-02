@@ -11,6 +11,8 @@ kind: "package-reference"
 
 使用本包可让 agent（智能体）和用户通过一个目录访问从本地目录、嵌入式插件数据或远程服务收集的可复用任务专项指令。它会以可预测的方式裁决重名项、验证条目、在来源不可用时保留可用结果，并按需加载所选 skill（技能）的完整指令。当组合需要多个来源或非文件系统来源的 skill 时，请挂载本包；本包自身不含 skill 内容，因此本地发现需搭配 `dsh-skill-filesystem`，模型访问需搭配 `dsh-tool-skill`。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
