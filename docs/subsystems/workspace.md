@@ -6,6 +6,8 @@ A workspace is the persistent record of a directory the user works in: a stable 
 
 Source: [`packages/workspace/workspace/src/types.ts`](../../packages/workspace/workspace/src/types.ts)
 
+English | [中文](workspace.zh.md) | [Deutsch](workspace.de.md)
+
 ## Identity
 
 ```ts type-equiv

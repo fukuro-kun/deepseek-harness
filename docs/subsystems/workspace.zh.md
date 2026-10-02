@@ -11,6 +11,8 @@
 ```ts type-equiv
 /**
  * Identifies one workspace record. A generated uuid, never the path: path
+
+[English](workspace.md) | 中文 | [Deutsch](workspace.de.md)
  * normalization rewrites paths, and a reference anchor must stay stable.
  */
 type WorkspaceId = Branded<'WorkspaceId'>

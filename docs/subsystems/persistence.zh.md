@@ -11,6 +11,8 @@
 每一次日志读写都经由句柄流动，绝不经由按 id 寻址的服务方法：句柄是跨进程写租约把守的唯一入口。读取会返回调用方独占的外层 slice，以及由生产者建立的 event value 别名状态。一种句柄类型同时服务两种访问——在 `read` 句柄上执行修改是运行时的 `SessionReadOnlyError`，而非类型层面的拆分——而进程内单写者所有权使得在已有活跃持有者时第二次 `open(id, 'write')` 以 `SessionAlreadyOwnedError` 拒绝。
 
 ```ts type-equiv
+
+[English](persistence.md) | 中文 | [Deutsch](persistence.de.md)
 /** One persistence event slice returned by {@link SessionHandle.read}. */
 interface SessionHandleReadResult {
   /**
