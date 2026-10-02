@@ -6,6 +6,8 @@ kind: "package-reference"
 
 English | [中文](README.zh.md)
 
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
+
 ## Summary
 
 Use client resources when a component knows live data only by URL address, such as a tab record, link, or mention, while another client package owns the data. Resource addresses use `dsh-resource://<type>/…`; protocols that need a scope encode it in the path. Components receive the current value and later updates through the public `useResource` hook. Unsupported protocols and non-resource schemes, such as `sidebar://guide`, resolve to no resource.

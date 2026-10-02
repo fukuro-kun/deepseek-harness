@@ -5,6 +5,8 @@ kind: "package-library"
 
 # @deepseek-ai/dsh-cmdline
 
+
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 English | [中文](README.zh.md)
 
 ## Summary

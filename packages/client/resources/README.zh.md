@@ -12,6 +12,8 @@ kind: "package-reference"
 
 ## 目录
 
+[English](README.md) | 中文 | [Deutsch](README.de.md)
+
 - [使用本包](#use-this-package)
   - [读取资源](#read-a-resource)
   - [提供协议](#provide-a-protocol)
