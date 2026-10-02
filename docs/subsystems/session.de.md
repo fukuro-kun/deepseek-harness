@@ -1,14 +1,14 @@
-# 会话
+# Sessions
 
-[English](session.md) | 中文 | [Deutsch](session.de.md)
+[English](session.md) | [中文](session.zh.md) | Deutsch
 
-[dsh-session](../../packages/core/session) 的内存事件溯源模型。`Session` 是一份由类型化 `SessionEvent` 组成的**仅追加日志**，是 agent（智能体）完整交互历史的唯一真源。LLM（大语言模型）消息历史从日志*派生*而来，从不单独存储；回放即从同一组事件重新派生。日志如何实现**持久化**（持久化 seam、后端、崩溃恢复）是兄弟文档 [persistence.md](persistence.zh.md) 的关注点。
+Das in-memory, ereignisgesteuerte Modell von [dsh-session](../../packages/core/session). Eine `Session` ist ein **append-only-Log** typisierter `SessionEvent`s — die einzige Quelle der Wahrheit für die gesamte Interaktionshistorie eines Agents. Der LLM-Nachverlauf wird *abgeleitet* aus dem Log, nie separat gespeichert; Replay ist die erneute Ableitung aus denselben Ereignissen. Wie das Log **dauerhaft** gemacht wird (die Persistence-Seam, Backends, Crash-Wiederherstellung) ist das Schwestenthema auf [persistence.md](persistence.de.md).
 
-源码：[`packages/core/session/src/types.ts`](../../packages/core/session/src/types.ts)
+Quellcode: [`packages/core/session/src/types.ts`](../../packages/core/session/src/types.ts)
 
-## `SessionEventMap`：事件词汇
+## `SessionEventMap` — the event vocabulary
 
-仅追加的事件类型。可通过声明合并扩展：插件通过 declaration merging 声明额外的事件类型。例如[压缩（compaction） seam](compaction.zh.md) 添加了 `compaction/start` / `compaction/summary` / `compaction/end`，`@deepseek-ai/dsh-hook-protocol` 为钩子桥接添加了仅记录日志的 `hook/invoked` / `hook/result` 记录。与 `compaction/*` 一样，这些都不是 `SurfaceEventType`（没有 `surfaceOp`）。生成的[持久化日志事件目录](../persistence-catalog.zh.md)列举了所有成员（核心与合并扩展的），包含其 payload、surface 标记与声明位置。
+Die append-only-Ereignistypen. Merge-erweiterbar: Ein Plugin erklärt zusätzliche Ereignistypen per Deklarations-Merging — z. B. fügt die [Compaction-Seam](compaction.de.md) `compaction/start` / `compaction/summary` / `compaction/end` hinzu, und `@deepseek-ai/dsh-hook-protocol` fügt log-only-`hook/invoked` / `hook/result`-Datensätze für eine Hook-Brücke hinzu. Wie `compaction/*` sind diese keine `SurfaceEventType`s (kein `surfaceOp`). Der generierte [Persistence-Log-Event-Katalog](../persistence-catalog.de.md) enumeriert jedes Mitglied — Kern und gemergt — mit seinem Payload, Surface-Badge und Deklarationsort.
 
 ```ts type-equiv
 /** A user-role specialization of the one shared message representation. */
@@ -159,13 +159,13 @@ interface SessionEventMap {
 }
 ```
 
-`UserMessage` 是普通提示词、注入上下文、steering（中途引导）与实时收件箱事件共享的带标识且冻结的 user-role 值。事件包装层只会增加事件本地的位置或结果事实；条目待处理期间，loop 只额外附加驱动器自有的路由状态。
+`UserMessage` ist der identifizierte, eingefrorene User-Rollen-Wert, der von normalen Prompts, injizierten Kontexten, Steering und Live-Inbox-Ereignissen geteilt wird. Ereignis-Wrapper fügen nur ereignislokale Positions- oder Ergebnisfakten hinzu; die Loop fügt nur Driver-eigenen Routing-Zustand hinzu, solange ein Element ausstehend ist.
 
 <a id="the-request-header-event-requestheader"></a>
 
-### 请求头事件：`request/header`
+### The request header event: `request/header`
 
-请求信封（即 `EpochHeader`：调用配置 + 适配器所提供默认值的标记 + 已组装的工具 schema）会作为会话状态写入日志，因此每个对话请求都是日志的纯函数（见可重建性 Agent Note）。渲染后的系统提示词不属于请求头：它是派生历史，即 surface 第 0 号节点上的 `system/message` 事件以及任何后续的历史内系统节点（[决策](../../.agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.zh.md)），因此提示词变更替换或追加一个系统节点，而请求头保持不变。带有 reason `'initial'` 或 `'resume'` 的完整 `request/header` 快照记录每个 agent loop 实例的边界；请求变化时会追加 reason 为 `'change'` 的快照；未变的信封显式开启消息序列或跟随 surface 替换时，会追加 reason 为 `'series'` 的快照。如果发生变化的快照所属请求同时开启序列，它会携带 `startsSeries: true`。普通的仅追加后续 Turn，以及同一模型消息序列内的后续 Step 与重试沿用最新快照。`foldRequestHeader(events)` 通过选择最新快照重建请求头。该事件不是 `SurfaceEventType`，不产生 LLM 消息。
+Die Request-Envelope — der `EpochHeader` (Aufrufkonfiguration + Marker für Adapter-Vorgaben + assemblierte Tool-Schemata) — ist protokollierter Session-Zustand, sodass jede Konversationsanfrage eine reine Funktion des Logs ist (die Rekonstruierbarkeit-Agent-Note). Der gerenderte System-Prompt ist kein Teil des Headers: Er ist abgeleitete Historie, das `system/message`-Ereignis am Surface-Knoten 0 und jeder spätere In-History-System-Knoten ([Entscheidung](../../.agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.md)), sodass eine Prompt-Änderung einen System-Knoten ersetzt oder einen neuen anhängt und den Header unverändert lässt. Ein vollständiger `request/header`-Snapshot mit dem Grund `'initial'` oder `'resume'` protokolliert jede Loop-Instanzen-Grenze; eine geänderte Anfrage hängt einen Snapshot mit dem Grund `'change'` an; und eine unveränderte Envelope, die eine explizit deklarierte Nachrichtenserie beginnt oder auf eine Surface-Ersatzfolge folgt, hängt einen Snapshot mit dem Grund `'series'` an. Ein geänderter Snapshot trägt `startsSeries: true`, wenn diese Anfrage auch eine Serie beginnt. Ordentliche append-only-spätere Turns, weitere Steps und Retries in derselben Modell-Nachrichtenserie erben den neuesten Snapshot. `foldRequestHeader(events)` rekonstruiert den Header, indem er den neuesten Snapshot auswählt. Das Ereignis ist kein `SurfaceEventType`: Es erzeugt keine LLM-Nachricht.
 
 ```ts type-equiv
 /**
@@ -184,11 +184,11 @@ interface EpochHeader {
 }
 ```
 
-当前事件接纳要求 `request/header.header` 为规范形式：禁止任何 `system` 字段，必须省略 `tools: []` 与 `adapterDefaults: {}`。仅含空白的系统消息内容、`config.stop: []` 与嵌套扩展保持不变。seed、append 与当前持久化读取拒绝非规范 header，而不会静默规范化；[V3 信封决策](../../.agents/notes/implemented/architecture/2026-09-06-v3-canonical-session-envelopes.zh.md)负责历史转换。包含旧版 `request/header-delta` 事件或完整快照原因为 `fallback` 的旧版 v0 日志，会被拒绝，而不会以不完整方式回放。
+Der aktuelle Ereignis-Empfang erfordert den kanonischen `request/header.header`: jedes `system`-Feld ist verboten, und `tools: []` sowie `adapterDefaults: {}` müssen weggelassen werden. Leerraum-allein-System-Nachrichteninhalte, `config.stop: []` und verschachtelte Erweiterungen bleiben unverändert. Seed-, Append- und aktuelle Persistence-Lesungen lehnen nicht-kanonische Header ab, statt sie still zu normalisieren; [die V3-Envelope-Entscheidung](../../.agents/notes/implemented/architecture/2026-09-06-v3-canonical-session-envelopes.md) besitzt die historische Konversion. Legacy-v0-Logs mit `request/header-delta` oder deren Voll-Snapshot-`fallback`-Grund werden abgelehnt, statt unvollständig regeplayt zu werden.
 
-### 路由容量事件：`request/context`
+### The route capacity event: `request/context`
 
-请求所解析到的路由的上下文元数据是独立的已记录状态，在同一步骤内紧随 `request/header` 追加，且仅在提供方、模型、容量或 `systemPromptUpdate` 模式与上一条记录不同时追加。它保持在 `EpochHeader` 之外，因为该类型是 `headerEquals` 逐字段比较的重建约定。容量与更新模式描述的是路由，不是请求输入，把它们折叠进去会让一次路由变化被登记为请求信封的 `change`，也会把适配器元数据拉进 loop 的重建不变式。与 `request/header` 一样，它不是 `SurfaceEventType`，也不产生 LLM 消息。`session.requestContext()` 以增量方式归并最新一条记录；agent loop 在决定变化后的系统提示词是替换最新的系统节点还是追加到已缓存历史之后时，读取该记录的 `systemPromptUpdate`（[决策规则](../../packages/core/agent-loop/README.zh.md#understand-the-implementation)）。适配器不公布容量的路由会以缺失 `contextWindow` 的形式记录，因此新记录可以清除较早路由的容量；未声明更新模式的路由同样会清除较早路由的 `systemPromptUpdate`。
+Die Kontextmetadaten der Route, auf die eine Anfrage aufgelöst wurde, sind separater protokollierter Zustand, neben `request/header` im selben Step angehängt und nur dann, wenn sich Provider, Modell, Kapazität oder `systemPromptUpdate`-Modus vom vorherigen Datensatz unterscheidet. Er bleibt außerhalb von `EpochHeader`, weil dieser Typ der Rekonstruktionsvertrag ist, der feldweise von `headerEquals` verglichen wird: Kapazität und das Update-Modus beschreiben eine Route, keine Eingabe der Anfrage, sodass deren Einbeziehen eine Routenänderung als `change` der Request-Envelope registrieren ließe und Adapter-Metadaten in die Rekonstruktionsinvariante der Loop ziehen würde. Wie `request/header` ist es kein `SurfaceEventType` und erzeugt keine LLM-Nachricht. `session.requestContext()` faltet den neuesten Datensatz inkrementell; die Agent-Loop liest dessen `systemPromptUpdate`, wenn sie entscheidet, ob ein geänderter System-Prompt den neuesten System-Knoten ersetzt oder nach dem zwischengespeicherten Verlauf angehängt wird ([Entscheidungsregel](../../packages/core/agent-loop/README.md#understand-the-implementation)). Eine Route, deren Adapter keine Kapazität anzeigt, wird mit abwesendem `contextWindow` protokolliert, sodass der neue Datensatz die Kapazität einer älteren Route löscht; eine Route ohne deklariertes Update-Modus löscht analog das `systemPromptUpdate` einer älteren Route.
 
 ```ts type-equiv
 /** Registration-bound metadata for one resolved model route. */
@@ -204,9 +204,9 @@ interface RequestContext {
 }
 ```
 
-## `SessionEvent<T>`：一条日志条目
+## `SessionEvent<T>` — one log entry
 
-基于 `type` 的真正可辨识联合（而非独立的 `type`/`data` 联合），因此 `switch (event.type)` 能直接收窄 `event.data`，无需类型断言。`seq` 是日志中的单调递增位置（`seq = log.length`）；`time` 为 epoch 毫秒。
+Eine ordnungsgemäße diskriminierte Union über `type` (keine unabhängigen `type`/`data`-Unions), sodass `switch (event.type)` `event.data` ohne Casts eingrenzt. `seq` ist die monotone Position im Log (`seq = log.length`); `time` ist Epoch-ms.
 
 ```ts type-equiv
 /** Sequence number of one existing event in a Session log. */
@@ -228,7 +228,7 @@ type SessionSeqCursor = SessionSeq | -1
 type OptionalSessionSeq = SessionSeq | null
 ```
 
-`SessionSeq(value)` 与 `SessionLogOffset(value)` 只接纳非负安全整数，并拒绝负零。它们仅添加编译期品牌，不改变序列化后的数值；算术会返回普通 `number`，调用方必须按结果的预期角色通过对应构造器重新接纳。
+`SessionSeq(value)` und `SessionLogOffset(value)` akzeptieren nur nicht-negative sichere Ganzzahlen und lehnen negativen Null ab. Sie fügen Compile-Time-Brands hinzu, ohne die serialisierte Zahl zu ändern; Arithmetik liefert eine gewöhnliche `number`, die Aufrufer erneut über den Konstruktor für ihre beabsichtigte Rolle zulassen müssen.
 
 ```ts type-equiv
 /**
@@ -270,17 +270,15 @@ type SessionEvent<T extends SessionEventType = SessionEventType> = {
 }[T]
 ```
 
-`SessionEventType = keyof SessionEventMap`。由于 `SessionEventMap` 可通过合并扩展，对 `SessionEvent` 的 switch 语句禁止使用 `assertNever`：插件添加的变体是合法的未知值；处理已知 case 后在 `default` 中放行。
+`SessionEventType = keyof SessionEventMap`. Weil `SessionEventMap` merge-erweiterbar ist, dürfen Switches über `SessionEvent` `assertNever` NICHT verwenden — eine plugin-hinzugefügte Variante ist ein gültiger unbekannter Wert; handele die bekannten Fälle ab und falle durch `default`.
 
-每个 surface 事件都要求 `surfaceOp`；已知仅日志事件禁止两个 surface 元数据字段。原生未知或已退役的可忽略信封保持不透明。`assistant/message` 嵌入其提供方 stream，并禁止 `sourceEventSeqs`。System、user 与 tool surface 事件可以在来源或替换操作需要时引用完整、非空且唯一的较早事件集合。`tool/result` 仅在工具结果块带有 `isError: true` 时可以携带 `data.error`；失败结果的失败身份仍可省略。
+Jedes Surface-Ereignis erfordert `surfaceOp`; bekannte log-only-Ereignisse verbieten beide Surface-Metadatenfelder. Natürliche unbekannte oder veraltete ignorable-Envelopes bleiben opak. `assistant/message` bettet seinen Provider-Stream ein und verbietet `sourceEventSeqs`. System-, User- und Tool-Surface-Ereignisse können eine vollständige nicht-leere Menge eindeutiger früherer Ereignisse zitieren, wenn ihre Herkunft oder ihre Ersatzoperation es erfordert. Ein `tool/result` kann `data.error` nur dann tragen, wenn sein Tool-Ergebnis-Block `isError: true` hat; die Fehleridentität bleibt für fehlerhafte Ergebnisse optional.
 
-<a id="surface-types"></a>
+## Surface types
 
-## Surface 类型
+Die vier nachrichtenerzeugenden Typen (`SurfaceEventType` — `system/message`, `user/message`, `assistant/message`, `tool/result`) tragen Surface-Metadaten, die erklären, wie sie die geordnete abgeleitete Surface betreten. `system/message` hält den gerenderten System-Prompt: Die Loop hängt den ersten als Surface-Knoten 0 an und ersetzt bei einer Prompt-Änderung genau den neuesten System-Knoten oder hängt auf einer In-History-Route einen neuen an; der Surface-Fold lehnt jede andere Ersatzabdeckung einer `system/message` am Knoten 0 ab, während ein späterer System-Knoten gewöhnliche Historie ist, die ein Compaction-Ersatz verschatten darf. Siehe die [Session-Surface-Agent-Note](../../.agents/notes/implemented/architecture/2026-06-18-session-surface.md).
 
-四种产生消息的类型（`SurfaceEventType`：`system/message`、`user/message`、`assistant/message`、`tool/result`）携带 surface 元数据，用来声明它们如何加入有序的派生 surface。`system/message` 承载渲染后的系统提示词：循环把第一条追加为 surface 第 0 号节点，并在提示词变化时恰好替换最新的系统节点，或在历史内路由上追加一条新的；surface 折叠拒绝任何其他覆盖第 0 号节点 `system/message` 的替换，而后续系统节点是普通历史，压缩替换可以遮蔽它。见 [session surface Agent Note](../../.agents/notes/implemented/architecture/2026-06-18-session-surface.zh.md)。
-
-### `SurfaceEventType`：事件类型中产生消息的子集
+### `SurfaceEventType` — the message-producing subset of event types
 
 ```ts type-equiv
 /**
@@ -296,7 +294,7 @@ type SurfaceEventType =
   | 'tool/result'
 ```
 
-### `SurfaceOp`：事件如何进入 surface
+### `SurfaceOp` — how an event entered the surface
 
 ```ts type-equiv
 /**
@@ -317,9 +315,9 @@ type SurfaceOp =
   | { op: 'replace'; startSeq: SessionSeq; endSeq: SessionSeq }
 ```
 
-`'append'` 是常规的尾部追加路径。`replace` 恰好包含 `op`、`startSeq` 和 `endSeq`，不接受别名或额外键。它遮蔽这两个当前 surface 事件序号之间的闭区间，并在原位置插入新事件；相同端点仅替换一个条目。端点必须早于替换事件，但它们的相对顺序按 surface 顺序而非数值序号顺序确定。
+`'append'` ist der normale Anhängeweg ans Ende. `replace` enthält genau `op`, `startSeq` und `endSeq`, ohne Aliase oder zusätzliche Schlüssel. Er verschattet den inkludierenden Span zwischen diesen aktuellen Surface-Ereignissequenzen und inseriert das neue Ereignis an deren Stelle; gleiche Endpunkte ersetzen einen Eintrag. Endpunkte müssen das ersetzende Ereignis vorangehen, aber ihre relative Ordnung ist Surface-Ordnung, nicht numerische Sequenzordnung.
 
-### `SurfaceIntent`：`session.append()` 的参数
+### `SurfaceIntent` — the parameter to `session.append()`
 
 ```ts type-equiv
 /**
@@ -337,15 +335,15 @@ type SurfaceIntent<T extends SurfaceEventType = SurfaceEventType> = {
 })
 ```
 
-对 `SurfaceEventType` 事件必填：每个产生消息的事件都必须声明它如何加入 surface（派生模型历史的唯一来源）。面向人类的 transcript（文本记录）是另一个投影，读取的是日志中追加来源的事件，因为 surface 会有意遮蔽替换所概括的范围（见 [dsh-session](../../packages/core/session/README.zh.md) 的 `isAppendSurfaceEvent`）。非 surface 类型在编译期拒绝此参数。
+Erforderlich für `SurfaceEventType`-Ereignisse — jedes nachrichtenerzeugende Ereignis muss erklären, wie es die Surface betritt, die einzige Quelle des abgeleiteten Modell-Verlaufs. Ein benutzerorientiertes Transkript ist die andere Projektion und liest die Append-Ursprungs-Ereignisse des Logs, weil die Surface die Bereiche, die ein Ersatz zusammenfasst, bewusst verschattet (`isAppendSurfaceEvent` in [dsh-session](../../packages/core/session/README.md)). Nicht-Surface-Typen lehnen es zur Compile-Zeit ab.
 
-`assistant/message` 不能携带 `sourceEventSeqs`；它的 `stream` 拥有精确 provider 证据。其他 surface event 不引用较早 event 时省略该字段，需要引用时使用完整非空 list。
+`assistant/message` kann `sourceEventSeqs` nicht tragen; sein `stream` besitzt den exakten Provider-Nachweis. Andere Surface-Ereignisse lassen das Feld weg, wenn sie kein früheres Ereignis zitieren, und verwenden eine vollständige nicht-leere Liste, wenn sie es tun.
 
-### `SessionSurface`：实时只读 surface 投影
+### `SessionSurface` — the live readonly surface projection
 
-`Session.surface` 返回会话稳定的 `SessionSurface` 视图。同一个增量管理器在提交前校验追加候选事件，并根据已提交事件推进该投影；调用方可以观察成员关系和替换代次，但不能调用校验。
+`Session.surface` liefert die stabile `SessionSurface`-Ansicht der Session. derselbe inkrementelle Manager validiert Append-Kandidaten vor dem Commit und advances diese Projektion von committeten Ereignissen; Aufrufer können Mitgliedschaft und Ersatz-Generation beobachten, aber keine Validierung aufrufen.
 
-`SurfaceManager(log, baseSeq?)` 也可以折叠一个连续的已加载窗口，其第一个事件的绝对序号为 `baseSeq`。每个事件在该绝对序号空间中仍保持连续；如果替换跨过窗口头部，由于其声明的范围并不存在，该替换会失败。
+`SurfaceManager(log, baseSeq?)` kann stattdessen ein zusammenhängendes geladenes Fenster falten, dessen erstes Ereignis die absolute Sequenz `baseSeq` hat. Jedes Ereignis bleibt in diesem absoluten Sequenzraum zusammenhängend, und ein Ersatz, der den Fensterkopf überschreitet, schlägt fehl, weil sein deklariertes Fehlen nicht vorhanden ist.
 
 ```ts type-equiv
 /** Readonly live projection of the message-producing session events. */
@@ -357,9 +355,9 @@ interface SessionSurface {
 }
 ```
 
-### `SurfaceFoldReplacement` 与 `SurfaceFoldResult`：完整的 surface 回放
+### `SurfaceFoldReplacement` and `SurfaceFoldResult` — a complete surface replay
 
-`foldSurface(events)` 返回一份独立的当前事件 seq 列表，以及每个声明的替换范围实际遮蔽的 seq。实时管理器复用同一套状态转换，但不保留替换历史。每提交一次替换，其 `replaceGeneration` 就递增一次，使增量消费方能够区分纯尾部增长与重写。
+`foldSurface(events)` liefert getrennte aktuelle Ereignissequenzen zusammen mit den tatsächlichen Sequenzen, die von jedem deklarierten Ersatzbereich verschattet werden. Der Live-Manager verwendet dieselben Übergänge, ohne Ersatzhistorie zu behalten. Seine `replaceGeneration` inkrementiert für jeden committeten Ersatz, sodass inkrementelle Konsumenten reines Endwachstum von einem Rewrite unterscheiden können.
 
 ```ts type-equiv
 /** One replacement operation observed while folding a session surface. */
@@ -385,9 +383,9 @@ interface SurfaceFoldResult {
 }
 ```
 
-## `Session` 公共 API
+## `Session` public API
 
-去除方法体的声明与源码中的普通类保持同步，覆盖其脱离态工厂、状态访问器、append 方法和历史投影。存储操作仍由生成的 [`ctx.sessions` 小节](#ctxsessions--sessionstore)记录。
+Die declaration mit entfernten Body hält die getrennte Factory, die Zustands-Accessoren, die Append-Methode und die Verlauf-Projektionen der gewöhnlichen Klasse mit dem Quellcode synchron. Store-Operationen bleiben im generierten [`ctx.sessions`-Abschnitt](#ctxsessions--sessionstore).
 
 ```ts public-api
 /**
@@ -436,7 +434,7 @@ declare class Session {
    * When this lifecycle appends the marker, it occupies this seq before the
    * store attaches and therefore does not publish either. Otherwise this seq
    * holds an ordinary published write.
-  */
+   */
   readonly firstLiveSeq: SessionLogOffset;
   /**
    * Create a detached session by validating and snapshotting borrowed seed
@@ -482,7 +480,7 @@ declare class Session {
   /**
    * Materialize an immutable snapshot of a half-open event sequence range.
    * A full current snapshot is reused until the next append; every previously
-   * returned snapshot remains stable after later appends.
+   * taken snapshot remains stable after later appends.
    * @param fromSeq - non-negative inclusive sequence number; defaults to the log start.
    * @param toSeqExclusive - non-negative exclusive sequence number; defaults to the current end.
    * @returns a frozen array of the selected deeply frozen events.
@@ -590,30 +588,28 @@ declare class Session {
 }
 ```
 
-## 派生历史：`deriveMessages()` 与 `deriveEventMessage()`
+## Derived history: `deriveMessages()` and `deriveEventMessage()`
 
-`Session.deriveMessages()` 将事件日志投影为模型看到的 `Message[]`。它是缓存的（每个 surface 节点在首次出现时投影一次；surface 重写触发重建）且冻结的（每次调用返回一个新数组，引用共享的深冻结消息，因此通过投影修改已记录的历史在类型上不可表达）。`deriveEventMessage(event)` 是折叠所应用的逐节点纯函数，公开暴露以便外部重建器和开发不变式检查能以完全相同的规则投影日志前缀，不会与缓存产生分歧。投影规则：
+`Session.deriveMessages()` projiziert das Ereignis-Log in das `Message[]`, das das Modell sieht — zwischengespeichert (jeder Surface-Knoten genau einmal projiziert, wenn er zum ersten Mal gesehen wird; ein Surface-Rewrite baut neu) und eingefroren (ein frisches Array pro Aufruf über geteilte, tief-eingefrorene Nachrichten, sodass das Mutieren protokollierter Historie durch eine Projektion darstellbar ist). `deriveEventMessage(event)` ist die pro-Knoten-reine Funktion, die der Fold anwendet — öffentlich, damit externe Rekonstruktoren und die Dev-Invariante einen Log-Präfix mit genau denselben Regeln projizieren und nicht mit dem Cache widersprechen können. Die Projektionsregeln:
 
-- `user/message` → 一条携带确切 `content` 的 user 消息；可选 envelope 仅作为日志中的展示元数据保留。
-- `assistant/message` → 一条 assistant 消息，包含生成它的提供方和模型，以及可选的适配器私有回放状态。其嵌入式紧凑 stream 是回放、usage 与 UI 证据，而不是第二条 message。**内容为空的** `assistant/message` 也会跳过：因 max-tokens 而截断且无内容的步骤仍会记录一条 `assistant/message` 来保存 stream、usage、提供方和模型，但无内容的 assistant 轮次不得进入提供方 transcript（文本记录）。
-- `tool/result` → 一条携带 `tool-result` 块的 user 消息。
-- `user/message`（注入上下文，即非 `user` 来源）→ 按时间顺序在相应位置生成一条 user-role 消息，并原样承载其 `content`；其类型化 source 标明生产方，并携带所有生产方专用数据。
+- `user/message` → eine User-Nachricht mit exaktem `content`; ein optionales Envelope bleibt log-only-Anzeigemetadaten.
+- `assistant/message` → eine Assistant-Nachricht mit dem Provider und Modell, die sie erzeugt hat, plus optionalem Adapter-privatem Replay-Zustand. Ihr eingebetteter kompakter Stream ist Replay-, Nutzungs- und UI-Nachweis, keine zweite Nachricht. Eine **leerinhalts** `assistant/message` wird ebenfalls übersprungen — ein max-tokens-Step, der ohne Inhalt abgeschnitten wurde, protokolliert trotzdem eine `assistant/message`, um ihren Stream, ihre Nutzung, ihren Provider und ihr Modell zu halten, aber ein inhaltsloser Assistant-Turn darf nicht in den Provider-Verlauf eintreten.
+- `tool/result` → eine User-Nachricht mit einem `tool-result`-Block.
+- `user/message` (injizierter Kontext, d. h. nicht-`user`-Quelle) → eine User-Rollen-Nachricht, die ihren `content` wortwörtlich an ihrer chronologischen Position trägt; ihre typisierte Quelle benennt den Produzenten und trägt alle produzenten-spezifischen Daten.
 
-其余所有事件（`turn/*`、`step/*`、`assistant/attempt`、插件所属的 `llm/retry`）均为结构信息，不会投影为消息。token 记账会展开每个 `assistant/message` 或 `assistant/attempt` 的嵌入式 stream，message 顶层 `usage` 存在时仍是已提交 message 的权威。失败的模型请求 attempt 因此可以保留提供方 usage，而无需虚构 assistant message。当前逻辑校验会拒绝没有提供方／模型的 request header 和 assistant 消息，而不会猜测路由；受支持的历史表示会在当前 Session 存在前，由其相邻格式迁移边归一化并校验。
+Alles andere (`turn/*`, `step/*`, `assistant/attempt`, plugin-eigenes `llm/retry`) ist strukturell und projiziert nicht in eine Nachricht. Token-Accounting expandiert den eingebetteten Stream bei jeder `assistant/message` oder `assistant/attempt`, während die Top-Level-`usage` der Nachricht die committete-Nachrichten-Autorität bleibt, wenn vorhanden. Ein fehlgeschlagener Modell-Anfragerversuch behält daher seine Provider-Nutzung, ohne eine Assistant-Nachricht zu fabrizieren. Die aktuelle logische Validierung lehnt Request-Header und Assistant-Nachrichten ab, die Provider/Modell weglassen, statt eine Route zu raten; unterstützte historische Darstellungen werden an ihrem benachbarten Format-Edge normalisiert und validiert, bevor eine aktuelle Session existiert.
 
-## 活跃会话 fork API
+## Live-session fork API
 
-`ctx.sessions.create(id, { seed, meta })` 是底层的回放/fork 原语。对于普通的活跃会话 fork，`SessionStore` 暴露一个策略 API：
+`ctx.sessions.create(id, { seed, meta })` ist das Low-Level-Replay/Fork-Primitive. Für gewöhnliche Live-Session-Forks bietet `SessionStore` eine Policy-API:
 
-- `fork(source, boundary?, childSessionId?)` 接受一个活跃的 `Session` 对象或活跃的 `SessionId`，选取到 `SessionSeq` boundary（含）为止的源事件（默认为当前最后一个事件），要求所选前缀结束时没有开放轮次，然后创建一个活跃的子会话，包含深克隆的 seed event、`parentSession`、`isSeeded: true`、精确 `inheritedEventCount` 及继承的 `cwd`。
+- `fork(source, boundary?, childSessionId?)` akzeptiert ein Live-`Session`-Objekt oder eine Live-`SessionId`, wählt Quellereignisse bis zur inkludierenden `SessionSeq`-Grenze (Standard: aktuelles letztes Ereignis), erfordert, dass der gewählte Präfix außerhalb eines offenen Turns endet, und erstellt dann ein Live-Kind-Session mit tief-geklonten Seed-Ereignissen, `parentSession`, `isSeeded: true`, dem exakten `inheritedEventCount` und geerbtem `cwd`.
 
-显式 `boundary` 允许调用者从任意稳定的轮次间位置 fork，包括之前的 `turn/end` 或更晚的独立纯日志事件，即使源会话有更新的事件或正在进行的轮次。API 拒绝结束于开放轮次内的前缀，而不是静默截断。更广泛的执行关系健全性检查留在既有的 `dsh-invariants` 插件和持久化修复路径中，不在 `fork()` 中重复。`dsh-subagent-fork-in-process` 保留其已完成前缀截断逻辑，因为工具调用时的委托通常在父轮次仍然打开时启动；普通的会话分支应显式指定请求的 boundary。
+Eine explizite `boundary` erlaubt Aufrufern, von jeder stabilen zwischen-Turn-Position zu forken, einschließlich eines vorherigen `turn/end` oder eines späteren eigenständigen log-only-Ereignisses, selbst wenn die Quelle neuere Ereignisse oder einen offenen aktuellen Turn hat. Die API lehnt einen Präfix ab, der innerhalb eines offenen Turns endet, statt still zu kürzen. Breitere Ausführungs-Beziehungssanity bleibt im bestehenden `dsh-invariants`-Plugin und dem Persistence-Reparaturweg, statt in `fork()` dupliziert zu werden. `dsh-subagent-fork-in-process` behält sein abgeschlossenen-Präfix-Kürzen, weil Tool-Zeit-Delegation normalerweise beginnt, während der Parent-Turn offen ist; gewöhnliche Session-Verzweigungen sollten die angeforderte Grenze explizit machen.
 
-<a id="why-a-turn-ended-turnendreasonmap"></a>
+## Why a turn ended: `TurnEndReasonMap`
 
-## 轮次的结束原因：`TurnEndReasonMap`
-
-`turn/start` 没有 trigger 字段。已进入的 `user/message` 批次记录进入每个步骤的内容，`llm/retry` 记录请求恢复，idle 注入则保持待处理，直到唤醒交付抵达后续 pre-step。实时轮次会保留停止驱动器的类型化 [`AgentCancelCause`](core.zh.md#the-agent-handle)；只有在导入受支持的粗粒度取消记录且记录未保存调用方时，持久化才使用额外的 `{ kind: 'legacy' }` 原因。
+`turn/start` hat kein Trigger-Feld. Das eingetretene `user/message`-Batch protokolliert, was jeden Step betrat, `llm/retry` protokolliert die Anfrage-Wiederherstellung, und Idle-Injektion bleibt ausstehend, bis eine Wach-Überlieferung zu einem späteren Pre-Step gelangt. Live-Turns behalten die typisierte [`AgentCancelCause`](core.de.md#the-agent-handle), die den Driver stoppte; Persistence verwendet die zusätzliche `{ kind: 'legacy' }`-Ursache nur bei der Import eines unterstützten groben Abbruch-Datensatzes, der seinen Aufrufer nicht speicherte.
 
 ```ts type-equiv
 /** Durable cancellation cause, including imports whose original coarse record carried no cause. */
@@ -648,43 +644,43 @@ interface TurnEndReasonMap {
 }
 ```
 
-`max-tokens` 与模型调用中同名的 `FinishReason` 对应：只要轮次内有任何步骤以 `max-tokens` 结束，整个轮次就以 `max-tokens` 而不是 `completed` 结束（即使之后继续执行，截断事实仍优先），让消费方能够区分正常停止和截断停止。取消和错误仍是不同的结果。`interrupted` 是唯一不会由任何 loop 发出的原因：它由崩溃恢复合成（见 [persistence.md](persistence.zh.md)）。该 map 可通过合并扩展。
+`max-tokens` spiegelt den Modell-Aufruf-`FinishReason` mit demselben Namen: jeder `max-tokens`-Step in einem Turn beendet den ganzen Turn mit `max-tokens` statt `completed` (die Abschnit-tatsache schlägt eine spätere Fortsetzung), sodass ein Konsument einen sauberen Stopp von einem abgeschnittenen unterscheiden kann. Abbruch und Fehler bleiben getrennte Ergebnisse. `interrupted` ist der einzige Grund, den keine Loop emittiert — er wird von der Crash-Wiederherstellung synthetisiert (siehe [persistence.md](persistence.de.md)). Die Map ist merge-erweiterbar.
 
-## 执行封闭与独立事件
+## Execution enclosure and standalone events
 
-一个轮次包围一次模型循环执行，而不是整个会话日志。AgentLoop 只会在轮次内进入 pre-step 批次时记录注入的 `user/message` 事件；插件所属的纯日志事件仍可出现在 `turn/end` 与下一个 `turn/start` 之间，占用事件 seq 但不递增轮次编号。持久化会将每个连续且已接受的事件纳入有界持久化批次，而崩溃修复只关闭确实仍处于开放状态的尾部轮次。需要即时持久性屏障的生产方会显式等待 `ctx.sessions.flush(session)`。
+Ein Turn umschließt eine Modell-Loop-Ausführung, nicht das ganze Session-Log. AgentLoop protokolliert injizierte `user/message`-Ereignisse nur von eintretenden Pre-Step-Batches innerhalb eines Turns; plugin-eigene log-only-Ereignisse können weiterhin zwischen `turn/end` und dem nächsten `turn/start` erscheinen, die Ereignissequenzen verbrauchen, ohne Turn-Nummern zu inkrementieren. Persistence lässt jedes zusammenhängende akzeptierte Ereignis in ein begrenztes dauerhafter Batch zu, während Crash-Reparatur nur einen wirklich offenen Nachfolge-Turn schließt. Ein Produzent, der eine sofortige Dauerhaftigkeitsbarriere benötigt, wartet explizit auf `ctx.sessions.flush(session)`.
 
-可选的 `dsh-session/invariant` 配套插件会强制核心拥有的关系：轮次与步骤编号、执行事件封闭，以及同一步骤内的工具调用／结果配对。可合并扩展事件的关系由声明它的插件拥有，因此核心不会仅因没有开放轮次就拒绝未知事件。见[独立事件决策](../../.agents/notes/implemented/simplification/2026-07-28-remove-synthetic-log-only-turns.zh.md)。
+Das optionale `dsh-session/invariant`-Companion erzwingt die von Core besessenen Beziehungen: Turn- und Step-Nummerierung, Ausführungs-Ereignis-Umschließung und Same-Step-Tool-Aufruf/Ergebnis-Paarung. Merge-erweiterbare Ereignis-Beziehungen gehören zum Plugin, das sie deklariert, sodass Core ein unbekanntes Ereignis nicht allein deshalb ablehnt, weil kein Turn offen ist. Siehe [die Eigenständiges-Ereignis-Entscheidung](../../.agents/notes/implemented/simplification/2026-07-28-remove-synthetic-log-only-turns.md).
 
-## 种子结束边界：`session/end-seed`
+## The end-seed boundary: `session/end-seed`
 
-新 fork constructor 要求 seed 等于 inherited prefix，并在精确持久 cut 追加 `session/end-seed { inherited: true }`。restore 会保留该 tagged marker，并且只在完整 stored seed 尚未以 marker 结尾时追加普通 `session/end-seed {}`。两种形式都只进入 log 且不产生 message；`Session` constructor 是唯一合法 writer。
+Ein frischer Fork-Konstruktor erfordert, dass sein Seed dem geerbten Präfix gleich ist, und hängt `session/end-seed { inherited: true }` am exakten dauerhaften Cut an. Ein Restore behält diesen markierten Marker und hängt ein gewöhnliches `session/end-seed {}` nur dann an, wenn sein vollständiger gespeicherter Seed nicht bereits in einem Marker endet. Beide Formen sind log-only und erzeugen keine Nachricht; `Session`'s Konstruktor ist der einzige legitime Schreiber.
 
-对于 fork lineage，定位 payload 携带 `inherited: true` 的最后一个 marker；当前格式 decoding 只在 `SessionHeader.isSeeded` 为 true 时要求该 marker，并从其 seq 推导 `inheritedEventCount`。对于 lifecycle ownership，定位任一形式的最后一个 `session/end-seed`。重新打开已经以任一 marker 结尾的 seed 时，不会再追加普通 marker。
+Für Fork-Abstammung: lokalisieren den LETZTEN Marker, dessen Payload `inherited: true` trägt; die aktuelle Format-Dekodierung erfordert ihn genau dann, wenn `SessionHeader.isSeeded` true ist, und leitet `inheritedEventCount` von seiner Sequenz ab. Für Lifecycle-Eigentum: lokalisieren das letzte `session/end-seed` beider Formen. Das Wiederöffnen eines Seeds, der bereits in einem Marker endet, hängt keinen weiteren gewöhnlichen Marker an.
 
-它之所以必要，是因为种子历史与实时工作在字节层面完全相同，这会让任何拥有独立开／闭括号的插件失效：一个未配对的 `compaction/start`，无论写入方是在压缩中途崩溃、还是此刻正在压缩，读起来都一样。在 `session/end-seed` 之前的开启标记来自构造种子，并且属于一个已结束的生命周期，无论结束原因为何（崩溃、进程接替，或从仍在运行的父会话 fork 出来），因此其所有方可以视之为已死。这只覆盖*本*会话继承的括号：另一个并发存活的会话可能在同一段历史上持有开放括号，而它自己的边界在别处，因此容忍并发写入方还需要日志之外的存活信号。核心写入该边界但不从中读取任何内容——括号的词汇表仍归其所属插件，这也正是崩溃修复只关闭轮次／步骤／工具边界而从不处理 `compaction/*` 的原因。
+Er existiert, weil Seed-Historie und Live-Arbeit andernfalls byte-identisch wären, was jedes Plugin, das eine eigenständige Open/Close-Klammer besitzt, zunichte macht: ein unpassendes `compaction/start` liest sich gleich, ob der Schreiber während der Kompaktion abgestürzt ist oder gerade kompaktiert. Ein öffnender Marker vor `session/end-seed` kam vom Konstruktor-Seed und gehört zu einem beendeten Lifecycle, was auch immer es beendete (ein Crash, ein erfolgreicher Prozess oder ein Fork aus einem noch laufenden Parent), sodass sein Besitzer ihn als tot behandeln darf. Das deckt nur Klammer *dieser* Session ab: eine gleichzeitig live Session, die eine offene Klammer über dieselbe Historie hält, hat ihre eigene Grenze woanders, sodass das Tolerieren paralleler Schreiber ein Liveness-Signal über das Log hinaus benötigt. Core schreibt die Grenze und liest nichts von ihr — das Klammer-Vokabular bleibt bei ihrem besitzenden Plugin, weshalb Crash-Reparatur Turn/Step/Tool-Grenzen schließt und nie `compaction/*`.
 
-按真人活动排序 Session 的消费方会排除该边界：接手 Session 不算工作，因此按日志尾部排序会把每个打开过的 Session 顶到最前。
+Konsumenten, die Sessions nach menschlicher Aktivität ordnen, schließen diese Grenze aus: das Aufheben einer Session ist keine Arbeit, sodass die Ordnung nach dem Log-Ende jede geöffnete Session nach oben bringen würde.
 
-## 插件贡献的仅日志事件
+## Plugin-contributed log-only events
 
-插件可以通过 declaration merging 添加额外的 `SessionEventMap` 类型。这些是**仅日志**事件：不是 `SurfaceEventType`（不携带 `surfaceOp`，不参与派生历史）。事件所有方决定它们属于一个开放的执行轮次，还是可以独立位于轮次之间，并在自己的不变量配套插件中强制所需关系。生成的[持久化日志事件目录](../persistence-catalog.zh.md)会列出每个核心或插件贡献的事件；压缩 seam 的 `compaction/*` 语义在 [compaction.md](compaction.zh.md) 中讨论。
+Ein Plugin kann per Deklarations-Merging zusätzliche `SessionEventMap`-Typen erklären. Diese sind **log-only**: KEINE `SurfaceEventType`s (sie tragen kein `surfaceOp` und steuern nichts zum abgeleiteten Verlauf bei). Ihr Besitzer entscheidet, ob sie zu einem offenen Ausführungsturn gehören oder zwischen Turns stehen dürfen, und erzwingt jede Beziehung in seinem eigenen Invariante-Companion. Der generierte [Persistence-Log-Event-Katalog](../persistence-catalog.de.md) enumeriert jedes Kern- und Plugin-Beitrag-Ereignis; die Compaction-Seam-`compaction/*`-Semantik wird auf [compaction.md](compaction.de.md) besprochen.
 
-如果同一个插件事件族中的多条事件要组装成一个 Web Client Conversation Node，该事件族中的每条 start、update、result、resource 或 interruption 事件都必须携带或独立推导出同一个稳定业务 id。此要求只约束需要关联的 Node 事件族，并不要求每条 Session 事件都有业务 id；Client 因此无须根据相邻关系猜测归属，也无须扫描历史。参见 [Conversation 子系统](conversation.zh.md)。
+Wenn mehrere Ereignisse in einer plugin-eigenen Familie zu einem Web-Client-Conversation-Knoten assemblieren, trägt jedes Start-, Update-, Ergebnis-, Ressourcen- oder Unterbrechungs-Ereignis in dieser Familie oder leitet unabhängig dieselbe stabile Geschäftskennung ab. Diese Anforderung gilt für korrelierte Knoten-Familien, nicht für jedes Session-Ereignis; sie ermöglicht dem Client, jedes Ereignis zu gruppieren, ohne aus Nachbarschaft oder Historie-Scanning zu raten. Siehe das [Conversation-Subsystem](conversation.de.md).
 
-钩子桥接层的 `hook/invoked` / `hook/result` 对（来自 `@deepseek-ai/dsh-hook-protocol`）通过 `handlerId` 关联。`UserPromptSubmit`、`PreToolUse`、`PostToolUse` 与 `Stop` 在 loop 已打开的轮次内触发，因此其 `hook/*` 记录天然位于轮次之内。`SessionStart` 不生成 `hook/*` 记录，因为它在轮次 1 之前运行；其上下文会在 inbox 中保持待处理，直到唤醒交付打开一个轮次。
+Die Hook-Brücken-`hook/invoked` / `hook/result`-Paare (von `@deepseek-ai/dsh-hook-protocol`) korrelieren über `handlerId`. `UserPromptSubmit`, `PreToolUse`, `PostToolUse` und `Stop` feuern innerhalb des offenen Turns der Loop, sodass ihre `hook/*`-Datensätze konstruktionsbedingt turn-umschlossen sind. `SessionStart` erhält keinen `hook/*`-Datensatz, weil es vor Turn 1 läuft; sein Kontext bleibt in der Inbox ausstehend, bis eine Wach-Überlieferung einen Turn öffnet.
 
-## 持久性约定
+## Durability contract
 
-持久化后端依赖的约定如下：持久日志无损保存每个事件，每个 Assistant attempt 都是一个 `assistant/message` 或 `assistant/attempt`，其嵌入式紧凑 stream 会保留原始带时间 chunk。`seq` 在这些 settlement 与所有交错事件之间保持连续。后端可以为事件批次选择自己的存储 framing，只要句柄的 `read()` 返回与追加时完全一致的事件即可；当前 JSONL 每个事件写一行（见 [persistence.md](persistence.zh.md)）。所有 `event.data` 都必须可序列化为 JSON；`Session.append` 会从源头强制这一要求（遇到不可序列化数据时抛出），因此错误事件绝不会进入日志，`session.snapshotEvents()` 始终与后端可持久化的内容一致。新增会携带不可序列化数据、破坏核心执行嵌套或违反事件所有方声明关系的事件类型，都会构成磁盘格式的破坏性变更。
+Worauf ein Persistence-Backend sich verlässt: Das dauerhafte Log persistiert jedes Ereignis verlustfrei, und jeder Assistant-Versuch ist eine `assistant/message` oder `assistant/attempt`, deren eingebetteter kompakter Stream die originalen zeitgestempelten Chunks erhält. `seq` bleibt über diese Abrechnungen und alle dazwischenliegenden Ereignisse zusammenhängend. Ein Backend kann seine eigene Speicher-Rahmung für einen Ereignis-Batch wählen, solange ein Handle-`read()` die exakten angehängten Ereignisse zurückgibt; aktuelle JSONL schreibt eine Zeile pro Ereignis (siehe [persistence.md](persistence.de.md)). Alle `event.data` müssen JSON-serialisierbar sein; `Session.append` erzwingt dies an der Quelle (wirft bei nicht-serialisierbaren Daten), sodass ein schlechtes Ereignis nie das Log betritt und `session.snapshotEvents()` immer dem gleicht, was ein Backend persistieren kann. Das Hinzufügen eines Ereignistyps, der nicht-serialisierbare Daten trägt, die Kern-Ausführungs-Nestung beschädigt oder die von seinem Besitzer deklarierte Beziehung verletzt, ist eine brechende Änderung des On-Disk-Formats.
 
-消费此约定的后端见 [persistence.md](persistence.zh.md)。
+Die Backends, die diesen Vertrag konsumieren, stehen auf [persistence.md](persistence.de.md).
 
-## Remote 目录与 workspace 打开
+## Remote catalog and workspace opening
 
-`ModelCatalog` 是 `session/modelCatalog` 返回的 Host generation 模型目录：它携带部署默认值、可路由 provider id、成功的 provider 分组与相互隔离的 provider 失败。它不由某个 Session 派生，因此与 Session projection 分开保存。
+`ModelCatalog` ist das Host-Generierungs-Modell-Verzeichnis, das von `session/modelCatalog` zurückgegeben wird: Es trägt den Deployment-Standard, routierbare Provider-IDs, erfolgreiche Provider-Gruppen und isolierte Provider-Fehler. Es wird nicht von einer Session abgeleitet und bleibt getrennt von Session-Projektionen.
 
-`SessionOpenWorkspacePathRequest` 携带绝对路径或已按 workspace 解析的 `path`。`SessionOpenWorkspacePathValue` 确认 Host 已接受原生交接。Session-aware Client 会在已知当前 Session cwd 时据此解析相对路径；controller 将路径原样交给打开器，并通过 Session Remote 错误词汇表报告无效请求、取消与打开器失败。 可选的 `action: "reveal"` 选择文件管理器导航；省略时使用默认应用打开。
+`SessionOpenWorkspacePathRequest` trägt einen absoluten oder workspace-aufgelösten `path`; optionales `action: "reveal"` wählt Dateimanavigator-Navigation statt Standardanwendungs-Öffnung. `SessionOpenWorkspacePathValue` bestätigt, dass der Host die native Übergabe akzeptiert hat. Ein Session-bewusster Client löst relative Pfade gegen seinen aktuellen Session-cwd auf, wenn bekannt; der Controller übergibt den Pfad unverändert an den Öffner und meldet ungültige Anfragen, Abbrüche und Öffner-Fehler über das Session-Remote-Fehler-Vokabular.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -692,13 +688,13 @@ interface TurnEndReasonMap {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Von `scripts/gen-cordis-catalog.ts` aus dem Quellcode generiert (frischheit-geprüft durch `pnpm run verify-cordis-catalog` in doc-sync; regenerieren mit `pnpm run gen-cordis-catalog`) — die Sprachseiten unterscheiden sich nur in den lokalspezifischen gepaarten Dokumentenpfaden. Signaturblöcke verwenden ein `ts cordis-catalog`-Fence und behalten die originalen Quell-JSDoc; Dispatch-Modi sind in der [Einleitung](../cordis-primer.de.md#dispatch-modes) definiert, und die framework-geerbte `ctx`-API steht in [cordis-api/inherited.md](../cordis-api/inherited.de.md).
 
 <a id="ctxsessioncontroller--sessioncontroller"></a>
 
 ### `ctx.sessionController` — `SessionController`
 
-Host service backing the generated `ctx.remote.session` namespace.
+Host-Dienst, der den generierten `ctx.remote.session`-Namespace trägt.
 
 ```ts cordis-catalog
 /**
@@ -841,17 +837,17 @@ workspaceDesktop(): { name: string; available: boolean; fileManager: 'finder' | 
 @Remote({ mode: 'stream' }) control(signal: AbortSignal): AsyncIterable<SessionControlFrame>
 ```
 
-Types: [SessionId](core.zh.md) · [SessionInspection](persistence.zh.md) · [SessionSearchRequest](session-query.zh.md)
+Typen: [SessionId](core.de.md) · [SessionInspection](persistence.de.md) · [SessionSearchRequest](session-query.de.md)
 
-Source: [`packages/api/session-controller/src/index.ts`](../../packages/api/session-controller/src/index.ts)
+Quellcode: [`packages/api/session-controller/src/index.ts`](../../packages/api/session-controller/src/index.ts)
 
 <a id="ctxsessions--sessionstore"></a>
 
 ### `ctx.sessions` — `SessionStore`
 
-In-memory session store (`ctx.sessions`).
+In-memory-Session-Store (`ctx.sessions`).
 
-Persistence is intentionally not implemented here — the agent lifecycle attaches a session-log writer to each published session's write handle; a session published outside that lifecycle persists nothing.
+Persistence ist hier bewusst nicht implementiert — der Agent-Lifecycle hängt einen Session-Log-Schreiber an jedes veröffentlichte Session-Schreib-Handle; eine außerhalb dieses Lifestyles veröffentlichte Session persistiert nichts.
 
 ```ts cordis-catalog
 /**
@@ -976,9 +972,9 @@ list(): Session[]
 fork(source: SessionForkSource, boundary?: SessionSeq, childSessionId?: SessionId): Session
 ```
 
-Types: [CreateSessionOptions](persistence.zh.md) · [PrepareSessionOptions](persistence.zh.md) · [SessionId](core.zh.md)
+Typen: [CreateSessionOptions](persistence.de.md) · [PrepareSessionOptions](persistence.de.md) · [SessionId](core.de.md)
 
-Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="api-session-events"></a>
 
@@ -988,7 +984,7 @@ Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/i
 
 #### `api-session/activity` — emit
 
-One user-authored durable message advanced Session list activity.
+Eine nutzer-autorendurable Nachricht hat die Session-Listen-Aktivität vorangebracht.
 
 ```ts cordis-catalog
 /**
@@ -1000,15 +996,15 @@ One user-authored durable message advanced Session list activity.
 'api-session/activity'(sessionId: SessionId, updatedAt: number): void
 ```
 
-Types: [SessionId](core.zh.md)
+Typen: [SessionId](core.de.md)
 
-Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionadded--emit"></a>
 
 #### `api-session/added` — emit
 
-A Session became visible to Session list consumers.
+Eine Session wurde für Session-Listen-Konsumenten sichtbar.
 
 ```ts cordis-catalog
 /**
@@ -1019,13 +1015,13 @@ A Session became visible to Session list consumers.
 'api-session/added'(summary: SessionSummary): void
 ```
 
-Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionerror--emit"></a>
 
 #### `api-session/error` — emit
 
-One Agent failed outside a durable turn position.
+Ein Agent ist außerhalb einer dauerhaften Turn-Position fehlgeschlagen.
 
 ```ts cordis-catalog
 /**
@@ -1037,15 +1033,15 @@ One Agent failed outside a durable turn position.
 'api-session/error'(sessionId: SessionId, message: string): void
 ```
 
-Types: [SessionId](core.zh.md)
+Typen: [SessionId](core.de.md)
 
-Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionremoved--emit"></a>
 
 #### `api-session/removed` — emit
 
-A Session left the live Host registry.
+Eine Session verließ das Live-Host-Register.
 
 ```ts cordis-catalog
 /**
@@ -1056,15 +1052,15 @@ A Session left the live Host registry.
 'api-session/removed'(sessionId: SessionId): void
 ```
 
-Types: [SessionId](core.zh.md)
+Typen: [SessionId](core.de.md)
 
-Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionstatus--emit"></a>
 
 #### `api-session/status` — emit
 
-One Agent changed running state.
+Ein Agent hat seinen Laufzustand geändert.
 
 ```ts cordis-catalog
 /**
@@ -1076,9 +1072,9 @@ One Agent changed running state.
 'api-session/status'(sessionId: SessionId, running: boolean): void
 ```
 
-Types: [SessionId](core.zh.md)
+Typen: [SessionId](core.de.md)
 
-Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="session-events"></a>
 
@@ -1088,7 +1084,7 @@ Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/sess
 
 #### `session/created` — emit
 
-Creation announcement during session publication. A synchronous throw vetoes and rolls back with a paired disposal; detach requested during dispatch is deferred. A returned-promise rejection is logged but cannot retroactively veto this synchronous boundary. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`): agent-scoped listeners receive only sessions entered through that agent's context.
+Erstellungs-Ankündigung während der Session-Veröffentlichung. Ein synchroner Wurf vetoes und rollt mit einer gepaarten Entsorgung zurück; ein während der Dispatch angeforderter Detach wird aufgeschoben. Eine zurückgegebene Promise-Ablehnung wird protokolliert, kann diese synchrone Grenze aber nicht rückwirkend vetieren. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`): agent-scope Listener erhalten nur Sessions, die durch den Kontext dieses Agents eintreten.
 
 ```ts cordis-catalog
 /**
@@ -1105,15 +1101,15 @@ Creation announcement during session publication. A synchronous throw vetoes and
 'session/created'(this: Scoped<Session>, session: Session): void
 ```
 
-Types: [Scoped](scope.zh.md)
+Typen: [Scoped](scope.de.md)
 
-Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="sessiondisposed--emit"></a>
 
 #### `session/disposed` — emit
 
-Emitted once when an announced session leaves the store, including publication rollback, but never for an entry whose creation announcement did not begin. Listener failures are logged and contained. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`) reuses the owner scope.
+Wird einmal emittiert, wenn eine angekündigte Session den Store verlässt, einschließlich Veröffentlichungs-rollback, aber nie für einen Eintrag, dessen Erstellungs-Ankündigung nicht begann. Listener-Fehler werden protokolliert und eingedämmt. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`) wiederverwendet den Besitzer-Scope.
 
 ```ts cordis-catalog
 /**
@@ -1128,15 +1124,15 @@ Emitted once when an announced session leaves the store, including publication r
 'session/disposed'(this: Scoped<Session>, session: Session): void
 ```
 
-Types: [Scoped](scope.zh.md)
+Typen: [Scoped](scope.de.md)
 
-Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="sessionevent--emit"></a>
 
 #### `session/event` — emit
 
-Post-commit, fire-and-forget append feed. The listener snapshot resolves before the log push, but callbacks run after it; observer failures are logged and contained without making the committed append fail. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`): agent-scoped listeners receive only events from sessions entered through that agent's context.
+Post-Commit, Fire-and-Forget-Append-Feed. Der Listener-Snapshot wird vor dem Log-Push aufgelöst, aber Callbacks laufen danach; Observer-Fehler werden protokolliert und eingedämmt, ohne den committeten Append zu versagen. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`): agent-scope Listener erhalten nur Ereignisse von Sessions, die durch den Kontext dieses Agents eintreten.
 
 ```ts cordis-catalog
 /**
@@ -1153,15 +1149,15 @@ Post-commit, fire-and-forget append feed. The listener snapshot resolves before 
 'session/event'(this: Scoped<Session>, session: Session, event: SessionEvent): void
 ```
 
-Types: [Scoped](scope.zh.md)
+Typen: [Scoped](scope.de.md)
 
-Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="sessionflush--parallel"></a>
 
 #### `session/flush` — parallel
 
-Awaited parallel durability checkpoint: every listener runs and the caller awaits all of them, with no waterfall veto. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`) reuses the session's owner scope.
+Gewarteter paralleler Dauerhaftigkeits-Checkpoint: Jeder Listener läuft und der Aufrufer wartet auf alle, ohne Wasserfall-Veto. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`) wiederverwendet den Besitzer-Scope der Session.
 
 ```ts cordis-catalog
 /**
@@ -1175,7 +1171,7 @@ Awaited parallel durability checkpoint: every listener runs and the caller await
 'session/flush'(this: Scoped<Session>, session: Session): Promise<void> | void
 ```
 
-Types: [Scoped](scope.zh.md)
+Typen: [Scoped](scope.de.md)
 
-Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 <!-- END GENERATED cordis-surface -->
