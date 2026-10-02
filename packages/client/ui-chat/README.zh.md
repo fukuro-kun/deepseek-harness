@@ -12,6 +12,8 @@ kind: "package-reference"
 
 文件引用提供方同时接收当前查看的 Session ID 与收尾 turn 的属主信息，因此继承历史中的链接可以指向 fork 自身。
 
+[English](README.md) | 中文 | [Deutsch](README.de.md)
+
 ## 目录
 
 - [系统提示词行](#system-prompt-row)
