@@ -11,6 +11,8 @@ kind: "package-reference"
 
 使用 `dsh-storage` 持久保存类型化应用数据，而不将其加入会话历史。将它与受支持的存储介质和领域配置一同挂载后，调用方即可通过公共 `ctx.storageDomain` API 访问记录。工作区记录、会话伴随数据或其他必须在重启后保留且不应成为会话事件的应用状态适合使用它。它仅供宿主代码使用，对模型没有可见影响；无需此类数据的组合可以省略它。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
