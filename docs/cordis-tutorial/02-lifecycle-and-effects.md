@@ -2,6 +2,8 @@
 
 English | [中文](02-lifecycle-and-effects.zh.md)
 
+English | [中文](02-lifecycle-and-effects.zh.md) | [Deutsch](02-lifecycle-and-effects.de.md)
+
 A Cordis plugin can be unloaded by a config edit, hot reload, explicit disposal, or loss of a required service. Registrations made through Cordis APIs are effects and are undone when their owning plugin unloads; resources managed outside those APIs must be wrapped in `ctx.effect()`.
 
 ## Effects

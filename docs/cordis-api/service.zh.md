@@ -5,6 +5,8 @@
 
 [English](service.md) | 中文
 
+[English](service.md) | 中文 | [Deutsch](service.de.md)
+
 上下文服务的基类。以插件形式加载的子类会将自身注册为 `ctx.<name>`。
 
 用于在 `ctx` 上公开具名 API 的服务基类。

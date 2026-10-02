@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cordis-tutorial/02-lifecycle-and-effects.md
-02-lifecycle-and-effects.md: 8e75708eb0cba1aceb7fa3dae5ae334995eb113f
-02-lifecycle-and-effects.zh.md: b5f8bc18ed242784528574a861c57bedae6fa880
+02-lifecycle-and-effects.md: bbca7990ee413da262f4d47b7a4acc8301ea4d36
+02-lifecycle-and-effects.zh.md: 9f53346ad537432a83ec86fc909e1e04ad6a86a5
+02-lifecycle-and-effects.de.md: 6fb281c2881fb7e03a2e6e546339101f66052b5d
