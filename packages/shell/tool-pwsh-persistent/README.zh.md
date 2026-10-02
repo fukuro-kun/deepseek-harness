@@ -11,6 +11,8 @@ kind: "package-reference"
 
 `dsh-tool-pwsh-persistent` 为每个 agent 提供 `pwsh` 工具，跨调用保留其当前目录、环境变量、函数与后台任务。同一 agent 的命令串行运行，不同 agent 维护相互隔离的 shell 状态。多步 PowerShell 工作应选择本包；若每条命令都应从干净状态开始，请使用 `dsh-tool-pwsh`，需要交互 stdin 时则使用 terminal 工具。请配置支持 pwsh 的后端和单条命令超时；超时或显式 `exit` 会丢弃 shell，因此下次调用从全新状态开始。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
