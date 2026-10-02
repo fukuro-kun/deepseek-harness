@@ -6,6 +6,8 @@ English | [中文](invariants.zh.md)
 
 Source: [`packages/runtime-diagnostics/invariants/src/index.ts`](../../packages/runtime-diagnostics/invariants/src/index.ts)
 
+English | [中文](invariants.zh.md) | [Deutsch](invariants.de.md)
+
 ## Selection
 
 ```ts type-equiv

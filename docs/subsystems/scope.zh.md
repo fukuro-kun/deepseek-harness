@@ -11,6 +11,8 @@
 `ScopeKey` 是一个不透明的对象身份标识。已交付的 agent loop（智能体循环）使用活跃的 `Agent` 对象作为自身的 key，但该原语从不检视该对象。
 
 ```ts type-equiv
+
+[English](scope.md) | 中文 | [Deutsch](scope.de.md)
 /** An opaque, identity-compared scope key. */
 type ScopeKey = object
 ```

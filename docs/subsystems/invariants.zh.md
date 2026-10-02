@@ -11,6 +11,8 @@
 ```ts type-equiv
 /** Runtime invariant selection configured on the service plugin. */
 interface Config {
+
+[English](invariants.md) | 中文 | [Deutsch](invariants.de.md)
   /** Global switch; defaults to `true`. */
   readonly enabled?: boolean
   /** Case-sensitive JavaScript regex sources that admit package names; empty admits all. */

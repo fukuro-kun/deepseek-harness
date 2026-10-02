@@ -6,6 +6,8 @@ The Web Client is a browser-side Cordis application assembled from independently
 
 ## Layers and ownership
 
+English | [中文](web-client.zh.md) | [Deutsch](web-client.de.md)
+
 | Layer | Main owners | Responsibility |
 |---|---|---|
 | Host application | business services and `packages/api/*-controller` Host entries | Own authoritative state, persistence, mutation ordering, access policy, and stream production. |

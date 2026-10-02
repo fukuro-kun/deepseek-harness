@@ -6,6 +6,8 @@ The client resource model turns an address into live data for any Web Client com
 
 This page is the developer reference: how to write an address, how to register a provider, how to read a resource, what the states and failures mean, and how the model holds and releases a resource.
 
+English | [中文](client-resources.zh.md) | [Deutsch](client-resources.de.md)
+
 ## Addresses
 
 A resource address is a `dsh-resource://<type>/…` URL. The host names the protocol and must be a key of `ResourceProtocolMap`; the path is the protocol's own, and its owner percent-encodes each segment. A protocol that needs a scope puts it in the path: the `file` protocol's addresses read `dsh-resource://file/session/<sessionId>/<path>`, where path is workspace-relative or absolute with its leading slashes preserved, built with `fileAddressFor(sessionId, cwd, path)` and read back with `parseFileAddress(address)` from [`dsh-util-workspace-path`](../../packages/util/workspace-path/README.md). The model itself reads only the scheme and the host: `protocolOf(address)` returns the lower-cased host of a `dsh-resource://` URL and `undefined` for anything else. Addresses under any other scheme — the Sidebar's `sidebar://guide` — name no resource and read as `none`.

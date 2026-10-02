@@ -6,6 +6,8 @@ Plan mode is logged per-agent collaboration state owned by [dsh-plan-mode](../..
 
 Source: [`packages/plan/plan-mode/src/index.ts`](../../packages/plan/plan-mode/src/index.ts)
 
+English | [中文](plan.zh.md) | [Deutsch](plan.de.md)
+
 ## Logged state and recovery
 
 `plan/mode` (`{ active: boolean }`) is a log-only, whole-value-replace [session event](session.md): durable and replayable, never in the model transcript. The optionally registered `plan` unit folds committed mode, command settlement, and the mode recorded at the latest request header. `ctx.planMode` reads that state through `stateOf()`; the first dependent access fails if the registry, `plan` key, or `turnBoundary` key is absent. Clients receive only `{ active, pending }`; resume, fork, and compaction recover both from the log. The complete event declaration is in the [persistence log event catalog](../persistence-catalog.md).

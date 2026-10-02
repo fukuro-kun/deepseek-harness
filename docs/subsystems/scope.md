@@ -6,6 +6,8 @@ The [scope package](../../packages/core/scope) supplies the identity, carrier, a
 
 Sources: [`packages/core/scope/src/index.ts`](../../packages/core/scope/src/index.ts) and [`packages/core/scope/src/store.ts`](../../packages/core/scope/src/store.ts).
 
+English | [中文](scope.zh.md) | [Deutsch](scope.de.md)
+
 ## Identity and dispatch carrier
 
 `ScopeKey` is an opaque object identity. The shipped loop uses the live `Agent` object as its own key, but the primitive never inspects the object.
