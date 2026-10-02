@@ -5,6 +5,8 @@
 
 Plugin loading and dependency injection.
 
+English | [中文](registry.zh.md) | [Deutsch](registry.de.md)
+
 ### ctx.inject(deps, callback)
 
 ```ts cordis-catalog

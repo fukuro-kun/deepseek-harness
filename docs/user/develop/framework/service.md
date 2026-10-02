@@ -2,6 +2,8 @@
 
 English | [中文](service.zh.md)
 
+English | [中文](service.zh.md) | [Deutsch](service.de.md)
+
 A service is a capability one plugin exposes to other plugins. `inject` declares the services a plugin requires.
 
 ## What is a service?

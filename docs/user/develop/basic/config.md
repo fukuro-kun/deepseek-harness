@@ -2,6 +2,8 @@
 
 English | [中文](config.zh.md)
 
+English | [中文](config.zh.md) | [Deutsch](config.de.md)
+
 Accept configuration supplied through `cordis.yml`.
 
 ## Define the Config type

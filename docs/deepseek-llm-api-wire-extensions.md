@@ -2,6 +2,8 @@
 
 English | [中文](deepseek-llm-api-wire-extensions.zh.md)
 
+English | [中文](deepseek-llm-api-wire-extensions.zh.md) | [Deutsch](deepseek-llm-api-wire-extensions.de.md)
+
 This reference defines every DeepSeek Harness-specific HTTP header and additive JSON field sent by [`@deepseek-ai/dsh-llm-deepseek`](../packages/llm/llm-deepseek/README.md) on `deepseek-official` chat-completion requests. It does not redefine fields owned by the upstream DeepSeek API. The provider-neutral LLM interface and `llm-pi-ai` do not implement these additions.
 
 The adapter sends the additions to its resolved `baseURL`, including a configured gateway. They remain outside `messages`, system prompts, and tool schemas, so they do not add model-input tokens or alter the model-visible prefix.

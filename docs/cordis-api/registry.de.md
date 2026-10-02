@@ -1,13 +1,11 @@
-<!-- 英文源文件由 scripts/gen-cordis-catalog.ts 生成；本中文文件是通过双语配对维护的经评审对侧。
-     更新时先运行 `pnpm run gen-cordis-catalog` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/cordis-api/registry.md` 重新记录配对。 -->
+<!-- Die englische Quelldatei wird von scripts/gen-cordis-catalog.ts generiert; diese deutsche Datei ist die per双语配对 gepflegte, reviewte Gegenüber.
+     Zum Aktualisieren zuerst `pnpm run gen-cordis-catalog` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/cordis-api/registry.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
-# 注册表
+# Registry
 
-[English](registry.md) | 中文
+[English](registry.md) | [中文](registry.zh.md) | Deutsch
 
-[English](registry.md) | 中文 | [Deutsch](registry.de.md)
-
-插件加载与依赖注入。
+Plugin-Laden und Dependency Injection.
 
 ### ctx.inject(deps, callback)
 
@@ -25,16 +23,16 @@
 inject(deps: Inject, callback: Plugin.Function<void>): Fiber & PromiseLike<Fiber>
 ```
 
-请求的服务可用后，运行回调。
+Führt einen Callback aus, sobald die angeforderten Services verfügbar sind.
 
-这是 `ctx.plugin({ inject, apply: callback })` 的简写形式：每当某个必需服务发生变化时，系统都会卸载并重新运行该回调。
+Kurzform für `ctx.plugin({ inject, apply: callback })`: der Callback wird entladen und neu ausgeführt, sobald sich ein erforderlicher Service ändert.
 
-- `deps`：必需服务，形式可以是数组，也可以是从名称到配置的映射。
-- `callback`：以 `(ctx, config)` 调用的插件主体。
+- `deps` — erforderliche Services, als Array oder als Name-→-Config-Map.
+- `callback` — Plugin-Body, aufgerufen mit `(ctx, config)`.
 
-**返回** fiber；对其执行 await 会在加载完成后结束等待。
+**Gibt** den Fiber zurück; ein await darauf settle nach Abschluss des Ladens.
 
-[源码](../../vendor/cordis/src/registry.ts#L176)
+[Quelle](../../vendor/cordis/src/registry.ts#L176)
 
 ### ctx.plugin(plugin, ...args)
 
@@ -50,18 +48,18 @@ inject(deps: Inject, callback: Plugin.Function<void>): Fiber & PromiseLike<Fiber
 plugin<P extends Plugin>(plugin: P, ...args: Spread<GetPluginConfig<P>>): Fiber & PromiseLike<Fiber>
 ```
 
-在当前上下文中加载插件。
+Lädt ein Plugin im aktuellen Context.
 
-- `plugin`：函数、类或 `{ apply }` 对象形式的插件。
-- `args`：插件配置，会根据其 `Config` schema 进行校验。
+- `plugin` — ein Plugin als Funktion, Klasse oder `{ apply }`-Objekt.
+- `args` — die Plugin-Config, validiert gegen ihr `Config`-Schema.
 
-**返回** fiber；对其执行 await 会在加载完成后结束等待（如果发生配置错误或启动错误，则会被拒绝）。
+**Gibt** den Fiber zurück; ein await darauf settle nach Abschluss des Ladens (bei Config- oder Startup-Fehlern wird rejected).
 
-[源码](../../vendor/cordis/src/registry.ts#L185)
+[Quelle](../../vendor/cordis/src/registry.ts#L185)
 
 ## Plugin
 
-支持的插件入口点形式。
+Unterstützte Plugin-Entrypoint-Shapes.
 
 ```ts cordis-catalog
 /** Supported plugin entrypoint shapes. */
@@ -122,13 +120,13 @@ namespace Plugin {
 }
 ```
 
-[源码](../../vendor/cordis/src/registry.ts#L92)
+[Quelle](../../vendor/cordis/src/registry.ts#L92)
 
 ## Inject
 
-插件和 `@Inject` 装饰器接受的服务依赖声明。
+Service-Abhängigkeitsdeklaration, die von Plugins und dem `@Inject`-Decorator akzeptiert wird.
 
-数组形式请求不带拦截配置的服务。对象形式将每个服务名称映射到插件上下文中可选的拦截配置。
+Die Array-Form fordert Services ohne Intercept-Config an. Die Objekt-Form mappt jeden Service-Namen auf eine optionale Intercept-Config für den Plugin-Context.
 
 ```ts cordis-catalog
 /**
@@ -153,4 +151,4 @@ namespace Inject {
 }
 ```
 
-[源码](../../vendor/cordis/src/registry.ts#L19)
+[Quelle](../../vendor/cordis/src/registry.ts#L19)

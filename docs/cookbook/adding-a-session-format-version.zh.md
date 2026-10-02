@@ -2,6 +2,8 @@
 
 [English](adding-a-session-format-version.md) | 中文
 
+[English](adding-a-session-format-version.md) | 中文 | [Deutsch](adding-a-session-format-version.de.md)
+
 ## 概述
 
 本教程介绍如何添加下一个结构性 Session 日志版本，同时不改写已发布数据。阅读[版本与发布状态真源](../session-format-status.zh.md)，确定工作区写入器与最新已发布格式。令 N 表示经核实的已发布格式，N+1 表示目标版本；名称与元数据中的这些占位符须替换为数字。开始前，请准备可用的贡献者工作区，并阅读[包检查清单](adding-a-package.zh.md)、[格式库](../../packages/session/session-format/README.zh.md)和[已发布格式决策](../../.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.zh.md)。
