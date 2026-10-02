@@ -11,6 +11,8 @@ kind: "package-bundle"
 
 当委派任务应在父工作区中以全新、无人值守的 Claude Code 会话运行时，安装这个 Profile Bundle。每次运行接受一个自包含文本任务，并返回最终答案或安全的失败诊断；推理、工具通信、stderr、用量信息和工作区差异不会进入父 Session。Claude 原生设置与身份验证继续是权威来源，而 Profile 配置选择模型、环境和 `permissionMode`。针对平台锁定的运行时仅在需要时启动，并且绝不会回退到宿主 `claude` 可执行文件。当隔离和真实 Claude Code 行为比续接或提示更重要时，选择本包。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
