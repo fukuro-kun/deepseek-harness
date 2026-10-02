@@ -1,6 +1,6 @@
 # 文件系统
 
-[English](filesystem.md) | 中文
+[English](filesystem.md) | 中文 | [Deutsch](filesystem.de.md)
 
 可选的文件系统能力由四个部分组成：[dsh-fs](../../packages/fs/fs) 拥有 `ctx.fs` 以及带可选守卫的原子文本操作；[dsh-fs-local](../../packages/fs/fs-local) 实现本地磁盘后端；[dsh-fs-observation-policy](../../packages/fs/fs-observation-policy) 记录观测到的存在或缺失状态，并通过事件（而非服务）添加新鲜度规则；[dsh-tool-fs](../../packages/fs/tool-fs) 直接执行面向模型的 read/write/edit 调用并渲染窗口。它位于 agent loop（智能体循环）主干之外；替换后端不会改变策略或工具 schema。
 
@@ -11,6 +11,7 @@
 ## 目标标识与元数据（提供方约定）
 
 每个操作首先将用户提供的路径解析为不透明的后端目标。消费方可以显示 `displayPath`，但禁止解析 `targetKey`（一个品牌化的不透明 id），也不得假设它是本地绝对路径。
+
 
 与文件系统共享执行世界的消费方通过提供方获取跨能力坐标，而不是解释该身份：`processPath(target)` 返回子进程可以打开的规范化绝对路径；`processPathFromHostPath(hostPath)` 只在该执行世界共享相应宿主文件时映射其绝对路径；`fileUrl(target)` 返回采用提供方平台语法的 `file:` URI；`contains(parent, child)` 检查规范化身份相等或后代包含关系。
 

@@ -1,6 +1,6 @@
 # 子进程
 
-[English](subprocess.md) | 中文
+[English](subprocess.md) | 中文 | [Deutsch](subprocess.de.md)
 
 子进程 seam 分为 Service Definition（[dsh-subprocess](../../packages/subprocess/subprocess)，`ctx.subprocess`）与 Service Provider（[dsh-subprocess-local](../../packages/subprocess/subprocess-local)）；它的 Consumer 是其他能力 seam 与进程外后端：[bash 执行器家族](shell.zh.md)使用收集模式的批量输出，LSP 使用原始协议管道，PTY 后端使用终端原语，ACP（Agent Client Protocol）subagent 后端则使用通过管道传输的 ndjson，并让 stderr 采用 inherit。该 seam 拥有受管的 `DSH_*` 环境命名空间、共享的凭据清除（`scrubbedParentEnv`）与 `CollectedOutput` 形状；[dsh-shell](../../packages/shell/shell) 重导出这套词汇，使 bash 消费方保持单一导入入口。
 
@@ -11,6 +11,7 @@
 一个提供方的 spawn 工作目录、可执行文件路径、普通进程与终端会话，和挂载的文件系统提供方处于同一路径与进程命名空间。`resolveExecutable(command, env?, signal?)` 验证绝对可执行文件路径，或通过提供方清理后的 `PATH` 加有意覆盖来解析裸名称。
 
 ## 受管环境命名空间与捕获的输出
+
 
 `DSH_*` 变量是归 Harness 所有的子进程事实；实现会在合并调用方显式 `env` 之前丢弃环境中已有的 `DSH_*` 名称，因此当前事实只会以有意提供的字符串条目形式到达，而显式的 `undefined` tombstone 会删除普通环境中已有的值。每条被收集的流都通过 `CollectedOutput` 报告自身的截断与 spill 恢复状态。
 
