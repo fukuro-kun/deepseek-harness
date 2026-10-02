@@ -1,16 +1,14 @@
 # Session Query
 
-English | [中文](session-query.zh.md)
+[English](session-query.md) | [中文](session-query.zh.md) | Deutsch
 
-Query vocabulary over the live-preferred logical session corpus. The [Service Definition package](../../packages/session-query/session-query) owns exact reads, source precedence, relationship tracing, semantic extraction, and provider-independent filters, while the [SQLite provider](../../packages/session-query/session-query-sqlite) owns the concrete full-text index lifecycle.
+Query-Vokabular über dem logischen Session-Korpus mit live-Bevorzugung. Das [Service-Definition-Paket](../../packages/session-query/session-query) besitzt exakte Reads, Quellenpriorität, Beziehungsverfolgung, semantische Extraktion und Provider-unabhängige Filter, während der [SQLite-Provider](../../packages/session-query/session-query-sqlite) den konkreten Lebenszyklus des Volltextindex besitzt.
 
-Source: [`packages/session-query/session-query/src/types.ts`](../../packages/session-query/session-query/src/types.ts)
+Quellcode: [`packages/session-query/session-query/src/types.ts`](../../packages/session-query/session-query/src/types.ts)
 
-## Logical records
+## Logische Datensätze
 
-English | [中文](session-query.zh.md) | [Deutsch](session-query.de.md)
-
-`SessionRecord` is returned by the cross-corpus list. It exposes source availability independently from the cloned live-preferred header. `SessionEventRecord` is a lightweight raw-log projection; classification uses the same `foldSurface()` transitions as model-history derivation.
+`SessionRecord` wird von der korpusübergreifenden Liste zurückgegeben. Er stellt die Quellenverfügbarkeit unabhängig vom geklonten, live-bevorzugten Header bereit. `SessionEventRecord` ist eine leichtgewichtige Raw-Log-Projektion; die Klassifizierung nutzt dieselben `foldSurface()`-Übergänge wie die Ableitung der Model-History.
 
 ```ts type-equiv
 /** Whether an event is current model context, replaced context, or raw-log-only. */
@@ -29,7 +27,7 @@ interface SessionRecord {
 }
 ```
 
-`SessionLogSnapshot` is the complete detached, replay-validated raw log used by resume preflight. `SessionSurfaceSnapshot` is one exact-read surface observation rather than a retained subscription.
+`SessionLogSnapshot` ist das vollständige losgelöste, replay-validierte Raw-Log, das die Resume-Vorprüfung verwendet. `SessionSurfaceSnapshot` ist eine exakt gelesene Surface-Beobachtung statt einer gehaltenen Subscription.
 
 ```ts type-equiv
 /** One validated detached observation of a logical session's complete raw log. */
@@ -57,7 +55,7 @@ interface SessionSurfaceSnapshot {
 }
 ```
 
-`SessionTitleObservation` applies the same atomic-observation rule to title folding, so an authorization consumer can validate the source header that supplied the title. Batch reads return one ordered `SessionTitleObservationResult` per unique requested id: operational failures remain local to that id, while cancellation rejects the complete operation.
+`SessionTitleObservation` wendet dieselbe atomare Beobachtungsregel auf das Title-Folding an, sodass ein Authorization-Consumer den Quell-Header validieren kann, der den Titel geliefert hat. Batch-Reads geben pro eindeutig angefragter ID ein geordnetes `SessionTitleObservationResult` zurück: Betriebsfehler bleiben lokal bei dieser ID, während eine Abbruchanforderung die gesamte Operation zurückweist.
 
 ```ts type-equiv
 /** Latest folded title bound to the same session-header observation. */
@@ -106,9 +104,9 @@ interface SessionEventRecord {
 }
 ```
 
-## Provider-independent filters and documents
+## Provider-unabhängige Filter und Dokumente
 
-Session and event filter arrays are ANDed; values inside one list clause are ORed. Ranges are inclusive. The event `text` clause is a literal Unicode case-insensitive, whitespace-flexible regular-expression scan over extracted semantic text, independent of full-text providers.
+Session- und Event-Filterarrays werden per UND verknüpft; Werte innerhalb einer Listenklausel werden per ODER verknüpft. Bereiche sind inklusiv. Die `text`-Klausel eines Events ist ein literal Unicode-basierter, Groß-/Kleinschreibung-insensitiver, whitespace-flexibler Regex-Scan über extrahierten semantischen Text — unabhängig von Volltext-Providern.
 
 ```ts type-equiv
 /**
@@ -144,11 +142,11 @@ interface SessionEventSearchDocument extends SessionEventRecord {
 }
 ```
 
-`ctx.sessionQuery.filterSessions(filters)` applies `SessionResultFilter` to the complete logical corpus; `ctx.sessionQuery.filterEvents(sessionId, filters)` returns matching documents in ascending seq order. Messages, tool calls/results, todos, and failure/status detail contribute semantic text; reasoning blocks, blocked prompts, structural events, and stream chunks do not.
+`ctx.sessionQuery.filterSessions(filters)` wendet `SessionResultFilter` auf den vollständigen logischen Korpus an; `ctx.sessionQuery.filterEvents(sessionId, filters)` liefert passende Dokumente in aufsteigender seq-Reihenfolge. Messages, Tool-Calls/-Results, Todos sowie Failure-/Status-Details liefern semantischen Text; Reasoning-Blöcke, blockierte Prompts, strukturelle Events und Stream-Chunks nicht.
 
-## Full-text search pages
+## Volltextsuche-Seiten
 
-The combined `ctx.sessionQuery` seam has two full-text scopes. `searchSessions()` groups the corpus by strongest matching event; `searchEvents()` searches one session. Requests bind an opaque cursor to the normalized query, metadata filters, and limit. The event text scan is intentionally absent from provider metadata filters.
+Die kombinierte `ctx.sessionQuery`-Seam hat zwei Volltext-Scopes. `searchSessions()` gruppiert den Korpus nach dem stärksten passenden Event; `searchEvents()` durchsucht eine Session. Requests binden einen opaken Cursor an die normalisierte Query, Metadatenfilter und das Limit. Der Event-Text-Scan fehlt absichtlich in den Provider-Metadatenfiltern.
 
 ```ts type-equiv
 /** Provider-owned opaque continuation token returned by session search. */
@@ -197,7 +195,7 @@ interface SessionSearchPage<T> {
 }
 ```
 
-Unlike grouped cross-session hits, a within-session search must also expose its observed target header even when the page contains no hits.
+Anders als gruppierte Cross-Session-Treffer muss eine Within-Session-Suche ihren beobachteten Ziel-Header auch dann bereitstellen, wenn die Seite keine Treffer enthält.
 
 ```ts type-equiv
 /** Event-search results bound to the indexed target-session observation. */
@@ -223,9 +221,9 @@ interface SessionSearchHit extends SessionRecord {
 }
 ```
 
-## Session lineage
+## Session-Abstammung
 
-`SessionLineageTrace` carries known parents in immediate-to-outward order and a forest of recursively nested direct descendants. The completeness discriminant makes a known root and a missing parent mutually exclusive.
+`SessionLineageTrace` trägt bekannte Parents in der Reihenfolge vom unmittelbaren nach außen sowie einen Wald rekursiv verschachtelter direkter Nachfahren. Das Vollständigkeits-Diskriminant macht eine bekannte Root und einen fehlenden Parent gegenseitig exklusiv.
 
 ```ts type-equiv
 /** Recursive descendant node in a session-lineage trace. */
@@ -262,9 +260,9 @@ type SessionLineageTrace = {
 )
 ```
 
-## Bounded event reads
+## Begrenzte Event-Reads
 
-The request addresses one raw seq and optional neighboring counts. The result carries a `SessionHeader` rather than availability flags so a known live target can remain independent of persistence health.
+Der Request adressiert eine Raw-seq und optionale Nachbarzahlen. Das Ergebnis trägt einen `SessionHeader` statt Verfügbarkeitsflags, sodass ein bekanntes Live-Ziel unabhängig vom Persistence-Zustand bleiben kann.
 
 ```ts type-equiv
 /** Request for one event plus raw neighboring log context. */
@@ -298,9 +296,9 @@ interface SessionEventWindow {
 }
 ```
 
-## Event relationships
+## Event-Beziehungen
 
-Event traces distinguish positional surface replacement from events cited as sources. Every seq list contains direct links except `replacementChain`, which follows immediate replacers from the target to the final positional replacement.
+Event-Traces unterscheiden positionsbezogene Surface-Ersetzung von als Quellen zitierten Events. Jede seq-Liste enthält direkte Verknüpfungen — außer `replacementChain`, die den unmittelbaren Replacern vom Ziel bis zur letzten positionsbezogenen Ersetzung folgt.
 
 ```ts type-equiv
 /** Request for direct surface replacements and relationships to cited source events around one event. */
@@ -338,9 +336,9 @@ interface SessionEventTraceObservation extends SessionEventTrace {
 }
 ```
 
-## Errors
+## Fehler
 
-The closed code union distinguishes request validation, missing targets, malformed surface logs, optional-backend failure, deployment-disabled search, and contradictory source metadata.
+Die geschlossene Code-Union unterscheidet Request-Validierung, fehlende Ziele, fehlerhafte Surface-Logs, Optional-Backend-Fehler, deployment-deaktivierte Suche und widersprüchliche Quellmetadaten.
 
 ```ts type-equiv
 /** Stable machine-routable failure taxonomy for session reads, traces, and search. */
@@ -370,7 +368,7 @@ type SessionQueryErrorCode =
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsessionquery--sessionqueryengine-abstract-seam"></a>
 
@@ -505,7 +503,7 @@ async traceEvent(request: SessionEventTraceRequest, signal?: AbortSignal): Promi
 async readEvent(request: SessionEventReadRequest, signal?: AbortSignal): Promise<SessionEventWindow>
 ```
 
-Types: [SessionId](core.md) · [SessionTitleSnapshot](session-title.md)
+Types: [SessionId](core.de.md) · [SessionTitleSnapshot](session-title.de.md)
 
 Source: [`packages/session-query/session-query/src/index.ts`](../../packages/session-query/session-query/src/index.ts)
 <!-- END GENERATED cordis-surface -->

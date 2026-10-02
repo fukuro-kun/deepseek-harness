@@ -15,6 +15,8 @@
 type CredentialRef = Branded<'CredentialRef'>
 ```
 
+[English](credentials.md) | 中文 | [Deutsch](credentials.de.md)
+
 ## 解析
 
 `resolve(ref)` 返回值及提供该值的来源层（由提供方定义）；未配置期间返回 `undefined`。消费方在每个操作中重新解析，绝不跨操作缓存——这种按操作进行的读取正是热更新机制。

@@ -15,6 +15,8 @@
 type SessionEventSurface = 'current' | 'shadowed' | 'log-only'
 ```
 
+[English](session-query.md) | 中文 | [Deutsch](session-query.de.md)
+
 ```ts type-equiv
 /** Lightweight identity and source availability for one logical session. */
 interface SessionRecord {

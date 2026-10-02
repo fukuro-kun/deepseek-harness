@@ -1,25 +1,23 @@
 # User Credentials
 
-English | [中文](credentials.zh.md)
+[English](credentials.md) | [中文](credentials.zh.md) | Deutsch
 
-The credential seam of [dsh-credentials](../../packages/credentials/credentials) keeps secrets out of configuration: settings sections and `cordis.yml` entries carry *references* (environment-variable names), providers such as [dsh-credentials-local](../../packages/credentials/credentials-local) own the values, and consumers resolve a reference once per operation — the LLM adapters resolve once per model request, so a rotated credential reaches the very next request without any restart. One seam-wide rule binds every provider: an empty stored value is absent everywhere.
+Die Credential-Seam von [dsh-credentials](../../packages/credentials/credentials) hält Secrets aus der Konfiguration heraus: Settings-Abschnitte und `cordis.yml`-Einträge tragen *Referenzen* (Umgebungsvariablennamen), Provider wie [dsh-credentials-local](../../packages/credentials/credentials-local) besitzen die Werte, und Consumer lösen eine Referenz einmal pro Operation auf — die LLM-Adapter lösen einmal pro Model-Request auf, sodass eine rotierte Credential ohne Neustart schon den allernächsten Request erreicht. Eine seam-weite Regel bindet jeden Provider: ein leerer gespeicherter Wert ist überall abwesend.
 
-Source: [`packages/credentials/credentials/src/index.ts`](../../packages/credentials/credentials/src/index.ts)
+Quellcode: [`packages/credentials/credentials/src/index.ts`](../../packages/credentials/credentials/src/index.ts)
 
-## Identity
+## Identität
 
-English | [中文](credentials.zh.md) | [Deutsch](credentials.de.md)
-
-A reference names one credential as a POSIX-style environment-variable name. The brand prevents callers from mixing credential references with other strings passed between packages or processes; construction validates the shell-identifier syntax.
+Eine Referenz benennt eine Credential als POSIX-artigen Umgebungsvariablennamen. Das Brand verhindert, dass Aufrufer Credential-Referenzen mit anderen zwischen Paketen oder Prozessen übergebenen Strings vermischen; die Konstruktion validiert die Shell-Identifier-Syntax.
 
 ```ts type-equiv
 /** Nominal reference to one credential: a POSIX-style environment-variable name. */
 type CredentialRef = Branded<'CredentialRef'>
 ```
 
-## Resolution
+## Auflösung
 
-`resolve(ref)` returns the value with the provider-defined source layer that supplied it, or `undefined` while unconfigured. Consumers re-resolve at each operation and never cache across operations — that per-operation read is the hot-update mechanism.
+`resolve(ref)` gibt den Wert zusammen mit der Provider-definierten Quellebene zurück, die ihn geliefert hat, oder `undefined`, solange nichts konfiguriert ist. Consumer lösen bei jeder Operation neu auf und cachen nie über Operationen hinweg — dieser Read pro Operation ist der Hot-Update-Mechanismus.
 
 ```ts type-equiv
 /** One resolved credential value and the source layer that supplied it. */
@@ -31,9 +29,9 @@ interface ResolvedCredential {
 }
 ```
 
-## Description
+## Beschreibung
 
-`describe(ref)` answers configuration surfaces without ever exposing a value: whether the reference resolves, from which layer, and whether `set` would currently succeed. The local provider reports a reference supplied by the live process environment as `writable: false` — a write would appear to succeed while resolution kept returning the shadowing value, so the seam rejects it and the UI can render the reference read-only up front.
+`describe(ref)` beantwortet Konfigurations-Surfaces, ohne je einen Wert offenzulegen: ob die Referenz auflöst, aus welcher Ebene, und ob `set` derzeit erfolgreich wäre. Der lokale Provider meldet eine Referenz, die aus der Live-Prozessumgebung gespeist wird, als `writable: false` — ein Schreiben würde erfolgreich erscheinen, während die Auflösung weiter den überschattenden Wert lieferte, also lehnt die Seam es ab und die UI kann die Referenz von vornherein schreibgeschützt rendern.
 
 ```ts type-equiv
 /**
@@ -51,9 +49,9 @@ interface CredentialInfo {
 }
 ```
 
-## Change commits
+## Committete Änderungen
 
-`credentials/reference-updated (ref)` fires after a committed change to a provider-managed source — a `set`, an `unset`, or an external edit observed in storage. Ambient process-environment changes are not observable and never emit. Consumers do not need the event (they re-resolve per operation); it exists for configuration surfaces refreshing a "configured" badge.
+`credentials/reference-updated (ref)` feuert nach einer committeten Änderung an einer Provider-verwalteten Quelle — einem `set`, einem `unset` oder einem im Storage beobachteten externen Edit. Umgebungsbedingte Änderungen der Prozessumgebung sind nicht beobachtbar und emittieren nie. Consumer brauchen das Event nicht (sie lösen pro Operation neu auf); es existiert für Konfigurations-Surfaces, die ein „configured"-Badge aktualisieren.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -61,7 +59,7 @@ interface CredentialInfo {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxauthorization--authorizationservice"></a>
 
