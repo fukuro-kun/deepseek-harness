@@ -2,6 +2,8 @@
 
 [English](0004-landlock-partial-notice-misclassified-child-failures.md) | 中文
 
+[English](0004-landlock-partial-notice-misclassified-child-failures.md) | 中文 | [Deutsch](0004-landlock-partial-notice-misclassified-child-failures.de.md)
+
 Status: resolved
 
 ## 摘要

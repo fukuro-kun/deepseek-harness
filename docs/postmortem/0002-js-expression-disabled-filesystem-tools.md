@@ -2,6 +2,8 @@
 
 English | [中文](0002-js-expression-disabled-filesystem-tools.zh.md)
 
+English | [中文](0002-js-expression-disabled-filesystem-tools.zh.md) | [Deutsch](0002-js-expression-disabled-filesystem-tools.de.md)
+
 Status: resolved
 
 ## Executive summary

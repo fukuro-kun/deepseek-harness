@@ -2,6 +2,8 @@
 
 [English](session-format-status.md) | 中文
 
+[English](session-format-status.md) | 中文 | [Deutsch](session-format-status.de.md)
+
 ## 概述
 
 本参考区分工作区的 Session 写入器版本与最新已发布的 Session 格式。代码常量拥有写入器版本；下方发布记录拥有最新已发布格式及其发布证据。其他文档链接到这里，而不重复声明哪个版本是当前、下一个或尚未发布的版本。

@@ -2,6 +2,8 @@
 
 [English](0002-js-expression-disabled-filesystem-tools.md) | 中文
 
+[English](0002-js-expression-disabled-filesystem-tools.md) | 中文 | [Deutsch](0002-js-expression-disabled-filesystem-tools.de.md)
+
 状态：已解决
 
 ## 摘要

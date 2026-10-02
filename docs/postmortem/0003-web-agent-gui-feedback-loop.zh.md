@@ -2,6 +2,8 @@
 
 [English](0003-web-agent-gui-feedback-loop.md) | 中文
 
+[English](0003-web-agent-gui-feedback-loop.md) | 中文 | [Deutsch](0003-web-agent-gui-feedback-loop.de.md)
+
 状态：已解决
 
 ## 摘要
