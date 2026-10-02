@@ -1,16 +1,14 @@
-# 工具
+# Tools
 
-[English](tools.md) | 中文
+[English](tools.md) | [中文](tools.zh.md) | Deutsch
 
-[English](tools.md) | 中文 | [Deutsch](tools.de.md)
+Die Tool-Pipeline von [dsh-tools](../../packages/core/tools). [core.md](core.de.md) führt `ToolDefinition` als den Pipeline-Authoring-Typ ein, der von den Core-Paketen geteilt wird; der modellseitige [`ToolSchema`](llm-streaming.de.md#the-model-request-and-result)-Wire-Typ wird zusammen mit der Modellanfrage deklariert. Diese Seite dokumentiert jedes `ToolDefinition`-Feld, die typisierte Schema-DSL, die es erzeugt, die abgesicherten Ausführungstypen und die UI-Präsentationstypen.
 
-[dsh-tools](../../packages/core/tools) 的工具流水线。[core.md](core.zh.md) 介绍了核心包共用、用于编写流水线的类型 `ToolDefinition`；面向模型的 [`ToolSchema`](llm-streaming.zh.md#the-model-request-and-result) 协议类型与模型请求一起声明。本页记录 `ToolDefinition` 的每个字段、用于构建它的类型化 schema DSL、带守卫的执行类型和 UI 展示类型。
+Quellen: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts) · [`packages/core/tools/src/schema.ts`](../../packages/core/tools/src/schema.ts) · [`packages/core/tools/src/presentation.ts`](../../packages/core/tools/src/presentation.ts)
 
-源码：[`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts) · [`packages/core/tools/src/schema.ts`](../../packages/core/tools/src/schema.ts) · [`packages/core/tools/src/presentation.ts`](../../packages/core/tools/src/presentation.ts)
+## `ToolDefinition` — ein registriertes Tool
 
-## `ToolDefinition` — 一个已注册的工具
-
-由一个 `ToolSchema`（面向模型的字段）、必需的规范输出声明、`execute` 函数、仅供宿主使用的调度器元数据、可选的最终内容回调和可选 UI 展示函数组成。注册表持有这些定义，循环通过它们分派调用。注册表的 `schemas()` 通过显式允许列表构建面向模型的 `ToolSchema[]`；`output`/`execute`/`finalizeContent`/`timeoutMs`/`isConcurrencySafe`/`presentCall`/`presentResult` 绝不能泄漏到模型请求中。
+Ein `ToolSchema` (die modellseitigen Felder) plus eine obligatorische kanonische Output-Deklaration, die `execute`-Funktion, host-exklusive Scheduler-Metadaten, ein optionaler Final-Content-Callback und optionale UI-Presenter. Die Registry hält diese Definitionen; der Loop dispatcht Aufrufe durch sie. Die Registry-Methode `schemas()` erzeugt das modellseitige `ToolSchema[]` durch eine explizite Allowlist — `output`/`execute`/`finalizeContent`/`timeoutMs`/`isConcurrencySafe`/`presentCall`/`presentResult` dürfen niemals in eine Modellanfrage gelangen.
 
 ```ts type-equiv
 /** Tool-owned canonical output contract used after the body returns a JSON value. */
@@ -95,13 +93,13 @@ interface ToolDefinition extends ToolSchema {
 }
 ```
 
-`execute` 接收 `args: unknown`——原始的 `ToolDefinition` 自行校验输入。第一方工具不需要手写校验；它们使用 `defineTool`，由后者代为校验并收窄参数类型、根据 `output.schema` 推导函数体返回类型，并为两个输出投影器提供类型约束。`finalizeContent` 特意接收不可变的执行对象而非类型化参数，因为无效输入和外层流水线失败也会到达该回调；它可以施加工具自有的内容限制，同时保留 `isError`、规范值、结构化错误身份、延迟上下文与展示元数据。
+`execute` empfängt `args: unknown` — ein rohes `ToolDefinition` validiert seine eigene Eingabe. First-Party-Tools schreiben das nicht von Hand; sie verwenden `defineTool`, das Argumente validiert und einschränkt, den Body-Rückgabewert aus `output.schema` inferiert und beide Output-Projektoren typisiert. `finalizeContent` erhält bewusst die unveränderliche Execution statt typisierter Argumente, weil ungültige Eingaben und äußere Pipeline-Fehler ebenfalls diesen Callback erreichen; es kann eine tool-eigene Content-Bindung durchsetzen, während `isError`, der kanonische Wert, die strukturierte Fehleridentität, aufgeschobene Kontexte und Präsentationsmetadaten erhalten bleiben.
 
-## 统一的 JSON 值 schema DSL
+## Die vereinheitlichte JSON-Wert-Schema-DSL
 
-插件作者使用同一套词汇描述类型化参数和类型化输出值。`ValueSchemaSpec` 支持 `string`、`number`、`integer`、`boolean`、`null`、`array`、`object`、仅作者侧可用的 `json`，以及要求恰好命中一个分支的 `oneOf`；标量 `enum` 和 `const` 值必须与节点类型匹配。显式对象节点始终声明 `additionalProperties: true | false`。参数定义仍是隐式的开放对象属性映射，每个必填属性都附带 `required: true`。
+Plugin-Autoren verwenden ein Vokabular für typisierte Parameter und typisierte Output-Werte. `ValueSchemaSpec` unterstützt `string`, `number`, `integer`, `boolean`, `null`, `array`, `object`, nur-Autor-`json` und exakt-eins `oneOf`; skalare `enum`- und `const`-Werte müssen ihrem Knotentyp entsprechen. Ein expliziter Objekt-Knoten deklariert immer `additionalProperties: true | false`. Parameterdefinitionen bleiben eine implizite offene Objekt-Eigenschafts-Map, wobei `required: true` an jeder benötigten Eigenschaft angebracht wird.
 
-源码：[`packages/core/tools/src/schema.ts`](../../packages/core/tools/src/schema.ts)
+Quelle: [`packages/core/tools/src/schema.ts`](../../packages/core/tools/src/schema.ts)
 
 ```ts type-equiv
 /** One author-facing schema for any lossless JSON value root. */
@@ -133,7 +131,7 @@ type ParameterSchemaSpec = {
 }
 ```
 
-`{ type: 'json' }` 推导为 `JsonValue`，并编译成仅含注解、不施加约束的原始 schema。输出根可以是对象、数组、标量或 null。`InferValue<S>` 在 16 层容器内保留字面量约束与对象开放性，之后回退为 `JsonValue`，避免耗尽 TypeScript 的类型实例化栈。`InferArgs<P>` 依据逐属性的必填标记生成必填和可选的字符串键：
+`{ type: 'json' }` inferiert `JsonValue` und kompiliert zu einem nur-Annotationen, unbeschränkten Raw-Schema. Output-Roots können Objekte, Arrays, Skalare oder null sein. `InferValue<S>` wahrt Literal-Bindungen und Objekt-Offenheit durch 16 Container-Ebenen, dann fällt es auf `JsonValue` zurück, statt den TypeScript-Typ-Instanziierungs-Stack auszuschöpfen. `InferArgs<P>` wandelt Per-Eigenschaft-Benötigtsein in benötigte und optionale String-Keys:
 
 ```ts type-equiv
 /**
@@ -148,13 +146,13 @@ type InferValue<S> = InferValueAt<S, []>
 type InferArgs<S> = InferProperties<S, []>
 ```
 
-`defineTool({ name, description, parameters, output, execute, … })` 将参数推导与 `parameterSchemaSpecToJsonSchema()` 和 `validateArgs()` 绑定，并将 `execute`/`render`/`presentationMeta` 与 `InferValue<OutputSchema>` 绑定。schema 记录只包含自有且可枚举的字符串键，schema 数组是稠密的内建数组，因此推导、编译与校验观察到的是同一份声明。精确推导保持到 16 层容器，之后放宽为 `JsonValue`；运行时校验仍会继续遍历完整 schema。`valueSchemaSpecToJsonSchema()` 通过同一套已强制执行的原始子集编译输出声明。参数不匹配时抛出 `ToolArgsError`（`INVALID_ARGS`）；函数体或后置策略产生的值无效时抛出 `ToolOutputError`（`INVALID_TOOL_OUTPUT`）。两者都经由常规工具错误路径处理。原始 JSON Schema 默认保持开放；不支持的关键字会被拒绝，而不会在未强制执行的情况下获准进入。
+`defineTool({ name, description, parameters, output, execute, … })` bindet Parameter-Inferenz an `parameterSchemaSpecToJsonSchema()` und `validateArgs()` und bindet `execute`/`render`/`presentationMeta` an `InferValue<OutputSchema>`. Schema-Datensätze enthalten nur eigene aufzählbare String-Keys und Schema-Arrays sind dichte intrinsische Arrays, sodass Inferenz, Kompilierung und Validierung dieselbe Deklaration beobachten. Die Inferenz bleibt exakt durch 16 Container-Ebenen und erweitert sich dann zu `JsonValue`; die Laufzeit-Validierung durchläuft weiterhin das vollständige Schema. `valueSchemaSpecToJsonSchema()` kompiliert Output-Deklarationen durch dieselbe erzwungene Raw-Teilmenge. Ein Parameter-Mismatch wirft `ToolArgsError` (`INVALID_ARGS`); ein ungültiger Body- oder Post-Policy-Wert wirft `ToolOutputError` (`INVALID_TOOL_OUTPUT`). Beide verwenden den normalen Tool-Fehler-Pfad. Raw JSON Schema bleibt standardmäßig offen; nicht unterstützte Keywords werden abgelehnt statt ohne Durchsetzung akzeptiert.
 
-注册是一项受信任的同进程约定。注册表以 readonly 输入借用已类型化定义，要求它声明 `output`，校验其原始 schema，并检查 `timeoutMs` 必须为正有限值等语义要求；`schemas()` 在构建请求时生成面向模型的投影，使执行和展示共享同一份已解析定义，而不会将回调泄漏到协议上。
+Die Registrierung ist ein vertrauenswürdiger Same-Process-Contract. Die Registry übernimmt die typisierte Definition als Readonly-Eingabe, verlangt `output`, validiert ihr Raw-Schema und prüft semantische Anforderungen wie ein positives endliches `timeoutMs`; `schemas()` erzeugt die modellseitige Projektion beim Erstellen einer Anfrage, sodass Ausführung und Präsentation eine aufgelöste Definition teilen, ohne Callbacks auf das Wire zu leaken.
 
-## `ToolRestriction` — 单个作用域对其继承内容的实时过滤器
+## `ToolRestriction` — ein Scope-Live-Filter über Geerbtes
 
-`ToolRestriction` 作用于该作用域继承来的工具：部署全局层，加上其链上的每个祖先作用域。注册表将 readonly 名称编译为私有集合，对多个限制取交集，再叠加该作用域**自身**的注册——后者不受约束，因此被委派的子 agent 会保留其回报所依赖的工具。仅 deny 的过滤器允许后续未列出的继承工具通过，而 allow 列表则排除它们。
+`ToolRestriction` gilt für die Tools, die ein Scope erbt: die Deployment-globalen Schicht plus jeder Vorfahren-Scope auf seiner Kette. Die Registry kompiliert Readonly-Namen in private Sets, schneidet mehrere Restrictions, legt dann die EIGENEN Registrierungen des Scope darüber, die exempt bleiben, sodass ein delegiertes Child die Tools behält, durch die es antwortet. Ein Deny-only-Filter lässt spätere nicht gelistete geerbte Tools zu, während eine Allow-Liste sie ausschließt.
 
 ```ts type-equiv
 /**
@@ -169,9 +167,9 @@ interface ToolRestriction {
 }
 ```
 
-## 执行：可扩展的 waterfall（瀑布式事件）加单调策略
+## Ausführung: erweiterbare Waterfalls plus monotone Policy
 
-`ctx.tools.execute()` 接受由调用方拥有且包含必需 readonly `signal` 的 `ToolExecutionInput`，将其解析后的 JSON 参数一次性物化为流水线拥有的 `ToolExecution`，然后让调用依次经过 `tools/pre-execute`（可重排的 allow/deny/ask waterfall）→ 已注册的单调 guard → `tools/execute`（环绕分派包装层）→ `tools/post-execute`（检查/替换结果）→ 可选且由定义拥有的 `finalizeContent` → `tools/result`（不可变的权威结果）。只有 `tools/execute` 视图可以替换必需的 signal。最终产出为 `ToolExecutionResult`。
+`ctx.tools.execute()` akzeptiert ein vom Aufrufer besessenes `ToolExecutionInput` mit einem erforderlichen Readonly-`signal`, materialisiert seine geparsten JSON-Argumente einmal in ein Pipeline-besessenes `ToolExecution` und führt diesen Aufruf durch `tools/pre-execute` (der umsortierbare Allow/Deny/Ask-Waterfall) → registrierte monotone Guards → `tools/execute` (Around-Dispatch-Wrapper) → `tools/post-execute` (Ergebnis inspizieren/ersetzen) → optionaler definitionsbesitzender `finalizeContent` → `tools/result` (das unveränderliche autoritative Ergebnis). Nur die `tools/execute`-Sicht darf das erforderliche Signal ersetzen. Das Ergebnis ist ein `ToolExecutionResult`.
 
 ```ts type-equiv
 /** Opaque call identity that permits correlation without exposing mutable execution state. */
@@ -211,7 +209,7 @@ interface ToolExecutionInput {
 }
 ```
 
-工具函数体接收运行时扩展。`deferContext()` 把上下文附着到本次执行自己的结果上——既是组合工具转运嵌套分派上下文的通道，也可供叶子工具铸造插件来源指令——而不会在外层调用尚未结束时注入这些上下文。
+Ein Tool-Body empfängt die Runtime-Erweiterung. `deferContext()` hängt Kontext an das eigene Ergebnis dieser Execution an — der Composite-Tool-Nested-Dispatch-Kanal, auch von einem Leaf-Tool verwendbar, das eine Plugin-quellende Instruktion prägt — ohne Injektion innerhalb des noch offenen äußeren Aufrufs.
 
 ```ts type-equiv
 /**
@@ -242,7 +240,7 @@ interface ToolRunContext extends ToolExecution {
 }
 ```
 
-agent loop（智能体循环）向注册表查询每个待处理调用的执行模式，并据此形成独占屏障和滚动池并行执行：
+Der Agent-Loop fragt die Registry nach dem Ausführungsmodus jedes ausstehenden Aufrufs ab und nutzt ihn, um exklusive Barrieren und Rolling-Pool-Parallel-Läufe zu bilden:
 
 ```ts type-equiv
 /**
@@ -254,7 +252,7 @@ type ToolExecutionMode =
   | { kind: 'exclusive' }
 ```
 
-PTC mode 的桥接层还会把每个已结算的子分派暴露给 `tools/ptc-dispatch-log` waterfall，该 waterfall 可以更改持久事件所存的内容副本（程序取得的值和模型可见结果均不受影响）：
+Die PTC-Mode-Bridge legt zusätzlich jeden abgeschlossenen Sub-Dispatch dem `tools/ptc-dispatch-log`-Waterfall offen, der die Content-Kopie des dauerhaften Ereignisses ändern kann (der Wert des Programms und das modellseitige Ergebnis bleiben unangetastet):
 
 ```ts type-equiv
 /**
@@ -310,9 +308,9 @@ interface ToolDispatchExecution extends Omit<ToolExecution, 'signal'> {
 }
 ```
 
-`ToolExecutionToken` 是不透明的运行时 `Symbol`，仅用于身份比较。策略执行前，`execute()` 会物化并冻结参数、拒绝非 JSON 输入并分配 token。身份字段、调用方必需的 signal 和可选的 parent token 均保持 readonly。`ToolDispatchExecution` 包装层可以替换 signal 但不能移除；注册表会在调用工具函数体前重新融合调用方的 signal。最终观察者接收冻结的执行身份。
+`ToolExecutionToken` ist ein opakes Runtime-`Symbol`, das nur für Identitätsvergleich verwendet wird. Vor der Policy materialisiert und friert `execute()` Argumente ein, lehnt Nicht-JSON-Eingaben ab und weist das Token zu. Identitätsfelder, das erforderliche Caller-Signal und das optionale Parent-Token bleiben Readonly. Ein `ToolDispatchExecution`-Wrapper darf das Signal ersetzen, aber nicht entfernen; die Registry führt das Caller-Signal vor dem Aufruf des Tool-Bodys wieder zusammen. Endgültige Beobachter empfangen die eingefrorene Execution-Identität.
 
-`ToolGuard` 是感知作用域的最终预分派策略。其返回类型有意不包含 allow 结果：`undefined` 保留 waterfall 的决策，而返回的 reason 只能缩减权限，因此后续监听器无法撤销它。
+Ein `ToolGuard` ist eine Scope-bewusste finale Pre-Dispatch-Policy. Sein Rückgabetyp hat bewusst kein Allow-Ergebnis: `undefined` wahrt die Waterfall-Entscheidung, während ein zurückgegebener Reason nur die Berechtigung reduzieren kann, sodass ein späterer Listener sie nicht rückgängig machen kann.
 
 ```ts type-equiv
 /**
@@ -369,13 +367,13 @@ interface ToolExecutionFailure {
 type ToolExecutionResult = ToolExecutionSuccess | ToolExecutionFailure
 ```
 
-结果仅承载产出。调用身份保留在不可变的 `ToolExecution` 上，后者伴随结果经过每个钩子，并出现在持久化的 `tool/call` / `tool/result` 会话事件上，因此包装层无法创建第二个相互矛盾的身份。规范的 `value` 仅存在于执行期间：循环只持久化 `content`、`error` 和 `meta`，`tool/ptc-dispatch` 则原样存储子调用渲染后的 `content` 与 `isError`。回放可以重现展示，却无法重建规范的中间值。
+Das Ergebnis trägt nur das Outcome. Die Aufrufidentität bleibt auf der unveränderlichen `ToolExecution`, die es durch jeden Hook begleitet, und auf den dauerhaften `tool/call`-/`tool/result`-Session-Ereignissen, sodass Wrapper keine zweite, widersprüchliche Identität erzeugen können. Der kanonische `value` ist Execution-lokal: der Loop persistiert nur `content`, `error` und `meta`, während `tool/ptc-dispatch` den gerenderten `content` und `isError` des Sub-Aufrufs unverändert speichert. Replay reproduziert die Präsentation, kann aber kanonische Zwischenwerte nicht rekonstruieren.
 
-成功时，注册表会快照并校验函数体返回值，将其冻结，然后调用纯渲染器；对于直接的外层调用，还会调用可选的元数据投影器。注册表会在 `tools/result` 之前另行物化持久展示字段；无效值、渲染器/投影器失败或非 JSON 展示都会转为 JSON 安全的 `isError`。因此，最终实时观察者能看到精确的执行期值，以及可安全用于后续持久追加的字段。
+Bei Erfolg snapshottet und validiert die Registry den Body-Wert, friert ihn ein und ruft den reinen Renderer plus den optionalen Top-Level-Call-Metadaten-Projektor auf. Sie materialisiert die dauerhaften Präsentationsfelder separat unmittelbar vor `tools/result`; ein ungültiger Wert, ein Renderer/Projektor-Fehler oder eine Nicht-JSON-Präsentation wird zu einem JSON-sicheren `isError`. Der endgültige Live-Beobachter sieht daher den exakten Execution-lokalen Wert neben Feldern, die für das spätere dauerhafte Anhängen sicher sind.
 
-在得到最终内容之前，注册表会物化候选结果；若内容、结构化错误、附加上下文或展示元数据无法物化，则会转为仍可到达 `finalizeContent` 的 JSON 安全 `isError` 结果。注册表恰好调用该回调一次，随后在 `tools/result` 之前立即物化并冻结已接受的结果，因此实时观察到的产出可安全用于后续持久化的 `tool/result` 追加。
+Vor dem finalen Content materialisiert die Registry das Kandidaten-Ergebnis; ein Fehler in Content, strukturiertem Fehler, zusätzlichem Kontext oder Präsentationsmetadaten wird zu einem JSON-sicheren `isError`-Ergebnis, das `finalizeContent` noch erreicht. Die Registry ruft diesen Callback genau einmal auf, dann materialisiert und friert sie das akzeptierte Ergebnis unmittelbar vor `tools/result` ein, sodass das beobachtete Live-Outcome für das spätere dauerhafte `tool/result`-Anhängen sicher ist.
 
-每个拦截 waterfall 返回一个类型化的 **Decision**（与 `agent/*` waterfall 共享的惯用模式）。`tools/pre-execute` 监听器接收 `(exec, next)` 并返回 `PreToolDecision`；`tools/execute` 包装层返回 `ToolExecutionResult`；`tools/post-execute` 监听器接收 `(exec, result, next)` 并返回 `PostToolDecision`：
+Jeder Interception-Waterfall gibt eine typisierte **Decision** zurück (das Idiom, das mit den `agent/*`-Waterfalls geteilt wird). `tools/pre-execute`-Listener empfangen `(exec, next)` und geben eine `PreToolDecision` zurück; `tools/execute`-Wrapper geben eine `ToolExecutionResult` zurück; `tools/post-execute`-Listener empfangen `(exec, result, next)` und geben eine `PostToolDecision` zurück:
 
 ```ts type-equiv
 /**
@@ -401,13 +399,13 @@ type PostToolDecision =
   | { kind: 'block'; feedback: ContentBlock[]; additionalContexts?: UserMessage[] }
 ```
 
-调用 `next()` 获取默认决策，或直接返回一个决策以短路。前置策略可以 deny 或 ask；只有 `allowed-once` 才继续执行，而未授权、缺少审批通道或服务、或无 agent 的请求都会变为拒绝。Guard 仍可施加最终拒绝。参数不可被改写，因为历史记录、审计、UI 和执行必须保持一致。
+`next()` für die Standardentscheidung aufrufen oder eine Decision zurückgeben, um kurzuschließen. Pre-Policy darf deny oder ask; nur `allowed-once` führt weiter, während eine Nicht-Gewährung, ein fehlender Approval-Kanal oder -Dienst oder eine Agent-lose Anfrage zu einer Denial wird. Guards können weiterhin eine finale Denial auferlegen. Argumente können nicht umgeschrieben werden, da Verlauf, Audit, UI und Ausführung übereinstimmen müssen.
 
-后置策略可以替换内容或值，但不能同时替换两者。替换内容会保留规范值和现有元数据；替换值会重新校验并重新计算内容/元数据；阻止会移除值，并转为包含纠正反馈的 `isError`。内容替换是展示策略，而非保密策略；需要隐藏程序化值的监听器必须阻止或替换该值。`tools/result` 在归一化后接收冻结的执行和结果；观察者无法对其进行变换，观察者的失败也会被隔离。未知工具和抛出异常的工具都会变为结构化错误（`ToolNotFoundError` 映射为 `UNKNOWN_TOOL`），调用失败但不终止当前轮次。
+Post-Policy darf entweder Content oder Value ersetzen, niemals beides. Content-Ersatz wahrt den kanonischen Wert und bestehende Metadaten; Value-Ersatz wird revalidiert und berechnet Content/Metadaten neu; ein Block entfernt den Wert und wird zu einem `isError` mit korrigierendem Feedback. Content-Ersatz ist Präsentations-Policy, nicht Vertraulichkeits-Policy: ein Listener, der den programmatischen Wert verbergen muss, blockiert oder ersetzt ihn. `tools/result` empfängt die eingefrorene Execution und das Ergebnis nach Normalisierung; Beobachter können sie nicht transformieren und Beobachter-Fehler werden eingegrenzt. Unbekannte und werfende Tools werden beide zu strukturierten Fehlern (`ToolNotFoundError` mapt zu `UNKNOWN_TOOL`), sodass der Aufruf fehlschlägt, ohne den Turn zu beenden.
 
-## 已强制执行的原始 JSON Schema 子集
+## Die erzwungene Raw-JSON-Schema-Teilmenge
 
-subagent、工作流、MCP 和动态注册提供的原始 schema 使用作者侧 DSL 在协议层的对应表示。`assertSupportedJsonSchema()` 接受任意 JSON 根，`validateJsonSchemaValue()` 强制执行该 schema，`JsonSchemaError` 则报告每条不受支持或格式错误的 schema 路径。仅含注解的空节点表示不受约束的无损 JSON。`oneOf` 至少要求两个分支，且一个值必须恰好匹配其中一个。仍要求对象根的消费方调用 `assertObjectJsonSchema()` 并携带 `ObjectJsonSchema`；这样，subagent/工作流中由调用方定义的结构化输出可以继续以对象为根，而不会限制共享词汇。
+Raw-Schemas von Subagents, Workflows, MCP und dynamischen Registrierungen verwenden das Wire-Level-Gegenstück der Autor-DSL. `assertSupportedJsonSchema()` akzeptiert jeden JSON-Root, `validateJsonSchemaValue()` erzwingt es und `JsonSchemaError` meldet jeden nicht unterstützten oder fehlerhaften Schema-Pfad. Der leere nur-Annotationen-Knoten bedeutet unbeschränktes verlustfreies JSON. `oneOf` erfordert mindestens zwei Branches und ein Wert muss genau einem entsprechen. Consumer, die weiterhin einen Objekt-Root erfordern, rufen `assertObjectJsonSchema()` auf und tragen `ObjectJsonSchema`; so bleibt der durch Aufrufer definierte strukturierte Output von Subagent/Workflow objekt-gerootet, ohne das geteilte Vokabular einzuschränken.
 
 ```ts type-equiv
 /** Scalar JSON values supported by `enum` and `const`. */
@@ -458,16 +456,16 @@ interface JsonSchemaNode {
 type ObjectJsonSchema = JsonSchemaNode & { type: 'object' }
 ```
 
-## 工具展示 UI 词汇
+## Tool-Präsentations-UI-Vokabular
 
-工具希望其调用在 UI 中如何呈现（编辑器工具调用卡片、CLI（命令行界面）日志行），提供方无关，使工具在不依赖任何客户端协议的情况下描述自身。`presentCall`/`presentResult` 返回一个 **`card` 标签的渲染意图**——一个可辨识联合类型，UI 桥接层据此分发：
+Wie ein Tool seinen Aufruf in einer UI präsentiert haben möchte (eine Editor-Tool-Call-Karte, eine CLI-Logzeile), Provider-neutral, sodass ein Tool sich selbst beschreibt, ohne von einem Client-Protokoll abzuhängen. `presentCall`/`presentResult` geben eine **`card`-getaggte Render-Intent** zurück — eine Discriminated Union, auf die eine UI-Bridge switcht:
 
-- `ToolCallView`（待执行）：`{ card: 'generic', title, kind?, rawInput?, content?, locations? }`（默认卡片；`locations` 是 `{ path, line? }[]`，表示调用读取/修改的文件，供编辑器跟随）、`{ card: 'terminal', title, description?, cwd? }`（shell 命令→终端卡片）、或 `{ card: 'diff', title, diffs, locations? }`（文件创建/修改→行内 diff 卡片；`diffs` 是 `{ path, oldText, newText }[]`，新文件时 `oldText: null`）。
-- `ToolResultView`（已完成）：`{ card: 'generic', title?, content? }`、`{ card: 'terminal', title?, output?, exitCode?, signal? }`（捕获的运行输出 + 退出状态；有能力的 UI 显示退出状态标签，其他 UI 可以派生围栏 ` ```console ` 回退）、`{ card: 'diff', title?, diffs }`（已完成的文件变更→要展示的变更，通常是从变更前后内容计算出带上下文行的已应用 hunk，或在没有前像时的整文件 diff）、`{ card: 'search', shape, title?, truncated, total, … }`（已完成的发现型搜索→`shape: 'matches'`（grep）为按文件分组的匹配，`shape: 'paths'`（glob）为扁平路径列表；`truncated`/`total` 报告内联结果是否被截断，使 UI 永不把部分结果当作完整结果呈现；该视图不携带结果文本——无 search 卡片的 UI 回退到原始结果内容）、`{ card: 'read', title?, path, offset, lines, totalLines, lang?, content? }`（已完成的文件读取→带行号、可选语法高亮的代码视图；`offset` 是窗口请求的 1-based 起始行，即使 `lines` 为空也保留；`lang` 是从扩展名推得的语言提示，`content` 是无读取能力的 UI 回退时使用的去信封文本）、或 `{ card: 'web', kind: 'search' | 'fetch', title?, … }`（已完成的 web 检索；`kind: 'search'` 携带结构化的 `sources`/`answer?`/`truncated`，`kind: 'fetch'` 携带 `url`/`statusCode`/`truncated`，不具备 `web` 能力的 UI 回退到原始结果内容——正文不会重复进视图）。已完成视图会替换待执行视图，因此变更工具即使与调用时的片段重复也要返回 diff 结果；搜索和 web 检索都没有 `card` 的调用时对应视图（其 pending 状态保持为 generic 卡片，因为结构化结果只在 `execute` 之后才存在）。
+- `ToolCallView` (pending): `{ card: 'generic', title, kind?, rawInput?, content?, locations? }` (die Standardkarte; `locations` ist `{ path, line? }[]` Dateien, die der Aufruf liest/ändert, für Editor-Nachverfolgung), `{ card: 'terminal', title, description?, cwd? }` (ein Shell-Befehl → eine Terminal-Karte), oder `{ card: 'diff', title, diffs, locations? }` (eine Datei-Erstellung/-Änderung → eine Inline-Diff-Karte; `diffs` ist `{ path, oldText, newText }[]`, `oldText: null` für eine neue Datei).
+- `ToolResultView` (completed): `{ card: 'generic', title?, content? }`, `{ card: 'terminal', title?, output?, exitCode?, signal? }` (die erfasste Ausgabe + Exit; eine fähige UI zeigt einen Exit-Status-Pill, während eine andere einen fenced ` ```console `-Fallback ableiten kann), `{ card: 'diff', title?, diffs }` (eine abgeschlossene Datei-Mutation → die anzuzeigende Änderung, typischerweise die angewandten Hunks mit Kontextzeilen, berechnet aus dem Before/After-Content, oder ein Whole-File-Diff, wenn es kein Before-Image gibt), `{ card: 'search', shape, title?, truncated, total, … }` (eine abgeschlossene Discovery-Suche → nach-Datei-gruppierte Matches für `shape: 'matches'` (grep) oder eine flache Pfadliste für `shape: 'paths'` (glob); `truncated`/`total` melden, ob das Inline-Ergebnis begrenzt wurde, damit eine UI niemals ein Teil-Ergebnis als vollständig präsentiert; die View trägt keinen Ergebnis-Text — eine UI ohne Search-Karte fällt auf den rohen Ergebnis-Content zurück), `{ card: 'read', title?, path, offset, lines, totalLines, lang?, content? }` (ein abgeschlossener Datei-Lesezugriff → eine zeilennummerierte, optional syntax-highlightende Code-View; `offset` ist die 1-basierte erste Zeile, die das Fenster angefordert hat, auch beibehalten wenn `lines` leer ist; `lang` ist ein Sprach-Hint von der Erweiterung, und `content` ist der envelope-stripped Text, auf den eine UI ohne Lese-Unterstützung zurückfällt), oder `{ card: 'web', kind: 'search' | 'fetch', title?, … }` (ein abgeschlossener Web-Retrieval; `kind: 'search'` trägt die strukturierten `sources`/`answer?`/`truncated`, `kind: 'fetch'` trägt `url`/`statusCode`/`truncated`, und eine UI ohne `web`-Capability fällt auf den rohen Ergebnis-Content zurück — der Body wird nicht in die View dupliziert). Completed-Views ersetzen Pending-Views, sodass Mutations-Tools ein Diff-Ergebnis zurückgeben, selbst wenn es das Call-Time-Snippet dupliziert; eine Search und ein Web-Retrieval haben kein `card`-Call-Time-Äquivalent (ihr Pending-Zustand bleibt eine generische Karte, da das strukturierte Ergebnis erst nach `execute` existiert).
 
-`ToolCallKind`（`'read' | 'edit' | 'delete' | 'move' | 'search' | 'execute' | 'fetch' | 'other'`）用于为通用卡片选择图标。`FileLocation`（`{ path, line? }`）、`FileDiff`（`{ path, oldText, newText }`）与 `ReadFileLine`（`{ number, text }`，读取窗口中一行带 1-based 行号的内容）是共享的文件卡片词汇。该设计由[渲染意图联合类型 Agent Note](../../.agents/notes/implemented/architecture/2026-07-02-tool-render-intent-union.zh.md)固定；host/client 运行时将这套中性词汇投影为各自的视图。
+`ToolCallKind` (`'read' | 'edit' | 'delete' | 'move' | 'search' | 'execute' | 'fetch' | 'other'`) wählt ein Icon auf einer generischen Karte. `FileLocation` (`{ path, line? }`), `FileDiff` (`{ path, oldText, newText }`) und `ReadFileLine` (`{ number, text }`, eine 1-basierte nummerierte Zeile eines Lese-Fensters) sind das geteilte Datei-Karten-Vokabular. Das Design ist im [Render-Intent-Union Agent Note](../../.agents/notes/implemented/architecture/2026-07-02-tool-render-intent-union.de.md) fixiert; Host/Client-Runtimes projizieren dieses neutrale Vokabular in ihre eigenen Views.
 
-完整的展示字段文档见 [`packages/core/tools/src/presentation.ts`](../../packages/core/tools/src/presentation.ts)。`bash` schema 与执行器见 [shell.md](shell.zh.md)；通用后台控制见 [jobs.md](jobs.zh.md)。
+Die vollständigen Präsentationsfeld-Dokumente liegen in [`packages/core/tools/src/presentation.ts`](../../packages/core/tools/src/presentation.ts). Das `bash`-Schema und der Executor sind auf [shell.md](shell.de.md); generische Hintergrund-Kontrollen sind auf [jobs.md](jobs.de.md).
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -475,7 +473,7 @@ type ObjectJsonSchema = JsonSchemaNode & { type: 'object' }
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxtools--toolruntime"></a>
 
@@ -571,7 +569,7 @@ executionMode(exec: ToolExecutionInput): ToolExecutionMode
 async execute(exec: ToolExecutionInput): Promise<ToolExecutionResult>
 ```
 
-Types: [ScopeKey](scope.zh.md)
+Types: [ScopeKey](scope.de.md)
 
 Source: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts)
 
@@ -620,7 +618,7 @@ Around-dispatch waterfall for timeout, retry, or metrics. `next()` returns a nor
 'tools/execute'(this: Scoped<ToolRuntime>, exec: ToolDispatchExecution, next: () => Promise<ToolExecutionResult>): Promise<ToolExecutionResult>
 ```
 
-Types: [Scoped](scope.zh.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts)
 
@@ -645,7 +643,7 @@ Accept, replace, enrich, or block a normalized dispatch result. `next()` accepts
 'tools/post-execute'(this: Scoped<ToolRuntime>, exec: ToolExecution, result: Readonly<ToolExecutionResult>, next: () => Promise<PostToolDecision>): Promise<PostToolDecision>
 ```
 
-Types: [Scoped](scope.zh.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts)
 
@@ -668,7 +666,7 @@ Allow, deny, or ask before dispatch. `next()` delegates to allow; missing approv
 'tools/pre-execute'(this: Scoped<ToolRuntime>, exec: ToolExecution, next: () => Promise<PreToolDecision>): Promise<PreToolDecision>
 ```
 
-Types: [Scoped](scope.zh.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts)
 
@@ -695,7 +693,7 @@ Allow a listener to replace content in the DURABLE LOG COPY of one `run_code` su
 'tools/ptc-dispatch-log'(this: Scoped<ToolRuntime>, dispatch: PtcDispatchLog, next: () => Promise<ContentBlock[]>): Promise<ContentBlock[]>
 ```
 
-Types: [ContentBlock](llm-streaming.zh.md) · [Scoped](scope.zh.md)
+Types: [ContentBlock](llm-streaming.de.md) · [Scoped](scope.de.md)
 
 Source: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts)
 
@@ -716,7 +714,7 @@ Observe the frozen, lossless-JSON final outcome. Listener failures are contained
 'tools/result'(this: Scoped<ToolRuntime>, exec: Readonly<ToolExecution>, result: Readonly<ToolExecutionResult>): undefined
 ```
 
-Types: [Scoped](scope.zh.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/tools/src/index.ts`](../../packages/core/tools/src/index.ts)
 <!-- END GENERATED cordis-surface -->

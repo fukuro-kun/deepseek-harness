@@ -1,29 +1,29 @@
 # Core
 
-English | [中文](core.zh.md)
+[English](core.md) | [中文](core.zh.md) | Deutsch
 
-English | [中文](core.zh.md) | [Deutsch](core.de.md)
+Das **Core**-Subsystem ist [`packages/core`](../../packages/core/README.de.md) — die Packages, die jede Komposition bootet: das event-sourced Session-Log, die System-Prompt-Assembly, die Tool-Registry, die Agent-Typen und die konkrete Schleife, die sie antreibt. Diese Seite erklärt, was das `agent`/`agent-loop`-Paar deklariert — wie ein Agent erstellt und gehalten wird, sowie die Delivery-, Cancel- und Interception-Contracts des `Agent`-Handles — plus die beiden Typmuster, denen jedes Subsystem folgt. Die dedizierten Seiten der Gruppe und der Rest des Ordners sind im [Subsystems-README](README.de.md) indexiert.
 
-The **core** subsystem is [`packages/core`](../../packages/core/README.md) — the packages every composition boots: the event-sourced session log, system-prompt assembly, the tool registry, the agent types, and the concrete loop that drives them. This page explains what the `agent`/`agent-loop` pair declares — how an agent is created and owned, and the `Agent` handle's delivery, cancellation, and interception contracts — plus the two type patterns every subsystem follows. The group's dedicated pages and the rest of the folder are indexed in the [subsystems README](README.md).
+## Der Rückgrat, Package für Package
 
-## The spine, package by package
+Ein Turn fließt durch die sechs Packages in einer Schleife: der Driver in [`agent-loop`](../../packages/core/agent-loop) beansprucht einen gepufferten Prompt, öffnet einen Turn auf dem [Session-Log](session.de.md) (`ctx.sessions`), assembliert den Request-Präfix über [system-prompt](system-prompt.de.md) (`ctx.systemPrompt`) und leitet die Historie aus dem Log ab, streamt die Modell-Antwort über das [LLM-Seam](llm-streaming.de.md), dispatcht Tool-Calls über die [Tool-Registry](tools.de.md) (`ctx.tools`) und hängt jedes modellsichtbare Fact zurück ans Log an, bevor der nächste Step daraus abgeleitet wird. Das Konversations-Vokabular, das die Schleife bewegt — `Message`, `ContentBlock`, `StreamChunk`, der Modell-Request — wird von [`packages/llm`](../../packages/llm/README.de.md) deklariert und auf [llm-streaming.md](llm-streaming.de.md) dokumentiert.
 
-A turn flows through the six packages in one loop: the driver in [`agent-loop`](../../packages/core/agent-loop) claims a queued prompt, opens a turn on the [session log](session.md) (`ctx.sessions`), assembles the request prefix through [system-prompt](system-prompt.md) (`ctx.systemPrompt`) and derives history from the log, streams the model response through the [LLM seam](llm-streaming.md), dispatches tool calls through the [tool registry](tools.md) (`ctx.tools`), and appends every model-visible fact back onto the log before the next step derives from it. The conversation vocabulary the loop moves — `Message`, `ContentBlock`, `StreamChunk`, the model request — is declared by [`packages/llm`](../../packages/llm/README.md) and documented on [llm-streaming.md](llm-streaming.md).
-
-| Package | Owns | Page |
+| Package | Besitzt | Seite |
 |---|---|---|
-| `session/` | The append-only `SessionEvent` log and in-memory store — the single source of truth (`ctx.sessions`) | [session.md](session.md) |
-| `system-prompt/` | Prompt-section and tool-schema assembly (`ctx.systemPrompt`) | [system-prompt.md](system-prompt.md) |
-| `tools/` | The scoped tool registry and guarded execution pipeline (`ctx.tools`) | [tools.md](tools.md) |
-| `agent/` | The `Agent` interface, live registry, initiator scope, and `agent/*` event vocabulary (`ctx.agents`) | this page |
-| `agent-loop/` | The concrete driver implementing the public `Agent` contract (`ctx.agentLoop`) | this page |
-| `scope/` | The scoped-registration primitive the registries and loop build per-agent scoping on | [scope.md](scope.md) |
+| `session/` | Das append-only `SessionEvent`-Log und den In-Memory-Store — die einzige Source of Truth (`ctx.sessions`) | [session.de.md](session.de.md) |
+| `system-prompt/` | Prompt-Section- und Tool-Schema-Assembly (`ctx.systemPrompt`) | [system-prompt.de.md](system-prompt.de.md) |
+| `tools/` | Die scoped Tool-Registry und die bewachte Execution-Pipeline (`ctx.tools`) | [tools.de.md](tools.de.md) |
+| `agent/` | Das `Agent`-Interface, die Live-Registry, den Initiator-Scope und das `agent/*`-Event-Vokabular (`ctx.agents`) | diese Seite |
+| `agent-loop/` | Den konkreten Driver, der den öffentlichen `Agent`-Contract implementiert (`ctx.agentLoop`) | diese Seite |
+| `scope/` | Das Scoped-Registration-Primitiv, auf dem Registries und Schleife das Per-Agent-Scoping aufbauen | [scope.de.md](scope.de.md) |
 
-`scope/` is the one non-service package: a dependency-free library (`createScope`/`scopeOf`/`scopeTarget`) that sits below `session/` and `system-prompt/` in the module graph precisely so they can consume it without a cycle. `agent-loop` is the one concrete implementation of the public `Agent` contract and lives here because it is the harness's default product loop; it runs each driver inside `ctx.agents.withInitiator()`. Extension plugins depend on `agent` — including when they need the initiating Agent — and never on `agent-loop` directly, so the loop stays swappable. [`dsh-base`](../../packages/bundle/base/README.md) is the default product composition, while [`dsh-sdk-minimal`](../../packages/bundle/sdk-minimal/README.md) declares a smaller standalone tree.
+`scope/` ist das einzige Non-Service-Package: eine dependency-freie Bibliothek (`createScope`/`scopeOf`/`scopeTarget`), die im Modul-Graph unter `session/` und `system-prompt/` sitzt, gerade damit diese sie konsumieren können, ohne einen Cycle zu bilden. `agent-loop` ist die eine konkrete Implementierung des öffentlichen `Agent`-Contracts und liegt hier, weil es die Default-Produkt-Schleife des Harness ist; sie führt jeden Driver innerhalb `ctx.agents.withInitiator()` aus. Erweiterungs-Plugins hängen von `agent` ab — auch wenn sie den initiierenden Agent benötigen — und niemals direkt von `agent-loop`, sodass die Schleife austauschbar bleibt. [`dsh-base`](../../packages/bundle/base/README.de.md) ist die Default-Produkt-Komposition, während [`dsh-sdk-minimal`](../../packages/bundle/sdk-minimal/README.de.md) einen kleineren Standalone-Baum deklariert.
 
-## Creation and ownership
+<a id="creation-and-ownership"></a>
 
-Consumers create agents through `ctx.agents` — `create()` builds a fresh session and agent under one caller-supplied `SessionId`, `resume()` loads a persisted session first — or declaratively through the loop's config entries. Programmatic creation returns the owner's handle:
+## Erstellung und Ownership
+
+Consumer erstellen Agents über `ctx.agents` — `create()` baut eine frische Session und einen Agent unter einer caller-supplied `SessionId`, `resume()` lädt zuerst eine persistierte Session — oder deklarativ über die Config-Einträge der Schleife. Programmatische Erstellung gibt das Handle des Owners zurück:
 
 Source: [`packages/core/agent/src/index.ts`](../../packages/core/agent/src/index.ts)
 
@@ -48,13 +48,15 @@ interface AgentHandle {
 }
 ```
 
-`CreateAgentOptions` carries the shared identity and everything a fresh agent needs before publication: an optional live `parentAgent`, session metadata (`meta` — validated `cwd`, fork lineage, the `isSeeded` marker, origin classification, delegation depth, and `agentPreset`), the exact fork cut in sibling field `inheritedEventCount`, an optional `seed` replay prefix, per-agent `AgentOptions`, a creation-only cancellation `signal`, and `setup`. `ResumeAgentOptions` is the persisted-identity counterpart: `resumeSessionId`, `parentAgent`, `agentOptions`, `signal`, and `setup`. The `setup` callback (`AgentSetup`) receives `(agentCtx, agent)` while both ids are still unpublished: the context owns scoped registrations, while the explicit Agent supplies the exact child Session without a reverse property on the Context. Everything registered through `agentCtx` exists before `agent/created` and the first prompt assembly. Setup may return a synchronous commit invoked immediately before publication; a setup rejection, commit throw, or owner disposal rolls the transaction back without publishing either id.
+`CreateAgentOptions` trägt die geteilte Identität und alles, was ein frischer Agent vor der Publikation benötigt: einen optionalen Live-`parentAgent`, Session-Metadaten (`meta` — validiertes `cwd`, Fork-Lineage, den `isSeeded`-Marker, Origin-Klassifizierung, Delegation-Tiefe und `agentPreset`), den exakten Fork-Cut im Sibling-Feld `inheritedEventCount`, einen optionalen `seed`-Replay-Präfix, Per-Agent-`AgentOptions`, eine Creation-only-Cancel-`signal` und `setup`. `ResumeAgentOptions` ist das Persisted-Identity-Gegenstück: `resumeSessionId`, `parentAgent`, `agentOptions`, `signal` und `setup`. Der `setup`-Callback (`AgentSetup`) empfängt `(agentCtx, agent)`, während beide IDs noch unveröffentlicht sind: der Context besitzt die Scoped-Registrations, während der explizite Agent die exakte Child-Session ohne eine Reverse-Property auf dem Context liefert. Alles über `agentCtx` Registrierte existiert vor `agent/created` und der ersten Prompt-Assembly. Setup darf ein synchrones Commit zurückgeben, das unmittelbar vor der Publikation aufgerufen wird; eine Setup-Rejection, ein Commit-Throw oder Owner-Disposal rollt die Transaktion zurück, ohne entweder id zu publizieren.
 
-`AgentFactory` is the creation interface behind the registry: the loop registers its factory via `ctx.agents.setFactory()`, so consumers use `ctx.agents` without depending on the concrete loop package. A runtime child creator sets `options.parentAgent`; the registry passes the options and caller Context to the factory without deriving one from the other. The exact `create`/`resume` signatures and rollback contracts are in the [generated section](#ctxagents--agentregistry) below.
+`AgentFactory` ist das Creation-Interface hinter der Registry: die Schleife registriert ihre Factory über `ctx.agents.setFactory()`, sodass Consumer `ctx.agents` verwenden, ohne vom konkreten Schleifen-Package abzuhängen. Ein Runtime-Child-Creator setzt `options.parentAgent`; die Registry übergibt die Options und den Caller-Context an die Factory, ohne eines aus dem anderen abzuleiten. Die exakten `create`/`resume`-Signaturen und Rollback-Contracts stehen im [generierten Abschnitt](#ctxagents--agentregistry) unten.
 
-## The agent handle
+<a id="the-agent-handle"></a>
 
-`Agent` is the surface every plugin (UI, hooks, orchestrators) programs against; `ctx.agents.get(id)` returns it, and the [initiator scope](#initiating-agent) carries it. The concrete implementation is package-internal to dsh-agent-loop; nothing outside the loop depends on it. The unified `send` method exposes target and wakeup routing directly; `followup`, `steer`, and `inject` are fixed-preset aliases.
+## Das Agent-Handle
+
+`Agent` ist die Surface, gegen die jedes Plugin (UI, Hooks, Orchestratoren) programmiert; `ctx.agents.get(id)` gibt sie zurück, und der [Initiator-Scope](#initiating-agent) trägt sie. Die konkrete Implementierung ist Package-intern in dsh-agent-loop; nichts außerhalb der Schleife hängt von ihr ab. Die vereinheitlichte `send`-Methode exponiert Target- und Wakeup-Routing direkt; `followup`, `steer` und `inject` sind Fixed-Preset-Aliase.
 
 Source: [`packages/core/agent/src/types.ts`](../../packages/core/agent/src/types.ts)
 
@@ -192,7 +194,7 @@ type AssistantStreamFrame =
   }
 ```
 
-`running` describes the driver-wide drain interval and may span consecutive queued turns; it does not prove a turn is still open. Disposal removes the agent from the registry and emits `agent/disposed`; it is not a terminal status value. `followup()` returns no handle: its `MessageId` identifies durable inbox insertion, claim, and discard facts, not a later assistant output or turn ending. `whenIdle()` observes the whole agent, so callers may call a receipt-to-idle interval a run only when they explicitly own that interval ([decision](../../.agents/notes/implemented/architecture/2026-07-30-followup-enqueue-and-owned-runs.md)).
+`running` beschreibt das Driver-weite Drain-Intervall und kann aufeinanderfolgende gepufferte Turns umfassen; es beweist nicht, dass ein Turn noch offen ist. Disposal entfernt den Agent aus der Registry und emittiert `agent/disposed`; es ist kein terminaler Status-Wert. `followup()` gibt kein Handle zurück: seine `MessageId` identifiziert durable Inbox-Insertion-, Claim- und Discard-Facts, keine spätere Assistant-Ausgabe oder ein Turn-Ende. `whenIdle()` beobachtet den ganzen Agent, sodass Caller einen Receipt-to-Idle-Intervall nur dann einen Run nennen dürfen, wenn sie diesen Intervall explizit besitzen ([Entscheidung](../../.agents/notes/implemented/architecture/2026-07-30-followup-enqueue-and-owned-runs.de.md)).
 
 ```ts type-equiv
 /** Merge-extensible agent creation options. Persona belongs to system-prompt sections. */
@@ -208,9 +210,9 @@ interface AgentOptions {
 }
 ```
 
-Dispatch requires `provider` and `model` after `agent/request`. An explicit `reasoningEffort` seeds the first request on that route; exact-model resolution validates it, while omission allows the adapter default to materialize. When present, `maxTokens` must be a positive safe integer and caps every conversation-model request; omission allows the exact-model adapter default to materialize before the request header, or otherwise leaves provider behavior unchanged. An agent-scoped `deployment:persona-prefix` prompt section may shadow the global default persona.
+Dispatch erfordert `provider` und `model` nach `agent/request`. Ein expliziter `reasoningEffort` seedt den ersten Request auf dieser Route; exakte Modellauflösung validiert ihn, während Weglassen den Adapter-Default materialisiert. Wenn vorhanden, muss `maxTokens` ein positiver Safe Integer sein und deckelt jeden Konversations-Modell-Request; Weglassen lässt den exakten Modell-Adapter-Default vor dem Request-Header materialisieren oder lässt anderweitig Provider-Verhalten unverändert. Eine Agent-Scoped-`deployment:persona-prefix`-Prompt-Section darf die globale Default-Persona überschatten.
 
-The inbox is the delivery vocabulary — two ordered pending-message lists the agent owns as a durable projection:
+Die Inbox ist das Delivery-Vokabular — zwei geordnete Pending-Message-Listen, die der Agent als durable Projektion besitzt:
 
 ```ts type-equiv
 /** Agent-owned access to pending work; concrete storage belongs to the driver. */
@@ -274,7 +276,7 @@ interface Inbox {
 type InboxTarget = 'next-turn' | 'next-step'
 ```
 
-Every pending occurrence is its `UserMessage`; `MessageId` is the sole identity. The structural `Inbox` methods record normalized durable `agent/inbox/spliced` mutations and reject duplicate pending ids. `replace(messageId, newMessage)` and `remove(messageId)` locate the pending message across both lists; replacement may change identity and emits the old message as discarded followed by the new message as inserted. Ordinary removals and `clear()` are cancellations. At a step boundary, dsh-agent-loop's package-internal `ReactLoopInbox` removes the proposed batch — all `next-step` input plus, at a turn boundary, one `next-turn` message — through pure deletion splices without discarded notifications, then emits per-message claimed notifications. Loop-only pending detection and claiming are not part of `Agent.inbox`. Each `ReactLoopInbox` constructor contributes the standard `inbox` projection from its agent scope; the registry shares that definition across agents by reference count, and its cell is the sole live state while the same fold serves cold consumers. The fold rejects unsafe or out-of-range splice coordinates and duplicate identities across both lists, identifying malformed durable history by event seq. Consumers following one message use the exact `agent/inbox/inserted`, `claimed`, and `discarded` notifications.
+Jedes Pending-Vorkommen ist seine `UserMessage`; `MessageId` ist die einzige Identität. Die strukturellen `Inbox`-Methoden zeichnen normale durable `agent/inbox/spliced`-Mutationen auf und lehnen duplizierte Pending-IDs ab. `replace(messageId, newMessage)` und `remove(messageId)` lokalisieren die Pending-Message über beide Listen; Replacement kann Identität ändern und emittiert die alte Message als Discarded gefolgt von der neuen Message als Inserted. Gewöhnliche Removals und `clear()` sind Cancellations. An einer Step-Grenze entfernt dsh-agent-loops Package-interne `ReactLoopInbox` die vorgeschlagene Batch — aller `next-step`-Input plus, an einer Turn-Grenze, einer `next-turn`-Message — durch reine Lösch-Splices ohne Discarded-Notifications und emittiert dann Per-Message-Claimed-Notifications. Loop-only-Pending-Detection und Claiming sind nicht Teil von `Agent.inbox`. Jeder `ReactLoopInbox`-Konstruktor trägt die Standard-`inbox`-Projektion aus seinem Agent-Scope bei; die Registry teilt diese Definition über Agents per Reference-Count, und ihre Zelle ist der einzige Live-State, während dieselbe Fold kalte Consumer bedient. Die Fold lehnt unsichere oder Out-of-Range-Splice-Koordinaten und duplizierte Identitäten über beide Listen ab und identifiziert malformede durable Historie per Event-Seq. Consumer, die einer Message folgen, verwenden die exakten `agent/inbox/inserted`-, `claimed`- und `discarded`-Notifications.
 
 Cancellation:
 
@@ -299,23 +301,27 @@ type AgentCancelCause =
   | { readonly kind: 'disposed' }
 ```
 
-The cause is a TypeScript-enforced same-process input. An active cancellation holder copies it into the runtime-only `AbortSignal.reason`; a signal grants cooperating listeners no classification authority. Durable `turn/end` records the outcome as `{ kind: 'aborted', reason: TurnEndCancelCause }`, so the cancel cause lands in the terminal result.
+Der Cause ist ein TypeScript-enforced Same-Process-Input. Ein aktiver Cancellation-Holder kopiert ihn in das Runtime-only-`AbortSignal.reason`; ein Signal gewährt kooperierenden Listenern keine Klassifizierungsautorität. Durable `turn/end`-Records zeichnen das Outcome als `{ kind: 'aborted', reason: TurnEndCancelCause }` auf, sodass die Cancel-Cause im terminalen Resultat landet.
 
-The [event taxonomy](../architecture.md#events) owns the `agent/*` lifecycle, checkpoint, and waterfall contracts. Turn and step boundaries are durable session events rather than agent emits.
+Die [Event-Taxonomie](../architecture.de.md#events) besitzt die `agent/*`-Lifecycle-, Checkpoint- und Waterfall-Contracts. Turn- und Step-Grenzen sind durable Session-Events, keine Agent-Emits.
+
+<a id="initiating-agent"></a>
 
 ## Initiating Agent
 
-The process-local initiator carried by `ctx.agents` is the exact `Agent` above, not a separate frame or copied identity. Ambient presence is neither liveness proof nor authorization; the [initiator-scope decision](../../.agents/notes/implemented/architecture/2026-07-15-agent-initiator-scope.md) defines its lifetime and scope rules.
+Der prozesslokale Initiator, den `ctx.agents` trägt, ist der exakte `Agent` oben, kein separater Frame oder kopierte Identität. Ambient-Präsenz ist weder Liveness-Beweis noch Autorisierung; die [Initiator-Scope-Entscheidung](../../.agents/notes/implemented/architecture/2026-07-15-agent-initiator-scope.de.md) definiert ihre Lifetime- und Scope-Regeln.
 
-## Interception decisions
+<a id="interception-decisions"></a>
 
-Pre-step decisions use the same identified `UserMessage` type as durable user-role input. The entered batch is authoritative and preserves every message's `id` and `source`. Hook bridges map their native decision fields onto this typed result.
+## Interception-Entscheidungen
+
+Pre-Step-Entscheidungen verwenden denselben identifizierten `UserMessage`-Typ wie durable User-Role-Input. Die eingegebene Batch ist autoritativ und bewahrt jede Message-`id` und `source`. Hook-Bridges mappen ihre nativen Decision-Felder auf dieses typisierte Resultat.
 
 Source: [`packages/core/agent/src/types.ts`](../../packages/core/agent/src/types.ts)
 
-`agent/pre-step` receives one payload carrying the exclusive claimed batch (`messages`), the proposed step's coordinates (`turn`, `step`), and the current turn's cancellation `signal`. The initial proposal runs inside an open turn before any step; a tool continuation may submit an empty claimed batch between steps:
+`agent/pre-step` empfängt einen Payload, der die exklusive Claimed-Batch (`messages`), die Koordinaten des vorgeschlagenen Steps (`turn`, `step`) und das Cancel-`signal` des aktuellen Turns trägt. Der Erstvorschlag läuft innerhalb eines offenen Turns vor jedem Step; eine Tool-Fortsetzung darf eine leere Claimed-Batch zwischen Steps einreichen:
 
-It returns a `PreStepDecision`. Reject opens no step. Enter supplies the complete message batch appended after `step/start`; claimed messages omitted by the final decision remain removed, while input inserted after the claim stays pending:
+Er gibt eine `PreStepDecision` zurück. Reject öffnet keinen Step. Enter liefert die komplette Message-Batch, angehängt nach `step/start`; Claimed-Messages, die von der finalen Decision weggelassen werden, bleiben entfernt, während Input nach dem Claim Pending bleibt:
 
 ```ts type-equiv
 /** Whether and with which messages the loop enters a proposed step. */
@@ -329,16 +335,16 @@ type PreStepDecision =
   }
 ```
 
-`agent/request-error` runs after a failed model step closes and before its turn closes. Listeners can repair durable state or await policy work while the failed turn's signal is still live. A handling listener returns `{ kind: 'retry' }` without calling `next()`; the default `undefined` leaves the failure terminal.
+`agent/request-error` läuft nach einem fehlgeschlagenen Modell-Step, bevor sein Turn schließt. Listener können durable State reparieren oder Policy-Work awaiten, während das Signal des fehlgeschlagenen Turns noch live ist. Ein behandelnder Listener gibt `{ kind: 'retry' }` zurück, ohne `next()` aufzurufen; der Default `undefined` lässt den Fehler terminal sein.
 
 ```ts type-equiv
 /** Action returned by a listener that owns model-request recovery. */
 type RequestErrorAction = { kind: 'retry' } | undefined
 ```
 
-`agent/pre-step` is the only waterfall listener chain before request derivation. `agent/turn-stopping` runs when a turn has no tool or steering continuation, before one final steering drain.
+`agent/pre-step` ist die einzige Waterfall-Listener-Kette vor der Request-Ableitung. `agent/turn-stopping` läuft, wenn ein Turn keine Tool- oder Steering-Fortsetzung hat, vor einem finalen Steering-Drain.
 
-`agent/session-start` carries a `SessionStartSource` (why the session lifecycle began; a bridge keys its SessionStart matcher on it):
+`agent/session-start` trägt eine `SessionStartSource` (warum der Session-Lifecycle begann; eine Bridge schlüsselt ihren SessionStart-Matcher darauf):
 
 ```ts type-equiv
 /** Why a session lifecycle began; seeded creates are `startup`, while persisted loads are `resume`. */
@@ -347,25 +353,25 @@ type SessionStartSource = 'startup' | 'resume' | 'clear' | 'compact'
 
 ## Sessions
 
-A `Session` is an **append-only log** of typed `SessionEvent`s — the single source of truth. The LLM message history is *derived* from the log (`deriveMessages()`), not stored separately. Every entry carries a monotonic `seq`, a `time`, and a `type`-discriminated `data` payload; surface variants may also list cited earlier events in `sourceEventSeqs` and carry a `surfaceOp`.
+Eine `Session` ist ein **append-only Log** typisierter `SessionEvent`s — die einzige Source of Truth. Die LLM-Message-Historie wird aus dem Log *abgeleitet* (`deriveMessages()`), nicht separat gespeichert. Jeder Eintrag trägt eine monotone `seq`, eine `time` und einen `type`-diskriminierten `data`-Payload; Surface-Varianten dürfen außerdem zitierte frühere Events in `sourceEventSeqs` auflisten und ein `surfaceOp` tragen.
 
-The `SessionEvent` envelope's exact conditional fields, the thirteen core event variants (`turn/start`, `turn/end`, `step/start`, `step/end`, `user/message`, `system/message`, `assistant/message`, `assistant/attempt`, `tool/call`, `tool/result`, `request/header`, `request/context`, `session/end-seed`), the `deriveMessages()` projection rules, the `TurnEndReason` reasons, and the execution-enclosure and standalone-event rules are on **[session.md](session.md)**. How the log is made durable — the `SessionPersistence` interface, JSONL provider, `session/flush` checkpoint, crash recovery, and `SessionHeader` — is on **[persistence.md](persistence.md)**.
+Die exakten Conditional-Felder des `SessionEvent`-Envelopes, die dreizehn Core-Event-Varianten (`turn/start`, `turn/end`, `step/start`, `step/end`, `user/message`, `system/message`, `assistant/message`, `assistant/attempt`, `tool/call`, `tool/result`, `request/header`, `request/context`, `session/end-seed`), die `deriveMessages()`-Projektionsregeln, die `TurnEndReason`-Reasons sowie die Execution-Enclosure- und Standalone-Event-Regeln stehen auf **[session.de.md](session.de.md)**. Wie das Log dauerhaft gemacht wird — das `SessionPersistence`-Interface, den JSONL-Provider, den `session/flush`-Checkpoint, Crash-Recovery und `SessionHeader` — steht auf **[persistence.de.md](persistence.de.md)**.
 
 ## `ToolDefinition`
 
-The one pipeline-authoring type that is core: what every registered tool *is* — a model-facing `ToolSchema` plus an `execute` function and optional final-content and UI callbacks. A tool author rarely constructs it by hand (the `defineTool` DSL builds it with typed arguments), but it is the contract the registry holds and the loop dispatches through.
+Der eine Pipeline-Authoring-Typ, der Core ist: was jedes registrierte Tool *ist* — ein modellsichtbares `ToolSchema` plus eine `execute`-Funktion und optionale Final-Content- und UI-Callbacks. Ein Tool-Autor konstruiert ihn selten von Hand (das `defineTool`-DSL baut ihn mit typisierten Argumenten), aber er ist der Contract, den die Registry hält und die Schleife dispatcht.
 
-Its full fields, the `defineTool`/`ValueSchemaSpec`/`ParameterSchemaSpec` typed schema DSL, the `ToolExecution`/`ToolExecutionResult` waterfall types, and the tool-presentation UI types are on **[tools.md](tools.md)**.
+Seine vollen Felder, das `defineTool`/`ValueSchemaSpec`/`ParameterSchemaSpec`-typisierte Schema-DSL sowie die `ToolExecution`/`ToolExecutionResult`-Waterfall-Typen und die Tool-Presentation-UI-Typen stehen auf **[tools.de.md](tools.de.md)**.
 
-## Repo-wide type patterns
+## Repo-weite Typmuster
 
-Two patterns recur across every subsystem and are documented once, here.
+Zwei Muster rekurrieren über jedes Subsystem und werden hier einmal dokumentiert.
 
 <a id="the-map--derived-union-pattern"></a>
 
-### The `…Map → derived-union` pattern
+### Das `…Map → derived-union`-Muster
 
-Almost every extensible sum type in the harness follows one pattern: an interface keyed by a discriminant tag (the `…Map`), from which the union is derived with `keyof`. Plugins add variants by **declaration merging** — no edit to the owning package.
+Fast jeder extensible Sum-Typ im Harness folgt einem Muster: ein Interface, das nach einem Diskriminant-Tag keyed ist (die `…Map`), aus dem die Union mit `keyof` abgeleitet wird. Plugins fügen Varianten per **Declaration Merging** hinzu — keine Edit am besitzenden Package.
 
 ```ts ignore-check
 // The pattern, schematically:
@@ -384,23 +390,23 @@ declare module '@deepseek-ai/dsh-llm' {
 }
 ```
 
-Five canonical maps use this pattern; a plugin author extends these:
+Fünf kanonische Maps verwenden dieses Muster; ein Plugin-Autor erweitert diese:
 
-| Map | Package | Derives | Catalog |
+| Map | Package | Leitet ab | Katalog |
 |---|---|---|---|
-| `ContentBlockMap` | dsh-llm | `ContentBlock` | [llm-streaming.md](llm-streaming.md#content-blocks-and-messages) |
-| `MessageSourceMap` | dsh-llm | `MessageSource` | [llm-streaming.md](llm-streaming.md#content-blocks-and-messages) |
-| `FinishReasonMap` | dsh-llm | `FinishReason` | [llm-streaming.md](llm-streaming.md#the-model-request-and-result) |
-| `TurnEndReasonMap` | dsh-session | `TurnEndReason` | [session.md](session.md) |
-| `SessionEventMap` | dsh-session | `SessionEvent` | [session.md](session.md) |
+| `ContentBlockMap` | dsh-llm | `ContentBlock` | [llm-streaming.de.md](llm-streaming.de.md#content-blocks-and-messages) |
+| `MessageSourceMap` | dsh-llm | `MessageSource` | [llm-streaming.de.md](llm-streaming.de.md#content-blocks-and-messages) |
+| `FinishReasonMap` | dsh-llm | `FinishReason` | [llm-streaming.de.md](llm-streaming.de.md#the-model-request-and-result) |
+| `TurnEndReasonMap` | dsh-session | `TurnEndReason` | [session.de.md](session.de.md) |
+| `SessionEventMap` | dsh-session | `SessionEvent` | [session.de.md](session.de.md) |
 
-Two large discriminated unions are the ones consumers `switch` over most: **`StreamChunk`** (the streaming protocol) and **`SessionEvent`** (the log entry). Per the repo convention, `switch` on the tag — don't chain `if`s — so each arm narrows and a typo'd tag fails to compile.
+Zwei große discriminated Unions sind die, über die Consumer am häufigsten `switch`en: **`StreamChunk`** (das Streaming-Protokoll) und **`SessionEvent`** (der Log-Eintrag). Per Repo-Konvention über den Tag `switch`en — keine `if`-Kette — sodass jeder Arm narrowt und ein vertippter Tag nicht kompiliert.
 
-### Branded IDs
+### Branded-IDs
 
-IDs passed between packages are **branded** — structurally strings, but non-interchangeable at the type level (a `SessionId` cannot be passed where a `ToolCallId` is expected). Construction uses the shared `brandString<T>()` helper or an owner-defined validating factory; comparison, logging, and JSON behave as ordinary strings.
+IDs, die zwischen Packages übergeben werden, sind **branded** — strukturell Strings, aber auf Type-Ebene nicht austauschbar (eine `SessionId` kann nicht übergeben werden, wo ein `ToolCallId` erwartet wird). Konstruktion verwendet den geteilten `brandString<T>()`-Helper oder eine Owner-definierte validierende Factory; Vergleich, Logging und JSON verhalten sich wie gewöhnliche Strings.
 
-The `Branded<B>` primitive and stateless constructor live in [dsh-brand](../../packages/util/brand), which has no harness capability dependency. `brandString<T>()` applies a compile-time-only string brand.
+Das `Branded<B>`-Primitiv und der statelose Konstruktor leben in [dsh-brand](../../packages/util/brand), der keine Harness-Capability-Dependency hat. `brandString<T>()` wendet ein Compile-Time-only-String-Brand an.
 
 Source: [`packages/util/brand/src/index.ts`](../../packages/util/brand/src/index.ts)
 
@@ -409,7 +415,7 @@ Source: [`packages/util/brand/src/index.ts`](../../packages/util/brand/src/index
 type Branded<B extends string> = string & { readonly [BRAND]: B }
 ```
 
-The two core IDs are `ToolCallId` (correlates a tool call with its result; dsh-llm) and `SessionId` (the shared live agent and durable session identity; dsh-session). Capability packages brand their own ids too, such as `JobId` in [jobs.md](jobs.md).
+Die beiden Core-IDs sind `ToolCallId` (korreliert einen Tool-Call mit seinem Resultat; dsh-llm) und `SessionId` (die geteilte Live-Agent- und durable Session-Identität; dsh-session). Capability-Packages branden auch ihre eigenen IDs, wie `JobId` in [jobs.de.md](jobs.de.md).
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -417,7 +423,7 @@ The two core IDs are `ToolCallId` (correlates a tool call with its result; dsh-l
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxagentdefaultmodel--agentdefaultmodelconfig"></a>
 
@@ -479,7 +485,7 @@ async createAgent(ownerCtx: Context, options: CreateAgentOptions): Promise<Agent
 async resume(ownerCtx: Context, options: ResumeAgentOptions): Promise<AgentHandle>
 ```
 
-Types: [SessionHeader](persistence.md)
+Types: [SessionHeader](persistence.de.md)
 
 Source: [`packages/core/agent-loop/src/index.ts`](../../packages/core/agent-loop/src/index.ts)
 
@@ -721,7 +727,7 @@ async recompose(agentCtx: Context, id: string): Promise<AgentPreset>
 async standingKeyFor(id?: string): Promise<ScopeKey>
 ```
 
-Types: [ScopeKey](scope.md)
+Types: [ScopeKey](scope.de.md)
 
 Source: [`packages/preset/agent-presets/src/index.ts`](../../packages/preset/agent-presets/src/index.ts)
 
@@ -922,7 +928,7 @@ Process-local assistant-stream publication. Chunk frames are transient; the loop
 'agent/assistant-stream'(this: Scoped<Agent>, payload: { agent: Agent; frame: AssistantStreamFrame }): void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -946,7 +952,7 @@ A fully configured agent and live session were published. Setup is composition-o
 'agent/created'(this: Scoped<Agent>, payload: { agent: Agent }): void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -968,7 +974,7 @@ An agent left the registry; AgentLoop emits this after driver quiescence and sco
 'agent/disposed'(this: Scoped<Agent>, payload: { agent: Agent }): void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -992,7 +998,7 @@ A step or turn errored. The machine reports a failure here even when the error h
 'agent/error'(this: Scoped<Agent>, payload: { agent: Agent; turn: number; step: number; error: unknown }): void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1016,7 +1022,7 @@ One message left the inbox inside its open turn. If the proposed step is rejecte
 'agent/inbox/claimed'(this: Scoped<Agent>, payload: { agent: Agent; message: UserMessage; turn: number }): void
 ```
 
-Types: [Scoped](scope.md) · [UserMessage](session.md)
+Types: [Scoped](scope.de.md) · [UserMessage](session.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1037,7 +1043,7 @@ One message was discarded from the live inbox.
 'agent/inbox/discarded'(this: Scoped<Agent>, payload: { agent: Agent; message: UserMessage }): void
 ```
 
-Types: [Scoped](scope.md) · [UserMessage](session.md)
+Types: [Scoped](scope.de.md) · [UserMessage](session.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1058,7 +1064,7 @@ One message entered the live inbox.
 'agent/inbox/inserted'(this: Scoped<Agent>, payload: { agent: Agent; message: UserMessage }): void
 ```
 
-Types: [Scoped](scope.md) · [UserMessage](session.md)
+Types: [Scoped](scope.de.md) · [UserMessage](session.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1083,7 +1089,7 @@ Reject a proposed step or replace the messages that enter it. Calling `next()` p
 'agent/pre-step'(this: Scoped<Agent>, payload: { agent: Agent; messages: UserMessage[]; turn: number; step: number; signal: AbortSignal }, next: () => Promise<PreStepDecision>): Promise<PreStepDecision>
 ```
 
-Types: [Scoped](scope.md) · [UserMessage](session.md)
+Types: [Scoped](scope.de.md) · [UserMessage](session.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1113,7 +1119,7 @@ Replace the frozen call configuration. `await next()` yields the config the mach
 'agent/request'(this: Scoped<Agent>, payload: { agent: Agent; turn: number; step: number; signal: AbortSignal }, next: () => Promise<LlmCallConfig>): Promise<LlmCallConfig>
 ```
 
-Types: [LlmCallConfig](llm-streaming.md) · [Scoped](scope.md)
+Types: [LlmCallConfig](llm-streaming.de.md) · [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1142,7 +1148,7 @@ Handle one failed model-request attempt before the loop retries or closes its st
 'agent/request-error'(this: Scoped<Agent>, payload: { agent: Agent; turn: number; step: number; provider: string; failure: LlmFailure; retryPolicy: ResolvedRetryPolicy | undefined; signal: AbortSignal }, next: () => Promise<RequestErrorAction>): Promise<RequestErrorAction>
 ```
 
-Types: [LlmFailure](llm-streaming.md) · [ResolvedRetryPolicy](llm-streaming.md) · [Scoped](scope.md)
+Types: [LlmFailure](llm-streaming.de.md) · [ResolvedRetryPolicy](llm-streaming.de.md) · [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1166,7 +1172,7 @@ The session lifecycle began, once before the first turn. Use `agent.inject()` to
 'agent/session-start'(this: Scoped<Agent>, payload: { agent: Agent; source: SessionStartSource }): void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1189,7 +1195,7 @@ Agent status changed (`idle` ⇄ `running`). A waking delivery enters `running` 
 'agent/status'(this: Scoped<Agent>, payload: { agent: Agent; status: AgentStatus }): void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
@@ -1220,7 +1226,7 @@ The turn is about to close: the model owes no response (no live tool calls, no f
 'agent/turn-stopping'(this: Scoped<Agent>, payload: { agent: Agent; turn: number; signal: AbortSignal }): Promise<void> | void
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/agent/src/runtime-types.ts`](../../packages/core/agent/src/runtime-types.ts)
 
