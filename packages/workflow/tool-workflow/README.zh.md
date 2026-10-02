@@ -11,6 +11,8 @@ kind: "package-reference"
 
 `dsh-tool-workflow` 让模型运行 JavaScript 编排脚本，把工作委派给多个 subagent，并返回脚本的最终 JSON 值。仅当用户明确要求工作流或大型多 agent 编排时使用；一两项委派应使用普通 subagent 调用。父级轮次会等待所有委派任务结束；取消或异常完成会返回错误，而不是部分成功。部署方可以通过 `toolName` 重命名工具，并通过 `maxResultChars` 限制渲染结果文本。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
