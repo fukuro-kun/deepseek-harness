@@ -6,6 +6,8 @@ The permission-preset layer of [dsh-permission-presets](../../packages/interacti
 
 Source: [`packages/interaction/permission-presets/src/index.ts`](../../packages/interaction/permission-presets/src/index.ts)
 
+English | [中文](permission-presets.zh.md) | [Deutsch](permission-presets.de.md)
+
 ## The preset table
 
 A preset is a table key mapping to one sandbox/approval bundle plus optional client presentation; the default table ships `workspace-write` (`workspace-write` + `ask`) and `danger-full-access` (`danger-full-access` + `never`).

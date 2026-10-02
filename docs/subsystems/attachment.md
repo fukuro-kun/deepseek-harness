@@ -6,6 +6,8 @@ The attachment seam separates binary image and generic-file ownership from the s
 
 Unsent browser drafts may stay in memory and native clients may stage them in operating-system temporary storage. Browser generic files become durable before they receive a staged prompt receipt. Once the host accepts a user message, its images move below `<DSH_HOME>/attachments/v1` before the user event is appended. Structured model image output follows the same persist-before-event rule.
 
+English | [中文](attachment.zh.md) | [Deutsch](attachment.de.md)
+
 Source: [`packages/attachment/attachment/src/types.ts`](../../packages/attachment/attachment/src/types.ts)
 
 ## Identity and verified metadata

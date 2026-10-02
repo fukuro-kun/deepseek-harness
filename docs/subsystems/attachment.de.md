@@ -1,18 +1,16 @@
-# 持久附件
+# Durable Attachments
 
-[English](attachment.md) | 中文
+[English](attachment.md) | [中文](attachment.zh.md) | Deutsch
 
-附件 seam 将二进制图片和通用文件的所有权与会话日志分离。生产方把字节交给 [`ctx.attachments`](#ctxattachments--attachmentstore-abstract-seam)；只有对象完成持久化后，该服务才会发布不可变的内容寻址引用。会话事件和模型可见的附件块包含该引用及其元数据，绝不包含浏览器对象 URL、宿主临时路径、提供方 URL 或 base64 数据。独立的 [`ctx.fileUploads`](#ctxfileuploads--fileuploads) 服务把浏览器文件传输与暂存凭证绑定到接收方 Agent。
+Die Attachment-Seam trennt das Eigentum an binären Bildern und generischen Dateien vom Session-Log. Ein Produzent übergibt Bytes an [`ctx.attachments`](#ctxattachments--attachmentstore-abstract-seam); der Service veröffentlicht eine unveränderliche, content-addressierte Referenz erst, nachdem das Objekt durable ist. Session-Events und modellsichtbare Attachment-Blöcke enthalten diese Referenz und Metadaten, niemals eine Browser-Objekt-URL, einen temporären Host-Pfad, eine Provider-URL oder ein base64-Payload. Der unabhängige Service [`ctx.fileUploads`](#ctxfileuploads--fileuploads) bindet Browser-Dateiübertragungen und gestaffelte Empfangsbestätigungen an den empfangenden Agent.
 
-未发送的浏览器草稿可以保留在内存中，原生客户端也可以将其暂存于操作系统临时存储。浏览器通用文件取得暂存 prompt 凭证前会完成持久化。宿主接受用户消息后，会先把消息中的图片移到 `<DSH_HOME>/attachments/v1` 下，再追加用户事件。结构化模型图片输出遵循同样的先持久化、后追加事件规则。
+Nicht gesendete Browser-Entwürfe dürfen im Speicher bleiben, und native Clients dürfen sie in temporärem Betriebssystemspeicher bereitstellen. Generische Browser-Dateien werden durable, bevor sie eine gestaffelte Prompt-Bestätigung erhalten. Sobald der Host eine User-Message annimmt, wandern ihre Bilder unter `<DSH_HOME>/attachments/v1`, bevor das User-Event angehängt wird. Strukturierte Model-Bildausgabe folgt derselben Persist-before-Event-Regel.
 
-来源：[`packages/attachment/attachment/src/types.ts`](../../packages/attachment/attachment/src/types.ts)
+Quelle: [`packages/attachment/attachment/src/types.ts`](../../packages/attachment/attachment/src/types.ts)
 
-## 标识与经过校验的元数据
+## Identität und verifizierte Metadaten
 
-`AttachmentId` 是带类型标记的不透明字符串。本地后端目前生成 `sha256:<digest>`，但消费方既不能解析这种表示，也不能据此派生文件系统路径。消费方可以通过 `imageHostPath()` 询问附件提供方所持对象的位置，然后必须由当前执行文件系统判断模型工具能否读取该宿主路径。
-
-[English](attachment.md) | 中文 | [Deutsch](attachment.de.md)
+`AttachmentId` ist ein gebrandeter opaker String. Das lokale Backend emittiert derzeit `sha256:<digest>`, aber Consumers dürfen diese Darstellung weder parsen noch einen Dateisystempfad daraus ableiten. Ein Consumer kann den Attachment-Provider über `imageHostPath()` nach dem Objektort fragen, muss dann aber über das aktuelle Ausführungsdateisystem entscheiden, ob Model-Tools diesen Host-Pfad lesen können.
 
 ```ts type-equiv
 /** Raster image formats accepted by the version-one attachment path. */
@@ -58,11 +56,11 @@ interface ImageAttachmentLimits {
 }
 ```
 
-本地后端每条消息最多准入 20 张图片，源图编码数据总量不超过 200 MiB。单张源图不得超过 20 MiB、64,000,000 像素和单边 8192 像素。这些源文件限制先于独立的规范化阶段执行；该阶段默认把长边限制为 2048 像素，把编码数据限制为 4 MiB。
+Das lokale Backend lässt pro Nachricht höchstens 20 Bilder und 200 MiB kodierte Quelldaten zu. Eine Quelle darf bis zu 20 MiB, 64.000.000 Pixel und 8192 Pixel pro Seite nutzen. Diese Quell-Limits gelten vor der unabhängigen Normalisierungsstufe, die die lange Kante standardmäßig auf 2048 Pixel und die kodierten Daten auf 4 MiB begrenzt.
 
-引用记录固有尺寸和编码长度，使客户端无需先解码即可排布历史记录；每次权威读取仍会根据对象重新校验摘要、媒体签名、尺寸和元数据。
+Die Referenz zeichnet intrinsische Abmessungen und kodierte Länge auf, damit Clients die Historie ohne vorheriges Dekodieren layouten können; jede autoritative Leseoperation prüft dennoch Digest, Mediasignatur, Abmessungen und Metadaten erneut gegen das Objekt.
 
-## 提交与经校验读取的数据
+## Commit- und verifizierte Lese-Payloads
 
 ```ts type-equiv
 /**
@@ -159,7 +157,7 @@ interface RequestImageAttachment {
 }
 ```
 
-`saveImage()` 准备并原子提交提供方无关的规范化附件，然后直接返回 `ImageAttachmentRef`。`saveImages()` 在发布批次前为每个成员各准备一次经过验证的附件，因此校验拒绝不会留下部分对象，发布也不会重复解码或选择质量。`admitPromptContent()` 在文件凭证解析后接收完整且有序的 Host prompt，把 base64 图片上传替换为持久引用，并让持久文件引用原样通过。`admitEncodedImages()` 支持其他 wire 入口，把张数、聚合字节和有序批量准入交给 `saveImages()`。`admitEncodedFile()` 让编码协议适配器使用服务拥有的规范 base64 准入，`isAttachmentError()` 让这些适配器无需导入实现辅助函数即可识别稳定的附件错误。`readImage()` 校验来自已授权会话路径的规范化附件。`imageHostPath()` 只公开提供方所持对象的宿主位置，不判断当前工具执行环境能否读取它。`readImageRequest()` 按确切路由的像素和字节预算派生并缓存确定性请求版本。该版本包含编码字节和元数据，不包含执行环境路径。新条目在发布前完整解码，缓存命中只做有界元数据探测。调用方需要有序批次时，对单数方法使用 `Promise.all`。本地实现按需编码首选候选、合并相同请求身份的并发任务、允许每个等待方单独取消、没有等待方时停止共享任务，并通过实例级限流器限制全部变换，默认同时执行两项。该服务不规定保留策略：恢复和 fork 后的会话可能共享对象，因此基于引用的垃圾回收会延期实现，不与单个会话的删除绑定。
+`saveImage()` bereitet ein provider-unabhängiges normalisiertes Attachment vor und committet es atomar, bevor es dessen `ImageAttachmentRef` zurückgibt. `saveImages()` bereitet jedes validierte Attachment einmal vor, bevor der Batch veröffentlicht wird, sodass eine Validierungsablehnung keine Teilobjekte hinterlässt und die Veröffentlichung weder Dekodierung noch Qualitätsauswahl wiederholt. `admitPromptContent()` nimmt den vollständigen, geordneten Host-Prompt nach der Auflösung der Datei-Empfangsbestätigungen an, ersetzt base64-Bild-Uploads durch durable Referenzen und reicht durable Datei-Referenzen unverändert durch. `admitEncodedImages()` unterstützt weitere Wire-Einstiege und delegiert Anzahl, Aggregat-Bytes und geordnete Batch-Admission an `saveImages()`. `admitEncodedFile()` gibt kodierten Protokoll-Adaptern dieselbe service-eigene Canonical-base64-Admission, und `isAttachmentError()` lässt diese Adapter stabile Attachment-Fehler erkennen, ohne Implementierungshelfer zu importieren. `readImage()` verifiziert ein normalisiertes Attachment von einem autorisierten Session-Pfad. `imageHostPath()` legt nur den provider-eigenen Host-Objektort offen; es entscheidet nicht, ob die aktuelle Tool-Ausführungswelt ihn lesen kann. `readImageRequest()` leitet eine deterministische Request-Version unter einem exakten Routen-Pixel- und Byte-Budget ab und cached sie. Diese Version enthält kodierte Bytes und Metadaten, aber keinen Ausführungswelt-Pfad. Neue Einträge werden vor der Veröffentlichung vollständig dekodiert, während Cache-Treffer eine begrenzte Metadaten-Probe nutzen. Aufrufer verwenden `Promise.all` über der Einzelmethode, wenn sie einen geordneten Batch brauchen. Die lokale Implementierung kodiert bevorzugte Kandidaten lazy, führt gleiche Request-Identitäten in Singleflights zusammen, lässt jeden Wartenden unabhängig abbrechen, stoppt geteilte Arbeit, wenn kein Wartender übrig bleibt, und begrenzt alle Transformationen mit ihrem instanzweiten Limiter, der standardmäßig zwei gleichzeitige Transformationen zulässt. Der Service ist retention-neutral: Resumte und geforkte Sessions dürfen Objekte teilen, daher wird referenzbewusste Garbage Collection verschoben statt an die Löschung einer einzelnen Session gebunden.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -167,7 +165,7 @@ interface RequestImageAttachment {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxattachments--attachmentstore-abstract-seam"></a>
 
@@ -347,7 +345,7 @@ bindPrompt( agent: Agent, receiptIds: readonly FileUploadReceiptId[], requestId:
 retirePrompt(agent: Agent, requestId: string): void
 ```
 
-Types: [Agent](core.zh.md) · [SessionId](core.zh.md)
+Types: [Agent](core.de.md) · [SessionId](core.de.md)
 
 Source: [`packages/client/file-upload/src/index.ts`](../../packages/client/file-upload/src/index.ts)
 <!-- END GENERATED cordis-surface -->
