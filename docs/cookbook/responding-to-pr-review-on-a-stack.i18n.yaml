@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/responding-to-pr-review-on-a-stack.md
-responding-to-pr-review-on-a-stack.md: 61b15fd5e7b3a528957ef3c9e958aac0e11eb43b
-responding-to-pr-review-on-a-stack.zh.md: a33418d342e57dd3c920008a4b12b2f33d6f31da
+responding-to-pr-review-on-a-stack.md: eaa947f927b715601fca6c99a47e42d22c7be59d
+responding-to-pr-review-on-a-stack.zh.md: ccfe18ba5fcef8044b7de8a6c5231fc5bd88e22b
+responding-to-pr-review-on-a-stack.de.md: b180280f11439aebfc8576b53fef75a37010c580
