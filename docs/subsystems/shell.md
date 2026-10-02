@@ -6,6 +6,8 @@ The bash execution seam is split across a Service Definition ([dsh-shell](../../
 
 Source: [`packages/shell/shell/src/types.ts`](../../packages/shell/shell/src/types.ts)
 
+English | [中文](shell.zh.md) | [Deutsch](shell.de.md)
+
 ## Managed shell environment namespace
 
 `DSH_*` variables are Harness-owned child-process facts. The model-facing bash tool collects them through `ctx.shellEnv` and passes them through `ShellExecRequest.dshEnv`; the subprocess service removes inherited `DSH_*` names before merging the current snapshot. The `DshEnvironmentKey`/`DshEnvironment` vocabulary is owned by the [subprocess seam](subprocess.md) and re-exported by `dsh-shell`.

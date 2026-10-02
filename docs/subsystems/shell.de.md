@@ -1,20 +1,18 @@
-# Bash 执行器
+# Bash-Executor
 
-[English](shell.md) | 中文
+[English](shell.md) | [中文](shell.zh.md) | Deutsch
 
-bash 执行 seam 分为 Service Definition（[dsh-shell](../../packages/shell/shell)，`ctx.shell`）、Service Provider（[dsh-bash-local](../../packages/shell/bash-local) 与 [dsh-bash-sandbox](../../packages/shell/bash-sandbox)）和 Consumer（[dsh-tool-bash](../../packages/shell/tool-bash)，即 `bash` schema）。通用后台任务的 job id、所有权与控制位于 [jobs.md](jobs.zh.md)；本 seam 返回一个不含任务概念的进程句柄。managed-range 机制封装在[子进程 seam](subprocess.zh.md)之后。
+Der bash-Execution-Seam ist aufgeteilt in eine Service Definition ([dsh-shell](../../packages/shell/shell), `ctx.shell`), Service Providers ([dsh-bash-local](../../packages/shell/bash-local) und [dsh-bash-sandbox](../../packages/shell/bash-sandbox)) und einen Consumer ([dsh-tool-bash](../../packages/shell/tool-bash), das `bash`-Schema). Generische Background-Job-Ids, Ownership und Controls liegen in [jobs.md](jobs.de.md); dieser Seam gibt einen jobfreien Prozess-Handle zurück. Die Managed-Range-Mechanik liegt hinter dem [Subprocess-Seam](subprocess.de.md).
 
-源码：[`packages/shell/shell/src/types.ts`](../../packages/shell/shell/src/types.ts)
+Quelle: [`packages/shell/shell/src/types.ts`](../../packages/shell/shell/src/types.ts)
 
-## 受管 shell 环境命名空间
+## Der managed Shell-Environment-Namespace
 
-`DSH_*` 变量是归 Harness 所有的子进程事实。面向模型的 bash 工具通过 `ctx.shellEnv` 收集它们，再经由 `ShellExecRequest.dshEnv` 传递；子进程服务在合并当前快照之前会移除继承而来的 `DSH_*` 名称。`DshEnvironmentKey`／`DshEnvironment` 词汇归[子进程 seam](subprocess.zh.md)所有，由 `dsh-shell` 重导出。
+`DSH_*`-Variablen sind Harness-eigene Child-Process-Fakten. Das modellseitige bash-Tool sammelt sie über `ctx.shellEnv` und reicht sie über `ShellExecRequest.dshEnv` durch; der Subprocess-Service entfernt geerbte `DSH_*`-Namen, bevor er den aktuellen Snapshot einmischt. Das `DshEnvironmentKey`/`DshEnvironment`-Vokabular gehört dem [Subprocess-Seam](subprocess.de.md) und wird von `dsh-shell` re-exportiert.
 
-## 请求与规格：`resolve()` 拆分
+## Request vs. Spec: der `resolve()`-Split
 
-[English](shell.md) | 中文 | [Deutsch](shell.de.md)
-
-该 seam 将**面向模型/插件的请求**（`workdir`/`timeoutMs`/`stdoutMaxBytes` 可选，由配置或请求策略补全）与执行器实际使用的**完全解析后的 spec**（这些字段均为必填）分开。工具层在二者之间调用 `ctx.shell.resolve(request)`（仓库的「包边界处显式优于隐式」规则）；`ShellExecSpec` 携带的是已解析的值。
+Der Seam trennt den **modell-/pluginseitigen Request** (optionales `workdir`/`timeoutMs`/`stdoutMaxBytes`, befüllt aus Config oder Request-Policy) vom **vollständig aufgelösten Spec**, auf den der Executor agiert (diese Felder erforderlich). Die Tool-Schicht ruft `ctx.shell.resolve(request)` dazwischen auf (die Regel des Repos „explizit > implizit an Package-Grenzen"); ein `ShellExecSpec` trägt aufgelöste Werte.
 
 ```ts type-equiv
 /**
@@ -100,13 +98,13 @@ interface ShellExecSpec {
 }
 ```
 
-`stdin` 和 `env` 是受信任的进程内插件输入，不由 `dsh-tool-bash` 暴露。本地执行器会先清除环境中的凭据，再合并调用方显式提供的 env。
+`stdin` und `env` sind vertrauenswürdige In-Process-Plugin-Inputs und werden von `dsh-tool-bash` nicht exponiert. Der lokale Executor scrubbt zuerst ambient Credentials, bevor er explizit vom Aufrufer geliefertes env einmischt.
 
-`stdoutMaxBytes` 同样仅供受信任插件使用。它让前台消费方能在有界解析预算内请求完整 stdout，而不会改变 stderr、后台任务或面向模型的 bash 工具的常规输出上限。
+`stdoutMaxBytes` ist ebenfalls nur für vertrauenswürdige Plugins. Es erlaubt einem Foreground-Consumer, vollständiges stdout bis zu einem begrenzten Parser-Budget anzufordern, ohne stderr, Background Jobs oder das gewöhnliche Output-Cap des modellseitigen bash-Tools zu ändern.
 
-## 前台运行：`ShellRunResult`
+## Foreground Runs: `ShellRunResult`
 
-一次已完成（或被终止）的前台运行的结果。正交的结果**独立报告**：一个进程可以同时超时并以退出码 0 退出（因为它捕获了信号），因此 `timedOut`、`aborted`、`signal` 和 `exitCode` 各自独立为一个字段；调用方永远不会把一次被提前中断的运行误读为正常成功。
+Das Ergebnis eines abgeschlossenen (oder gekillten) Foreground Runs. Orthogonale Outcomes werden **unabhängig** gemeldet — ein Prozess kann sowohl ein Timeout haben ALS AUCH mit 0 exiten, weil er das Signal gefangen hat — deshalb sind `timedOut`, `aborted`, `signal` und `exitCode` jeweils eigene Felder; ein Aufrufer liest einen vorzeitig abgebrochenen Run niemals als sauberen Erfolg.
 
 ```ts type-equiv
 /** The outcome of one completed (or killed) foreground run. */
@@ -138,13 +136,13 @@ interface ShellRunResult {
 }
 ```
 
-每个流是一个 `CollectedOutput`：（可能被截断的）文本加恢复信息；截断时，`text` 是**尾部**，完整流溢出到一个私有文件。这些字段归[子进程 seam](subprocess.zh.md)所有，由 `dsh-shell` 重导出。
+Jeder Stream ist ein `CollectedOutput` — der (möglicherweise gekürzte) Text plus Recovery-Info; bei Kürzung ist `text` der **Tail**, und der vollständige Stream spillt in eine private Datei. Die Felder gehören dem [Subprocess-Seam](subprocess.de.md) und werden von `dsh-shell` re-exportiert.
 
-## 文件沙箱：`ShellSandboxInfo`
+## Datei-Sandbox: `ShellSandboxInfo`
 
-使用沙箱的执行器通过 `ShellExecutor.sandboxMode` 暴露其已配置的模式回退值。工具层请求 [`@deepseek-ai/dsh-sandbox-policy`](../../packages/sandbox/sandbox-policy/README.zh.md)，把每个调用会话的持久 `sandbox/mode` 覆盖值与不可变 cwd 解析为 `ShellExecRequest.sandboxPolicy`；经用户批准、严格更宽松的调用只替换模式。模式/root/enforcement 词汇归 [`@deepseek-ai/dsh-sandbox` 沙箱 seam](sandbox.zh.md) 所有；模式仅管辖文件效果。
+Ein sandboxnutzender Executor exponiert sein konfiguriertes Mode-Fallback über `ShellExecutor.sandboxMode`. Die Tool-Schicht beauftragt [`@deepseek-ai/dsh-sandbox-policy`](../../packages/sandbox/sandbox-policy/README.de.md), das durable `sandbox/mode`-Override und das immutable cwd der jeweils aufrufenden Session in `ShellExecRequest.sandboxPolicy` aufzulösen; ein vom Benutzer genehmigter, strikt weiterer Aufruf ersetzt nur den Mode. Das Mode/Root/Enforcement-Vokabular gehört dem [`@deepseek-ai/dsh-sandbox`-Seam](sandbox.de.md); Modes regeln nur Dateieffekte.
 
-沙箱化运行会报告其模式、保守的拒绝分类与强制执行完整度。`runnerFailed` 标记命令运行前沙箱 runner 已失败；前台执行会抛出 `SANDBOX_UNAVAILABLE`，而已结束的后台进程只能通过其事实通道报告。
+Ein sandboxed Run meldet seinen Mode, die konservative Denial-Klassifikation und die Enforcement-Vollständigkeit. `runnerFailed` markiert einen Sandbox-Runner-Fehler bevor das Kommando lief; die Foreground-Ausführung wirft `SANDBOX_UNAVAILABLE`, während ein beendeter Hintergrundprozess nur seinen Faktenkanal hat.
 
 ```ts type-equiv
 /**
@@ -164,11 +162,11 @@ interface ShellSandboxInfo {
 }
 ```
 
-当受限模式没有可用后端时，`ctx.sandbox` 提供方会抛出、执行器会传播由[沙箱 seam](sandbox.zh.md)所有的 `SANDBOX_UNAVAILABLE` 错误码。选定的 runner 拒绝其 profile 时会触达同一个故障关闭的前台错误；已结束的后台任务则记录 `runnerFailed`。模型会在结果中收到拒绝/runner 事实，仅当拒绝标记指出生效模式时才得知该模式，并可通过 `sandbox_permissions` 加 `justification` 请求一次性、严格更宽松的重试；执行任何操作前，`ctx.approval` 必须批准该次确切调用。完整的策略与切换设计见[沙箱 Agent Note](../../.agents/notes/implemented/feature/2026-07-06-sandbox.zh.md)。
+Der `SANDBOX_UNAVAILABLE`-Fehlercode (im Besitz des [Sandbox-Seams](sandbox.de.md)) ist der, den der `ctx.sandbox`-Provider wirft — und der Executor propagiert — wenn ein confinierender Mode kein nutzbares Backend hat. Ein ausgewählter Runner, der sein Profil ablehnt, erreicht denselben fail-closed-Foreground-Fehler; ein beendeter Background Job verzeichnet `runnerFailed`. Das Modell erhält Denial-/Runner-Fakten in den Ergebnissen, erfährt den effektiven Mode nur, wenn ein Denial-Marker ihn benennt, und kann über `sandbox_permissions` plus `justification` einen einmaligen, strikt weiteren Retry anfordern; `ctx.approval` muss genau diesen Aufruf genehmigen, bevor irgendetwas ausgeführt wird. Das vollständige Policy- und Switching-Design ist die [Sandbox Agent Note](../../.agents/notes/implemented/feature/2026-07-06-sandbox.de.md).
 
-## 后台进程：`ShellProcess`
+## Hintergrundprozesse: `ShellProcess`
 
-`start()` 返回不含 id 或所有者的句柄。`dsh-tool-bash` 将它适配为 `ctx.jobs.start()` 钩子；随后由通用运行时拥有任务标识与生命周期。`done` 会在底层进程结算时完成且绝不 reject；subprocess 提供方的 rejection 会生成状态为 `killed` 的进程，并把不声明阶段的错误写入 stderr。进程结算后仍可读取，并且沙箱事实会在 `done` 完成前写入。
+`start()` gibt einen Handle ohne Id oder Owner zurück. `dsh-tool-bash` adaptiert ihn in `ctx.jobs.start()`-Hooks; die generische Runtime besitzt dann Job-Identität und Lifecycle. `done` resolved, wenn der zugrundeliegende Prozess settled, und rejectet nie; eine Provider-Rejection des Subprocess wird zu einem `killed`-Prozess mit einem stage-neutralen Fehler auf stderr. Reads bleiben nach dem Settlement gültig, und Sandbox-Fakten werden gestempelt, bevor `done` resolved.
 
 ```ts type-equiv
 /**
@@ -205,7 +203,7 @@ interface ShellProcess {
 }
 ```
 
-`readOutput()` 返回增量内容与 spill 恢复信息：
+`readOutput()` gibt das inkrementelle Delta und die Spill-Recovery-Fakten zurück:
 
 ```ts type-equiv
 /** One incremental {@link ShellProcess.readOutput} read. */
@@ -221,9 +219,9 @@ interface ShellProcessRead {
 }
 ```
 
-## 服务
+## Der Service
 
-`ShellExecutor` 拥有 `resolve`、前台 `run`、后台进程 `start` 以及 `sandboxMode` 能力事实。`dsh-bash-local` 拥有命令默认值补全、超时/中止分类、终端环境以及后台读取合并；managed-range 终止、有界收集器、spill 文件、凭据清除与 dispose（资源释放）后完全停稳归[子进程服务](subprocess.zh.md)所有。`dsh-tool-bash` 拥有面向模型的渲染，并将后台句柄适配到[通用任务运行时](jobs.zh.md)。`dsh-shell` 拥有 shell 工具共享的退出状态约定：导出的 `parseExitStatus`/`ParsedExitStatus` 是 `dsh-tool-bash` 的 `renderResult` 与 `dsh-tool-pwsh` 的 `renderPwshResult` 所追加的 `[exit code: N]` / `[killed by signal: X]` 标记的逆解析，两个工具的 `presentResult` 都用它把渲染文本拆分为 terminal 卡的输出正文与退出状态 pill。
+`ShellExecutor` besitzt `resolve`, den Foreground-`run`, den Hintergrundprozess-`start` und das `sandboxMode`-Capability-Fakt. `dsh-bash-local` besitzt Command-Defaulting, Timeout/Abort-Klassifikation, das Terminal-Environment und den Background-Read-Merge; Managed-Range-Termination, begrenzte Collector, Spill-Dateien, Credential-Scrubbing und Disposal-Quiescence gehören dem [Subprocess-Service](subprocess.de.md). `dsh-tool-bash` besitzt das modellseitige Rendering und adaptiert Background-Handles in die [generische Job-Runtime](jobs.de.md). `dsh-shell` besitzt den gemeinsamen Exit-Status-Contract der Shell-Tools: das exportierte `parseExitStatus`/`ParsedExitStatus` invertiert die `[exit code: N]`-/`[killed by signal: X]`-Marker, die `dsh-tool-bash`' `renderResult` und `dsh-tool-pwsh`' `renderPwshResult` anhängen, und beider Tools `presentResult` verwenden es, um den gerenderten Text in den Output-Body der Terminal-Karte und ihre Exit-Status-Pill aufzuteilen.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -231,7 +229,7 @@ interface ShellProcessRead {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.de.md).
 
 <a id="ctxshell--shellexecutor-abstract-seam"></a>
 
@@ -302,7 +300,7 @@ collect(execution: ToolExecution): DshEnvironment
 list(): BashEnvVariableInfo[]
 ```
 
-Types: [DshEnvironment](subprocess.zh.md) · [ToolExecution](tools.zh.md)
+Types: [DshEnvironment](subprocess.de.md) · [ToolExecution](tools.de.md)
 
 Source: [`packages/shell/shell-env/src/index.ts`](../../packages/shell/shell-env/src/index.ts)
 <!-- END GENERATED cordis-surface -->

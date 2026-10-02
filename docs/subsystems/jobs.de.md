@@ -1,18 +1,16 @@
-# 后台任务运行时
+# Background-Task-Runtime
 
-[English](jobs.md) | 中文
+[English](jobs.md) | [中文](jobs.zh.md) | Deutsch
 
-长时间运行的生产方、`ctx.jobs` 与任务控制命令共用的类型。[运行时 Agent Note](../../.agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.zh.md) 负责设计；本页记录 [`packages/jobs/jobs/src/types.ts`](../../packages/jobs/jobs/src/types.ts) 中的确切字段和变体。
+Typen, die von langlebigen Producern, `ctx.jobs` und Job-Controls geteilt werden. Die [Runtime Agent Note](../../.agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.de.md) besitzt das Design; diese Seite hält die exakten Felder und Varianten aus [`packages/jobs/jobs/src/types.ts`](../../packages/jobs/jobs/src/types.ts) fest.
 
-## ID 与状态
+## Ids und Status
 
-`JobId` 是按 `<kind>-N` 生成的[品牌化 id](core.zh.md#branded-ids)。访问控制依赖拥有者授权，而非 id 的保密性。`JobKind` 派生自可合并扩展的 map；注册表将各个 kind 视为不透明的 id 命名空间。
+`JobId` ist eine [branded id](core.de.md#branded-ids), die als `<kind>-N` erzeugt wird. Zugriffskontrolle beruht auf Owner-Authorisierung, nicht auf Id-Geheimhaltung. `JobKind` leitet sich aus einer merge-erweiterbaren Map ab; die Registry behandelt Kinds als opake Id-Namespaces.
 
 ```ts type-equiv
 /**
  * Producer-defined job kinds. Plugins extend this map by declaration merging;
-
-[English](jobs.md) | 中文 | [Deutsch](jobs.de.md)
  * the registry treats every value as an opaque id namespace.
  */
 interface JobKindMap {
@@ -21,11 +19,11 @@ interface JobKindMap {
 }
 ```
 
-`JobStatus` 为 `'running' | 'stopping' | 'completed' | 'killed' | 'failed'`；生产方特有的事实归入 `JobSnapshot.detail`。
+`JobStatus` ist `'running' | 'stopping' | 'completed' | 'killed' | 'failed'`; producer-spezifische Fakten gehören in `JobSnapshot.detail`.
 
-## 生产方约定
+## Producer-Contract
 
-`JobStart` 声明身份和启动器。运行时会在调用 `run()` 前完成预检，随后提交注册，不再执行可能失败的步骤。生产方拥有执行资源；运行时拥有身份、访问权限和生命周期状态。
+`JobStart` deklariert Identität und einen Starter. Die Runtime beendet das Preflight, bevor sie `run()` aufruft, und committet ohne einen späteren fällbaren Schritt. Producer besitzen Ausführungsressourcen; die Runtime besitzt Identität, Zugriff und Lifecycle-State.
 
 ```ts type-equiv
 /**
@@ -59,7 +57,7 @@ interface JobStart {
 }
 ```
 
-`JobHooks.done` 会在生产方释放其资源后 resolve，而不是仅在工作完成时 resolve。可选的 `readOutput` 用来区分会消费输出的流式任务和仅有最终输出的任务。
+`JobHooks.done` resolved, nachdem der Producer seine Ressourcen freigegeben hat — nicht erst, wenn die Arbeit fertig ist. Das optionale `readOutput` unterscheidet konsumierende Stream-Jobs von Final-Output-only-Jobs.
 
 ```ts type-equiv
 /** Hooks through which the runtime controls and observes producer work. */
@@ -97,9 +95,9 @@ interface JobOutcome {
 }
 ```
 
-## 消费方视图
+## Consumer-Views
 
-快照是每次新建的只读投影。`ownerSession` 携带用于授权的共享 `SessionId`；完成监听器则会另行收到用于生命周期清理的确切拥有者对象。另一个接口已经交付终止状态或承诺交付时，`reported` 会抑制完成通知；排空 owner 或服务的 teardown 取消同样计入。
+Snapshots sind frische Read-only-Projektionen. `ownerSession` trägt die für Authorisierung verwendete geteilte `SessionId`; Completion-Listener erhalten separat das exakte Owner-Objekt, das für Lifecycle-Cleanup verwendet wird. `reported` unterdrückt eine Completion-Notice, nachdem ein anderer Reporter den Terminal-State geliefert hat oder sich zur Lieferung committet hat — einschließlich des Teardown-Cancels, das einen Owner oder den Service entleert.
 
 ```ts type-equiv
 /**
@@ -154,9 +152,9 @@ interface JobRead {
 }
 ```
 
-## 服务行为
+## Service-Verhalten
 
-抽象的 [`JobRegistry`](../../packages/jobs/jobs/src/index.ts) Service Definition 规定原子 `start`、限定调用方作用域的 `get` 和 `list`、`read`、`kill`、有界 `wait`、故障隔离的 `onJobDone` 与 `onJobsChanged` 监听器，以及 `attachController`；[`LocalJobRegistry`](../../packages/jobs/jobs-local/src/index.ts) 是其进程局部 Service Provider。授权会比较拥有者会话；拥有者清理与准入会使用确切的已注册 `Agent` 实例。本地 Service Provider 的 `maxConcurrentJobsPerOwner` 配置必须是正的安全整数，默认值为 `10`；它按确切 owner 统计 `running` 与 `stopping` 记录，所有无 owner 任务共享一个服务级桶，并在生产方终止结算后释放容量。Service Definition 约定见 [`dsh-jobs`](../../packages/jobs/jobs/README.zh.md)，注册表生命周期与准入策略见 [`dsh-jobs-local`](../../packages/jobs/jobs-local/README.zh.md)，面向模型的 Consumer 见 [`dsh-tool-jobs`](../../packages/jobs/tool-jobs/README.zh.md)。
+Die abstrakte [`JobRegistry`](../../packages/jobs/jobs/src/index.ts) Service Definition spezifiziert atomares `start`, caller-scoped `get` und `list`, `read`, `kill`, begrenztes `wait`, failure-isolierte `onJobDone`- und `onJobsChanged`-Listener sowie `attachController`; [`LocalJobRegistry`](../../packages/jobs/jobs-local/src/index.ts) ist der prozesslokale Service Provider. Authorisierung vergleicht Owner-Sessions; Owner-Cleanup und Admission verwenden die exakt registrierte `Agent`-Instanz. Die positive-safe-integer-Config `maxConcurrentJobsPerOwner` des lokalen Providers defaultet auf `10` und zählt `running`- plus `stopping`-Records pro exaktem Owner, mit einem geteilten Bucket für unowned Jobs; terminales Producer-Settlement gibt Kapazität frei. Siehe [`dsh-jobs`](../../packages/jobs/jobs/README.de.md) für den Service-Definition-Contract, [`dsh-jobs-local`](../../packages/jobs/jobs-local/README.de.md) für Registry-Lifecycle und Admission-Policy sowie [`dsh-tool-jobs`](../../packages/jobs/tool-jobs/README.de.md) für den modellseitigen Consumer.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -164,7 +162,7 @@ interface JobRead {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.de.md).
 
 <a id="ctxjobs--jobregistry-abstract-seam"></a>
 
@@ -286,7 +284,7 @@ abstract onJobsChanged(listener: JobsChangedListener): () => void
 abstract attachController(name: string): () => void
 ```
 
-Types: [Agent](core.zh.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/jobs/jobs/src/index.ts`](../../packages/jobs/jobs/src/index.ts)
 <!-- END GENERATED cordis-surface -->

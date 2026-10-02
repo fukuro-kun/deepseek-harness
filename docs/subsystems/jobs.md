@@ -6,6 +6,8 @@ Types shared by long-running producers, `ctx.jobs`, and job controls. The [runti
 
 ## Ids and status
 
+English | [中文](jobs.zh.md) | [Deutsch](jobs.de.md)
+
 `JobId` is a [branded id](core.md#branded-ids) generated as `<kind>-N`. Access control relies on owner authorization, not id secrecy. `JobKind` derives from a merge-extensible map; the registry treats kinds as opaque id namespaces.
 
 ```ts type-equiv
