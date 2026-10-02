@@ -11,6 +11,8 @@ kind: "package-reference"
 
 使用 `dsh-bash-sandbox` 运行每条 Bash 命令，使其文件访问受到限制，而不是使用 harness 进程的完整权限。结果会报告所选模式、被拒绝的文件操作，以及 runner 是否完整实施该模式。如果没有 runner 能实施受限模式，命令会以 `SANDBOX_UNAVAILABLE` 失败，绝不会无隔离地运行。部署需要文件隔离时选择它；网络访问和进程可见性不在其保证范围内。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
