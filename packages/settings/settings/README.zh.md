@@ -11,6 +11,8 @@ kind: "package-reference"
 
 当用户需要在运行时修改插件配置，且不能重启或重新读取 `cordis.yml` 时，请使用本包。每个 namespace 合并 schema 默认值、部署配置与用户覆盖；读取方会得到深冻结的解析值快照，并可观察已提交的变更。写入只影响用户覆盖、按 namespace 串行执行，并可拒绝陈旧 revision，避免覆盖较新的变更。持久化运行时编辑需要先配置设置存储；否则插件仍可继续使用组合配置。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
