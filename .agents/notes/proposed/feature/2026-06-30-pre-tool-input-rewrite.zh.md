@@ -2,7 +2,7 @@
 
 Status: proposed
 
-[English](2026-06-30-pre-tool-input-rewrite.md) | 中文
+[English](2026-06-30-pre-tool-input-rewrite.md) | 中文 | [Deutsch](2026-06-30-pre-tool-input-rewrite.de.md)
 
 ## 问题
 
