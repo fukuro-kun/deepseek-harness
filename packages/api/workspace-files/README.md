@@ -5,6 +5,8 @@ kind: "package-reference"
 
 # @deepseek-ai/dsh-api-workspace-files
 
+
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 English | [中文](README.zh.md)
 
 ## Summary
