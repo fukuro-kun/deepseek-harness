@@ -1,18 +1,16 @@
-# 会话引用
+# Session-Referenzen
 
-[English](session-reference.md) | 中文
+[English](session-reference.md) | [中文](session-reference.zh.md) | Deutsch
 
-由 Host 支撑的文件发现，以及结构化的跨会话引用请求与准备后的消息上下文。[文件引用约定](../../packages/context/file-reference)负责仅含路径的补全记录与语法；[会话引用约定](../../packages/context/session-reference)定义规范 URI、当前表层投影、标签安全的 JSON 与字节保留、稳定错误和不可信的模型提示词。宿主适配器使用这些类型，而不会把各自 UI 的提及语法传入 agent（智能体）核心。
+Host-gestützte Dateikandidaten-Suche plus strukturierte Session-übergreifende Referenzanfragen und vorbereitete Nachrichtenkontexte. Der [File-Reference-Vertrag](../../packages/context/file-reference) besitzt die rein pfadbasierten Vervollständigungsdatensätze und die Grammatik; der [Session-Reference-Vertrag](../../packages/context/session-reference) definiert kanonische URIs, die Projektion der aktuellen Oberfläche, tag-sichere JSON- und Byte-Aufbewahrung, stabile Fehler und den nicht vertrauenswürdigen Modell-Prompt. Host-Adapter verwenden diese Typen, statt ihre UI-Mention-Syntax in den Agent-Kern zu reichen.
 
-来源：[`packages/context/file-reference/src/types.ts`](../../packages/context/file-reference/src/types.ts) · [`packages/context/session-reference/src/types.ts`](../../packages/context/session-reference/src/types.ts)
+Quellen: [`packages/context/file-reference/src/types.ts`](../../packages/context/file-reference/src/types.ts) · [`packages/context/session-reference/src/types.ts`](../../packages/context/session-reference/src/types.ts)
 
-## 文件候选项
+## Dateikandidaten
 
-`FileReferenceCandidate` 是仅含路径的发现结果。被寻址的 agent 提供工作目录范围；提供方负责排序和命名空间访问，但不会读取文件内容。
+`FileReferenceCandidate` ist das rein pfadbasierte Suchergebnis. Der adressierte Agent liefert den Arbeitsverzeichnis-Geltungsbereich; Provider entscheiden über Ranking und Namespace-Zugriff, ohne Dateiinhalte zu lesen.
 
 ```ts type-equiv
-
-[English](session-reference.md) | 中文 | [Deutsch](session-reference.de.md)
 /** One path-only completion candidate inside the target session cwd. */
 interface FileReferenceCandidate {
   /** User-facing path accepted by normal prompts and filesystem tools. */
@@ -22,9 +20,9 @@ interface FileReferenceCandidate {
 }
 ```
 
-## 输入与候选项
+## Eingaben und Kandidaten
 
-`SessionReferenceInput` 是与宿主无关的选择。id 具有权威性；label 是随快照携带的显示元数据。
+`SessionReferenceInput` ist die host-unabhängige Auswahl. Die id ist maßgeblich; das label ist Anzeige-Metadatum, das in den Snapshot übernommen wird.
 
 ```ts type-equiv
 /** One source session selected by a host. */
@@ -36,7 +34,7 @@ interface SessionReferenceInput {
 }
 ```
 
-`SessionReferenceCandidate` 是面向宿主的发现输出。存在最新会话标题时，它的 label 使用该标题；筛选搜索该 label 以及 session id 和 cwd，绝不搜索 transcript（文本记录）。
+`SessionReferenceCandidate` ist die host-seitige Suchausgabe. Sein label verwendet den neuesten Session-Titel, sofern vorhanden, und die Filterung durchsucht dieses label zusammen mit Session-id und cwd, niemals den Transkripttext.
 
 ```ts type-equiv
 /** One host-facing candidate from exact session metadata. */
@@ -58,7 +56,7 @@ interface SessionReferenceCandidate {
 }
 ```
 
-`sessionReferenceResolver/candidates` Remote 方法向浏览器消费方提供同一发现能力，并为每个候选附上规范提示词 mention。
+Die Remote-Methode `sessionReferenceResolver/candidates` stellt dieselbe Suche für Browser-Konsumenten bereit und hängt jedem Kandidaten seine kanonische Prompt-Mention an.
 
 ```ts type-equiv
 /** One discovery candidate carrying its canonical prompt mention. */
@@ -68,9 +66,9 @@ interface SessionReferenceMentionCandidate extends SessionReferenceCandidate {
 }
 ```
 
-## 准备后的消息
+## Vorbereitete Nachrichten
 
-准备过程保留可读的当前消息内容，并最多返回一个聚合上下文。其持久 source 记录会把 `capturedThroughSeq` 保留为被引用 Session 原始 generation 中的坐标，绝不会把它重新解释为所在 Session 的 seq。`capturedFormatVersion` 记录该 generation；缺失表示已发布格式 v0。
+Die Vorbereitung bewahrt lesbaren Inhalt der aktuellen Nachricht und gibt höchstens einen aggregierten Kontext zurück. Ihre dauerhaften Quelldatensätze behalten `capturedThroughSeq` als Koordinate in der ursprünglichen Generation der referenzierten Session; sie interpretieren ihn niemals als seq der enthaltenden Session um. `capturedFormatVersion` zeichnet diese Generation auf; Abwesenheit bedeutet veröffentlichtes Format v0.
 
 ```ts type-equiv
 /** Durable source session, cited event seqs, and snapshot facts for prepared cross-session context. */
@@ -106,9 +104,9 @@ interface PreparedReferencedMessage {
 }
 ```
 
-## 错误
+## Fehler
 
-`SessionReferenceError.code` 区分无效配置或输入、自引用、数量限制、源读取失败、预算失败和取消。宿主协议会把这些 code 映射到各自的错误封装，无需检查提示词字节。
+`SessionReferenceError.code` trennt ungültige Konfiguration oder Eingabe, Selbstreferenz, Mengenlimits, Quelllesefehler, Budgetfehler und Abbruch. Host-Protokolle bilden diese Codes auf ihre eigenen Fehler-Envelopes ab, ohne Prompt-Bytes zu inspizieren.
 
 ```ts type-equiv
 /** Stable failure codes exposed to host adapters. */
@@ -128,7 +126,7 @@ type SessionReferenceErrorCode =
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxfilereferences--filereferenceservice-abstract-seam"></a>
 
@@ -147,7 +145,7 @@ Host capability for cancellable file-reference discovery.
 abstract list( agent: Agent, query: string, signal: AbortSignal, ): Promise<FileReferenceCandidate[]>
 ```
 
-Types: [Agent](core.zh.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/context/file-reference/src/index.ts`](../../packages/context/file-reference/src/index.ts)
 
@@ -168,7 +166,7 @@ Host Remote adapter over the composed file-reference provider.
 @Remote list( agent: Agent, query: string, signal: AbortSignal, ): Promise<FileReferenceCandidate[]>
 ```
 
-Types: [Agent](core.zh.md)
+Types: [Agent](core.de.md)
 
 Source: [`packages/api/session-controller/src/file-references.ts`](../../packages/api/session-controller/src/file-references.ts)
 
@@ -219,7 +217,7 @@ async listCandidates( agent: Agent, query: string = '', limit: number = this.con
 async prepare( agent: Agent, content: ContentBlock[], references: SessionReferenceInput[], signal?: AbortSignal, ): Promise<PreparedReferencedMessage>
 ```
 
-Types: [Agent](core.zh.md) · [ContentBlock](llm-streaming.zh.md)
+Types: [Agent](core.de.md) · [ContentBlock](llm-streaming.de.md)
 
 Source: [`packages/context/session-reference/src/index.ts`](../../packages/context/session-reference/src/index.ts)
 <!-- END GENERATED cordis-surface -->

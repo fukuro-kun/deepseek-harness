@@ -6,6 +6,8 @@ Host-backed file discovery plus structured cross-session reference requests and 
 
 Sources: [`packages/context/file-reference/src/types.ts`](../../packages/context/file-reference/src/types.ts) · [`packages/context/session-reference/src/types.ts`](../../packages/context/session-reference/src/types.ts)
 
+English | [中文](session-reference.zh.md) | [Deutsch](session-reference.de.md)
+
 ## File candidates
 
 `FileReferenceCandidate` is the path-only discovery result. The addressed agent supplies the working-directory scope; providers decide ranking and namespace access without reading file contents.

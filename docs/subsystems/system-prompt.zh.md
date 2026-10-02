@@ -11,6 +11,8 @@
 `AssembleContext` 标识一次组装所解析的作用域层，并可携带该请求的显式控制信号。它可合并扩展：`dsh-agent` 添加可选字段 `agent`，用于携带当前的 agent（智能体）实例；`assembleContextFor(agent, signal)` 则一起设置这些显式字段。裸组装既没有作用域，也没有信号。
 
 ```ts type-equiv
+
+[English](system-prompt.md) | 中文 | [Deutsch](system-prompt.de.md)
 /** Merge-extensible context for one prompt assembly. */
 interface AssembleContext {
   /**

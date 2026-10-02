@@ -1,16 +1,14 @@
-# Process Sandbox
+# Prozess-Sandbox
 
-English | [中文](sandbox.zh.md)
+[English](sandbox.md) | [中文](sandbox.zh.md) | Deutsch
 
-The process-sandbox seam of [dsh-sandbox](../../packages/sandbox/sandbox) wraps a same-world subprocess argv in a file-effect policy without coupling consumers to a platform runner. [dsh-sandbox-local](../../packages/sandbox/sandbox-local) supplies Linux bwrap/Landlock, macOS Seatbelt, and the Windows ACL restricted-token backend; [dsh-bash-sandbox](../../packages/shell/bash-sandbox) and [dsh-pwsh-sandbox](../../packages/shell/pwsh-sandbox) consume it. Containers, microVMs, and remote execution are sibling implementations of whole capability seams, not providers of `ctx.sandbox`.
+Der Prozess-Sandbox-seam von [dsh-sandbox](../../packages/sandbox/sandbox) verpackt das argv eines Subprozesses, der Dateisystem und Kernel mit dem Host teilt, in eine Dateieffekt-Richtlinie, ohne Konsumenten an einen plattformspezifischen Runner zu koppeln. [dsh-sandbox-local](../../packages/sandbox/sandbox-local) liefert Linux bwrap/Landlock, macOS Seatbelt und das Windows-ACL-Backend mit restricted token; [dsh-bash-sandbox](../../packages/shell/bash-sandbox) und [dsh-pwsh-sandbox](../../packages/shell/pwsh-sandbox) konsumieren ihn. Container, MicroVMs und Remote-Ausführung sind gleichrangige Implementierungen ganzer Capability-seams, keine Provider von `ctx.sandbox`.
 
-Source: [`packages/sandbox/sandbox/src/index.ts`](../../packages/sandbox/sandbox/src/index.ts)
+Quelle: [`packages/sandbox/sandbox/src/index.ts`](../../packages/sandbox/sandbox/src/index.ts)
 
-English | [中文](sandbox.zh.md) | [Deutsch](sandbox.de.md)
+## Modi und Durchsetzung
 
-## Modes and enforcement
-
-`SandboxMode` governs filesystem effects only. `read-only` asks the backend to deny writes — the POSIX runners additionally grant the `/dev/null` sink their shells require, while the Windows ACL runner grants no explicit writable root and reports partial enforcement for its ambient ACL gaps; `workspace-write` permits writes under the workspace root and the backend's promised temp area; `danger-full-access` bypasses confinement. Network and process visibility are outside this vocabulary.
+`SandboxMode` regelt ausschließlich Dateisystemeffekte. `read-only` fordert vom Backend, Schreibzugriffe abzulehnen — die POSIX-Runner gewähren zusätzlich die `/dev/null`-Senke, die ihre Shells benötigen, während der Windows-ACL-Runner keine explizit beschreibbare Wurzel gewährt und wegen seiner Umgebungs-ACL-Lücken teilweise Durchsetzung meldet; `workspace-write` erlaubt Schreibzugriffe unter der Workspace-Wurzel und dem vom Backend zugesagten Temp-Bereich; `danger-full-access` umgeht die Beschränkung. Netzwerk- und Prozesssichtbarkeit liegen außerhalb dieses Vokabulars.
 
 ```ts type-equiv
 /**
@@ -22,14 +20,14 @@ English | [中文](sandbox.zh.md) | [Deutsch](sandbox.de.md)
 type SandboxMode = 'read-only' | 'workspace-write' | 'danger-full-access'
 ```
 
-Only the first two modes can be sent to a provider. A `danger-full-access` consumer spawns its original argv and does not call `ctx.sandbox`.
+Nur die ersten beiden Modi können an einen Provider gesendet werden. Ein `danger-full-access`-Konsument startet sein ursprüngliches argv per spawn und ruft `ctx.sandbox` nicht auf.
 
 ```ts type-equiv
 /** A confining (non-`danger-full-access`) mode — the modes a {@link SandboxPolicy} can carry. */
 type ConfinedSandboxMode = Exclude<SandboxMode, 'danger-full-access'>
 ```
 
-Enforcement is a reported fact. `full` means the backend governs every file effect promised by the mode; `partial` means an active backend or older kernel ABI governs only a subset, so consumers that require the absolute promise must reject or surface that distinction. Older Landlock ABIs and the Windows ACL runner's Everyone/hard-link boundaries are current partial cases.
+Durchsetzung ist eine gemeldete Tatsache. `full` bedeutet, das Backend kontrolliert jeden vom Modus zugesagten Dateieffekt; `partial` bedeutet, ein aktives Backend oder eine ältere Kernel-ABI kontrolliert nur eine Teilmenge, sodass Konsumenten, die die absolute Zusage benötigen, diesen Unterschied ablehnen oder nach oben melden müssen. Ältere Landlock-ABIs und die Everyone-/Hardlink-Grenzen des Windows-ACL-Runners sind aktuelle Partial-Fälle.
 
 ```ts type-equiv
 /**
@@ -40,9 +38,9 @@ Enforcement is a reported fact. `full` means the backend governs every file effe
 type SandboxEnforcement = 'full' | 'partial'
 ```
 
-## Per-call policy
+## Richtlinie pro Aufruf
 
-The complete execution policy is resolved and carried per capability call. It includes `danger-full-access` so a consumer can resolve policy once before deciding whether to bypass confinement. Normal tool calls derive `workspaceRoot` from the calling session's immutable cwd; deployment configuration is the agentless fallback. The root is canonicalized with filesystem semantics before lexical normalization, so a cwd containing `symlink/..` identifies the directory where a spawned process actually runs.
+Die vollständige Ausführungsrichtlinie wird pro Capability-Aufruf aufgelöst und mitgeführt. Sie schließt `danger-full-access` ein, damit ein Konsument die Richtlinie einmal auflösen kann, bevor er entscheidet, ob er die Beschränkung umgeht. Normale Tool-Aufrufe leiten `workspaceRoot` aus dem unveränderlichen cwd der aufrufenden Session ab; die Deployment-Konfiguration ist der Fallback ohne Agent. Die Wurzel wird vor der lexikalischen Normalisierung mit Dateisystemsemantik kanonisiert, sodass ein cwd, der `symlink/..` enthält, das Verzeichnis identifiziert, in dem ein gestarteter Prozess tatsächlich läuft.
 
 ```ts type-equiv
 /**
@@ -66,7 +64,7 @@ interface SandboxExecutionPolicy {
 }
 ```
 
-`ctx.sandboxPolicy.resolve()` accepts the active session and, for an approved retry, an explicit mode. The service owns precedence and root fallback so bash and fs do not repeat it.
+`ctx.sandboxPolicy.resolve()` akzeptiert die aktive Session und für einen genehmigten Wiederholungsversuch einen expliziten Modus. Der Service besitzt die Rangfolge und den Wurzel-Fallback, damit bash und fs sie nicht wiederholen.
 
 ```ts type-equiv
 /** Inputs that select the sandbox policy for one capability call. */
@@ -78,7 +76,7 @@ interface SandboxPolicyRequest {
 }
 ```
 
-Only a confined execution reaches `ctx.sandbox`; its provider policy narrows the mode while retaining the same root. This permits concurrent sessions, consumers, and one-shot escalated retries to ask the same provider for different boundaries without mutating provider state.
+Nur eine beschränkte Ausführung erreicht `ctx.sandbox`; die an den Provider übergebene Richtlinie verengt den Modus bei gleicher Wurzel. So können konkurrierende Sessions, Konsumenten und einmalig eskalierte Wiederholungen beim selben Provider unterschiedliche Grenzen anfragen, ohne Provider-Zustand zu verändern.
 
 ```ts type-equiv
 /**
@@ -97,9 +95,9 @@ interface SandboxPolicy extends SandboxExecutionPolicy {
 
 <a id="wrapped-argv-and-classification-dialects"></a>
 
-## Wrapped argv and classification dialects
+## Verpacktes argv und Klassifizierungsdialekte
 
-`RunnerFailureRule` combines evidence that a runner failed before executing the command. A consumer requires a nonzero exit, the optional allowed-exit-code gate, and a case-insensitive fatal signature within one remaining stderr line. Case-insensitive exact full-line informational exclusions are removed first, so a benign runner notice cannot prove failure by itself. The matched line remains available as error detail; classification does not rewrite stderr.
+`RunnerFailureRule` bündelt die Nachweise dafür, dass ein Runner vor Ausführung des Befehls fehlgeschlagen ist. Ein Konsument verlangt einen Exit ungleich null, das optionale Exit-Code-Gatter der erlaubten Codes und eine groß-/kleinschreibungsunabhängige fatale Signatur in einer der verbleibenden stderr-Zeilen. Groß-/kleinschreibungsunabhängige exakte Vollzeilen-Ausschlüsse informativer Zeilen werden zuerst entfernt, sodass eine harmlose Runner-Meldung allein keinen Fehler beweisen kann. Die gematchte Zeile bleibt als Fehlerdetail verfügbar; die Klassifizierung schreibt stderr nicht um.
 
 ```ts type-equiv
 /**
@@ -119,7 +117,7 @@ interface RunnerFailureRule {
 }
 ```
 
-`ConfinedArgv` is what the consumer spawns. Besides the replacement argv, it carries the backend's enforcement fact and two orthogonal stderr classifiers. `denialSignatures` identify the confined command being blocked while the sandbox works correctly. `runnerFailureRules` identify the sandbox runner refusing or failing before it executes the command; consumers check these first and surface a sandbox infrastructure failure, never an ordinary task failure.
+`ConfinedArgv` ist das, was der Konsument per spawn startet. Neben dem Ersatz-argv trägt es die Durchsetzungstatsache des Backends und zwei orthogonale stderr-Klassifizierer. `denialSignatures` erkennen, dass der beschränkte Befehl blockiert wurde, während die Sandbox korrekt arbeitet. `runnerFailureRules` erkennen, dass der Sandbox-Runner vor Ausführung des Befehls verweigert oder fehlschlägt; Konsumenten prüfen diese zuerst und melden einen Sandbox-Infrastrukturfehler, niemals einen normalen Taskfehler.
 
 ```ts type-equiv
 /**
@@ -151,13 +149,13 @@ interface ConfinedArgv {
 }
 ```
 
-The [local provider](../../packages/sandbox/sandbox-local/README.md) owns operator configuration and maps its runner dialect into these rules. The [sandboxed bash consumer](../../packages/shell/bash-sandbox/README.md) owns spawn and result attribution.
+Der [lokale Provider](../../packages/sandbox/sandbox-local/README.de.md) besitzt die Betreiberkonfiguration und bildet seinen Runner-Dialekt auf diese Regeln ab. Der [gesandboxte bash-Konsument](../../packages/shell/bash-sandbox/README.de.md) besitzt spawn und Ergebniszuordnung.
 
-## Provider and fail-closed errors
+## Provider und Fail-Closed-Fehler
 
-`ctx.sandbox.confine(argv, policy)` returns a `ConfinedArgv` or throws `SandboxUnavailableError` with code `SANDBOX_UNAVAILABLE` when no usable backend exists. Consumers may also classify a failure while spawning or observing the returned argv; that attribution belongs to the consumer contract. Silent unconfined passthrough is never legal for a confined policy.
+`ctx.sandbox.confine(argv, policy)` gibt ein `ConfinedArgv` zurück oder wirft `SandboxUnavailableError` mit Code `SANDBOX_UNAVAILABLE`, wenn kein nutzbares Backend existiert. Konsumenten können einen Fehler auch beim Starten oder Beobachten des zurückgegebenen argv klassifizieren; diese Zuordnung gehört zum Konsumentenvertrag. Stiller unbeschränkter Passthrough ist für eine beschränkte Richtlinie niemals zulässig.
 
-Provider selection, probing, caching, and backend-specific enforcement reports belong to the [local provider](../../packages/sandbox/sandbox-local/README.md).
+Provider-Auswahl, Probing, Caching und backend-spezifische Durchsetzungsberichte gehören dem [lokalen Provider](../../packages/sandbox/sandbox-local/README.de.md).
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -165,7 +163,7 @@ Provider selection, probing, caching, and backend-specific enforcement reports b
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsandbox--sandboxprovider-abstract-seam"></a>
 
@@ -216,7 +214,7 @@ resolve(request: SandboxPolicyRequest = {}): SandboxExecutionPolicy
 overrideOf(session: Session): SandboxMode | undefined
 ```
 
-Types: [Session](session.md)
+Types: [Session](session.de.md)
 
 Source: [`packages/sandbox/sandbox-policy/src/index.ts`](../../packages/sandbox/sandbox-policy/src/index.ts)
 <!-- END GENERATED cordis-surface -->

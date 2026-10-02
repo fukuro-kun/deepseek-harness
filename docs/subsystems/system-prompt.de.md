@@ -1,16 +1,14 @@
-# System Prompt Assembly
+# System-Prompt-Assembly
 
-English | [中文](system-prompt.zh.md)
+[English](system-prompt.md) | [中文](system-prompt.zh.md) | Deutsch
 
-The [system-prompt package](../../packages/core/system-prompt) owns the data exchanged between prompt contributors and one assembly call. The package [README](../../packages/core/system-prompt/README.md) documents registration, ordering, scoping, and rendering behavior; this page records the exact cross-package types that plugins implement or pass.
+Das [system-prompt-Paket](../../packages/core/system-prompt) besitzt die Daten, die zwischen Prompt-Beitragenden und einem Assembly-Aufruf ausgetauscht werden. Das Paket-[README](../../packages/core/system-prompt/README.de.md) dokumentiert Registrierung, Reihenfolge, Scoping und Rendering-Verhalten; diese Seite hält die exakten paketübergreifenden Typen fest, die Plugins implementieren oder übergeben.
 
-Source: [`packages/core/system-prompt/src/index.ts`](../../packages/core/system-prompt/src/index.ts).
+Quelle: [`packages/core/system-prompt/src/index.ts`](../../packages/core/system-prompt/src/index.ts).
 
-English | [中文](system-prompt.zh.md) | [Deutsch](system-prompt.de.md)
+## Assembly-Kontext
 
-## Assembly context
-
-`AssembleContext` identifies the scope layer one assembly resolves and may carry the explicit control signal for that request. It is merge-extensible: `dsh-agent` adds the optional live `agent` field, and `assembleContextFor(agent, signal)` sets the explicit fields together. A bare assembly has neither scope nor signal.
+`AssembleContext` identifiziert die Scope-Ebene, die ein Assembly auflöst, und kann das explizite Steuersignal für diese Anfrage tragen. Er ist merge-erweiterbar: `dsh-agent` fügt das optionale Feld `agent` für die aktive Agent-Instanz hinzu, und `assembleContextFor(agent, signal)` setzt die expliziten Felder gemeinsam. Ein nacktes Assembly hat weder Scope noch Signal.
 
 ```ts type-equiv
 /** Merge-extensible context for one prompt assembly. */
@@ -25,9 +23,9 @@ interface AssembleContext {
 }
 ```
 
-## Tool-provider result
+## Tool-Provider-Ergebnis
 
-`ToolProviderResult.schemas` is the model-visible set for the current assembly. `knownNames` is the provider's pre-restriction name universe used to distinguish a configured-name typo from a known tool that is deliberately hidden in this scope.
+`ToolProviderResult.schemas` ist die modellseitig sichtbare Menge für das aktuelle Assembly. `knownNames` ist das vom Provider vor der Einschränkung bekannte Namensuniversum, mit dem sich ein Tippfehler in einem konfigurierten Namen von einem bekannten Tool unterscheiden lässt, das in diesem Scope absichtlich verborgen ist.
 
 ```ts type-equiv
 /** Tool schemas visible in one assembly and their pre-restriction name set. */
@@ -39,11 +37,11 @@ interface ToolProviderResult {
 }
 ```
 
-## Prompt sections
+## Prompt-Abschnitte
 
-The exported `PERSONA_PREFIX_SECTION` (`deployment:persona-prefix`) and `PERSONA_SUFFIX_SECTION` (`deployment:persona-suffix`) name the slots shared by global configuration and scoped contributions. Their `PromptSectionOrderName` entries are `DEPLOYMENT_PERSONA_PREFIX` and `DEPLOYMENT_PERSONA_SUFFIX`; the [package README](../../packages/core/system-prompt/README.md#configure-the-prompt) owns their placement and template configuration.
+Die exportierten `PERSONA_PREFIX_SECTION` (`deployment:persona-prefix`) und `PERSONA_SUFFIX_SECTION` (`deployment:persona-suffix`) benennen die Slots, die globale Konfiguration und gescopte Beiträge teilen. Ihre `PromptSectionOrderName`-Einträge sind `DEPLOYMENT_PERSONA_PREFIX` und `DEPLOYMENT_PERSONA_SUFFIX`; das [Paket-README](../../packages/core/system-prompt/README.de.md#configure-the-prompt) besitzt ihre Platzierung und Template-Konfiguration.
 
-`PromptSection` is a readonly same-process registration contract. Its text may be static or resolved from the current assembly context. Sections sort by ascending order and then code-unit name; repository contributors resolve the service-owned named allocation through `getSectionOrder()`. Runtime-context contributors resolve their independent allocation through `getContextOrder()`. One effective `complete` section becomes the sole prompt section after cooperative assembly. agent-loop renders the assembled sections with `renderPrompt` and commits the text as a `system/message` surface node — appended as surface node 0 on the first step, then replaced in place when the rendered text changes or, when the prepared call declares `systemPromptUpdate: 'in-history'`, appended after the cached history for non-empty updates in a continuing series — so the prompt reaches the model as a message of derived history rather than as a request field ([decision](../../.agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.md); [decision rule](../../packages/core/agent-loop/README.md#understand-the-implementation)).
+`PromptSection` ist ein schreibgeschützter prozessinterner Registrierungsvertrag. Sein Text kann statisch sein oder aus dem aktuellen Assembly-Kontext aufgelöst werden. Abschnitte sortieren nach aufsteigendem order und danach nach Code-Unit-Namen; Beitragende im Repository lösen die service-seitige benannte Zuteilung über `getSectionOrder()` auf. Runtime-Kontext-Beitragende lösen ihre unabhängige Zuteilung über `getContextOrder()` auf. Ein wirksamer `complete`-Abschnitt wird nach dem kooperativen Assembly der einzige Prompt-Abschnitt. Die Agent-Loop rendert die assemblierten Abschnitte mit `renderPrompt` und committet den Text als `system/message`-Surface-Knoten — im ersten Step als Surface-Knoten 0 angehängt, danach bei geändertem gerendertem Text in-place ersetzt oder, wenn der vorbereitete Aufruf `systemPromptUpdate: 'in-history'` deklariert, bei nicht-leeren Updates in einer fortgesetzten Serie nach dem zwischengespeicherten Verlauf angehängt — sodass der Prompt das Modell als Nachricht des abgeleiteten Verlaufs erreicht, nicht als Request-Feld ([Entscheidung](../../.agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.de.md); [Entscheidungsregel](../../packages/core/agent-loop/README.de.md#understand-the-implementation)).
 
 ```ts type-equiv
 /** One contributed section of the system prompt (registry input). */
@@ -71,9 +69,9 @@ interface PromptSection {
 }
 ```
 
-## Dynamic prompt context
+## Dynamischer Prompt-Kontext
 
-`PromptContext` is the cache-safe counterpart to `PromptSection`. The assembly resolves and orders these contributions, while agent-loop logs their complete current snapshot after retained model history only when it changed or compaction removed it.
+`PromptContext` ist das cache-sichere Gegenstück zu `PromptSection`. Das Assembly löst diese Beiträge auf und ordnet sie, während die Agent-Loop ihren vollständigen aktuellen Snapshot nur dann nach dem behaltenen Modellverlauf protokolliert, wenn er sich geändert hat oder eine Compaction ihn entfernt hat.
 
 ```ts type-equiv
 /** Dynamic model context materialized as a durable user-role snapshot. */
@@ -93,7 +91,7 @@ interface PromptContext {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsystemprompt--systemprompt"></a>
 
@@ -201,7 +199,7 @@ Expert waterfall over the assembled sections, contexts, tools, and variables. Sc
 'system-prompt/assemble'(this: Scoped<SystemPrompt>, assembly: PromptAssembly, context: AssembleContext, next: () => Promise<PromptAssembly>): Promise<PromptAssembly>
 ```
 
-Types: [Scoped](scope.md)
+Types: [Scoped](scope.de.md)
 
 Source: [`packages/core/system-prompt/src/index.ts`](../../packages/core/system-prompt/src/index.ts)
 

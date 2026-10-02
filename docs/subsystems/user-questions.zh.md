@@ -11,6 +11,8 @@
 `AskUserQuestionOption` 包含一个可供选择的选项。`label` 是面向用户的选项文字，同时也是面向模型的选中值；`description` 是可选的 UI 帮助文本。
 
 ```ts type-equiv
+
+[English](user-questions.md) | 中文 | [Deutsch](user-questions.de.md)
 /** One selectable answer offered to the user. */
 interface AskUserQuestionOption {
   /** User-facing label. */

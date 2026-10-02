@@ -1,16 +1,14 @@
-# User Interaction
+# Benutzerinteraktion
 
-English | [中文](user-questions.zh.md)
+[English](user-questions.md) | [中文](user-questions.zh.md) | Deutsch
 
-The user-questions seam of [dsh-user-questions](../../packages/interaction/user-questions). It is the provider-neutral vocabulary a tool or permission plugin uses when it needs the human to answer before the agent can continue. Agent-scoped waterfall listeners compose the available UI surfaces, including listeners relayed to a connected client.
+Der user-questions-seam von [dsh-user-questions](../../packages/interaction/user-questions). Er ist das provider-neutrale Vokabular, das ein Tool- oder Permission-Plugin verwendet, wenn es die Antwort eines Menschen braucht, bevor der Agent fortfahren kann. Agent-gescopte waterfall-Listener komponieren die verfügbaren UI-Oberflächen, einschließlich Listener, die an einen verbundenen Client weitergeleitet werden.
 
-Source: [`packages/interaction/user-questions/src/index.ts`](../../packages/interaction/user-questions/src/index.ts)
+Quelle: [`packages/interaction/user-questions/src/index.ts`](../../packages/interaction/user-questions/src/index.ts)
 
-English | [中文](user-questions.zh.md) | [Deutsch](user-questions.de.md)
+## Frageoptionen
 
-## Question options
-
-`AskUserQuestionOption` contains one selectable choice. `label` is the user-facing option text and also the model-facing selected value; `description` is optional UI help text.
+`AskUserQuestionOption` enthält eine wählbare Option. `label` ist der nutzerseitige Optionstext und zugleich der modellseitige ausgewählte Wert; `description` ist optionaler UI-Hilfetext.
 
 ```ts type-equiv
 /** One selectable answer offered to the user. */
@@ -22,9 +20,9 @@ interface AskUserQuestionOption {
 }
 ```
 
-## Presentation intent
+## Präsentationsintention
 
-`AskUserQuestionIntent` optionally declares a known decision kind. It is tagged on `kind` so intents can be added; a UI that does not recognise a tag renders the generic option list. An intent changes presentation only — a UI honouring it answers with the same option labels a generic UI would send, so the caller reads the same answer fields either way. `approve` names the affirmative option instead of relying on option order. `ask()` rejects the two assertions no type can carry: an `approve` naming none of its own question's options, and an intent on a question with no `detail`.
+`AskUserQuestionIntent` deklariert optional eine bekannte Entscheidungsart. Es ist über `kind` getaggt, damit Intentionen hinzugefügt werden können; eine UI, die einen Tag nicht kennt, rendert die generische Optionsliste. Eine Intention ändert nur die Präsentation — eine UI, die sie beachtet, antwortet mit denselben Optionslabels, die eine generische UI senden würde, sodass der Aufrufer in beiden Fällen dieselben Antwortfelder liest. `approve` benennt die bejahende Option, statt sich auf die Optionsreihenfolge zu verlassen. `ask()` lehnt die zwei Fälle ab, die kein Typ tragen kann: ein `approve`, das keine Option der eigenen Frage benennt, und eine Intention auf einer Frage ohne `detail`.
 
 ```ts type-equiv
 /**
@@ -46,9 +44,9 @@ type AskUserQuestionIntent = {
 }
 ```
 
-## Question item
+## Frageelement
 
-`AskUserQuestionItem` is one question in a request. The caller supplies a stable `id`, which is echoed back with the answer so batched questions remain routable. Optional `detail` carries supporting text that providers render with the question but keep out of selectable option labels.
+`AskUserQuestionItem` ist eine Frage in einer Anfrage. Der Aufrufer liefert eine stabile `id`, die mit der Antwort zurückgespiegelt wird, damit gebündelte Fragen routbar bleiben. Das optionale `detail` trägt begleitenden Text, den Provider mit der Frage rendern, aber aus den wählbaren Optionslabels heraushalten.
 
 ```ts type-equiv
 /** One question in a user-questions request. */
@@ -70,18 +68,18 @@ interface AskUserQuestionItem {
 }
 ```
 
-## Ask request
+## Ask-Anfrage
 
-`AskUserQuestionRequest` is the cross-package request. `questions` is an array so a UI can present related prompts in one flow while preserving a stable id per answer. When present, `agent` is the exact live caller; the interaction seam admits it only while the live registry identifies that instance as a runtime root.
+`AskUserQuestionRequest` ist die paketübergreifende Anfrage. `questions` ist ein Array, damit eine UI zusammengehörige Fragen in einem Ablauf präsentieren kann und jede Antwort eine stabile id behält. Wenn vorhanden, ist `agent` der exakt aktive Aufrufer; der interaction-seam lässt ihn nur zu, solange die aktive Registry diese Instanz als Runtime-Root identifiziert.
 
 ```ts type-equiv
 /** Request for a human answer. */
 interface AskUserQuestionRequest extends AskUserQuestionRequestEvent {}
 ```
 
-## Answer
+## Antwort
 
-Providers return one answer item per question id. `selected` contains selected option labels, and `custom` carries a free-form "Other" answer when the user typed one. For a single-select question, `custom` overrides the selected choice and `selected` is empty. For a multi-select question, `custom` may supplement the labels in `selected`. A UI may also use an item with empty `selected` and no `custom` to preserve a skipped question in an otherwise completed batch.
+Provider geben pro Frage-id ein Antwortelement zurück. `selected` enthält ausgewählte Optionslabels, und `custom` trägt eine freie „Other"-Antwort, wenn der Nutzer eine eingegeben hat. Bei einer Single-Select-Frage überschreibt `custom` die getroffene Wahl und `selected` ist leer. Bei einer Multi-Select-Frage kann `custom` die Labels in `selected` ergänzen. Eine UI kann auch ein Element mit leerem `selected` und ohne `custom` verwenden, um eine übersprungene Frage in einem ansonsten abgeschlossenen Batch zu bewahren.
 
 ```ts type-equiv
 /** Answer to one question. */
@@ -103,9 +101,9 @@ interface AskUserQuestionAnswer {
 }
 ```
 
-## Errors
+## Fehler
 
-`UserQuestionError` extends `HarnessError`, so `ctx.tools.execute()` preserves `{ name, code }` for model-facing tool failures such as `EMPTY_QUESTIONS`, `NO_PROVIDER`, `ASK_ABORTED`, or UI-side cancellation.
+`UserQuestionError` erweitert `HarnessError`, sodass `ctx.tools.execute()` `{ name, code }` für modellseitige Tool-Fehler wie `EMPTY_QUESTIONS`, `NO_PROVIDER`, `ASK_ABORTED` oder UI-seitigen Abbruch bewahrt.
 
 ```ts type-equiv
 /** Stable error taxonomy for user-questions failures. */
@@ -123,7 +121,7 @@ class UserQuestionError extends HarnessError {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxuserquestions--userquestionservice"></a>
 
@@ -174,7 +172,7 @@ Ask composed answerers for structured user input. Return an answer to claim the 
 'user-questions/request'( this: Scoped<Agent>, request: AskUserQuestionRequestEvent, next: () => Promise<AskUserQuestionAnswer>, ): Promise<AskUserQuestionAnswer>
 ```
 
-Types: [Agent](core.md) · [Scoped](scope.md)
+Types: [Agent](core.de.md) · [Scoped](scope.de.md)
 
 Source: [`packages/interaction/user-questions/src/types.ts`](../../packages/interaction/user-questions/src/types.ts)
 <!-- END GENERATED cordis-surface -->
