@@ -2,6 +2,8 @@
 
 English | [中文](01-first-plugin.zh.md)
 
+English | [中文](01-first-plugin.zh.md) | [Deutsch](01-first-plugin.de.md)
+
 In the loader configuration used here, a Cordis plugin module named-exports an `apply` function. When Cordis loads it, it calls `apply` with a **context** — the `ctx` object through which the plugin registers everything it contributes.
 
 ## Write the plugin
