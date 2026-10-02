@@ -11,6 +11,8 @@ kind: "package-reference"
 
 使用 `dsh-tools` 可向模型公开类型化能力、校验调用、执行允许／拒绝／询问策略，并在普通工具失败时返回最终结果而不中止当前轮次。通过 `mode` 选择原生 Function Calling（函数调用）、[PTC mode](#ptc-mode) 或两者；单个 agent 可用 `presentAs` 覆盖默认值。工具作者使用 `defineTool` 声明类型化参数与输出、协作式超时、并行安全属性和可选 UI 展示。模型会看到每个获准工具声明的名称、描述与参数 schema；按 agent 设置的限制可缩小该可见集合。
 
+
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
