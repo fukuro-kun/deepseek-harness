@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # acp/ — Agent Client Protocol automation
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 
