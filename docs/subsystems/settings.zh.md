@@ -11,6 +11,8 @@
 namespace 命名用户文档中一个归插件所有的分节。brand 防止调用方将设置 namespace 与在包或进程之间传递的其他 id 混用；构造时校验小写 kebab-case 语法。
 
 ```ts type-equiv
+
+[English](settings.md) | 中文 | [Deutsch](settings.de.md)
 /** Nominal id of one registered settings namespace. */
 type SettingsNamespace = Branded<'SettingsNamespace'>
 ```

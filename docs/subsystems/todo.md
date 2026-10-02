@@ -6,6 +6,8 @@ The durable todo vocabulary owned by [`@deepseek-ai/dsh-tool-todo`](../../packag
 
 Source: [`packages/todo/tool-todo/src/types.ts`](../../packages/todo/tool-todo/src/types.ts)
 
+English | [中文](todo.zh.md) | [Deutsch](todo.de.md)
+
 ## `TodoItem` — one list entry
 
 ```ts type-equiv

@@ -11,6 +11,8 @@
 ```ts type-equiv
 /**
  * One entry in an agent's todo list — the unit of the `todo/write`
+
+[English](todo.md) | 中文 | [Deutsch](todo.de.md)
  * whole-list snapshot declared by this package.
  *
  * Deliberately minimal: a human-readable `content` line and a three-state

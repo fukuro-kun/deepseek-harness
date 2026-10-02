@@ -1,25 +1,23 @@
 # User Settings
 
-English | [中文](settings.zh.md)
+[English](settings.md) | [中文](settings.zh.md) | Deutsch
 
-The user-settings seam of [dsh-settings](../../packages/settings/settings) holds one user-owned document of per-namespace sections and resolves each registered namespace as schema defaults, then the registrant's composition `base`, then the user section. Providers such as [dsh-settings-file](../../packages/settings/settings-file) store the raw document and push external edits; consumer plugins register a schema and read or observe the resolved value. Composition config stays in `cordis.yml` — a namespace carries only the user-editable subset.
+Der User-Settings seam von [dsh-settings](../../packages/settings/settings) hält ein benutzereigenes Dokument mit Abschnitten pro namespace und löst jeden registrierten namespace auf: zuerst schema-Defaults, dann die Kompositions-`base` des Registranten, dann der User-Abschnitt. Provider wie [dsh-settings-file](../../packages/settings/settings-file) speichern das rohe Dokument und pushen externe Änderungen; Consumer-Plugins registrieren ein schema und lesen oder beobachten den aufgelösten Wert. Die Kompositions-Konfiguration bleibt in `cordis.yml` — ein namespace trägt nur die vom Benutzer editierbare Teilmenge.
 
-Source: [`packages/settings/settings/src/index.ts`](../../packages/settings/settings/src/index.ts)
+Quelle: [`packages/settings/settings/src/index.ts`](../../packages/settings/settings/src/index.ts)
 
-English | [中文](settings.zh.md) | [Deutsch](settings.de.md)
+## Identität
 
-## Identity
-
-A namespace names one plugin-owned section of the user document. The brand prevents callers from mixing settings namespaces with other ids passed between packages or processes; construction validates lowercase kebab-case syntax.
+Ein namespace benennt einen plugin-eigenen Abschnitt des User-Dokuments. Das Branding verhindert, dass Aufrufer Settings-namespaces mit anderen ids vermischen, die zwischen Paketen oder Prozessen übergeben werden; die Konstruktion validiert die lowercase-kebab-case-Syntax.
 
 ```ts type-equiv
 /** Nominal id of one registered settings namespace. */
 type SettingsNamespace = Branded<'SettingsNamespace'>
 ```
 
-## Registration
+## Registrierung
 
-Registration binds a schemastery schema to a namespace on the calling plugin's fiber — disposing that fiber removes the namespace and its observers. The options carry the composition layer, the owner's effect timing, and an optional check for what the schema cannot express.
+Die Registrierung bindet ein schemastery-schema an einen namespace auf dem fiber des aufrufenden Plugins — das dispose des fibers entfernt den namespace und seine Beobachter. Die Options tragen die Kompositionsschicht, das Effect-Timing des Owners und eine optionale Prüfung für das, was das schema nicht ausdrücken kann.
 
 ```ts type-equiv
 /** Registration options beyond the namespace schema. */
@@ -51,9 +49,9 @@ interface SettingsRegisterOptions<T> {
 }
 ```
 
-`validate` runs after the schema admits a value, so it sees defaults and the composition base exactly as the owner will. `dsh-llm-pi-ai` uses it to refuse a provider profile it could not serve at the write that produced it, rather than storing one that would disable every route in its namespace.
+`validate` läuft, nachdem das schema einen Wert akzeptiert hat, und sieht daher Defaults und die Kompositions-`base` genau so, wie der Owner sie sehen wird. `dsh-llm-pi-ai` nutzt sie, um ein Provider-Profil, das es nicht bedienen könnte, bereits beim Schreiben abzulehnen, statt eines zu speichern, das jede Route in seinem namespace deaktivieren würde.
 
-`applies` is a UI hint, not a mechanism: a `restart` owner never watches, so its value is read once at construction and configuration surfaces can badge the pending change.
+`applies` ist ein UI-Hinweis, kein Mechanismus: ein `restart`-Owner beobachtet nie, sein Wert wird einmal bei der Konstruktion gelesen, und Konfigurationsoberflächen können die ausstehende Änderung markieren.
 
 ```ts type-equiv
 /** When a namespace's changes take effect for its owner. */
@@ -62,7 +60,7 @@ type SettingsApplies = 'live' | 'restart'
 
 ## Owner scope
 
-The scope is the owner-facing handle. `update` merges a sparse patch over the user section only (never into `base`); `replace` sets the section wholesale, which is the removal/reset path — keys absent from the replacement re-inherit `base` and schema defaults. Writes to one namespace are serialized in call order, and resolved values are deep-frozen snapshots.
+Der scope ist das dem Owner zugewandte handle. `update` mergt einen spärlichen patch nur über den User-Abschnitt (niemals in `base`); `replace` setzt den Abschnitt als Ganzes und ist damit der Entfernen-/Zurücksetzen-Pfad — im Ersatz fehlende Schlüssel erben `base` und schema-Defaults erneut. Schreibzugriffe auf einen namespace werden in Aufrufreihenfolge serialisiert, und aufgelöste Werte sind tief eingefrorene Snapshots.
 
 ```ts type-equiv
 /** Owner-facing handle for one registered namespace. */
@@ -95,9 +93,9 @@ interface SettingsScope<T> {
 }
 ```
 
-## Descriptors
+## Deskriptoren
 
-`describe()` serializes every registered namespace for configuration surfaces: the schemastery `toJSON()` envelope drives schema-rendered forms, the resolved value fills them, and the detached `base`/`user` layers let a form mark user-overridden fields by presence. `describe({ redactSecrets: true })` — mandatory on every wire surface — strips `role('secret')` fields from all three layers and enumerates their `{path, set}` slots so a page can render write-only inputs without ever receiving a secret.
+`describe()` serialisiert jeden registrierten namespace für Konfigurationsoberflächen: die schemastery-`toJSON()`-Hülle treibt schema-gerenderte Formulare, der aufgelöste Wert füllt sie, und die abgetrennten `base`/`user`-Schichten lassen ein Formular vom Benutzer überschriebene Felder anhand ihrer Anwesenheit markieren. `describe({ redactSecrets: true })` — auf jeder wire-Oberfläche obligatorisch — entfernt `role('secret')`-Felder aus allen drei Schichten und enumeriert ihre `{path, set}`-slots, sodass eine Seite Write-only-Eingaben rendern kann, ohne je ein Secret zu empfangen.
 
 ```ts type-equiv
 /** One registered namespace as surfaced to configuration UIs. */
@@ -127,7 +125,7 @@ interface SettingsDescriptor {
 }
 ```
 
-A caller that holds only the redacted descriptor cannot safely rebuild a section, so removals travel as path ops instead. Each descriptor also carries a `revision` over the raw section; a write may send it back as `expectedRevision`, and one that no longer matches is refused rather than applied over the writer that landed first.
+Ein Aufrufer, der nur den redigierten Deskriptor hält, kann einen Abschnitt nicht sicher rekonstruieren; Entfernungen wandern daher als Pfad-Operationen. Jeder Deskriptor trägt außerdem eine `revision` über den rohen Abschnitt; ein Schreibvorgang kann sie als `expectedRevision` zurücksenden, und ein nicht mehr passender Wert wird abgelehnt, statt über den zuerst gelandeten Schreiber angewendet zu werden.
 ```ts type-equiv
 /**
  * One path-addressed edit to a namespace's user section. Path mutation exists
@@ -154,18 +152,18 @@ interface SettingsDescribeOptions {
 }
 ```
 
-## Change commits
+## Änderungs-Commits
 
-Every committed change — an in-process write or an externally observed provider edit — emits `settings/updated (ns, next, prev, source)` after the new value is authoritative, and never when the resolved value is deep-equal. The source tag separates the two entry paths.
+Jede committete Änderung — ein prozessinterner Schreibvorgang oder eine extern beobachtete Provider-Änderung — emittiert `settings/updated (ns, next, prev, source)`, nachdem der neue Wert maßgeblich ist, und niemals, wenn der aufgelöste Wert tiefengleich ist. Das source-Tag unterscheidet die beiden Einstiegspfade.
 
 ```ts type-equiv
 /** Origin of one committed settings change. */
 type SettingsUpdateSource = 'update' | 'provider'
 ```
 
-## Native document operations
+## Native Dokumentoperationen
 
-`SettingsDocumentOpenValue` confirms that `settings/openSettingsDocument` prepared the provider-owned document and handed it to the native text editor. `AgentPresetDirectoryOpenValue` reports either a completed native handoff or the resolved user-preset directory when desktop opening is unavailable. Neither operation accepts a browser-selected Host path.
+`SettingsDocumentOpenValue` bestätigt, dass `settings/openSettingsDocument` das Provider-eigene Dokument vorbereitet und an den nativen Texteditor übergeben hat. `AgentPresetDirectoryOpenValue` meldet entweder eine abgeschlossene native Übergabe oder das aufgelöste User-Preset-Verzeichnis, wenn das Öffnen auf dem Desktop nicht verfügbar ist. Keine der beiden Operationen akzeptiert einen vom Browser gewählten Host-Pfad.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -173,7 +171,7 @@ type SettingsUpdateSource = 'update' | 'provider'
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsettings--settingsprovider-abstract-seam"></a>
 

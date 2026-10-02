@@ -11,6 +11,8 @@
 ```ts type-equiv
 /** Opaque compare-and-set token for one exact feedback item revision. */
 type MessageFeedbackVersion = Branded<'MessageFeedbackVersion'>
+
+[English](feedback.md) | 中文 | [Deutsch](feedback.de.md)
 ```
 
 ```ts type-equiv

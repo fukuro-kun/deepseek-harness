@@ -1,14 +1,12 @@
 # Message Feedback
 
-English | [中文](feedback.zh.md)
+[English](feedback.md) | [中文](feedback.zh.md) | Deutsch
 
-[`@deepseek-ai/dsh-message-feedback`](../../packages/feedback/message-feedback) owns editable feedback for individual assistant messages. The canonical Session log stores `feedback/message-put` and `feedback/message-delete`; the immutable Session-level remark remains `feedback/record`, owned by [`@deepseek-ai/dsh-command-feedback`](../../packages/feedback/command-feedback) together with the `FeedbackCategory` taxonomy both kinds of feedback file under. All three are log-only events that never enter model context.
+[`@deepseek-ai/dsh-message-feedback`](../../packages/feedback/message-feedback) besitzt das editierbare Feedback für einzelne Assistant-Nachrichten. Das kanonische Session-Log speichert `feedback/message-put` und `feedback/message-delete`; die unveränderliche Bemerkung auf Session-Ebene bleibt `feedback/record`, im Besitz von [`@deepseek-ai/dsh-command-feedback`](../../packages/feedback/command-feedback) zusammen mit der `FeedbackCategory`-Taxonomie, unter der beide Feedbackarten abgelegt werden. Alle drei sind rein logbasierte Events, die niemals in den Modellkontext gelangen.
 
-Source: [`packages/feedback/message-feedback/src/types.ts`](../../packages/feedback/message-feedback/src/types.ts)
+Quelle: [`packages/feedback/message-feedback/src/types.ts`](../../packages/feedback/message-feedback/src/types.ts)
 
-English | [中文](feedback.zh.md) | [Deutsch](feedback.de.md)
-
-## Public types
+## Öffentliche Typen
 
 ```ts type-equiv
 /** Opaque compare-and-set token for one exact feedback item revision. */
@@ -209,9 +207,9 @@ type MessageFeedbackDeleteResult =
   | MessageFeedbackRejected<MessageFeedbackSessionNotFound | MessageFeedbackVersionConflict>
 ```
 
-## Session feedback types
+## Session-Feedback-Typen
 
-Source: [`packages/feedback/command-feedback/src/types.ts`](../../packages/feedback/command-feedback/src/types.ts)
+Quelle: [`packages/feedback/command-feedback/src/types.ts`](../../packages/feedback/command-feedback/src/types.ts)
 
 ```ts type-equiv
 /** One of the fixed feedback categories; the ids are durable log vocabulary. */
@@ -274,47 +272,47 @@ type SessionFeedbackRecordResult =
   | { readonly ok: false; readonly error: SessionFeedbackSessionNotFound }
 ```
 
-## Data and concurrency
+## Daten und Nebenläufigkeit
 
-Current items are folded from canonical feedback events whose payload `sessionId` matches the owning Session. Each item carries a positive or negative rating, an optional note, an optional category, Host-assigned `createdAt`/`updatedAt` timestamps, and its own opaque version. Versions are compared only for equality and only against the addressed message; callers do not order or synthesize them.
+Aktuelle Einträge werden aus kanonischen Feedback-Events gefaltet, deren Payload-`sessionId` zur besitzenden Session passt. Jeder Eintrag trägt eine positive oder negative Bewertung, eine optionale Notiz, eine optionale Kategorie, Host-zugewiesene `createdAt`/`updatedAt`-Zeitstempel und eine eigene opaque version. Versionen werden nur auf Gleichheit und nur gegen die adressierte Nachricht verglichen; Aufrufer ordnen oder synthetisieren sie nicht.
 
-`put` uses strict optimistic concurrency: every request for an existing item must match its current `ifVersion`, including a no-op (a put repeating the stored rating, note, and category). A conflict returns the authoritative current item (or `null`), so a caller can reconcile a lost response or a concurrent edit without another read. Deleting an already absent item succeeds. A per-Session queue serializes reads and mutations; cold mutations hold a persistence write handle across read, comparison, append, and flush. Matching no-ops append no event.
+`put` verwendet strikte optimistische Nebenläufigkeit: Jede Anfrage für einen existierenden Eintrag muss dessen aktuelle `ifVersion` treffen, auch bei einem No-op (ein put, der gespeicherte Bewertung, Notiz und Kategorie wiederholt). Ein Konflikt liefert den maßgeblichen aktuellen Eintrag (oder `null`), sodass ein Aufrufer eine verlorene Antwort oder eine nebenläufige Änderung ohne weiteren Lesevorgang abgleichen kann. Das Löschen eines bereits fehlenden Eintrags ist erfolgreich. Eine Warteschlange pro Session serialisiert Lese- und Änderungsoperationen; kalte Änderungen halten einen Persistence-Schreib-Handle über Lesen, Vergleichen, Append und Flush hinweg. Passende No-ops fügen kein Event an.
 
-## Target and lifecycle authority
+## Ziel- und Lebenszyklus-Autorität
 
-A live owner's in-memory log supplies the target Session observation directly; cold reads use a `SessionPersistence.open(id, 'read')` handle, while mutations use a write handle. Neither path constructs a Session or Agent. A `stat(id)` preflight classifies definite absence; a read failure for a Session `stat` confirmed propagates as infrastructure failure. `put` accepts only a non-empty, append-origin `assistant/message` with the requested `MessageId`; replacement-origin, usage-only empty, and non-assistant records are not feedback targets.
+Das In-Memory-Log eines live Owners liefert die Beobachtung der Ziel-Session direkt; kalte Lesevorgänge nutzen einen `SessionPersistence.open(id, 'read')`-Handle, Änderungen einen Schreib-Handle. Kein Pfad konstruiert eine Session oder einen Agent. Ein `stat(id)`-Preflight klassifiziert das definitive Fehlen; ein Lesefehler für eine von `stat` bestätigte Session propagiert als Infrastrukturfehler. `put` akzeptiert nur eine nicht-leere, append-origin `assistant/message` mit der angefragten `MessageId`; replacement-origin-, nur-usage-leere und nicht-assistant-Einträge sind keine Feedback-Ziele.
 
-Fork seeds can contain parent feedback events, but their payload retains the parent `sessionId`, so they do not become current feedback for the child. Deleting an item appends a tombstone; earlier ratings and notes remain in the log.
+Fork-Saatgut kann Feedback-Events des Parents enthalten, doch deren Payload behält die parent-`sessionId`, sodass sie nicht zum aktuellen Feedback des Kindes werden. Das Löschen eines Eintrags fügt einen Tombstone an; frühere Bewertungen und Notizen bleiben im Log.
 
-## Persistence and Remote contract
+## Persistenz- und Remote-Kontrakt
 
-Successful message-feedback mutations await canonical persistence: live operations append through the owning Session and require a participating `ctx.sessions.flush` listener; cold operations append and flush through their write handle. Persistence failures propagate rather than reporting success. `maxNoteBytes` is required and bounds note text by UTF-8 bytes; the Web Host composition sets `8192`. The package publishes the Host `messageFeedback.list`, `messageFeedback.put`, and `messageFeedback.delete` unary Remote contract through `TypertRemoteService` and `@Remote`; `command-feedback` publishes `sessionFeedback.record` the same way for Session-level remarks on live Sessions. The generated Cordis API below is the method-level authority.
+Erfolgreiche Message-Feedback-Mutationen warten die kanonische Persistenz ab: Live-Operationen appenden über die besitzende Session und erfordern einen teilnehmenden `ctx.sessions.flush`-Listener; kalte Operationen appenden und flushen über ihren Schreib-Handle. Persistenzfehler propagieren, statt Erfolg zu melden. `maxNoteBytes` ist erforderlich und begrenzt den Notiztext in UTF-8-Bytes; die Web-Host-Komposition setzt `8192`. Das Paket publiziert den Host-Remote-Kontrakt `messageFeedback.list`, `messageFeedback.put` und `messageFeedback.delete` als unäre Operationen über `TypertRemoteService` und `@Remote`; `command-feedback` publiziert `sessionFeedback.record` auf demselben Weg für Bemerkungen auf Session-Ebene an live Sessions. Die unten generierte Cordis-API ist die Autorität auf Methodenebene.
 
-Plugin disposal closes operation admission and drains accepted per-Session queue work.
+Beim dispose des Plugins wird die Aufnahme von Operationen geschlossen und akzeptierte Arbeit der per-Session-Warteschlangen abgedräht.
 
-When explicitly enabled, [`session-log-deepseek`](../../packages/session/session-log-deepseek/README.md) carries feedback as part of the ordinary `dsh_session_log` suffix on subsequent eligible DeepSeek requests. Recording feedback does not trigger an LLM request or a separate `dsh_feedback` upload. For non-DeepSeek routes, the [OTel backend](../../packages/session/session-telemetry-otel/README.md) can release the canonical prefix through recorded feedback. The command acknowledgement confirms recording and identifies the Session and anonymous user; it reports neither telemetry policy nor delivery.
+Wenn explizit aktiviert, überträgt [`session-log-deepseek`](../../packages/session/session-log-deepseek/README.de.md) Feedback als Teil des gewöhnlichen `dsh_session_log`-Suffix auf nachfolgenden berechtigten DeepSeek-Anfragen. Das Aufzeichnen von Feedback löst weder eine LLM-Anfrage noch einen separaten `dsh_feedback`-Upload aus. Für Nicht-DeepSeek-Routen kann das [OTel-Backend](../../packages/session/session-telemetry-otel/README.de.md) das kanonische Präfix über aufgezeichnetes Feedback freigeben. Die Befehlsbestätigung bestätigt die Aufzeichnung und identifiziert Session und anonymen Benutzer; sie meldet weder Telemetrie-Policy noch Zustellung.
 
-## Web surface
+## Web-Oberfläche
 
-[`@deepseek-ai/dsh-client-ui-message-feedback`](../../packages/client/ui-message-feedback) is the browser consumer. `@deepseek-ai/dsh-api-remotes` mounts the generated `messageFeedback` and `sessionFeedback` contributions, so the plugin calls `ctx.remote.messageFeedback` and `ctx.remote.sessionFeedback` and never touches the transport.
+[`@deepseek-ai/dsh-client-ui-message-feedback`](../../packages/client/ui-message-feedback) ist der Browser-Consumer. `@deepseek-ai/dsh-api-remotes` mountet die generierten `messageFeedback`- und `sessionFeedback`-Beiträge, sodass das Plugin `ctx.remote.messageFeedback` und `ctx.remote.sessionFeedback` aufruft und den Transport nie berührt.
 
-The controls are the `feedback` entry (order 10) of the `conversation.chat.assistant-actions` list slot, which `ui-conversation` declares and renders inside the finalized assistant message's IconActions row. `AssistantMessageNode` carries the optional `messageId` from the `assistant/message` event. The field is absent on interruption-frozen partials, and the render site skips the slot when it is absent. The strip renders once per turn, on the closing assistant message: the Host accepts every append-origin step message as a target, but earlier steps of a multi-step turn render tool rows rather than a rateable body, so the UI exposes a narrower set than the Host contract allows.
+Die Steuerelemente sind der `feedback`-Eintrag (order 10) des `conversation.chat.assistant-actions`-list-slots, den `ui-conversation` deklariert und innerhalb der IconActions-Zeile der finalisierten Assistant-Nachricht rendert. `AssistantMessageNode` trägt die optionale `messageId` aus dem `assistant/message`-Event. Das Feld fehlt bei durch Unterbrechung eingefrorenen Partials, und die Render-Stelle überspringt den slot, wenn es fehlt. Die Leiste rendert einmal pro Turn, auf der abschließenden Assistant-Nachricht: Der Host akzeptiert jede append-origin-Schrittnachricht als Ziel, doch frühere Schritte eines mehrstufigen Turns rendern Tool-Zeilen statt eines bewertbaren Bodys, sodass die UI eine engere Menge anbietet als der Host-Kontrakt erlaubt.
 
-One `MessageFeedbackController` per Session backs every message control in that Session: a single `list` read seeds the whole transcript, deferred to first hover or focus rather than fired on mount. Each mutation sends the version that controller last observed as `ifVersion`; a `version-conflict` reply carries the authoritative item, so the controller reconciles from the reply instead of refetching. Mutations serialize per Session so a queued operation compares against the committed version. A `connection/reset` refreshes only Sessions already read.
+Ein `MessageFeedbackController` pro Session bedient jedes Nachrichtensteuerelement in dieser Session: Ein einziger `list`-Lesevorgang befüllt den gesamten Transcript, aufgeschoben bis zum ersten Hover oder Focus statt beim Mount ausgelöst. Jede Mutation sendet die zuletzt vom Controller beobachtete Version als `ifVersion`; eine `version-conflict`-Antwort trägt den maßgeblichen Eintrag, sodass der Controller aus der Antwort abgleicht statt neu zu laden. Mutationen serialisieren pro Session, sodass eine eingereihte Operation gegen die committete Version vergleicht. Ein `connection/reset` aktualisiert nur bereits gelesene Sessions.
 
-Like records the bare positive judgment at once and shows the acknowledgement toast. Dislike opens the Session's feedback dialog, the `feedback-dialog` entry of `conversation.input.overlay`: the shared Modal card with seven category chips and a detail box. Submit puts a negative judgment carrying the chosen category and the trimmed description, or neither. The same dialog opens for the Session from a bare `/feedback` — a decoration `ui-commands` routes as an `action` — and then records through `sessionFeedback.record`; `/feedback <text>` keeps the Host command path. Clicking a recorded rating retracts it.
+Like zeichnet die nackte positive Bewertung sofort auf und zeigt den Bestätigungs-Toast. Dislike öffnet den Feedback-Dialog der Session, den `feedback-dialog`-Eintrag von `conversation.input.overlay`: die gemeinsame Modal-Karte mit sieben Kategorie-Chips und einem Detailfeld. Submit puttet eine negative Bewertung mit der gewählten Kategorie und der getrimmten Beschreibung — oder ohne beides. Derselbe Dialog öffnet sich für die Session über ein nacktes `/feedback` — eine Dekoration, die `ui-commands` als `action` routet — und zeichnet anschließend über `sessionFeedback.record` auf; `/feedback <text>` behält den Host-Kommando-Pfad. Ein Klick auf eine aufgezeichnete Bewertung zieht sie zurück.
 
-## Boundaries and limitations
+## Grenzen und Einschränkungen
 
-- The operation queue is process-local; cold writer exclusion relies on the selected persistence provider.
-- Deletion removes the current item, not earlier note text from the append-only log or an already delivered suffix.
-- A request in the narrow interval after live detach but before the persistence catalog materializes the header can receive `session-not-found`; callers retry after retirement materialization.
-- Cold requests read the complete log; the service has no item-count or aggregate-byte cap. `maxNoteBytes` bounds only each note.
-- The Host contract records no authenticated actor or audit identity and therefore assumes a trusted caller boundary.
-- The Web controls appear in the chat view only. The trajectory and waterfall views render no feedback entry even though their assistant nodes carry the same `messageId`.
-- The Web controller does not consume feedback log events, so a second tab's rating becomes visible on reconnect or on the next conflict reply rather than immediately.
-- The dialog does not pre-check `maxNoteBytes`; an oversized description for a message fails on submit with `note-too-large` rather than while typing. A Session remark has no size bound, as the `/feedback` command never had one.
-- `sessionFeedback.record` serves live Sessions only and answers `session-not-found` otherwise; the dialog reports that failure when its Session retires while it is open.
+- Die Operations-Warteschlange ist prozesslokal; die Exklusivität kalter Schreiber hängt vom gewählten Persistence-Provider ab.
+- Das Löschen entfernt den aktuellen Eintrag, nicht früheren Notiztext aus dem append-only Log oder einem bereits zugestellten Suffix.
+- Eine Anfrage im schmalen Intervall nach dem live detach, aber bevor der Persistence-Katalog den Header materialisiert, kann `session-not-found` erhalten; Aufrufer wiederholen nach der Retirement-Materialisierung.
+- Kalte Anfragen lesen das komplette Log; der Dienst hat keine Obergrenze für Eintragszahl oder aggregierte Bytes. `maxNoteBytes` begrenzt nur jede Notiz.
+- Der Host-Kontrakt zeichnet keinen authentifizierten Actor und keine Audit-Identität auf und setzt daher eine vertrauenswürdige Aufrufergrenze voraus.
+- Die Web-Steuerelemente erscheinen nur in der Chat-Ansicht. Die Trajectory- und Waterfall-Ansichten rendern keinen Feedback-Eintrag, obwohl ihre Assistant-Knoten dieselbe `messageId` tragen.
+- Der Web-Controller konsumiert keine Feedback-Log-Events, sodass die Bewertung eines zweiten Tabs erst beim Reconnect oder bei der nächsten Konfliktantwort sichtbar wird.
+- Der Dialog prüft `maxNoteBytes` nicht vorab; eine überlange Beschreibung für eine Nachricht schlägt beim Submit mit `note-too-large` fehl, nicht während der Eingabe. Eine Session-Bemerkung hat keine Größengrenze, da das `/feedback`-Kommando nie eine hatte.
+- `sessionFeedback.record` bedient nur live Sessions und antwortet sonst `session-not-found`; der Dialog meldet diesen Fehlschlag, wenn seine Session retiriert, während er offen ist.
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
@@ -322,7 +320,7 @@ Like records the bare positive judgment at once and shows the acknowledgement to
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxmessagefeedback--messagefeedbackservice"></a>
 
@@ -396,7 +394,7 @@ Observe a durable cold feedback mutation without publishing a live Session. Obse
 'feedback/committed'(inspection: SessionInspection): void
 ```
 
-Types: [SessionInspection](persistence.md)
+Types: [SessionInspection](persistence.de.md)
 
 Source: [`packages/feedback/message-feedback/src/index.ts`](../../packages/feedback/message-feedback/src/index.ts)
 <!-- END GENERATED cordis-surface -->
