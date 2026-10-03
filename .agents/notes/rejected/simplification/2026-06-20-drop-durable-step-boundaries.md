@@ -1,4 +1,5 @@
 # Agent Note: Drop durable step boundary events
+English | [中文](.agents/notes/rejected/simplification/2026-06-20-drop-durable-step-boundaries.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-06-20-drop-durable-step-boundaries.de.md)
 
 Status: rejected — `step/end` is the durable indication that a model step finished, and keeping the symmetric `step/start` / `step/end` pair makes crash repair, invariants, and transcript inspection clearer than inferring completion from adjacent step-scoped events.
 

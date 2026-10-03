@@ -1,4 +1,5 @@
 # Agent Note: Truncate interrupted final turns on load
+English | [中文](.agents/notes/rejected/simplification/2026-06-20-truncate-interrupted-turns.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-06-20-truncate-interrupted-turns.de.md)
 
 Status: rejected — a single turn can contain substantial real work, including many steps and large tool output. Preserving interrupted turns is preferable to silently dropping that tail on load.
 

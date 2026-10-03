@@ -1,4 +1,5 @@
 # Agent Note: Fold the persistence interface into dsh-session
+English | [中文](.agents/notes/rejected/simplification/2026-06-20-fold-session-persistence-interface.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-06-20-fold-session-persistence-interface.de.md)
 
 Status: rejected — the separate persistence Service Definition package is the intended modular role split for the durable-persistence capability seam. Folding it into `dsh-session` would reduce package count at the cost of a cleaner backend boundary.
 
