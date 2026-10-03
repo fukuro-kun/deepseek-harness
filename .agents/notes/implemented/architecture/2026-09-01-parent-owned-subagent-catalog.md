@@ -1,4 +1,5 @@
 # Agent Note: Parent-owned subagent catalog events
+English | [中文](2026-09-01-parent-owned-subagent-catalog.zh.md) | [Deutsch](2026-09-01-parent-owned-subagent-catalog.de.md)
 
 Status: implemented
 

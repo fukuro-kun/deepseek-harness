@@ -1,4 +1,5 @@
 # Agent Note: Alpha Session migration refuses every unknown historical event
+English | [中文](2026-08-31-alpha-historical-unknown-event-refusal.zh.md) | [Deutsch](2026-08-31-alpha-historical-unknown-event-refusal.de.md)
 
 Status: implemented
 

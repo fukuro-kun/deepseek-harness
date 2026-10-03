@@ -1,4 +1,5 @@
 # Agent Note: The system prompt is surface node 0
+English | [中文](2026-09-02-system-prompt-as-surface-node.zh.md) | [Deutsch](2026-09-02-system-prompt-as-surface-node.de.md)
 
 Status: implemented
 

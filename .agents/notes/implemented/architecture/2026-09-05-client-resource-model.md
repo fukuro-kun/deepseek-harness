@@ -1,4 +1,5 @@
 # Agent Note: Client resource model
+English | [中文](2026-09-05-client-resource-model.zh.md) | [Deutsch](2026-09-05-client-resource-model.de.md)
 
 Status: implemented
 

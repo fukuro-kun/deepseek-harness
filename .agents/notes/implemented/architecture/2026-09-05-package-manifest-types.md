@@ -1,4 +1,5 @@
 # Agent Note: Package manifest declaration ownership
+English | [中文](2026-09-05-package-manifest-types.zh.md) | [Deutsch](2026-09-05-package-manifest-types.de.md)
 
 Status: implemented
 

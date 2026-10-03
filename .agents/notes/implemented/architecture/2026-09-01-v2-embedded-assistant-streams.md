@@ -1,4 +1,5 @@
 # Agent Note: Embed Assistant streams in v2 attempt settlements
+English | [中文](2026-09-01-v2-embedded-assistant-streams.zh.md) | [Deutsch](2026-09-01-v2-embedded-assistant-streams.de.md)
 
 Status: implemented
 

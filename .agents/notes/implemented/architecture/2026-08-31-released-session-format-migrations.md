@@ -1,4 +1,5 @@
 # Agent Note: Released Session formats migrate through stateful streaming stages
+English | [中文](2026-08-31-released-session-format-migrations.zh.md) | [Deutsch](2026-08-31-released-session-format-migrations.de.md)
 
 Status: implemented
 

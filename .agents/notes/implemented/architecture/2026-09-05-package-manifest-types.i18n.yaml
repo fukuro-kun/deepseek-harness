@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-05-package-manifest-types.md
-2026-09-05-package-manifest-types.md: 94317a9317ba12059e726612840e4a001be2a892
-2026-09-05-package-manifest-types.zh.md: 2c40facd2591921123b5eae71b80c516f3b1f697
+2026-09-05-package-manifest-types.md: a2d66bf918d6848958f4ef34e575b485ea4b8348
+2026-09-05-package-manifest-types.zh.md: 332d898de5bf31ad79a35a7c85e8f1a0644a0cb6
+2026-09-05-package-manifest-types.de.md: 87facf7812b05c8a90ef5045eb1045efd09587e0

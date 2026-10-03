@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-05-client-resource-model.md) | 中文
+[English](2026-09-05-client-resource-model.md) | 中文 | [Deutsch](2026-09-05-client-resource-model.de.md)
 
 ## Problem
 

@@ -1,4 +1,5 @@
 # Agent Note: Explicit Agent identity at runtime boundaries
+English | [中文](2026-08-31-explicit-agent-runtime-identity.zh.md) | [Deutsch](2026-08-31-explicit-agent-runtime-identity.de.md)
 
 Status: implemented
 

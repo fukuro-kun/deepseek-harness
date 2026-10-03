@@ -1,4 +1,5 @@
 # Agent Note: Retain ignorable session events for external plugins
+English | [中文](2026-08-30-retain-ignorable-external-session-events.zh.md) | [Deutsch](2026-08-30-retain-ignorable-external-session-events.de.md)
 
 Status: implemented
 

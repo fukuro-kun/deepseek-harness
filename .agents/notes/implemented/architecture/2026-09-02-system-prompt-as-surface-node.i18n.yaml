@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.md
-2026-09-02-system-prompt-as-surface-node.md: 1500fd2350f02ab5d8f203c0d62b98832c6c5de5
-2026-09-02-system-prompt-as-surface-node.zh.md: 306f347092caa3e9daf2494fa26d290b1c1ab9a7
+2026-09-02-system-prompt-as-surface-node.md: 7d8d82ee4c345039d8bf91d25466fddd44f40233
+2026-09-02-system-prompt-as-surface-node.zh.md: 43a4bf1e8c1066729bddc8f086df08411373455e
+2026-09-02-system-prompt-as-surface-node.de.md: 0a4b128bf9365cd98704c6925d996fa13be6e2ce

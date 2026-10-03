@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-02-projcache-cross-version-read-compat.md) | 中文
+[English](2026-09-02-projcache-cross-version-read-compat.md) | 中文 | [Deutsch](2026-09-02-projcache-cross-version-read-compat.de.md)
 
 ## 问题
 

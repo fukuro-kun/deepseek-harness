@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-31-explicit-agent-runtime-identity.md) | 中文
+[English](2026-08-31-explicit-agent-runtime-identity.md) | 中文 | [Deutsch](2026-08-31-explicit-agent-runtime-identity.de.md)
 
 ## 问题
 

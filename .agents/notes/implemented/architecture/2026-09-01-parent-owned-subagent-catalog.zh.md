@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-01-parent-owned-subagent-catalog.md) | 中文
+[English](2026-09-01-parent-owned-subagent-catalog.md) | 中文 | [Deutsch](2026-09-01-parent-owned-subagent-catalog.de.md)
 
 ## 问题
 
