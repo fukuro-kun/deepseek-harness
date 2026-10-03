@@ -4,8 +4,8 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-client-ui-slots
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 
