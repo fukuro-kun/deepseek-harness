@@ -1,4 +1,5 @@
 # Agent Note: Request-error retry action
+English | [中文](.agents/notes/implemented/simplification/2026-07-27-request-error-retry-action.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-27-request-error-retry-action.de.md)
 
 Status: implemented
 

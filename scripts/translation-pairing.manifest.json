@@ -120,8 +120,6 @@
     ".agents/notes/implemented/architecture/2026-09-08-document-preview-operations.md",
     ".agents/notes/implemented/architecture/2026-09-08-global-main-panels.md",
     ".agents/notes/implemented/architecture/2026-09-09-workspace-file-read-authority.md",
-    ".agents/notes/implemented/simplification/2026-07-27-request-error-retry-action.md",
-    ".agents/notes/implemented/simplification/2026-08-08-copy-only-preset-authoring.md",
     ".agents/notes/implemented/testing/2026-06-19-acp-snapshot-tests.md",
     ".agents/notes/implemented/testing/2026-06-19-real-api-e2e-ci.md",
     ".agents/notes/implemented/testing/2026-07-24-web-gui-browser-e2e-lane.md",
