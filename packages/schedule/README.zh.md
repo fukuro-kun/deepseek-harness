@@ -5,7 +5,7 @@ kind: "package-group"
 
 # schedule/ — 仅限会话内的提醒
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

@@ -5,7 +5,7 @@ kind: "package-group"
 
 # settings/：用户可编辑配置
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 
