@@ -1,8 +1,8 @@
 # Agent Note: 拉平交付的工具清单
+[English](2026-07-31-even-out-shipped-tool-rosters.md) | 中文 | [Deutsch](2026-07-31-even-out-shipped-tool-rosters.de.md)
 
 Status: implemented
 
-[English](2026-07-31-even-out-shipped-tool-rosters.md) | 中文
 
 ## 问题
 

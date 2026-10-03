@@ -1,8 +1,8 @@
 # Agent Note: 仅复制的 preset 创作，与通往 preset 文件的入口
+[English](2026-08-08-copy-only-preset-authoring.md) | 中文 | [Deutsch](2026-08-08-copy-only-preset-authoring.de.md)
 
 Status: implemented
 
-[English](2026-08-08-copy-only-preset-authoring.md) | 中文
 
 ## 问题
 

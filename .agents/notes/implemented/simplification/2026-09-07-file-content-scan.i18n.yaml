@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-09-07-file-content-scan.md
-2026-09-07-file-content-scan.md: 708e2f8950b7cbd0123e4aa84aaf32a5e68c9aaa
-2026-09-07-file-content-scan.zh.md: 87463ba340f68820e49fd2194d0295a53b93eb3c
-2026-09-07-file-content-scan.de.md: dd0f488cccf6d348c2f3f1c988363368bbdd82b6
+2026-09-07-file-content-scan.md: 5909a6b2f763c460bc4d849f2207304bda640dd6
+2026-09-07-file-content-scan.zh.md: 84124ef1c09aa85803943170638c25d58fa86e5a
+2026-09-07-file-content-scan.de.md: 562a344e3bb1ff97bb38b458d81668cae87bd3cb

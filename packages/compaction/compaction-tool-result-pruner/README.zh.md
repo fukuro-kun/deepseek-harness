@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-compaction-tool-result-pruner
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-compaction-tool-result-pruner` 防止超大工具输出填满上下文窗口。压缩触发条件满足后，它会把超出预算的文本替换为长度受限的头部、简短的「middle pruned」标记与长度受限的尾部；低于压力的对话保持不变。完整原始结果仍保留在会话日志中，可供精确回放与检查。修剪不发起模型调用，并可能充分缓解 token 压力，使压缩跳过摘要。字符预算只能近似 token 用量；token meter 负责判定压力是否得到缓解。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

@@ -1,8 +1,8 @@
 # Agent Note: In-history-Ersetzung des system prompt für cache-stabile Prompt-Änderungen
+[English](2026-09-02-in-history-system-prompt-replacement.md) | [中文](2026-09-02-in-history-system-prompt-replacement.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-02-in-history-system-prompt-replacement.md) | [中文](2026-09-02-in-history-system-prompt-replacement.zh.md) | Deutsch
 
 ## Problem
 
@@ -10,11 +10,11 @@ Jede Änderung des system prompt kostet den gesamten Präfix-Cache des Providers
 
 Ein DeepSeek-Modell — hier als für diese Arbeit gelieferte Modelltatsache festgehalten — beseitigt diese Einschränkung: Es akzeptiert eine `system`-Nachricht an beliebiger Position der Konversation und behandelt die neueste als den vollständig wirksamen system prompt, der die führende ersetzt. Tool schemas bleiben Teil des gecachten Präfix, sodass eine Änderung des Tool-Sets den Cache weiterhin invalidiert. Mit diesem Modell kann das harness den neuen Prompt hinter der gecachten History anhängen, statt Nachricht 0 neu zu schreiben, und das Präfix bleibt warm.
 
-Das harness besitzt die nötige Repräsentation, weil der [system prompt der Surface-Knoten 0 ist](../architecture/2026-09-02-system-prompt-as-surface-node.md): Eine Prompt-Änderung ist eine Operation auf `system/message`-Surface-Knoten, und die Wahl zwischen „den neuesten Systemknoten ersetzen" und „einen neuen Knoten anhängen" ist eine Entscheidung pro Route.
+Das harness besitzt die nötige Repräsentation, weil der [system prompt der Surface-Knoten 0 ist](../architecture/2026-09-02-system-prompt-as-surface-node.de.md): Eine Prompt-Änderung ist eine Operation auf `system/message`-Surface-Knoten, und die Wahl zwischen „den neuesten Systemknoten ersetzen" und „einen neuen Knoten anhängen" ist eine Entscheidung pro Route.
 
 ## Entscheidung
 
-Für eine Model-Route, die die Fähigkeit deklariert, hängt der Loop einen neuen `system/message`-Surface-Knoten an, statt den neuesten Systemknoten zu ersetzen, wenn sich der gerenderte Prompt ändert und das Präfix andernfalls überleben würde. Alles andere in der [Surface-Knoten-Entscheidung](../architecture/2026-09-02-system-prompt-as-surface-node.md) bleibt unverändert: der Event-Typ, der Owner der Projektion, die Serializer und der Head-Schutz von Knoten 0.
+Für eine Model-Route, die die Fähigkeit deklariert, hängt der Loop einen neuen `system/message`-Surface-Knoten an, statt den neuesten Systemknoten zu ersetzen, wenn sich der gerenderte Prompt ändert und das Präfix andernfalls überleben würde. Alles andere in der [Surface-Knoten-Entscheidung](../architecture/2026-09-02-system-prompt-as-surface-node.de.md) bleibt unverändert: der Event-Typ, der Owner der Projektion, die Serializer und der Head-Schutz von Knoten 0.
 
 ### Fähigkeit
 

@@ -2,10 +2,9 @@
      更新时先运行 `pnpm run gen-cordis-catalog` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/cordis-api/service.md` 重新记录配对。 -->
 
 # Service
-
-[English](service.md) | 中文
-
 [English](service.md) | 中文 | [Deutsch](service.de.md)
+
+
 
 上下文服务的基类。以插件形式加载的子类会将自身注册为 `ctx.<name>`。
 

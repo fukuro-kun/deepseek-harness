@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/rejected/architecture/2026-07-25-client-settings-locale-theme.md
-2026-07-25-client-settings-locale-theme.md: e8fea5f2fa4568f437c47f5b11d6cc2e97316268
-2026-07-25-client-settings-locale-theme.zh.md: 9edd7395afd48fd7088e0c64d74d1c704a584b15
-2026-07-25-client-settings-locale-theme.de.md: 3e184bf035bea0a1a468db8dc5618607c97f9f37
+2026-07-25-client-settings-locale-theme.md: 90e8a92e6dbc5af4abb2eeede058a6c6fc755eb5
+2026-07-25-client-settings-locale-theme.zh.md: baf1f403d9302b521f48083e1c6a29518d607985
+2026-07-25-client-settings-locale-theme.de.md: f45ddea5ccc2bca2ac60848b8f587d46fa43a2d5

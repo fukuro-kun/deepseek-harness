@@ -1,6 +1,6 @@
 # 安排会话内提醒
+[English](schedule.md) | 中文 | [Deutsch](schedule.de.md)
 
-[English](schedule.md) | 中文 | [Deutsch](docs/user/guide/schedule.de.md)
 
 此 overlay 让一个 `dsh web` 进程显式启用 Schedule 提醒，同时不改变交付的默认 Web 组合：
 

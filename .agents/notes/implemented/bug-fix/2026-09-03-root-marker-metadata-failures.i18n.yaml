@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-03-root-marker-metadata-failures.md
-2026-09-03-root-marker-metadata-failures.md: 133c56fa7ee2f7f8c359052d5af8d3199412dc10
-2026-09-03-root-marker-metadata-failures.zh.md: 4b62f4e01ba56074a10dbcb3ae37c4478fe82379
-2026-09-03-root-marker-metadata-failures.de.md: c3e929f778aa4716f177f3f5b7910bb9512adf5f
+2026-09-03-root-marker-metadata-failures.md: 1f30bb9ba56df187c20c8d157b108a55704ffb2a
+2026-09-03-root-marker-metadata-failures.zh.md: 52776711ddf17c7681efc0ab52dc34593d72e52b
+2026-09-03-root-marker-metadata-failures.de.md: 6b71fab68a2b30041ebf2a452019fb27ffa61bad

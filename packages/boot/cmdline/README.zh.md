@@ -4,15 +4,14 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-cmdline
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-cmdline` 让应用从启动器 flag 之后原样留下的参数中解析自己的 flag、`--help` 与错误。解析值可以覆盖配置默认值，而无需改写配置。应用还可以通过启动器的关停路径请求进程退出。适用于拥有自有命令行界面的应用 bin。它不增加提示词、schema 或模型可见内容。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

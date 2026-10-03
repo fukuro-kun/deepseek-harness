@@ -2,10 +2,9 @@
      更新时先运行 `pnpm run gen-doc-graphs` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/tool-execution-pipeline.md` 重新记录配对。 -->
 
 # 工具执行流水线
-
-[English](tool-execution-pipeline.md) | 中文
-
 [English](tool-execution-pipeline.md) | 中文 | [Deutsch](tool-execution-pipeline.de.md)
+
+
 
 此图展示策略、钩子、沙箱、文件系统守卫、结果重写、最终结果观察和 UI 渲染在不改变循环的情况下何时运行。`tools/pre-execute` waterfall（瀑布式事件）首先运行，随后是单调守卫，然后运行 `tools/execute` 和 `tools/post-execute` waterfall；这三个 waterfall 可以改写一次调用。由定义自身控制的 `finalizeContent` 和 `tools/result` 在此之后运行。
 

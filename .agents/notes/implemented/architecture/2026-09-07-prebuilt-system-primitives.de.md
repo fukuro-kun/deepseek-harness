@@ -1,8 +1,8 @@
 # Agent Note: Vorgefertigte System-Primitives
+[English](2026-09-07-prebuilt-system-primitives.md) | [中文](2026-09-07-prebuilt-system-primitives.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-prebuilt-system-primitives.md) | [中文](2026-09-07-prebuilt-system-primitives.zh.md) | Deutsch
 
 ## Problem
 

@@ -3,7 +3,6 @@ English | [中文](2026-07-10-after-call-compaction-pressure-and-overflow-recove
 
 Status: implemented
 
-English | [中文](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.zh.md)
 
 ## Problem
 

@@ -3,7 +3,6 @@ English | [中文](2026-07-08-agent-scope-contexts.zh.md) | [Deutsch](2026-07-08
 
 Status: implemented
 
-English | [中文](2026-07-08-agent-scope-contexts.zh.md)
 
 ## Problem
 

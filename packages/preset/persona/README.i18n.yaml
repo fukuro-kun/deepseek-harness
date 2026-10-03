@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/preset/persona/README.md
 README.md: bb5b7d2e4b21dc28cd367f4d65f2ddc88920e1a1
-README.zh.md: 68129f57b56114da94576136a899101629ea53ab
-README.de.md: b493b925fb52fe054680f1d1312b3f01704df2a3
+README.zh.md: e693650eedc62bf0b9864a254fb8e182ed1cbe7d
+README.de.md: 224a2b75b671d000d89b7d8a8022ec58241cf44b

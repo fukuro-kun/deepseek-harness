@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-session-query-sqlite
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -34,10 +34,15 @@ Wähle es, wenn du Volltext-Recall über frühere Sessions mit Ranking und Pagin
 ### Minimale Konfiguration
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-session'
+
 - name: '@deepseek-ai/dsh-session-query-sqlite'
+
   config:
+
     path: /absolute/path/to/session-search.db
+
 ```
 
 | Feld | Default | Bedeutung |

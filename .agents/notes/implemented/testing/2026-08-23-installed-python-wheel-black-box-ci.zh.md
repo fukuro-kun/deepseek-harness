@@ -1,8 +1,8 @@
 # Agent Note: 安装后 Python wheel 黑盒拉取请求验证
+[English](2026-08-23-installed-python-wheel-black-box-ci.md) | 中文 | [Deutsch](2026-08-23-installed-python-wheel-black-box-ci.de.md)
 
 Status: implemented
 
-[English](2026-08-23-installed-python-wheel-black-box-ci.md) | 中文
 
 ## Problem
 

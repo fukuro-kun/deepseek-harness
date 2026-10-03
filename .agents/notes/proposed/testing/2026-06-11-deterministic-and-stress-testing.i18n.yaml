@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/testing/2026-06-11-deterministic-and-stress-testing.md
-2026-06-11-deterministic-and-stress-testing.md: 87ef46bb9c75a9e656cec2c8931497eccb7e34f2
-2026-06-11-deterministic-and-stress-testing.zh.md: 702a8805d048c9bded4d72224828726567003e5a
-2026-06-11-deterministic-and-stress-testing.de.md: 486d55c469923d4286ec41142e27ad11444a7a1d
+2026-06-11-deterministic-and-stress-testing.md: 045434b98e541c179a53c92bb1b9f07368588453
+2026-06-11-deterministic-and-stress-testing.zh.md: 35c27ba99ef5d71715a3a0b6b1c4400226c547b0
+2026-06-11-deterministic-and-stress-testing.de.md: 580ad3104a0d9e8e856aa8394ca2df2a83a66ed3

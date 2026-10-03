@@ -1,8 +1,8 @@
 # Agent Note: Der Agent ist ein Registrierungs-Scope
+[English](2026-07-08-agent-scope-contexts.md) | [中文](2026-07-08-agent-scope-contexts.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-08-agent-scope-contexts.md) | [中文](2026-07-08-agent-scope-contexts.zh.md) | Deutsch
 
 ## Problem
 
@@ -47,7 +47,7 @@ flowchart LR
 
 Die fehlenden Kreuzkanten sind die Isolationsregel: Agent As lokale Registrierungen gehen nicht in Agent Bs View ein, und die Registrierungen eines Elternteils gehen nicht in ein Kind ein, nur weil der Elternteil die Lebensdauer des Kindes besitzt.
 
-Die Begleit-[Runtime-Design-Agent-Note](2026-07-12-agent-scope-runtime-design.md) erklärt die Implementation und das Korrektheits-Reasoning. Die [Agent-Note zur expliziten Runtime-Identität](2026-08-31-explicit-agent-runtime-identity.md) besitzt, warum Lifecycle-, Event- und Transport-Interfaces Agent-Identität übergeben statt sie über Context zu exponieren. Die [Subagent-Composition-Controls-Agent-Note](../feature/2026-07-12-subagent-persona-tool-filter-and-depth.de.md) besitzt das separate `persona`-, `toolFilter`- und `maxDepth`-Feature.
+Die Begleit-[Runtime-Design-Agent-Note](2026-07-12-agent-scope-runtime-design.de.md) erklärt die Implementation und das Korrektheits-Reasoning. Die [Agent-Note zur expliziten Runtime-Identität](2026-08-31-explicit-agent-runtime-identity.de.md) besitzt, warum Lifecycle-, Event- und Transport-Interfaces Agent-Identität übergeben statt sie über Context zu exponieren. Die [Subagent-Composition-Controls-Agent-Note](../feature/2026-07-12-subagent-persona-tool-filter-and-depth.de.md) besitzt das separate `persona`-, `toolFilter`- und `maxDepth`-Feature.
 
 ### Registrierungs-Ursprung wählt Sichtbarkeit und Aufräumung
 

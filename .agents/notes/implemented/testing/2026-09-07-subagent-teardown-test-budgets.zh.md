@@ -1,8 +1,8 @@
 # Agent Note: 子代理清理测试继承执行通道的时间预算
+[English](2026-09-07-subagent-teardown-test-budgets.md) | 中文 | [Deutsch](2026-09-07-subagent-teardown-test-budgets.de.md)
 
 Status: implemented
 
-[English](2026-09-07-subagent-teardown-test-budgets.md) | 中文
 
 ## 问题
 

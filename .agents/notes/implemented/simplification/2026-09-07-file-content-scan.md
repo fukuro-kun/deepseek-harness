@@ -1,9 +1,8 @@
 # Agent Note: Scan file content without per-array callbacks
-English | [中文](.agents/notes/implemented/simplification/2026-09-07-file-content-scan.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-09-07-file-content-scan.de.md)
+English | [中文](2026-09-07-file-content-scan.zh.md) | [Deutsch](2026-09-07-file-content-scan.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-07-file-content-scan.zh.md)
 
 ## Problem
 

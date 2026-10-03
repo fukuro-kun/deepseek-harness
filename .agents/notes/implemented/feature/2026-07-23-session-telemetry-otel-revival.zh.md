@@ -1,8 +1,8 @@
 # Agent Note: 设有强制脱敏点和 OTel 后端的会话遥测 seam
+[English](2026-07-23-session-telemetry-otel-revival.md) | 中文 | [Deutsch](2026-07-23-session-telemetry-otel-revival.de.md)
 
 Status: implemented
 
-[English](2026-07-23-session-telemetry-otel-revival.md) | 中文
 
 ## 问题
 

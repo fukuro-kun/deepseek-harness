@@ -1,8 +1,8 @@
 # Agent Note: Durable Session-lokale Erinnerungen
+[English](2026-08-05-durable-web-schedule.md) | [中文](2026-08-05-durable-web-schedule.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-05-durable-web-schedule.md) | [中文](2026-08-05-durable-web-schedule.zh.md) | Deutsch
 
 ## Problem
 
@@ -12,7 +12,7 @@ Beschäftigte Agents, lange Wartezeiten, Wall-Clock-Änderungen, kalte Sessions,
 
 ## Entscheidung
 
-Der [Schedule-Guide](../../../../docs/user/guide/schedule.md) verwendet ein Overlay, das explizit `@deepseek-ai/dsh-time-context` und `@deepseek-ai/dsh-schedule` lädt und die ansonsten deaktivierte `ui-schedule`-Row des Web-Bundles aktiviert. Der Default-Web-Startup-Graph bleibt für Schedule inaktiv. Schedule beobachtet nur Root-Agents, die nach dem Laden des Plugins veröffentlicht werden, und installiert seine drei Tools plus einen einweg-Owner in diesem Agent-Scope. Kalte History-Reads, bereits veröffentlichte Roots, Child-Agents und andere Hosts aktivieren die Runtime nicht.
+Der [Schedule-Guide](../../../../docs/user/guide/schedule.de.md) verwendet ein Overlay, das explizit `@deepseek-ai/dsh-time-context` und `@deepseek-ai/dsh-schedule` lädt und die ansonsten deaktivierte `ui-schedule`-Row des Web-Bundles aktiviert. Der Default-Web-Startup-Graph bleibt für Schedule inaktiv. Schedule beobachtet nur Root-Agents, die nach dem Laden des Plugins veröffentlicht werden, und installiert seine drei Tools plus einen einweg-Owner in diesem Agent-Scope. Kalte History-Reads, bereits veröffentlichte Roots, Child-Agents und andere Hosts aktivieren die Runtime nicht.
 
 Die usersichtbare Grenze ist `session-local`: Die originale Session führt eine pünktliche Erinnerung nur aus, solange sie live ist, sendet keine externe Benachrichtigung, solange sie kalt ist, und verarbeitet eine überfällige Erinnerung, nachdem sie wieder live wird. Fällige Arbeit wartet, bis der Agent vollständig idle ist, und tritt dann über `followup()` in die gewöhnliche Next-Turn-Warteschlange ein; sie steuert niemals den laufenden Turn und hat keine eigenständige Web-Quittung ([conversational delivery](../../archived/simplification/2026-08-09-conversational-schedule-delivery.md)).
 
@@ -38,7 +38,7 @@ Jeder erfolgreiche Management-Preflight bittet den Live-Owner um Neuberechnung. 
 
 ### Explizite Absolute-Time-Grenze
 
-Natürlichsprachliche Interpretation und Schedule-Parsing sind bewusst getrennt ([Zeitzonen-Simplification](../simplification/2026-08-09-explicit-schedule-time-zone.md)). Jeder Browser-Prompt trägt seine Host-validierte IANA-Zone nur auf genau dieser durable User-Message. Time-Context sagt dem Modell, diese Zone für ansonsten unqualifizierte Daten und Zeiten anzunehmen. Schedule importiert dieses Plugin weder noch speichert es eine Session-Zone: Das Modell muss seine Interpretation in einen Offset-tragenden RFC-3339-Wert oder ein lokales Objekt mit explizitem `time_zone` verwandeln.
+Natürlichsprachliche Interpretation und Schedule-Parsing sind bewusst getrennt ([Zeitzonen-Simplification](../simplification/2026-08-09-explicit-schedule-time-zone.de.md)). Jeder Browser-Prompt trägt seine Host-validierte IANA-Zone nur auf genau dieser durable User-Message. Time-Context sagt dem Modell, diese Zone für ansonsten unqualifizierte Daten und Zeiten anzunehmen. Schedule importiert dieses Plugin weder noch speichert es eine Session-Zone: Das Modell muss seine Interpretation in einen Offset-tragenden RFC-3339-Wert oder ein lokales Objekt mit explizitem `time_zone` verwandeln.
 
 Schedule validiert exakte Kalenderformen, Offsets, Zonennamen und einen strikt zukünftigen Zeitpunkt mit vierstelliger Jahreszahl. Eine lokale Zeit in einer Sommerzeit-Lücke wird abgelehnt; eine Überlappung wählt ihr erstes, früheres Zeitpunkt. Ein erfolgreiches Create speichert nur kanonisches UTC-`scheduledAt`, nicht den ursprünglichen Offset, die lokalen Felder oder die Zone.
 

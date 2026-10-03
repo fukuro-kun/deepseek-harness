@@ -1,8 +1,8 @@
 # Agent Note: 工具调用超时策略作为插件
+[English](2026-07-07-tool-call-timeout-policy.md) | 中文 | [Deutsch](2026-07-07-tool-call-timeout-policy.de.md)
 
 Status: implemented
 
-[English](2026-07-07-tool-call-timeout-policy.md) | 中文 | [Deutsch](2026-07-07-tool-call-timeout-policy.de.md)
 
 ## 问题
 

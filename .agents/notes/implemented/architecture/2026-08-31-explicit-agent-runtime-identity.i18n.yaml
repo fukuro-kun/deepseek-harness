@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-31-explicit-agent-runtime-identity.md
-2026-08-31-explicit-agent-runtime-identity.md: 4cecbf99a3d4e8720cf7cd4ac2deac1f45bd7a4e
-2026-08-31-explicit-agent-runtime-identity.zh.md: 99d30ce7e31d4212fe37de7bdfc00a26b8068da0
-2026-08-31-explicit-agent-runtime-identity.de.md: 5a70e0f0248d6bb441a89efb5f9ff573885183af
+2026-08-31-explicit-agent-runtime-identity.md: 0e4e25b77b334d7a038e833e203cc4c3f0f43a40
+2026-08-31-explicit-agent-runtime-identity.zh.md: beec389ce06722cd6f2a8c1df1e850d48a9bd42f
+2026-08-31-explicit-agent-runtime-identity.de.md: de6bdf3a71cd215ba71d3ec97d007352e2954e51

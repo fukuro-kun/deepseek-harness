@@ -1,6 +1,6 @@
 # Teststrategie
-
 [English](testing.md) | [中文](testing.zh.md) | Deutsch
+
 
 Wie dieses Repository Tests durchführt, Ebene für Ebene, und die Regeln, die eine grüne Testsuite sinnvoll halten. Befehle stehen im Wurzel-[AGENTS.md](../AGENTS.md); verlinkte Agent Notes tragen die Begründung.
 

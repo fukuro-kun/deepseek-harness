@@ -2,8 +2,8 @@
      Zum Aktualisieren zuerst `pnpm run gen-doc-graphs` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/agent-lifecycle.md` zur erneuten Paaraufzeichnung ausführen. -->
 
 # Agent-Turn- und Step-Lebenszyklus
-
 [English](agent-lifecycle.md) | [中文](agent-lifecycle.zh.md) | Deutsch
+
 
 Diese Sequenz ist die visuelle Begleitung zu [architecture.md](architecture.de.md#turn-flow). Sie hält dauerhafte Replay-Fakten auf `session/event` und Live-Steuerung/Status auf `agent/*`.
 

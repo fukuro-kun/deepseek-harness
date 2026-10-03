@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-06-environment-prompt-suffix.md
-2026-09-06-environment-prompt-suffix.md: 70c34a37c90a04f3f40b883da19272ec8cdea871
-2026-09-06-environment-prompt-suffix.zh.md: 102d1196639ac7d7a754a24fc5a93bc93c1d05ba
-2026-09-06-environment-prompt-suffix.de.md: cfcd5407a191c6844c0daff1a03891f4bcbda194
+2026-09-06-environment-prompt-suffix.md: 17e01fb81230e6fe708e109ad993001c0b422805
+2026-09-06-environment-prompt-suffix.zh.md: abe27a7ebc1844c14ce45047ed7597462b95421f
+2026-09-06-environment-prompt-suffix.de.md: 0d898b145bbd873e85cd8212b988447d4d076948

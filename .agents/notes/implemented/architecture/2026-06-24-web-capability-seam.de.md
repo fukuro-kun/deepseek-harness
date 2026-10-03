@@ -1,8 +1,8 @@
 # Agent Note: Web capability seam — stabile tools über mehrere provider hinweg
+[English](2026-06-24-web-capability-seam.md) | [中文](2026-06-24-web-capability-seam.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-24-web-capability-seam.md) | [中文](2026-06-24-web-capability-seam.zh.md) | Deutsch
 
 ## Problem
 
@@ -45,12 +45,12 @@ Die Abhängigkeitsrichtung spiegelt bash und filesystem:
 ```text
 @deepseek-ai/dsh-tool-web  --depends on-->  @deepseek-ai/dsh-web  <--depends on--  @deepseek-ai/dsh-web-search-exa
         consumer                                 interface                       implementation
-                                                                  <--depends on--  @deepseek-ai/dsh-web-search-perplexity
-                                                                                   implementation
-                                                                  <--depends on--  @deepseek-ai/dsh-web-search-deepseek
-                                                                                   implementation
-                                                                  <--depends on--  @deepseek-ai/dsh-web-fetch-http
-                                                                                   implementation
+                                                                 <--depends on--  @deepseek-ai/dsh-web-search-perplexity
+                                                                                  implementation
+                                                                 <--depends on--  @deepseek-ai/dsh-web-search-deepseek
+                                                                                  implementation
+                                                                 <--depends on--  @deepseek-ai/dsh-web-fetch-http
+                                                                                  implementation
 ```
 
 Zur Laufzeit registrieren provider-pakete capabilities bei `ctx.web`; `tool-web` registriert stabile tools bei `ctx.tools` und führt sie durch die seam aus:

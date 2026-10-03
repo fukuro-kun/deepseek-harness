@@ -3,7 +3,6 @@ English | [中文](2026-07-06-timeout-deadline-library.zh.md) | [Deutsch](2026-0
 
 Status: implemented
 
-English | [中文](2026-07-06-timeout-deadline-library.zh.md)
 
 ## Problem
 

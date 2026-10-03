@@ -1,8 +1,8 @@
 # Agent Note: 鉴权文件展示复用文件系统字节读取
+[English](2026-09-08-file-display-through-filesystem.md) | 中文 | [Deutsch](2026-09-08-file-display-through-filesystem.de.md)
 
 Status: implemented
 
-[English](2026-09-08-file-display-through-filesystem.md) | 中文
 
 ## Problem
 

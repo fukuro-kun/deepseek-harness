@@ -1,8 +1,8 @@
 # Agent Note: Blockierte gewichtete Genehmigungen bleiben pending
+[English](2026-09-09-blocked-weighted-approvals-remain-pending.md) | [中文](2026-09-09-blocked-weighted-approvals-remain-pending.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-09-blocked-weighted-approvals-remain-pending.md) | [中文](2026-09-09-blocked-weighted-approvals-remain-pending.zh.md) | Deutsch
 
 ## Problem
 

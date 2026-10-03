@@ -1,6 +1,6 @@
 # Cookbook: eine Remote API hinzufügen
-
 [English](adding-a-remote-api.md) | [中文](adding-a-remote-api.zh.md) | Deutsch
+
 
 Das Hinzufügen oder Ändern eines `ctx.remote`-Endpoints umfasst die fünf Schritte auf dieser Seite: Methode deklarieren, Fehler deklarieren, am Package registrieren, auf der Client-Seite konsumieren und testen. Decorator-Semantik, Lookup-Auflösung, die Generierungs-Pipeline und die `/api`-Route sind Mechanismus und gehören zur [API-Gateway-Referenz](../api-gateway.de.md); diese Seite gibt die Aktion für jeden Schritt und die Konventionen, die sie erfüllen muss. Warum die Programmierschnittstelle so aussieht, steht in der [Typert-Remote-Method-Calls-Agent-Note](../../.agents/notes/implemented/architecture/2026-08-02-typert-remote-method-calls.de.md), und warum ein Fehler ein einzelner `RemoteError` plus eine Code-Tabelle ist, steht in der [Failure-Vocabulary-Agent-Note](../../.agents/notes/implemented/architecture/2026-08-28-ctx-remote-failure-vocabulary.de.md).
 

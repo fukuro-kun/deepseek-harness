@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/llm/plugin-package-inventory-deepseek/README.md
 README.md: 376ba98e8387dde42b21a66eb539540d1c5af272
-README.zh.md: 956229b359e40c3e13b439668c6be26fae1ed394
-README.de.md: 594ebfce2e3d5120763be9850ac0276d204ca370
+README.zh.md: efcf6e028e30bfa5c1a7ba303be12bb116e5dc20
+README.de.md: 39103de511347c0bd511cc69fc1ab26943ec691e

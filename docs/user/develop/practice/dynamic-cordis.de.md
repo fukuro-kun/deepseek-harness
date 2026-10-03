@@ -1,6 +1,6 @@
 # Einen laufenden agent mit Cordis tools erweitern
-
 [English](dynamic-cordis.md) | [中文](dynamic-cordis.zh.md) | Deutsch
+
 
 Dieser Praxisleitfaden aktiviert [`@deepseek-ai/dsh-tool-cordis`](../../../../packages/extensions/tool-cordis/README.de.md). Der agent kann seinen aktuellen Cordis-Prozess inspizieren und vom model erstellte plugins im Speicher mounten oder unmounten. Temporäre plugins verschwinden beim Unmounten oder beim Beenden des Prozesses und können andere sessions im selben Prozess beeinflussen.
 

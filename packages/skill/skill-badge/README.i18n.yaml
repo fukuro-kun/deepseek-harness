@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/skill/skill-badge/README.md
 README.md: d4254628d40536f0c55a5c7ba846c58db3207510
-README.zh.md: f841764baa4a236b5b8707c787c06e93315241a5
-README.de.md: 0c726e1e26a44c1ee4c01c5e23c8a1c4b7cc758c
+README.zh.md: cfa324c537c82ad7ce20d9244c6c50c147356857
+README.de.md: 94a0bff0754234e66438cfb8497f5c06fe27ec67

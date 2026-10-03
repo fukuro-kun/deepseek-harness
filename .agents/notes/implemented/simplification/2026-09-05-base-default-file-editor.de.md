@@ -1,8 +1,8 @@
 # Agent Note: Geteilte Base-Default-Auswahl des File-Editors
+[English](2026-09-05-base-default-file-editor.md) | [中文](2026-09-05-base-default-file-editor.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-base-default-file-editor.md) | [中文](2026-09-05-base-default-file-editor.zh.md) | Deutsch
 
 ## Problem
 

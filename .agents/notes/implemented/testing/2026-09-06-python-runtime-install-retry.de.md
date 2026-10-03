@@ -1,8 +1,8 @@
 # Agent Note: Begrenzter Retry für die Python-Runtime-Dependency-Installation
+[English](2026-09-06-python-runtime-install-retry.md) | [中文](2026-09-06-python-runtime-install-retry.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-python-runtime-install-retry.md) | [中文](2026-09-06-python-runtime-install-retry.zh.md) | Deutsch
 
 ## Problem
 

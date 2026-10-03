@@ -3,7 +3,6 @@ English | [中文](2026-07-08-tool-output-spill-files.zh.md) | [Deutsch](2026-07
 
 Status: implemented
 
-English | [中文](2026-07-08-tool-output-spill-files.zh.md)
 
 ## Problem
 

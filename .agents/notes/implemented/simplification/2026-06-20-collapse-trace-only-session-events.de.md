@@ -1,8 +1,8 @@
 # Agent Note: Trace-only Session-Fakten in tragende Events eingefaltet
+[English](2026-06-20-collapse-trace-only-session-events.md) | [中文](2026-06-20-collapse-trace-only-session-events.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-20-collapse-trace-only-session-events.md) | [中文](2026-06-20-collapse-trace-only-session-events.zh.md) | Deutsch
 
 ## Problem
 

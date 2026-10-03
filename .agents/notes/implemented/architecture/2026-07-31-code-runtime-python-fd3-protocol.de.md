@@ -1,10 +1,10 @@
 # Agent Note: das code-runtime-python-fd-3-frame-Protokoll
+[English](2026-07-31-code-runtime-python-fd3-protocol.md) | [中文](2026-07-31-code-runtime-python-fd3-protocol.zh.md) | Deutsch
 
 Status: implemented
 
 Der CPython-code-runtime liegt nun unter `packages/experimental/code-runtime-python` (private, npm-Name `@deepseek-ai/dsh-experimental-code-runtime-python`); die Beförderung zu einem released package folgt der experimental-packages-Entscheidung.
 
-[English](2026-07-31-code-runtime-python-fd3-protocol.md) | [中文](2026-07-31-code-runtime-python-fd3-protocol.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Private npm-Publikation als drei unabhängige Sequenzen
+[English](2026-08-10-npm-release-sequences.md) | [中文](2026-08-10-npm-release-sequences.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-npm-release-sequences.md) | [中文](2026-08-10-npm-release-sequences.zh.md) | Deutsch
 
 ## Problem
 

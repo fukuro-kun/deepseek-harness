@@ -1,8 +1,8 @@
 # Agent Note: Web 中的远程 Markdown 图片
+[English](2026-07-30-web-remote-markdown-images.md) | 中文 | [Deutsch](2026-07-30-web-remote-markdown-images.de.md)
 
 Status: implemented
 
-[English](2026-07-30-web-remote-markdown-images.md) | 中文
 
 ## 问题
 

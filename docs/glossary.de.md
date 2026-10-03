@@ -1,6 +1,6 @@
 # Glossar
-
 [English](glossary.md) | [中文](glossary.zh.md) | Deutsch
+
 
 Domain-Vokabular für DeepSeek Harness verwendet einen kanonischen Begriff pro Konzept. Begriffe linken zu ihren Einträgen mit Standard-Markdown-Anchorn; Implementierungsdetail bleibt in Package-READMEs und Agent Notes.
 

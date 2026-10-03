@@ -3,7 +3,6 @@ English | [中文](2026-07-19-package-invariant-runtime-contracts.zh.md) | [Deut
 
 Status: implemented
 
-English | [中文](2026-07-19-package-invariant-runtime-contracts.zh.md)
 
 ## Problem
 

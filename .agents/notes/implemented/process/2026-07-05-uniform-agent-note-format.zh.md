@@ -1,8 +1,8 @@
 # Agent Note: Agent Note 的统一受门禁约束的文件内格式
+[English](2026-07-05-uniform-agent-note-format.md) | 中文 | [Deutsch](2026-07-05-uniform-agent-note-format.de.md)
 
 Status: implemented
 
-[English](2026-07-05-uniform-agent-note-format.md) | 中文
 
 ## 问题
 

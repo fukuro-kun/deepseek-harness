@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/terminal.md
-terminal.md: b3e140f148da857787cd3f75a4d569f4b3d6b4c2
-terminal.zh.md: c6123974fd5156f87ebaaebe8347fc00db397c06
-terminal.de.md: 492f0dc4f6fa03f27f6d844cd52db624ec60d40a
+terminal.md: 3197ec1cb19b604a9ec6f590997f34dd8b71342e
+terminal.zh.md: 5bd316dbe7758a342ea442e95e7b7e068cce4582
+terminal.de.md: cec4a5badf14345f80a8470a21090baf2c864a4c

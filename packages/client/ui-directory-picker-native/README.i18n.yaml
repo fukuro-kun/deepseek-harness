@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-directory-picker-native/README.md
 README.md: 1eefe9e0b178a678f720f57a46f11c786ef8d906
-README.zh.md: d3adbef014977ab607fcdcdad88dbca677100d6c
-README.de.md: 58bae8d1c2d4257249663cf8bc8a3dfffa5c7582
+README.zh.md: 35f1b0015813d78f14cae0c4cc3a1c4a509a9e0c
+README.de.md: 421f38d34030ce02a1a6e759da7a4bc6cdced1f0

@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-llm
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -151,8 +151,8 @@ Die Reasoning-Effort-Materialisierung bewahrt das assemblierte Anfrage-Präfix. 
 Diese Grenzen definieren, wo dieser Service aufhört und andere Pakete oder künftige Arbeit beginnen. Sie sind aktuelle Paket-Einschränkungen, kein Aufgabenrückstand.
 
 - **Keine Retry-Ausführung, kein Caching und kein Rate-Limiting in diesem Service** — die Provider-Registrierung speichert die Retry-Policy, aber ein Stream bleibt ein einzelner Provider-Versuch; `@deepseek-ai/dsh-llm-retry` führt die Policy an persistenten Agent-Schritt-Grenzen aus.
-- **`GenerateOptions`-Sampling ist nur `temperature`/`maxTokens`/`stop`** — keine `tool_choice`-, `top_p`- oder Penalty-Felder; das Vokabular wächst, wenn ein Produzent landet ([entfernte inerte Regler](../../../.agents/notes/archived/simplification/2026-07-04-drop-inert-request-knobs.de.md)).
-- **Produzenten-gesteuerte Varianten bleiben draußen, bis sie produziert werden** — `prefill`, Per-Tool `strict`, Block-`cache`-Hints und die `agent`-Message-Source-Variante haben keinen Produzenten ([Agent Note](../../../.agents/notes/archived/simplification/2026-07-04-prune-producerless-vocabulary-variants.de.md)).
+- **`GenerateOptions`-Sampling ist nur `temperature`/`maxTokens`/`stop`** — keine `tool_choice`-, `top_p`- oder Penalty-Felder; das Vokabular wächst, wenn ein Produzent landet ([entfernte inerte Regler](../../../.agents/notes/archived/simplification/2026-07-04-drop-inert-request-knobs.md)).
+- **Produzenten-gesteuerte Varianten bleiben draußen, bis sie produziert werden** — `prefill`, Per-Tool `strict`, Block-`cache`-Hints und die `agent`-Message-Source-Variante haben keinen Produzenten ([Agent Note](../../../.agents/notes/archived/simplification/2026-07-04-prune-producerless-vocabulary-variants.md)).
 - **`BlockAssembler` verarbeitet nur Kern-Block-Arten** — ein Plugin-hinzugefügter Block-Typ, dessen Stream nie durch `block-end` geschlossen wird, lässt `blocks()` werfen.
 - **`GenerateOptions.sessionId` ist ein lokal deklariertes Brand** — der Import von dsh-sessions `SessionId` würde einen Dependency-Cycle erzeugen.
 

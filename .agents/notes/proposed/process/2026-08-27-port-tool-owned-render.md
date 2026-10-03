@@ -1,10 +1,9 @@
 # Agent Note: Port tool-owned render into current DSH APIs
+English | [中文](2026-08-27-port-tool-owned-render.zh.md) | [Deutsch](2026-08-27-port-tool-owned-render.de.md)
 
-English | [中文](.agents/notes/proposed/process/2026-08-27-port-tool-owned-render.zh.md) | [Deutsch](.agents/notes/proposed/process/2026-08-27-port-tool-owned-render.de.md)
 
 Status: proposed
 
-English | [中文](2026-08-27-port-tool-owned-render.zh.md)
 
 ## Problem
 

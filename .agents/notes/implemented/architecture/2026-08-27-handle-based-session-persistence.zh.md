@@ -1,8 +1,8 @@
 # Agent Note: 基于句柄的会话持久化
+[English](2026-08-27-handle-based-session-persistence.md) | 中文 | [Deutsch](2026-08-27-handle-based-session-persistence.de.md)
 
 Status: implemented
 
-[English](2026-08-27-handle-based-session-persistence.md) | 中文 | [Deutsch](2026-08-27-handle-based-session-persistence.de.md)
 
 ## 问题
 

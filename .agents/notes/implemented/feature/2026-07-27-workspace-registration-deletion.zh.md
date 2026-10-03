@@ -1,8 +1,8 @@
 # Agent Note: 删除 Workspace 注册记录
+[English](2026-07-27-workspace-registration-deletion.md) | 中文 | [Deutsch](2026-07-27-workspace-registration-deletion.de.md)
 
 Status: implemented
 
-[English](2026-07-27-workspace-registration-deletion.md) | 中文
 
 ## 问题
 

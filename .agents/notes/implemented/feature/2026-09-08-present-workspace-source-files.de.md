@@ -1,8 +1,8 @@
 # Agent Note: Present deklariert Quelldateien im Workspace
+[English](2026-09-08-present-workspace-source-files.md) | [中文](2026-09-08-present-workspace-source-files.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-present-workspace-source-files.md) | [中文](2026-09-08-present-workspace-source-files.zh.md) | Deutsch
 
 ## Problem
 
@@ -10,7 +10,7 @@ Benutzer müssen die in ihrem Workspace erzeugten Dateien öffnen und bearbeiten
 
 ## Entscheidung
 
-Das [present-Tool](../../../../packages/fs/tool-present/README.de.md) deklariert vorhandene reguläre Quelldateien unter der [Session-Dateisystem-Zugriffsrichtlinie](2026-09-09-present-filesystem-access.md). Es zeichnet Pfade und optionale Beschreibungen auf, ohne Inhalte zu lesen oder zu kopieren. Das [Deliverables-Plugin](../../../../packages/client/ui-deliverables/README.de.md) öffnet aktuelle Workspace-Quelldateien in der Standardanwendung des Hosts. Bearbeitungen sind beim nächsten Öffnen sichtbar; Löschen oder Verschieben macht die Deklaration unverfügbar. Die Aufbewahrung von Dateiinhalten und Copy-on-Write-Speicherung sind verschoben, bis ein Persistenzdesign dafür zuständig ist.
+Das [present-Tool](../../../../packages/fs/tool-present/README.de.md) deklariert vorhandene reguläre Quelldateien unter der [Session-Dateisystem-Zugriffsrichtlinie](2026-09-09-present-filesystem-access.de.md). Es zeichnet Pfade und optionale Beschreibungen auf, ohne Inhalte zu lesen oder zu kopieren. Das [Deliverables-Plugin](../../../../packages/client/ui-deliverables/README.de.md) öffnet aktuelle Workspace-Quelldateien in der Standardanwendung des Hosts. Bearbeitungen sind beim nächsten Öffnen sichtbar; Löschen oder Verschieben macht die Deklaration unverfügbar. Die Aufbewahrung von Dateiinhalten und Copy-on-Write-Speicherung sind verschoben, bis ein Persistenzdesign dafür zuständig ist.
 
 Die Tool-Beschreibung verlangt `present` nach dem Schreiben einer Datei, die der Benutzer erhalten wollte, und vor der finalen Antwort, einschließlich Dateien, die über Bash oder Codeausführung erstellt wurden. Ein Pfadverweis im Fließtext ersetzt den Aufruf nicht. Das aufgezeichnete [SVG-Auslieferungsszenario](../../../../snapshots/web/present-svg/snapshot.yml) verwendet eine Benutzeranfrage, die `present` nicht nennt, und prüft die resultierende Datei, das Auslieferungs-Event und die Karte. Sein UI-Snapshot deckt das ausgeklappte Chat-Transcript ab; Navigations- und Composer-Steuerelemente gehören zu ihren eigenen Szenarien, sodass unbeteiligte Oberflächenänderungen die Erwartungen an die Dateiauslieferung nicht ungültig machen können.
 

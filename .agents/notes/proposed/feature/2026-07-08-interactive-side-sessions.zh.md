@@ -1,8 +1,8 @@
 # Agent Note: 交互式侧会话与合并回写
+[English](2026-07-08-interactive-side-sessions.md) | 中文 | [Deutsch](2026-07-08-interactive-side-sessions.de.md)
 
 Status: proposed
 
-[English](2026-07-08-interactive-side-sessions.md) | 中文 | [Deutsch](2026-07-08-interactive-side-sessions.de.md)
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: 通用文件上传
+[English](2026-08-26-generic-file-upload.md) | 中文 | [Deutsch](2026-08-26-generic-file-upload.de.md)
 
 Status: implemented
 
-[English](2026-08-26-generic-file-upload.md) | 中文
 
 ## 问题
 

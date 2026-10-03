@@ -1,8 +1,8 @@
 # Agent Note: Isolierte Node-Kompatibilitätsjobs auf selbst gehostetem Linux
+[English](2026-09-06-node-compatibility-selfhosted.md) | [中文](2026-09-06-node-compatibility-selfhosted.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-node-compatibility-selfhosted.md) | [中文](2026-09-06-node-compatibility-selfhosted.zh.md) | Deutsch
 
 ## Problem
 

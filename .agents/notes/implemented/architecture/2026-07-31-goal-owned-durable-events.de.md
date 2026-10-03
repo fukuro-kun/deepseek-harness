@@ -1,8 +1,8 @@
 # Agent Note: Goal-eigene dauerhafte Events
+[English](2026-07-31-goal-owned-durable-events.md) | [中文](2026-07-31-goal-owned-durable-events.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-31-goal-owned-durable-events.md) | [中文](2026-07-31-goal-owned-durable-events.zh.md) | Deutsch
 
 ## Problem
 

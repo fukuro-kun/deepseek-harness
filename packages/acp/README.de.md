@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # acp/ — Agent Client Protocol automation
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 
 ## Zusammenfassung
@@ -33,7 +33,7 @@ Die acp-Gruppe stellt ein Paket bereit: einen Server, über den Programme und Au
 ## Zugehörige Dokumentation
 
 - [dsh-subagent-acp](../subagent/subagent-acp/README.de.md) — der Out-of-Process-ACP-Client, der diesen Server spawnt und steuert.
-- [ACP as an automation-only protocol](../../.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.md) — der Design-Record für den Automatisierungs-Contract und seine Wire-Grenzen.
+- [ACP as an automation-only protocol](../../.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.de.md) — der Design-Record für den Automatisierungs-Contract und seine Wire-Grenzen.
 - [Multiplex concurrent ACP sessions over one connection](../../.agents/notes/archived/feature/2026-06-14-acp-multi-session.md) — Per-Session-Isolation-, Ownership- und Teardown-Entscheidungen.
 
 <a id="dev-note"></a>

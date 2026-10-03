@@ -1,8 +1,8 @@
 # Agent Note: 响应式 Sidebar 与注入的标签信息
+[English](2026-09-07-sidebar-responsive-tab-info.md) | 中文 | [Deutsch](2026-09-07-sidebar-responsive-tab-info.de.md)
 
 Status: implemented
 
-[English](2026-09-07-sidebar-responsive-tab-info.md) | 中文 | [Deutsch](2026-09-07-sidebar-responsive-tab-info.de.md)
 
 ## 问题
 

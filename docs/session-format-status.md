@@ -1,8 +1,7 @@
 # Session format version and release status
-
-English | [中文](session-format-status.zh.md)
-
 English | [中文](session-format-status.zh.md) | [Deutsch](session-format-status.de.md)
+
+
 
 ## Summary
 

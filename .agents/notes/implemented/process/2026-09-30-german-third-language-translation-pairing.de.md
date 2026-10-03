@@ -1,8 +1,8 @@
 # Agent Note: Deutsch als gleichberechtigte Paarungssprache etablieren
+[English](2026-09-30-german-third-language-translation-pairing.md) | [中文](2026-09-30-german-third-language-translation-pairing.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-30-german-third-language-translation-pairing.md) | [中文](2026-09-30-german-third-language-translation-pairing.zh.md) | Deutsch
 
 ## Problem
 

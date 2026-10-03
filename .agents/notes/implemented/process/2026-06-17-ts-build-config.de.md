@@ -1,8 +1,8 @@
 # Agent Note: TSC-first Build und eine Compiler-Zuständigkeit
+[English](2026-06-17-ts-build-config.md) | [中文](2026-06-17-ts-build-config.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-17-ts-build-config.md) | [中文](2026-06-17-ts-build-config.zh.md) | Deutsch
 
 > Die Topologie des Root-Projekts nutzt einen Solution-Root über zwei Aggregate-Programmen; siehe die [Solution-Root-Note](../../archived/process/2026-07-22-tsconfig-solution-root-two-aggregates.md). Die [API-Remotes-Build-Note](../../archived/process/2026-08-08-api-remotes-generated-contract-build.md) definiert die aktuelle Befehlsreihenfolge, in der der Host die Remote-Contracts generiert, bevor der Client kompiliert. Die hier entschiedene tsc-first-Zuständigkeit ist unverändert.
 

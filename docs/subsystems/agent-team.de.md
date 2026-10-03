@@ -1,6 +1,6 @@
 # Agent Teams
-
 [English](agent-team.md) | [中文](agent-team.zh.md) | Deutsch
+
 
 Typen, die sich die experimentelle implizit-root Team-Domäne, Model-Tools und Host-Adapter teilen. Der [Agent-Teams-Agent-Note](../../.agents/notes/implemented/feature/2026-08-05-agent-teams.de.md) hält die Entscheidungen zu Identität, Mailbox, Tasks und gemeinsamem Checkout; diese Seite hält die buchstäblichen durable Formen aus [`packages/experimental/agent-team/src/types.ts`](../../packages/experimental/agent-team/src/types.ts) fest.
 

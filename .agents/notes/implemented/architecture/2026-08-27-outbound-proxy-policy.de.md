@@ -1,8 +1,8 @@
 # Agent Note: Eine outbound-proxy-Policy, installiert bevor irgendetwas requesten kann
+[English](2026-08-27-outbound-proxy-policy.md) | [中文](2026-08-27-outbound-proxy-policy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-27-outbound-proxy-policy.md) | [中文](2026-08-27-outbound-proxy-policy.zh.md) | Deutsch
 
 ## Problem
 

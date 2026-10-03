@@ -1,8 +1,8 @@
 # Spill-Speicher
-
 [English](spill.md) | [中文](spill.zh.md) | Deutsch
 
-Der Spill-Speicher-[Fähigkeits-Seam](../../.agents/notes/implemented/architecture/2026-07-08-tool-output-spill-files.md) hält aufruferseitig gelieferten Text persistent vor und gibt einen modellseitigen Locator mit Abrufhinweis zurück. Seine Service Definition ist [dsh-spill](../../packages/spill/spill) (`ctx.spillStore`), sein lokaler Service Provider ist [dsh-spill-local](../../packages/spill/spill-local). Konsumenten sind die [Tool-Result-Richtlinie](../../packages/spill/spill-policy) und [Sitzungsreferenzen](../../packages/context/session-reference/README.md). Spill ist optional und nicht Teil des [Agent-Loop-Spine](core.de.md); Vorschau- und Spill-Entscheidungen liegen bei den Konsumenten, während der Speicher den gelieferten Text unverändert ablegt.
+
+Der Spill-Speicher-[Fähigkeits-Seam](../../.agents/notes/implemented/architecture/2026-07-08-tool-output-spill-files.de.md) hält aufruferseitig gelieferten Text persistent vor und gibt einen modellseitigen Locator mit Abrufhinweis zurück. Seine Service Definition ist [dsh-spill](../../packages/spill/spill) (`ctx.spillStore`), sein lokaler Service Provider ist [dsh-spill-local](../../packages/spill/spill-local). Konsumenten sind die [Tool-Result-Richtlinie](../../packages/spill/spill-policy) und [Sitzungsreferenzen](../../packages/context/session-reference/README.de.md). Spill ist optional und nicht Teil des [Agent-Loop-Spine](core.de.md); Vorschau- und Spill-Entscheidungen liegen bei den Konsumenten, während der Speicher den gelieferten Text unverändert ablegt.
 
 Quelle: [`packages/spill/spill/src/types.ts`](../../packages/spill/spill/src/types.ts)
 

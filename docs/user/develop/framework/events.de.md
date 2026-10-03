@@ -1,6 +1,6 @@
 # Ereignissystem
-
 [English](events.md) | [中文](events.zh.md) | Deutsch
+
 
 Ereignisse sind der zentrale Kommunikationsmechanismus zwischen Cordis-Plugins. Harness setzt sie vielfach für lose gekoppelte Erweiterungspunkte ein.
 

@@ -1,8 +1,8 @@
 # Agent Note: Session persistence als abstrakter service über das bestehende `SessionEvent`
+[English](2026-06-14-session-persistence.md) | [中文](2026-06-14-session-persistence.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-14-session-persistence.md) | [中文](2026-06-14-session-persistence.zh.md) | Deutsch
 
 ## Problem
 

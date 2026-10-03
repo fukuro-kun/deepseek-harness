@@ -3,7 +3,6 @@ English | [中文](2026-07-30-followup-enqueue-and-owned-runs.zh.md) | [Deutsch]
 
 Status: implemented
 
-English | [中文](2026-07-30-followup-enqueue-and-owned-runs.zh.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Win32-Picker-Pfad ohne unmanaged Sicht fester Größe lesen
+[English](2026-08-31-win32-picker-path-string-read.md) | [中文](2026-08-31-win32-picker-path-string-read.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-31-win32-picker-path-string-read.md) | [中文](2026-08-31-win32-picker-path-string-read.zh.md) | Deutsch
 
 ## Problem
 

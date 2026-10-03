@@ -1,8 +1,8 @@
 # Agent Note: 按 alpha 路由的图片质量阶梯取代按色数分类的编码路由
+[English](2026-08-24-alpha-routed-image-quality-ladders.md) | 中文 | [Deutsch](2026-08-24-alpha-routed-image-quality-ladders.de.md)
 
 Status: implemented
 
-[English](2026-08-24-alpha-routed-image-quality-ladders.md) | 中文
 
 ## 问题
 

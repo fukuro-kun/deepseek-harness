@@ -1,8 +1,8 @@
 # Agent Note: 浏览器第三方库作为构建输入
+[English](2026-09-08-browser-third-party-build-inputs.md) | 中文 | [Deutsch](2026-09-08-browser-third-party-build-inputs.de.md)
 
 Status: implemented
 
-[English](2026-09-08-browser-third-party-build-inputs.md) | 中文
 
 ## 问题
 

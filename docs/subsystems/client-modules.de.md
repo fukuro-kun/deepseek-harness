@@ -1,6 +1,6 @@
 # Client Modules
-
 [English](client-modules.md) | [中文](client-modules.zh.md) | Deutsch
+
 
 Die Web-Plugin-Tabelle: die Node-Hälfte des Client-Modulsystems in [dsh-client-modules](../../packages/client/modules), bereitgestellt als `ctx.clientModules` (`ClientModuleRegistry`). Sie scannt die Entries des Host-Loader nach Packages, die `dsh.client` deklarieren, komponiert den `window.__DSH_BOOT__`-Entry-Graphen, serviert versionierte Ein-oder-mehrere-Ressourcen-Combo-Skripte unter `/plugins` und beantwortet jede Index-Injection-Sammlung mit den Boot-Protokoll-Zeilen — die vier Faces eines einzigen Service. Sie ist eine optionale Fähigkeit des Web-GUI-Stacks, nicht Teil der agent-loop-Spine, und sie ist Consumer von [dsh-host-webserver](../../packages/host/webserver): Der in [web-server.md](web-server.de.md) beschriebene Carrier liefert die Prefix-Route und das `webserver/index-inject`-Event, das dieser Service beantwortet. Die Browser-Hälfte desselben Packages (`ctx.modules`, die lazy-CJS-Modultabelle, die diese Bundles fetched und materialisiert) ist Kernel-Machinerie, die im [Package-README](../../packages/client/modules/README.de.md) dokumentiert ist, nicht hier.
 

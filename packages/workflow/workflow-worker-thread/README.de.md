@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-workflow-worker-thread
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -45,7 +45,7 @@ Das Laden der Engine registriert `ctx.workflowEngine`; das Hinzufügen von `dsh-
 | `syncTimeoutMs` | `5000` | VM-Timeout für das initiale synchrone Segment des Skripts, in Millisekunden. |
 | `disposeGraceMs` | `5000` | Grenze vor Force-Settlement und Worker-Terminierung; begrenzt auch `dispose()`. |
 
-Ein besitzender Consumer darf `WorkflowStartRequest.subagentProvider` und `WorkflowStartRequest.maxTotalAgents` für einen Run setzen — Engine-Level-Policy, keine Skript-Hooks; das gewöhnliche `workflow`-Tool lässt beide ungesetzt, und eine Per-Run-Gesamt-Child-Obergrenze darf die konfigurierte Grenze senken, aber niemals erhöhen. Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-workflow-worker-thread) ist die erschöpfende Quelle für jedes akzeptierte Feld.
+Ein besitzender Consumer darf `WorkflowStartRequest.subagentProvider` und `WorkflowStartRequest.maxTotalAgents` für einen Run setzen — Engine-Level-Policy, keine Skript-Hooks; das gewöhnliche `workflow`-Tool lässt beide ungesetzt, und eine Per-Run-Gesamt-Child-Obergrenze darf die konfigurierte Grenze senken, aber niemals erhöhen. Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-workflow-worker-thread) ist die erschöpfende Quelle für jedes akzeptierte Feld.
 
 ### Was ein Run liefert
 
@@ -119,10 +119,10 @@ Der Host führt ein Ledger der weitergeleiteten Child-Starts; ein sauber beendet
 Lesen Sie diese Seiten, wenn der Engine-Level-Contract nicht ausreicht. Sie führen vom Seam-Contract zu den modellseitigen Consumern und den Designentscheidungen.
 
 - [Workflow-Subsystem](../../../docs/subsystems/workflow.de.md) — der Seam-Contract, den diese Engine implementiert.
-- [Workflow-Seam](../workflow/README.md) — das Run- und Ergebnisvokabular hinter `ctx.workflowEngine`.
-- [workflow-Tool](../tool-workflow/README.md) — der modellseitige Consumer, der Skripte auf dieser Engine ausführt.
+- [Workflow-Seam](../workflow/README.de.md) — das Run- und Ergebnisvokabular hinter `ctx.workflowEngine`.
+- [workflow-Tool](../tool-workflow/README.de.md) — der modellseitige Consumer, der Skripte auf dieser Engine ausführt.
 - [Gruppenkarte](../README.de.md) — die Workflow-Capability-Familie und ihre Pakete.
-- [Dynamic-Workflows Agent Note](../../../.agents/notes/implemented/feature/2026-07-05-dynamic-workflows.md) — das Seam-Design und seine Entscheidungen.
+- [Dynamic-Workflows Agent Note](../../../.agents/notes/implemented/feature/2026-07-05-dynamic-workflows.de.md) — das Seam-Design und seine Entscheidungen.
 
 -----
 
@@ -147,7 +147,7 @@ Unabhängig vom Parent-Request-Cache und von Sibling-Childs. Jedes Child kann nu
 
 #### Was das Modell sieht
 
-Über [`dsh-tool-workflow`](../tool-workflow/README.md) exponiert ein Erfolg nur den materialisierten finalen JSON-Wert und die Child-Anzahl im Wrapper dieses Consumers. Diese Engine liefert stabile Fehler, darunter `workflow script does not parse: <error>`, `invalid meta: <violations>`, `agent() requires a non-empty prompt string`, `agent() could not start a child: <error>` und `child agent run failed: <error>`, plus ihre exakten `parallel()`-, `pipeline()`-, `phase()`-, Options-, Schema- und JSON-Grenzen-Validierungsmeldungen. Zwischenzeitliche Child-Ausgaben stehen dem Skript zur Verfügung, nicht aber dem Parent-Modell.
+Über [`dsh-tool-workflow`](../tool-workflow/README.de.md) exponiert ein Erfolg nur den materialisierten finalen JSON-Wert und die Child-Anzahl im Wrapper dieses Consumers. Diese Engine liefert stabile Fehler, darunter `workflow script does not parse: <error>`, `invalid meta: <violations>`, `agent() requires a non-empty prompt string`, `agent() could not start a child: <error>` und `child agent run failed: <error>`, plus ihre exakten `parallel()`-, `pipeline()`-, `phase()`-, Options-, Schema- und JSON-Grenzen-Validierungsmeldungen. Zwischenzeitliche Child-Ausgaben stehen dem Skript zur Verfügung, nicht aber dem Parent-Modell.
 
 #### Token-Effekt
 

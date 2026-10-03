@@ -1,6 +1,6 @@
 # Benutzerinteraktion
-
 [English](user-questions.md) | [中文](user-questions.zh.md) | Deutsch
+
 
 Der user-questions-seam von [dsh-user-questions](../../packages/interaction/user-questions). Er ist das provider-neutrale Vokabular, das ein Tool- oder Permission-Plugin verwendet, wenn es die Antwort eines Menschen braucht, bevor der Agent fortfahren kann. Agent-gescopte waterfall-Listener komponieren die verfügbaren UI-Oberflächen, einschließlich Listener, die an einen verbundenen Client weitergeleitet werden.
 

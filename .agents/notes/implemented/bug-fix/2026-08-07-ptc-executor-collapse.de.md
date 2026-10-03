@@ -1,8 +1,8 @@
 # Agent Note: PTC mode collapses the executor, not just the wire
+[English](2026-08-07-ptc-executor-collapse.md) | [中文](2026-08-07-ptc-executor-collapse.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-07-ptc-executor-collapse.md) | [中文](2026-08-07-ptc-executor-collapse.zh.md) | Deutsch
 
 ## Problem
 

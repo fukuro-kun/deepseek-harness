@@ -1,12 +1,11 @@
 # Background Task Runtime
+English | [中文](jobs.zh.md) | [Deutsch](jobs.de.md)
 
-English | [中文](jobs.zh.md)
 
 Types shared by long-running producers, `ctx.jobs`, and job controls. The [runtime Agent Note](../../.agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.md) owns the design; this page records the exact fields and variants from [`packages/jobs/jobs/src/types.ts`](../../packages/jobs/jobs/src/types.ts).
 
 ## Ids and status
 
-English | [中文](jobs.zh.md) | [Deutsch](jobs.de.md)
 
 `JobId` is a [branded id](core.md#branded-ids) generated as `<kind>-N`. Access control relies on owner authorization, not id secrecy. `JobKind` derives from a merge-extensible map; the registry treats kinds as opaque id namespaces.
 

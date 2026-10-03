@@ -1,10 +1,10 @@
 # Agent Note: Standard-ACP-v1-Automatisierungs-Controls
+[English](2026-08-22-standard-acp-automation-controls.md) | [中文](2026-08-22-standard-acp-automation-controls.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-22-standard-acp-automation-controls.md) | [中文](2026-08-22-standard-acp-automation-controls.zh.md) | Deutsch
 
-> Diese Note ersetzt nur das Nur-Prompt-Protokollinventar in [ACP als Automation-only-Protokoll](../simplification/2026-07-23-acp-automation-only-protocol.md). Das Verbot dieser Entscheidung, dass ACP zu einer zweiten Produkt-UI wird, bleibt maßgeblich.
+> Diese Note ersetzt nur das Nur-Prompt-Protokollinventar in [ACP als Automation-only-Protokoll](../simplification/2026-07-23-acp-automation-only-protocol.de.md). Das Verbot dieser Entscheidung, dass ACP zu einer zweiten Produkt-UI wird, bleibt maßgeblich.
 
 ## Problem
 

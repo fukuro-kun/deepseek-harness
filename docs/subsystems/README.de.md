@@ -1,6 +1,6 @@
 # Subsysteme
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Eine Seite pro Subsystem des DeepSeek Harness: was es ist, welche Datenstrukturen es bewegt und — wo ein `ctx`-Service oder Event-Scope dahintersteht — ein generierter **Cordis-API**-Abschnitt mit seiner Service- und Event-Referenz. Der Ordner ergänzt [architecture.md](../architecture.de.md), das das *Verhalten* über Subsysteme hinweg beschreibt (die Service-Karte, den Session-/Turn-/Step-Lebenszyklus, die Event-Taxonomie); jede Seite hier ist die Referenz für das Vokabular und die Verdrahtung eines Subsystems.
 

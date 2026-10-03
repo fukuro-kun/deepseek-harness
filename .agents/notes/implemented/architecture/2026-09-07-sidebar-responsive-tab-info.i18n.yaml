@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-07-sidebar-responsive-tab-info.md
-2026-09-07-sidebar-responsive-tab-info.md: e2dc6d9c608e6a22f29d06661ac6338ca4c39374
-2026-09-07-sidebar-responsive-tab-info.zh.md: c979e3b0486b3a3ff3be8b91d0ccaf9d97e1abd8
-2026-09-07-sidebar-responsive-tab-info.de.md: 6ad8f621f4884682464f5fa880aa6b4af257b01f
+2026-09-07-sidebar-responsive-tab-info.md: 2f23afce8986d397421773151bd56e5e8a17bd08
+2026-09-07-sidebar-responsive-tab-info.zh.md: f84a70b6c5e8772a6bcb756b4967c39a1f11f009
+2026-09-07-sidebar-responsive-tab-info.de.md: 66f99c4c7ebb19953db1828ac018bd5af5788801

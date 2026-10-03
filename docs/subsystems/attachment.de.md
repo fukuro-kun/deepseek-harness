@@ -1,6 +1,6 @@
 # Durable Attachments
-
 [English](attachment.md) | [中文](attachment.zh.md) | Deutsch
+
 
 Die Attachment-Seam trennt das Eigentum an binären Bildern und generischen Dateien vom Session-Log. Ein Produzent übergibt Bytes an [`ctx.attachments`](#ctxattachments--attachmentstore-abstract-seam); der Service veröffentlicht eine unveränderliche, content-addressierte Referenz erst, nachdem das Objekt durable ist. Session-Events und modellsichtbare Attachment-Blöcke enthalten diese Referenz und Metadaten, niemals eine Browser-Objekt-URL, einen temporären Host-Pfad, eine Provider-URL oder ein base64-Payload. Der unabhängige Service [`ctx.fileUploads`](#ctxfileuploads--fileuploads) bindet Browser-Dateiübertragungen und gestaffelte Empfangsbestätigungen an den empfangenden Agent.
 

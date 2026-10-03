@@ -1,7 +1,6 @@
 # `dsh` CLI behavior reference
-English | [中文](apps/cli/reference/README.zh.md) | [Deutsch](apps/cli/reference/README.de.md)
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 This reference defines the profile, web-alias, plugin-management, and config-dump command modes. Argv is parsed once through [`src/args.ts`](../src/args.ts), and [`src/bin.ts`](../src/bin.ts) dynamically imports only the selected runner.
 

@@ -3,9 +3,8 @@ description: "Prebuilt system primitives for Linux confinement and POSIX Session
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system
-English | [中文](native/system/README.zh.md) | [Deutsch](native/system/README.de.md)
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

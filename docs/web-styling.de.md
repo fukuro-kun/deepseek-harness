@@ -1,6 +1,6 @@
 # Web-UI-Stilreferenz
-
 [English](web-styling.md) | [中文](web-styling.zh.md) | Deutsch
+
 
 Diese Referenz definiert die Zuständigkeiten für das Styling und die Komponentenregeln für Browser-Client-Packages. Die aktuellen Token-Werte liegen in [`packages/client/ui-theme/src/styles/`](../packages/client/ui-theme/src/styles/); dieses Dokument dupliziert dieses aus dem Quellcode generierte Verzeichnis nicht.
 

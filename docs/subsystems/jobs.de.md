@@ -1,6 +1,6 @@
 # Background-Task-Runtime
-
 [English](jobs.md) | [中文](jobs.zh.md) | Deutsch
+
 
 Typen, die von langlebigen Producern, `ctx.jobs` und Job-Controls geteilt werden. Die [Runtime Agent Note](../../.agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.de.md) besitzt das Design; diese Seite hält die exakten Felder und Varianten aus [`packages/jobs/jobs/src/types.ts`](../../packages/jobs/jobs/src/types.ts) fest.
 
@@ -162,7 +162,7 @@ Die abstrakte [`JobRegistry`](../../packages/jobs/jobs/src/index.ts) Service Def
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.de.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxjobs--jobregistry-abstract-seam"></a>
 

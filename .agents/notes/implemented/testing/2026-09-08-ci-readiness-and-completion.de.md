@@ -1,8 +1,8 @@
 # Agent Note: CI-Assertions warten auf den Abschluss ihrer Operationen
+[English](2026-09-08-ci-readiness-and-completion.md) | [中文](2026-09-08-ci-readiness-and-completion.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-ci-readiness-and-completion.md) | [中文](2026-09-08-ci-readiness-and-completion.zh.md) | Deutsch
 
 ## Problem
 

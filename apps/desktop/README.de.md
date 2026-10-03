@@ -1,6 +1,6 @@
 # DeepSeek Harness Desktop
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Die Desktop-Anwendung ist eine Electron-Shell um die dsh-Web-UI. Sie öffnet keinen Listening-Port: Ein gebündeltes Upstream-Node.js-Child bootet das installierte dsh-Projekt, versionierte Framed-Byte-Pipes tragen Fetch-Requests und Streaming-Responses ohne äußere Base64-Hülle, Node-IPC trägt die Lifecycle-Steuerung, und `dsh-app://` liefert die passenden Client-Assets.
 

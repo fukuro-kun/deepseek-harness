@@ -3,7 +3,6 @@ English | [中文](2026-09-06-embedded-stream-record-readers.zh.md) | [Deutsch](
 
 Status: implemented
 
-English | [中文](2026-09-06-embedded-stream-record-readers.zh.md)
 
 ## Problem
 

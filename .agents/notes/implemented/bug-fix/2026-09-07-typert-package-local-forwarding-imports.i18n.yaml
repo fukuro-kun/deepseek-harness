@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-07-typert-package-local-forwarding-imports.md
-2026-09-07-typert-package-local-forwarding-imports.md: cb07d6b53824f9479f3355d6394ebaacba068383
-2026-09-07-typert-package-local-forwarding-imports.zh.md: 7e012d220df3e7356b35a105784f89e4df148802
-2026-09-07-typert-package-local-forwarding-imports.de.md: 991ac5136df759f130f9123341984eb241136824
+2026-09-07-typert-package-local-forwarding-imports.md: 558079f6a44e4b9a7e1482a089117618cfe2fafb
+2026-09-07-typert-package-local-forwarding-imports.zh.md: 2baa5c6a60b7d2ccfe4ca14eff9182e1e37c992a
+2026-09-07-typert-package-local-forwarding-imports.de.md: f54d03e4007aa367173069e8cbf56c62b93fe2b9

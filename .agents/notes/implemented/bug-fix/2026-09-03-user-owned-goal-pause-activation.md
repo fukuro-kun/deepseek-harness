@@ -1,9 +1,8 @@
 # Agent Note: User-owned goal pause exposes live activation
-English | [中文](.agents/notes/implemented/bug-fix/2026-09-03-user-owned-goal-pause-activation.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-03-user-owned-goal-pause-activation.de.md)
+English | [中文](2026-09-03-user-owned-goal-pause-activation.zh.md) | [Deutsch](2026-09-03-user-owned-goal-pause-activation.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-03-user-owned-goal-pause-activation.zh.md)
 
 ## Problem
 

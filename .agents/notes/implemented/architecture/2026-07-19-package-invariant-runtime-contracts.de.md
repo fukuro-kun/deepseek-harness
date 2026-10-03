@@ -1,8 +1,8 @@
 # Agent Note: Aussagekräftige Package-Invariant-Contracts
+[English](2026-07-19-package-invariant-runtime-contracts.md) | [中文](2026-07-19-package-invariant-runtime-contracts.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-19-package-invariant-runtime-contracts.md) | [中文](2026-07-19-package-invariant-runtime-contracts.zh.md) | Deutsch
 
 ## Problem
 

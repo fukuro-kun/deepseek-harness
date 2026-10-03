@@ -1,9 +1,8 @@
 # Agent Note: Semantic Issue templates and presentation-neutral policy
-English | [中文](.agents/notes/implemented/process/2026-09-03-semantic-issue-templates-and-policy.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-03-semantic-issue-templates-and-policy.de.md)
+English | [中文](2026-09-03-semantic-issue-templates-and-policy.zh.md) | [Deutsch](2026-09-03-semantic-issue-templates-and-policy.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-03-semantic-issue-templates-and-policy.zh.md)
 
 ## Problem
 

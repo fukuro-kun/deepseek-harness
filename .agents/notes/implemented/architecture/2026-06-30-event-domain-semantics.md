@@ -3,7 +3,6 @@ English | [中文](2026-06-30-event-domain-semantics.zh.md) | [Deutsch](2026-06-
 
 Status: implemented
 
-English | [中文](2026-06-30-event-domain-semantics.zh.md)
 
 ## Problem
 

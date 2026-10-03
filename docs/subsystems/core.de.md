@@ -1,6 +1,6 @@
 # Core
-
 [English](core.md) | [中文](core.zh.md) | Deutsch
+
 
 Das **Core**-Subsystem ist [`packages/core`](../../packages/core/README.de.md) — die Packages, die jede Komposition bootet: das event-sourced Session-Log, die System-Prompt-Assembly, die Tool-Registry, die Agent-Typen und die konkrete Schleife, die sie antreibt. Diese Seite erklärt, was das `agent`/`agent-loop`-Paar deklariert — wie ein Agent erstellt und gehalten wird, sowie die Delivery-, Cancel- und Interception-Contracts des `Agent`-Handles — plus die beiden Typmuster, denen jedes Subsystem folgt. Die dedizierten Seiten der Gruppe und der Rest des Ordners sind im [Subsystems-README](README.de.md) indexiert.
 

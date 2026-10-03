@@ -1,8 +1,8 @@
 # Agent Note: DeepSeek 请求用户与会话身份头部
+[English](2026-08-11-deepseek-request-user-id-header.md) | 中文 | [Deutsch](2026-08-11-deepseek-request-user-id-header.de.md)
 
 Status: implemented
 
-[English](2026-08-11-deepseek-request-user-id-header.md) | 中文
 
 ## 问题
 

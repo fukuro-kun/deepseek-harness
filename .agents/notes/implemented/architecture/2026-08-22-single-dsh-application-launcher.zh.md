@@ -1,8 +1,8 @@
 # Agent Note: 由一个 dsh 启动应用 profile
+[English](2026-08-22-single-dsh-application-launcher.md) | 中文 | [Deutsch](2026-08-22-single-dsh-application-launcher.de.md)
 
 Status: implemented
 
-[English](2026-08-22-single-dsh-application-launcher.md) | 中文 | [Deutsch](2026-08-22-single-dsh-application-launcher.de.md)
 
 ## Problem
 

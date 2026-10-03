@@ -1,8 +1,8 @@
 # Agent Note: Der agent einer Session wird aus einem vorgegebenen cordis.yml zusammengesetzt
+[English](2026-08-03-per-session-agent-presets.md) | [中文](2026-08-03-per-session-agent-presets.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-03-per-session-agent-presets.md) | [中文](2026-08-03-per-session-agent-presets.zh.md) | Deutsch
 
 ## Problem
 

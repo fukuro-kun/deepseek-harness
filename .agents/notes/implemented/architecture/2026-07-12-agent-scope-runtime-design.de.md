@@ -1,8 +1,8 @@
 # Agent Note: Agent-Scope-Runtime-Design und Korrektheit
+[English](2026-07-12-agent-scope-runtime-design.md) | [中文](2026-07-12-agent-scope-runtime-design.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-12-agent-scope-runtime-design.md) | [中文](2026-07-12-agent-scope-runtime-design.zh.md) | Deutsch
 
 ## Problem
 
@@ -102,7 +102,7 @@ Die Transaktion wird sowohl unter dem aufrufenden Cordis-Context als auch unter 
 
 Create bereitet eine neue Session vor. Resume lädt und validiert die persistierte Session, bevor es dieselbe Live-Session-Identität vorbereitet. Beide Pfade bauen dann Scope, Agent und Driver und rufen denselben Setup-/Publication-Algorithmus auf.
 
-Die Factory speichert konkrete Trace-Ziele, ruft sie aber über einen Caller-gebundenen Cordis-Trace auf. Ein Runtime-Child-Creator setzt `parentAgent` in den Create- oder Resume-Optionen, und AgentRegistry reicht diese Optionen weiter, ohne aus dem Caller-Context einen Parent abzuleiten. Das bewahrt die Abhängigkeitsherkunft und beide Ownership-Fakten, ohne Trace-Proxies zu stapeln oder ein Domain-Objekt an den Context zu hängen. Scoped-Remote-Event-Adapter erhalten den Agent ebenfalls im Request, verifizieren, dass er der Träger-Key ist, und projizieren Context und Wire-Identität direkt. Kein Scope-Index rekonstruiert einen Agent aus einem Context. Die [Explizite-Runtime-Identity-Entscheidung](2026-08-31-explicit-agent-runtime-identity.md) besitzt diese Trennung und die daraus folgende Continuable-Child-Ownership-Regel.
+Die Factory speichert konkrete Trace-Ziele, ruft sie aber über einen Caller-gebundenen Cordis-Trace auf. Ein Runtime-Child-Creator setzt `parentAgent` in den Create- oder Resume-Optionen, und AgentRegistry reicht diese Optionen weiter, ohne aus dem Caller-Context einen Parent abzuleiten. Das bewahrt die Abhängigkeitsherkunft und beide Ownership-Fakten, ohne Trace-Proxies zu stapeln oder ein Domain-Objekt an den Context zu hängen. Scoped-Remote-Event-Adapter erhalten den Agent ebenfalls im Request, verifizieren, dass er der Träger-Key ist, und projizieren Context und Wire-Identität direkt. Kein Scope-Index rekonstruiert einen Agent aus einem Context. Die [Explizite-Runtime-Identity-Entscheidung](2026-08-31-explicit-agent-runtime-identity.de.md) besitzt diese Trennung und die daraus folgende Continuable-Child-Ownership-Regel.
 
 ### Setup ist vertrauenswürdige Komposition in einer privaten Welt
 

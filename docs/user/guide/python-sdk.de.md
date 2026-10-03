@@ -1,6 +1,6 @@
 # Erste Schritte mit dem Python SDK
-
 [English](python-sdk.md) | [中文](python-sdk.zh.md) | Deutsch
+
 
 Dieses Tutorial installiert das veröffentlichte Python SDK, führt das mitgelieferte eigenständige Minimal-Profil aus und zeigt, wie dasselbe `dsh`-Profil aus einem eigenen Programm heraus angepasst wird.
 

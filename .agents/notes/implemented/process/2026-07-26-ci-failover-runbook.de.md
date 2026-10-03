@@ -1,8 +1,8 @@
 # Agent Note: CI-Failover-Runbook — gehostete Pools → hauseigener Pool
+[English](2026-07-26-ci-failover-runbook.md) | [中文](2026-07-26-ci-failover-runbook.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-26-ci-failover-runbook.md) | [中文](2026-07-26-ci-failover-runbook.zh.md) | Deutsch
 
 ## Problem
 

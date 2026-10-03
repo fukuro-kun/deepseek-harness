@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-sandbox-policy
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -47,7 +47,7 @@ Lade das Paket mit einem Default-Modus; der Fail-Safe-Default ist `read-only`, u
 | `mode` | `read-only` | Der Deployment-Default-Modus, von dem eine Session ausgeht, beim Laden validiert |
 | `workspaceRoot` | `process.cwd()` | Die Fallback-Root, unter die `workspace-write` für agentlose Aufrufe oder Sessions ohne cwd schreiben darf; normale agent-Aufrufe verwenden stattdessen das unveränderliche cwd der Session |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-sandbox-policy) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-sandbox-policy) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Den Modus einer Session wechseln
 

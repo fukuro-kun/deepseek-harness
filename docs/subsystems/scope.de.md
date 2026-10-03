@@ -1,6 +1,6 @@
 # Scoped Registration
-
 [English](scope.md) | [中文](scope.zh.md) | Deutsch
+
 
 Das [Scope-Paket](../../packages/core/scope) liefert das Identitäts-, Carrier- und Scoped-Layer-Vokabular, mit dem ein Registrierungskontext zugleich pro-Agent-Sichtbarkeit und geteilten Lebenszyklusbesitz bedeutet. Es ist eine Bibliotheksprimitive, kein Cordis-Service; der [Agent-Scope-Runtime-Design-Agent-Note](../../.agents/notes/implemented/architecture/2026-07-12-agent-scope-runtime-design.de.md#scope-routing-one-opaque-key-selects-one-layer) besitzt die Lebenszyklusbegründung, und das Paket-[README](../../packages/core/scope/README.de.md) besitzt die aufrufbare API und die Filtersemantik.
 

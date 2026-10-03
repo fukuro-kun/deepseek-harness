@@ -1,8 +1,8 @@
 # Agent Note: 让 Lefthook 安装限定于各 worktree
+[English](2026-07-27-worktree-local-lefthook.md) | 中文 | [Deutsch](2026-07-27-worktree-local-lefthook.de.md)
 
 Status: implemented
 
-[English](2026-07-27-worktree-local-lefthook.md) | 中文
 
 ## 问题
 

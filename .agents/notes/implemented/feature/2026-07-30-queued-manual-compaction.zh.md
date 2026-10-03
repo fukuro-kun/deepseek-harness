@@ -1,8 +1,8 @@
 # Agent Note: 使用单一持久锁实现排队手动压缩
+[English](2026-07-30-queued-manual-compaction.md) | 中文 | [Deutsch](2026-07-30-queued-manual-compaction.de.md)
 
 Status: implemented
 
-[English](2026-07-30-queued-manual-compaction.md) | 中文
 
 ## 问题
 

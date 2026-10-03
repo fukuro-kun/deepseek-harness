@@ -1,10 +1,9 @@
 # Agent Note: Provider-neutral content-block vocabulary owned by dsh-llm
+English | [中文](2026-06-11-content-block-vocabulary.zh.md) | [Deutsch](2026-06-11-content-block-vocabulary.de.md)
 
-English | [中文](.agents/notes/implemented/architecture/2026-06-11-content-block-vocabulary.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-content-block-vocabulary.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-11-content-block-vocabulary.zh.md)
 
 ## Problem
 

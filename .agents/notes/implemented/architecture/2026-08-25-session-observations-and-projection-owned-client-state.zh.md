@@ -1,8 +1,8 @@
 # Agent Note: Session observation 与 projection 所有的客户端状态
+[English](2026-08-25-session-observations-and-projection-owned-client-state.md) | 中文 | [Deutsch](2026-08-25-session-observations-and-projection-owned-client-state.de.md)
 
 Status: implemented
 
-[English](2026-08-25-session-observations-and-projection-owned-client-state.md) | 中文 | [Deutsch](2026-08-25-session-observations-and-projection-owned-client-state.de.md)
 
 ## 问题
 

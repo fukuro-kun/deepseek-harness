@@ -1,8 +1,8 @@
 # Agent Note: Supply-Chain-Prüfungen und Vendor-Drift-Verifikation
+[English](2026-06-11-supply-chain-and-vendor-drift.md) | [中文](2026-06-11-supply-chain-and-vendor-drift.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-06-11-supply-chain-and-vendor-drift.md) | [中文](2026-06-11-supply-chain-and-vendor-drift.zh.md) | Deutsch
 
 ## Problem
 

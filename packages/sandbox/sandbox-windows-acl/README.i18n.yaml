@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/sandbox/sandbox-windows-acl/README.md
-README.md: 49b1b65ea55622a6999723a46199f4d8c2512f2a
-README.zh.md: 6863be8720ed5116588791f36fafe9a963dead60
-README.de.md: a69a702ebc1377637fab67b0063b92459fb71f9b
+README.md: 4e1251ce98af20a1d135d23fd37988de1860418e
+README.zh.md: 6b6f5e7336c052ec0347dbc6833b49acf28bb5ad
+README.de.md: 4a7f7d97935247e7c36971e76f59de6618993221

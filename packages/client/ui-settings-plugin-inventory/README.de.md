@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-settings-plugin-inventory
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -29,7 +29,7 @@ Der Tab **Plugin-Liste** lässt Web-Nutzer Plugins einsehen, ohne ihre Konfigura
 
 ### Eine Karte lesen
 
-Jede eingeklappte Karte nutzt den kurzen Modulnamen als primären Titel, zeigt die stabile Entry-Id darunter und trägt ein kleines Enablement-Tag; aktivierte Einträge zeigen zusätzlich einen farbigen Root-Fiber-Statuspunkt. Ein kompositionsgenerierter Untertitel lässt seine führende `include:`-Markierung weg, während Hover, Suche, der zugängliche Name und die aufgeklappten Details die vollständige Id behalten. Lange Entry-Ids werden in der Zeile abgeschnitten und bleiben per Hover verfügbar. Das Aufklappen einer Karte zeigt die deklarierte Entry-Id, den vollständigen Modul-Specifier und die Zustandsfakten: eine Preset-Row nennt das Preset, aus dem sie stammt, ihren Runtime-Status, wenn die Komposition live ist, und ihre Disable-Bedingung, wenn sie eine trägt; eine preset-provided globale Row erklärt, dass Agent-Presets sie pro Session bereitstellen, nennt die Presets, die sie aktivieren, und bietet einen Sprung in die Preset-Gruppe. Preset-Namen werden über den geteilten `presetDisplayText`-Fold (`dsh-agent-presets/display`) über den Dictionaries von [`ui-agent-preset`](../ui-agent-preset/README.md) aufgelöst: mitgelieferte Presets folgen der aktiven Locale, nutzerauthorte behalten ihre eigenen Metadaten, sodass eine englische Oberfläche nie die chinesischen Namen der Preset-Dateien wiedergibt. Die Suche filtert beide Gruppen nach Modulname und Entry-Id.
+Jede eingeklappte Karte nutzt den kurzen Modulnamen als primären Titel, zeigt die stabile Entry-Id darunter und trägt ein kleines Enablement-Tag; aktivierte Einträge zeigen zusätzlich einen farbigen Root-Fiber-Statuspunkt. Ein kompositionsgenerierter Untertitel lässt seine führende `include:`-Markierung weg, während Hover, Suche, der zugängliche Name und die aufgeklappten Details die vollständige Id behalten. Lange Entry-Ids werden in der Zeile abgeschnitten und bleiben per Hover verfügbar. Das Aufklappen einer Karte zeigt die deklarierte Entry-Id, den vollständigen Modul-Specifier und die Zustandsfakten: eine Preset-Row nennt das Preset, aus dem sie stammt, ihren Runtime-Status, wenn die Komposition live ist, und ihre Disable-Bedingung, wenn sie eine trägt; eine preset-provided globale Row erklärt, dass Agent-Presets sie pro Session bereitstellen, nennt die Presets, die sie aktivieren, und bietet einen Sprung in die Preset-Gruppe. Preset-Namen werden über den geteilten `presetDisplayText`-Fold (`dsh-agent-presets/display`) über den Dictionaries von [`ui-agent-preset`](../ui-agent-preset/README.de.md) aufgelöst: mitgelieferte Presets folgen der aktiven Locale, nutzerauthorte behalten ihre eigenen Metadaten, sodass eine englische Oberfläche nie die chinesischen Namen der Preset-Dateien wiedergibt. Die Suche filtert beide Gruppen nach Modulname und Entry-Id.
 
 ### Der Preset-Switcher
 
@@ -68,7 +68,7 @@ Diese Seiten behandeln den Settings-Abschnitt, den Remote-Call und die Host-seit
 
 - [ui-settings-plugins](../ui-settings-plugins/README.de.md) — der Plugins-Abschnitt, in den sich dieser Tab registriert.
 - [ui-settings](../ui-settings/README.de.md) — die Domain-Basis, die `settings.plugins.tab` deklariert.
-- [api-remotes](../../api/remotes/README.md) — die Remote-BFF-Oberfläche hinter `pluginInventory.list()`.
+- [api-remotes](../../api/remotes/README.de.md) — die Remote-BFF-Oberfläche hinter `pluginInventory.list()`.
 - [plugin-inventory](../../host/plugin-inventory/README.de.md) — die Host-seitige Read-only-Loader-Projektion, die dieser Tab rendert.
 
 -----

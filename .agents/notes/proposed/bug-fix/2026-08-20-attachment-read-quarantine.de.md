@@ -1,8 +1,8 @@
 # Agent Note: Quarantäne für unlesbare historische Anhänge
+[English](2026-08-20-attachment-read-quarantine.md) | [中文](2026-08-20-attachment-read-quarantine.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-08-20-attachment-read-quarantine.md) | [中文](2026-08-20-attachment-read-quarantine.zh.md) | Deutsch
 
 ## Problem
 

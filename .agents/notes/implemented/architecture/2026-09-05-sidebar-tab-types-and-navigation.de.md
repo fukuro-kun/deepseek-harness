@@ -1,8 +1,8 @@
 # Agent Note: Tab-Typen und Navigation der rechten Sidebar
+[English](2026-09-05-sidebar-tab-types-and-navigation.md) | [中文](2026-09-05-sidebar-tab-types-and-navigation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-sidebar-tab-types-and-navigation.md) | [中文](2026-09-05-sidebar-tab-types-and-navigation.zh.md) | Deutsch
 
 ## Problem
 
@@ -46,7 +46,7 @@ Zwei weitere Sitze erweitern Guide und Menü: `sidebar.right.tab.guide` ist eine
 
 ### Vorkommensinformationen von Tabs
 
-[Responsive Sidebar und Tab-Informationen](2026-09-07-sidebar-responsive-tab-info.md) ersetzt die Wahl flacher Owner-Props für Vorkommensinformationen aus dieser Note. Bodies, Titel und Guide-Ersetzungen erhalten das framework-injizierte `useTabInfo()`, um `{ sidebar, panel, tab }` zu lesen. Der Record, Navigation, Sichtbarkeit, Signal und gebundene Aktionen leben in `tab`; die exakten Felder gehören zur [Sidebar-Referenz](../../../../docs/subsystems/sidebar-right.de.md).
+[Responsive Sidebar und Tab-Informationen](2026-09-07-sidebar-responsive-tab-info.de.md) ersetzt die Wahl flacher Owner-Props für Vorkommensinformationen aus dieser Note. Bodies, Titel und Guide-Ersetzungen erhalten das framework-injizierte `useTabInfo()`, um `{ sidebar, panel, tab }` zu lesen. Der Record, Navigation, Sichtbarkeit, Signal und gebundene Aktionen leben in `tab`; die exakten Felder gehören zur [Sidebar-Referenz](../../../../docs/subsystems/sidebar-right.de.md).
 
 Die Tab-Domain besitzt weiterhin ein Vorkommen pro committetem Record, mit einem `AbortController`, einem Navigations-Snapshot und an seine Session gebundenen Aktionen. Sie pinnt die Adresse im [Ressourcenmodell](2026-09-05-client-resource-model.de.md) für die Lebensdauer des Records; Verstecken und Session-Wechsel beenden es nicht, während das Schließen des Records es abbricht und freigibt. Bestehende Framework-Store- und Navigations-Hooks liefern Live-Lesevorgänge, ohne Subscriptions in Tab-Implementierungen.
 
@@ -86,7 +86,7 @@ Das `openFile(path, { line? })` der Konversation — Pfad-Links in Tool-Zeilen, 
 
 **Ein Chain-Slot für Tab-Dispatch oder ein keyed Slot allein.** Das `select` einer Chain ist nicht enumerierbar, und die Guide-Seite und das Navigationsgesicht müssen Typen enumerieren; ein keyed Slot trägt einen Body und sonst nichts, sodass Titel und Adresserkennung eines Typs nirgends zu leben hatten. Zwei Stufen — eine Definitions-Registry plus keyed Komponentensitze — sind das bestehende Muster des Repositories (`ConversationViewRegistry`).
 
-**Laufzeit-Hooks oder ein Instanzobjekt pro Tab.** Mehrere Formen wurden auf Papier versucht — eine Cordis-Fiber pro Tab, eine abstrakte Basisklasse, ein `initial`/`create`-Paar, das eine Instanz mit `dispose` zurückgibt, ein Satz `useTab*`-Hooks, ein framework-verwaltetes `useTabResource(fetch)`, ein `useTabStream`. Der Reihe nach abgelehnt: Eine Fiber pro Tab ist viel zu schwer; dynamische Packages können weder Basisklasse noch exportierte Konstante teilen; eine Instanzschicht dupliziert, was ein Slot-Store und Inject-Gesicht bereits sind; Per-Tab-Hooks erneuern Owner-Props nur; ein framework-eigenes Fetch hat keinen guten Cache-Schlüssel; und ein Stream-Hook auf der Tab-Domain fragt den falschen Owner — Chat-Daten müssen aus der Chat-Domain kommen, Dateidaten aus dem Workspace-Dateiservice. Übrig bleiben Owner-Props plus ein clientweites `useResource`. `visible` wurde später aus demselben Grund als Prop statt als Hook hinzugefügt: Es ist eine weitere Tatsache über das Vorkommen, und die Props tragen das Vorkommen bereits. Die Ablehnung vorkommenslesender Hooks wird von der [Tab-Informations-Entscheidung](2026-09-07-sidebar-responsive-tab-info.md) ersetzt; die unabhängige Begründung zu Instanz-, Fiber- und Datenstrom-Ownership gilt weiterhin.
+**Laufzeit-Hooks oder ein Instanzobjekt pro Tab.** Mehrere Formen wurden auf Papier versucht — eine Cordis-Fiber pro Tab, eine abstrakte Basisklasse, ein `initial`/`create`-Paar, das eine Instanz mit `dispose` zurückgibt, ein Satz `useTab*`-Hooks, ein framework-verwaltetes `useTabResource(fetch)`, ein `useTabStream`. Der Reihe nach abgelehnt: Eine Fiber pro Tab ist viel zu schwer; dynamische Packages können weder Basisklasse noch exportierte Konstante teilen; eine Instanzschicht dupliziert, was ein Slot-Store und Inject-Gesicht bereits sind; Per-Tab-Hooks erneuern Owner-Props nur; ein framework-eigenes Fetch hat keinen guten Cache-Schlüssel; und ein Stream-Hook auf der Tab-Domain fragt den falschen Owner — Chat-Daten müssen aus der Chat-Domain kommen, Dateidaten aus dem Workspace-Dateiservice. Übrig bleiben Owner-Props plus ein clientweites `useResource`. `visible` wurde später aus demselben Grund als Prop statt als Hook hinzugefügt: Es ist eine weitere Tatsache über das Vorkommen, und die Props tragen das Vorkommen bereits. Die Ablehnung vorkommenslesender Hooks wird von der [Tab-Informations-Entscheidung](2026-09-07-sidebar-responsive-tab-info.de.md) ersetzt; die unabhängige Begründung zu Instanz-, Fiber- und Datenstrom-Ownership gilt weiterhin.
 
 **Ein Per-Pane-Tools-Sitz für die Controls des aktiven Tabs (`sidebar.right.pane.tab.tools`).** Für eine Review-Runde ausgeliefert, dann entfernt: Er setzte typprivate Buttons auf den Strip des Panels neben die Split- und Einklapp-Controls, wo sie als Panel-Chrome lasen. Die Controls eines Typs gehören in seinen eigenen Body.
 

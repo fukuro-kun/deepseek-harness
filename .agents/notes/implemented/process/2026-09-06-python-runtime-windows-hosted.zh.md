@@ -1,8 +1,8 @@
 # Agent Note: Windows Python runtime CI 保留在 GitHub 托管 Windows 上
+[English](2026-09-06-python-runtime-windows-hosted.md) | 中文 | [Deutsch](2026-09-06-python-runtime-windows-hosted.de.md)
 
 Status: implemented
 
-[English](2026-09-06-python-runtime-windows-hosted.md) | 中文
 
 ## 问题
 

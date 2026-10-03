@@ -1,8 +1,8 @@
 # Agent Note: node:timers/promises für handgeschriebene abbrechbare Sleeps verwenden
+[English](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.md) | [中文](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.zh.md) | Deutsch
 
 Status: rejected — die Implementierung (PR #679) hat die Paritätsannahme widerlegt: vitests Fake Clock fängt `node:timers/promises` nicht ab, der Tausch kostet also deterministische schnelle Tests für ~10 gelöschte Zeilen
 
-[English](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.md) | [中文](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.zh.md) | Deutsch
 
 ## Problem
 

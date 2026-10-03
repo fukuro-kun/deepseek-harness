@@ -1,8 +1,7 @@
 # Web UI 样式参考
-
-[English](web-styling.md) | 中文
-
 [English](web-styling.md) | 中文 | [Deutsch](web-styling.de.md)
+
+
 
 本文规定浏览器客户端包的样式职责归属与组件规则。当前 token 值位于 [`packages/client/ui-theme/src/styles/`](../packages/client/ui-theme/src/styles/)；本文不重复这份由源码生成的清单。
 

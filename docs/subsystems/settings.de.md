@@ -1,6 +1,6 @@
 # User Settings
-
 [English](settings.md) | [中文](settings.zh.md) | Deutsch
+
 
 Der User-Settings seam von [dsh-settings](../../packages/settings/settings) hält ein benutzereigenes Dokument mit Abschnitten pro namespace und löst jeden registrierten namespace auf: zuerst schema-Defaults, dann die Kompositions-`base` des Registranten, dann der User-Abschnitt. Provider wie [dsh-settings-file](../../packages/settings/settings-file) speichern das rohe Dokument und pushen externe Änderungen; Consumer-Plugins registrieren ein schema und lesen oder beobachten den aufgelösten Wert. Die Kompositions-Konfiguration bleibt in `cordis.yml` — ein namespace trägt nur die vom Benutzer editierbare Teilmenge.
 

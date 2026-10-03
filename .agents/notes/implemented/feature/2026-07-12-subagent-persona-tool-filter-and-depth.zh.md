@@ -1,8 +1,8 @@
 # Agent Note: 配置 subagent 的人设、工具可见性与深度
+[English](2026-07-12-subagent-persona-tool-filter-and-depth.md) | 中文 | [Deutsch](2026-07-12-subagent-persona-tool-filter-and-depth.de.md)
 
 Status: implemented
 
-[English](2026-07-12-subagent-persona-tool-filter-and-depth.md) | 中文
 
 ## 问题
 

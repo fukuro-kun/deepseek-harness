@@ -1,8 +1,8 @@
 # Agent Note: Web 后台任务展示
+[English](2026-08-08-web-background-job-display.md) | 中文 | [Deutsch](2026-08-08-web-background-job-display.de.md)
 
 Status: implemented
 
-[English](2026-08-08-web-background-job-display.md) | 中文
 
 ## 问题
 

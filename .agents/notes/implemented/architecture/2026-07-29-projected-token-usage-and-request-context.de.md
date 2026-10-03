@@ -1,8 +1,8 @@
 # Agent Note: Projizierte Token-Usage und Context-Belegung
+[English](2026-07-29-projected-token-usage-and-request-context.md) | [中文](2026-07-29-projected-token-usage-and-request-context.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-29-projected-token-usage-and-request-context.md) | [中文](2026-07-29-projected-token-usage-and-request-context.zh.md) | Deutsch
 
 ## Problem
 

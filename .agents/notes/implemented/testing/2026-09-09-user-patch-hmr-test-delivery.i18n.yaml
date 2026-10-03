@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-09-user-patch-hmr-test-delivery.md
-2026-09-09-user-patch-hmr-test-delivery.md: 6659a5e57363d8907680467e565dded40bac3543
-2026-09-09-user-patch-hmr-test-delivery.zh.md: c2a3a14c9f322e748dbfd131a98138b13c5d47a6
-2026-09-09-user-patch-hmr-test-delivery.de.md: 2682c63ce02854b4f285547d31a7e48ec8051cb1
+2026-09-09-user-patch-hmr-test-delivery.md: 4c6e6424e1b4faf81e58cdc296b62dc278a313c1
+2026-09-09-user-patch-hmr-test-delivery.zh.md: 49a9e15248d4931e30f293d56d0c1db8d3b8062b
+2026-09-09-user-patch-hmr-test-delivery.de.md: af83547167287b28f60821b4bbc500e420d5575f

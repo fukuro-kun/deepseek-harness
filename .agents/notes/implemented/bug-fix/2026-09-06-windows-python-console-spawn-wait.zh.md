@@ -1,8 +1,8 @@
 # Agent Note: 等待 Windows Python 控制台运行时
+[English](2026-09-06-windows-python-console-spawn-wait.md) | 中文 | [Deutsch](2026-09-06-windows-python-console-spawn-wait.de.md)
 
 Status: implemented
 
-[English](2026-09-06-windows-python-console-spawn-wait.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Die Alpha-Session-Migration verweigert jedes unbekannte historische Event
+[English](2026-08-31-alpha-historical-unknown-event-refusal.md) | [中文](2026-08-31-alpha-historical-unknown-event-refusal.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-31-alpha-historical-unknown-event-refusal.md) | [中文](2026-08-31-alpha-historical-unknown-event-refusal.zh.md) | Deutsch
 
 ## Problem
 

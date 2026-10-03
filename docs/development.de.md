@@ -1,6 +1,6 @@
 # Entwicklungshandbuch
-
 [English](development.md) | [中文](development.zh.md) | Deutsch
+
 
 Die Einrichtungsanleitung führt neue Mitwirkende von den Voraussetzungen bis zum geprüften Checkout. Die folgende Referenz für Mitwirkende behandelt das Repository-Layout, den täglichen Arbeitsablauf und die CI-Organisation. Design-Rationale und Implementierungsdetails gehören zu den verlinkten Agent Notes und Skripten.
 

@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-settings-plugins
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -68,10 +68,10 @@ Das Speichern schreibt gestagte Felder über den Client-Settings-Scope, der jede
 
 Diese Seiten behandeln die Settings-Basis, den Inventory-Tab und die durable Seams hinter den Karten.
 
-- [ui-settings](../ui-settings/README.md) — die Domain-Basis, die `settings.plugins.tab` und den Settings-Scope deklariert.
-- [ui-settings-plugin-inventory](../ui-settings-plugin-inventory/README.md) — der Read-only-Tab „Plugin-Liste“ im selben Abschnitt.
-- [settings](../../settings/README.md) — der durable User-Settings-Seam und sein File-Provider.
-- [credentials](../../credentials/README.md) — der Credential-Reference-Seam, über den Secret-Felder schreiben.
+- [ui-settings](../ui-settings/README.de.md) — die Domain-Basis, die `settings.plugins.tab` und den Settings-Scope deklariert.
+- [ui-settings-plugin-inventory](../ui-settings-plugin-inventory/README.de.md) — der Read-only-Tab „Plugin-Liste“ im selben Abschnitt.
+- [settings](../../settings/README.de.md) — der durable User-Settings-Seam und sein File-Provider.
+- [credentials](../../credentials/README.de.md) — der Credential-Reference-Seam, über den Secret-Felder schreiben.
 - [ui-settings-general](../ui-settings-general/README.de.md) — die Settings-Shell, die diesen Abschnitt hostet.
 
 -----

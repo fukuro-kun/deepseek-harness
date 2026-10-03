@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-30-queued-manual-compaction.md
-2026-07-30-queued-manual-compaction.md: 706039e12da2bb09068a53e639d37365959caf88
-2026-07-30-queued-manual-compaction.zh.md: 2da3f494afcdb0e0db47a0adb2e2a6101f7ef2e6
-2026-07-30-queued-manual-compaction.de.md: 5c5dcb7f548419a0dcf8d972ff0450cd69d3ab50
+2026-07-30-queued-manual-compaction.md: 28c0799f1012a5ca3280f4ccb0c2f2efbda3cc59
+2026-07-30-queued-manual-compaction.zh.md: f9dda1c69adb025fb0b8dfc64a5d0ada2daf625a
+2026-07-30-queued-manual-compaction.de.md: b6929645a156908a2c75797de6397136f66ac42f

@@ -1,8 +1,8 @@
 # Agent Note: 可继续 subagent 的人类 inbox 控制
+[English](2026-08-27-continuable-subagent-human-inbox-control.md) | 中文 | [Deutsch](2026-08-27-continuable-subagent-human-inbox-control.de.md)
 
 Status: implemented
 
-[English](2026-08-27-continuable-subagent-human-inbox-control.md) | 中文
 
 ## 问题
 

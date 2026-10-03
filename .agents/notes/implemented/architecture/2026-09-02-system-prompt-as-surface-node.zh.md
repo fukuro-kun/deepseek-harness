@@ -1,8 +1,8 @@
 # Agent Note: 系统提示词是 surface 的第 0 号节点
+[English](2026-09-02-system-prompt-as-surface-node.md) | 中文 | [Deutsch](2026-09-02-system-prompt-as-surface-node.de.md)
 
 Status: implemented
 
-[English](2026-09-02-system-prompt-as-surface-node.md) | 中文 | [Deutsch](2026-09-02-system-prompt-as-surface-node.de.md)
 
 ## Problem
 

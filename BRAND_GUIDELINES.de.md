@@ -1,6 +1,6 @@
 # DeepSeek Harness Brand Asset Usage Guidelines
-
 [English](BRAND_GUIDELINES.md) | [中文](BRAND_GUIDELINES.zh.md) | Deutsch
+
 
 Um die langfristig gesunde Entwicklung des DeepSeek-Harness-Ökosystems zu erhalten, Verwirrung bei Nutzern zu vermeiden und das Auffinden und Erkennen zugehöriger Ressourcen zu erleichtern, haben wir diese Richtlinien aufgestellt und hoffen, dass sich alle daran halten:
 

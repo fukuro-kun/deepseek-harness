@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-07-composer-session-stats-pills.md
-2026-09-07-composer-session-stats-pills.md: 361095fe4f84d1d2b30f1893daca73b5d5ac4ef4
-2026-09-07-composer-session-stats-pills.zh.md: b6ef6da3c37a46d9e07e7ebdf77439e26896fddc
-2026-09-07-composer-session-stats-pills.de.md: d867152808956c34689a8c876df05d37e32b420b
+2026-09-07-composer-session-stats-pills.md: 2482d8c4ae0555a746ad23e18a6f25e439bf0282
+2026-09-07-composer-session-stats-pills.zh.md: ac8a96da71433e99e8da6fd18408bf5422997607
+2026-09-07-composer-session-stats-pills.de.md: 8fe1889928b6f10d74dd9f6a93f854e70664c68e

@@ -1,8 +1,8 @@
 # Agent Note: 引用已提交的产物，绝不引用设计会话序号
+[English](2026-08-09-committed-artifact-citations.md) | 中文 | [Deutsch](2026-08-09-committed-artifact-citations.de.md)
 
 Status: implemented
 
-[English](2026-08-09-committed-artifact-citations.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Ein Remote-Fehlervokabular für `ctx.remote`
+[English](2026-08-28-ctx-remote-failure-vocabulary.md) | [中文](2026-08-28-ctx-remote-failure-vocabulary.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-28-ctx-remote-failure-vocabulary.md) | [中文](2026-08-28-ctx-remote-failure-vocabulary.zh.md) | Deutsch
 
 ## Problem
 

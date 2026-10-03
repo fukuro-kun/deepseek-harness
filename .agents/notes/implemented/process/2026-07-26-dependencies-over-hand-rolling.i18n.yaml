@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-26-dependencies-over-hand-rolling.md
-2026-07-26-dependencies-over-hand-rolling.md: 5415acbc0e2a58bbc6ff7e12d63e68f65a10ac03
-2026-07-26-dependencies-over-hand-rolling.zh.md: deec00d87f2c514dbf16cac0e96cdf00ec055958
-2026-07-26-dependencies-over-hand-rolling.de.md: f2972e65dcd857c9f84be4edc5b5c840543edf30
+2026-07-26-dependencies-over-hand-rolling.md: c3b433c6600a8ccbec8f96b7174e2161a2f07f3d
+2026-07-26-dependencies-over-hand-rolling.zh.md: 6841d5e4dd5fcca4b47373e3123d4e48a016ec95
+2026-07-26-dependencies-over-hand-rolling.de.md: 209d68ddde1cb22f3fe4c62ab90e91a3b3c01d8d

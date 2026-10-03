@@ -1,6 +1,6 @@
 # Cordis-Primer
-
 [English](cordis-primer.md) | [中文](cordis-primer.zh.md) | Deutsch
+
 
 Cordis ist das vendorte Plugin-Framework unter DeepSeek Harness. Dieser Primer lehrt die Cordis-Ideen, die ein Harness-Plugin-Autor braucht, bevor er die generierte Service-/Event-Referenz auf den [Subsystem-Seiten](subsystems/core.de.md) liest; das [Cordis-Tutorial](cordis-tutorial/index.de.md) geht dieselben Ideen praktisch durch. Der vendorte Source und die Sync-Prozedur leben in [vendor/README.md](../vendor/README.md).
 

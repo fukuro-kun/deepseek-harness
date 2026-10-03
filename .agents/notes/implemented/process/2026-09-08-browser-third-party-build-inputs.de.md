@@ -1,8 +1,8 @@
 # Agent Note: Drittanbieter-Bibliotheken für den Browser als Build-Eingaben
+[English](2026-09-08-browser-third-party-build-inputs.md) | [中文](2026-09-08-browser-third-party-build-inputs.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-browser-third-party-build-inputs.md) | [中文](2026-09-08-browser-third-party-build-inputs.zh.md) | Deutsch
 
 ## Problem
 

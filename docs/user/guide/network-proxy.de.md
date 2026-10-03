@@ -1,6 +1,6 @@
 # DSH hinter einem Netzwerk-Proxy betreiben
-
 [English](network-proxy.md) | [中文](network-proxy.zh.md) | Deutsch
+
 
 DSH leitet seine ausgehenden Anfragen — Modellaufrufe, Websuche, Seitenabrufe und MCP-Server über HTTP — durch den Proxy, den die üblichen Proxy-Umgebungsvariablen nennen. Es liest sie beim Start; nichts weiter muss konfiguriert werden. Einige Pfade bleiben bewusst oder aus Laufzeitgründen direkt, aufgeführt unter „Was direkt bleibt" weiter unten.
 

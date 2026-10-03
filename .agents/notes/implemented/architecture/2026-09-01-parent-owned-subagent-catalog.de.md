@@ -1,8 +1,8 @@
 # Agent Note: Eltern-verwaltete Subagent-Katalog-Events
+[English](2026-09-01-parent-owned-subagent-catalog.md) | [中文](2026-09-01-parent-owned-subagent-catalog.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-01-parent-owned-subagent-catalog.md) | [中文](2026-09-01-parent-owned-subagent-catalog.zh.md) | Deutsch
 
 ## Problem
 

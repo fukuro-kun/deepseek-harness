@@ -1,8 +1,8 @@
 # Agent Note: Sidebar 文本预览与文件树
+[English](2026-09-05-sidebar-text-preview-and-file-tree.md) | 中文 | [Deutsch](2026-09-05-sidebar-text-preview-and-file-tree.de.md)
 
 Status: implemented
 
-[English](2026-09-05-sidebar-text-preview-and-file-tree.md) | 中文
 
 ## Problem
 

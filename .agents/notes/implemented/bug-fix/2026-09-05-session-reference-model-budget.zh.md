@@ -1,8 +1,8 @@
 # Agent Note: 模型相对会话引用预算
+[English](2026-09-05-session-reference-model-budget.md) | 中文 | [Deutsch](2026-09-05-session-reference-model-budget.de.md)
 
 Status: implemented
 
-[English](2026-09-05-session-reference-model-budget.md) | 中文
 
 ## Problem
 

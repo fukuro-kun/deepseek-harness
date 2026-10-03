@@ -1,9 +1,8 @@
 # Agent Note: Fold trace-only session facts into load-bearing events
-English | [中文](.agents/notes/implemented/simplification/2026-06-20-collapse-trace-only-session-events.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-06-20-collapse-trace-only-session-events.de.md)
+English | [中文](2026-06-20-collapse-trace-only-session-events.zh.md) | [Deutsch](2026-06-20-collapse-trace-only-session-events.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-20-collapse-trace-only-session-events.zh.md)
 
 ## Problem
 

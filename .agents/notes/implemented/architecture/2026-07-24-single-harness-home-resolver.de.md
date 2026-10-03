@@ -1,8 +1,8 @@
 # Agent Note: Ein Harness-Home-Resolver
+[English](2026-07-24-single-harness-home-resolver.md) | [中文](2026-07-24-single-harness-home-resolver.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-24-single-harness-home-resolver.md) | [中文](2026-07-24-single-harness-home-resolver.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,9 +1,8 @@
 # Agent Note: Human inbox controls for continuable subagents
-English | [中文](.agents/notes/implemented/feature/2026-08-27-continuable-subagent-human-inbox-control.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-27-continuable-subagent-human-inbox-control.de.md)
+English | [中文](2026-08-27-continuable-subagent-human-inbox-control.zh.md) | [Deutsch](2026-08-27-continuable-subagent-human-inbox-control.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-27-continuable-subagent-human-inbox-control.zh.md)
 
 ## Problem
 

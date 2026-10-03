@@ -1,8 +1,8 @@
 # Agent Note: Projekt-lokale Issue-Planungsfelder
+[English](2026-09-02-project-local-issue-planning-fields.md) | [中文](2026-09-02-project-local-issue-planning-fields.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-02-project-local-issue-planning-fields.md) | [中文](2026-09-02-project-local-issue-planning-fields.zh.md) | Deutsch
 
 ## Problem
 

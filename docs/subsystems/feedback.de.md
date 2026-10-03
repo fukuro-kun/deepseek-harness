@@ -1,6 +1,6 @@
 # Message Feedback
-
 [English](feedback.md) | [中文](feedback.zh.md) | Deutsch
+
 
 [`@deepseek-ai/dsh-message-feedback`](../../packages/feedback/message-feedback) besitzt das editierbare Feedback für einzelne Assistant-Nachrichten. Das kanonische Session-Log speichert `feedback/message-put` und `feedback/message-delete`; die unveränderliche Bemerkung auf Session-Ebene bleibt `feedback/record`, im Besitz von [`@deepseek-ai/dsh-command-feedback`](../../packages/feedback/command-feedback) zusammen mit der `FeedbackCategory`-Taxonomie, unter der beide Feedbackarten abgelegt werden. Alle drei sind rein logbasierte Events, die niemals in den Modellkontext gelangen.
 

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/process/2026-07-26-remove-packed-session-fixture-migrator.md
-2026-07-26-remove-packed-session-fixture-migrator.md: 847dba13535b978f3b8f079e9445020b40f44c81
-2026-07-26-remove-packed-session-fixture-migrator.zh.md: 6bf553aed0ab01a5a0020cd2241845e9bcdd11eb
-2026-07-26-remove-packed-session-fixture-migrator.de.md: ac0bd4150da85c8aace0f27c31d846105e57085c
+2026-07-26-remove-packed-session-fixture-migrator.md: 701217c7b7417913cf83f87cfc226e9918d0da86
+2026-07-26-remove-packed-session-fixture-migrator.zh.md: cee9e5ca0f181293cd2ee89ea4a45054d2d1a78e
+2026-07-26-remove-packed-session-fixture-migrator.de.md: eff107de26a7e05d662bf6cd9eee01c2ca48617d

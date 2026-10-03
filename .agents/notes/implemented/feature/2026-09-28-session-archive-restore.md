@@ -1,9 +1,8 @@
 # Agent Note: Session archive restore and the archive section
-English | [中文](.agents/notes/implemented/feature/2026-09-28-session-archive-restore.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-28-session-archive-restore.de.md)
+English | [中文](2026-09-28-session-archive-restore.zh.md) | [Deutsch](2026-09-28-session-archive-restore.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-28-session-archive-restore.zh.md)
 
 ## Problem
 

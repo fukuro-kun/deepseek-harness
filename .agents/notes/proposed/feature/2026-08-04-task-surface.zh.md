@@ -1,8 +1,8 @@
 # Agent Note: 用于结构化会话交互的 Task Surface
+[English](2026-08-04-task-surface.md) | 中文 | [Deutsch](2026-08-04-task-surface.de.md)
 
 Status: proposed
 
-[English](2026-08-04-task-surface.md) | 中文 | [Deutsch](.agents/notes/proposed/feature/2026-08-04-task-surface.de.md)
 
 ## 问题
 

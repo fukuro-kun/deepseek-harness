@@ -1,8 +1,8 @@
 # Agent Note: 反馈门控的会话遥测默认值
+[English](2026-08-25-feedback-gated-telemetry-default.md) | 中文 | [Deutsch](2026-08-25-feedback-gated-telemetry-default.de.md)
 
 Status: implemented
 
-[English](2026-08-25-feedback-gated-telemetry-default.md) | 中文
 
 ## 问题
 

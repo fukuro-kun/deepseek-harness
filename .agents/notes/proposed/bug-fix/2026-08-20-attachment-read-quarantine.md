@@ -1,9 +1,8 @@
 # Agent Note: Quarantine unreadable historical attachments
-English | [中文](.agents/notes/proposed/bug-fix/2026-08-20-attachment-read-quarantine.zh.md) | [Deutsch](.agents/notes/proposed/bug-fix/2026-08-20-attachment-read-quarantine.de.md)
+English | [中文](2026-08-20-attachment-read-quarantine.zh.md) | [Deutsch](2026-08-20-attachment-read-quarantine.de.md)
 
 Status: proposed
 
-English | [中文](2026-08-20-attachment-read-quarantine.zh.md)
 
 ## Problem
 

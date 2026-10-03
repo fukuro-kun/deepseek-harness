@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-03-normalized-unread-fs-tool-diagnostic.md
-2026-09-03-normalized-unread-fs-tool-diagnostic.md: c75e07a7f62c1075fa130bd2d6767b49433a6758
-2026-09-03-normalized-unread-fs-tool-diagnostic.zh.md: 5aba96ce761376e8609267f251433fee11c9f114
-2026-09-03-normalized-unread-fs-tool-diagnostic.de.md: 85d4d594669234bd8c7672898a34d3c51a2be72d
+2026-09-03-normalized-unread-fs-tool-diagnostic.md: 65f9426b1d298d3af81605a828ec42924f4f4e36
+2026-09-03-normalized-unread-fs-tool-diagnostic.zh.md: 53399b821a69bb2ba1b52b0f853b29f52aa976a2
+2026-09-03-normalized-unread-fs-tool-diagnostic.de.md: 6369ba2e2dec9b2832977300e33edb31e57438c0

@@ -1,8 +1,8 @@
 # Agent Note: Browser-Launch-token-Authentifizierung
+[English](2026-08-24-browser-token-authentication.md) | [中文](2026-08-24-browser-token-authentication.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-24-browser-token-authentication.md) | [中文](2026-08-24-browser-token-authentication.zh.md) | Deutsch
 
 ## Problem
 

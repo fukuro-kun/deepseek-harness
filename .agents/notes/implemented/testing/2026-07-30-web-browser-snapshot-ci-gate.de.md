@@ -1,8 +1,8 @@
 # Agent Note: Pflicht-CI-Gate für Web-Browser-Expected-Outputs
+[English](2026-07-30-web-browser-snapshot-ci-gate.md) | [中文](2026-07-30-web-browser-snapshot-ci-gate.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-30-web-browser-snapshot-ci-gate.md) | [中文](2026-07-30-web-browser-snapshot-ci-gate.zh.md) | Deutsch
 
 ## Problem
 

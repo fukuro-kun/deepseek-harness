@@ -1,8 +1,8 @@
 # Agent Note: Responsive Sidebar und injizierte Tab-Informationen
+[English](2026-09-07-sidebar-responsive-tab-info.md) | [中文](2026-09-07-sidebar-responsive-tab-info.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-sidebar-responsive-tab-info.md) | [中文](2026-09-07-sidebar-responsive-tab-info.zh.md) | Deutsch
 
 ## Problem
 
@@ -16,7 +16,7 @@ Der Frame schützt 400px für die Conversation, indem er zuerst die rechte Spalt
 
 Fullscreen nutzt denselben montierten Inhaltsbaum und deckt den Viewport ab, während die zugrunde liegende Spaltenreservierung erhalten bleibt. Öffnen unterhalb von 768px wählt automatisches Fullscreen; ein Austritt dort schließt die Sidebar. Verbreitern kann das automatische Fullscreen beenden, lässt aber manuell gewähltes Fullscreen unangetastet. Das Produkt erlaubt zwei horizontale Panes, eine anfängliche 50/50-Teilung und einen Divider zwischen 20 und 80%; schmale Panes verweigern neue Splits. Die generische Docking-Engine behält ihre unabhängigen Fähigkeiten. Ein Fullscreen-Eintritt vollendet seinen Slide, bevor er die zugrunde liegende Spur meldet; diese verdeckte Breitenänderung ist unmittelbar, sodass weder Eintritt noch Rückkehr zum Normalzustand einen Hintergrund-Reflow offenbart. Beim Zwei-Pane-Budget ist die Split-Steuerung verborgen; die Verweigerung bei Ein-Pane-Breite bleibt deaktiviert. Beim Austritt bereitet der Frame das Ziel vor, bevor das Overlay zurückweicht: keine rechte Spur beim Schließen, eine normale Spur beim Wiederherstellen. Die Unterdrückung von Transitionen überlebt das Zurücksetzen der Fullscreen-Meldung und endet mit der nächsten Geometrie-Aktion.
 
-Diese Entscheidung ersetzt die flache Owner-Props-Wahl in [Tab-Typen und Navigation](2026-09-05-sidebar-tab-types-and-navigation.md) sowie die No-Concession-Regel, die Overlay-Darstellung und das Produkt-Pane-Limit in [Docking-Infrastruktur](../feature/2026-09-04-right-sidebar-docking-infrastructure.de.md). Deren Registrierungs-, Record-Lifetime-, State-Ownership- und Engine-Auswahl-Begründungen bleiben aktiv.
+Diese Entscheidung ersetzt die flache Owner-Props-Wahl in [Tab-Typen und Navigation](2026-09-05-sidebar-tab-types-and-navigation.de.md) sowie die No-Concession-Regel, die Overlay-Darstellung und das Produkt-Pane-Limit in [Docking-Infrastruktur](../feature/2026-09-04-right-sidebar-docking-infrastructure.de.md). Deren Registrierungs-, Record-Lifetime-, State-Ownership- und Engine-Auswahl-Begründungen bleiben aktiv.
 
 ## Betrachtete Alternativen
 

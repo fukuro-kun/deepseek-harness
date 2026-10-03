@@ -1,6 +1,6 @@
 # Session Query
-
 [English](session-query.md) | [中文](session-query.zh.md) | Deutsch
+
 
 Query-Vokabular über dem logischen Session-Korpus mit live-Bevorzugung. Das [Service-Definition-Paket](../../packages/session-query/session-query) besitzt exakte Reads, Quellenpriorität, Beziehungsverfolgung, semantische Extraktion und Provider-unabhängige Filter, während der [SQLite-Provider](../../packages/session-query/session-query-sqlite) den konkreten Lebenszyklus des Volltextindex besitzt.
 

@@ -1,8 +1,8 @@
 # Agent Note: 供应链检查与 vendor 漂移验证
+[English](2026-06-11-supply-chain-and-vendor-drift.md) | 中文 | [Deutsch](2026-06-11-supply-chain-and-vendor-drift.de.md)
 
 Status: proposed
 
-[English](.agents/notes/proposed/process/2026-06-11-supply-chain-and-vendor-drift.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-06-11-supply-chain-and-vendor-drift.de.md)
 
 ## 问题
 

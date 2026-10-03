@@ -1,9 +1,8 @@
 # Agent Note: User-patch transactions control filesystem event delivery
-English | [中文](.agents/notes/implemented/testing/2026-09-09-user-patch-hmr-test-delivery.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-09-user-patch-hmr-test-delivery.de.md)
+English | [中文](2026-09-09-user-patch-hmr-test-delivery.zh.md) | [Deutsch](2026-09-09-user-patch-hmr-test-delivery.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-09-user-patch-hmr-test-delivery.zh.md)
 
 ## Problem
 

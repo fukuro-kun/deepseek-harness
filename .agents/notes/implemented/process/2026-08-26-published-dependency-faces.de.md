@@ -1,8 +1,8 @@
 # Agent Note: Publizierte Dependency-Faces und begrenzte Peer-Relays
+[English](2026-08-26-published-dependency-faces.md) | [中文](2026-08-26-published-dependency-faces.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-26-published-dependency-faces.md) | [中文](2026-08-26-published-dependency-faces.zh.md) | Deutsch
 
 ## Problem
 

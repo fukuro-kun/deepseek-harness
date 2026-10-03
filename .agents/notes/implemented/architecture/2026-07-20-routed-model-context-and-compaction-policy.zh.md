@@ -1,8 +1,8 @@
 # Agent Note: 路由模型上下文与压缩策略
+[English](2026-07-20-routed-model-context-and-compaction-policy.md) | 中文 | [Deutsch](2026-07-20-routed-model-context-and-compaction-policy.de.md)
 
 Status: implemented
 
-[English](2026-07-20-routed-model-context-and-compaction-policy.md) | 中文 | [Deutsch](2026-07-20-routed-model-context-and-compaction-policy.de.md)
 
 ## 问题
 

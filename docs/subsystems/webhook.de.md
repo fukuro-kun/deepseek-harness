@@ -1,8 +1,8 @@
 # Webhook runtime
-
 [English](webhook.md) | [中文](webhook.zh.md) | Deutsch
 
-Das Webhook-Subsystem wandelt authentifizierte externe Zustellungen in optionale gewöhnliche Root-Sessions um. Provider-Adapter besitzen Authentifizierung und generische JSON-Aufnahme; vertrauenswürdige programmatische Regeln besitzen Bedingungen und externe Aufrufe; `ctx.webhookRuntime` besitzt den Callback-Lebenszyklus sowie die Workspace-basierte Session-Erstellung. Die [implementierte Entscheidung](../../.agents/notes/implemented/feature/2026-08-22-fire-and-forget-webhook-sessions.md) dokumentiert, warum die Runtime keinen Zustellungs- oder Abschlusszustand speichert.
+
+Das Webhook-Subsystem wandelt authentifizierte externe Zustellungen in optionale gewöhnliche Root-Sessions um. Provider-Adapter besitzen Authentifizierung und generische JSON-Aufnahme; vertrauenswürdige programmatische Regeln besitzen Bedingungen und externe Aufrufe; `ctx.webhookRuntime` besitzt den Callback-Lebenszyklus sowie die Workspace-basierte Session-Erstellung. Die [implementierte Entscheidung](../../.agents/notes/implemented/feature/2026-08-22-fire-and-forget-webhook-sessions.de.md) dokumentiert, warum die Runtime keinen Zustellungs- oder Abschlusszustand speichert.
 
 ## Gemeinsame Werte
 

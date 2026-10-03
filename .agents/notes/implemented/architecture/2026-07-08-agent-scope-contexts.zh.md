@@ -1,8 +1,8 @@
 # Agent Note: agent 即注册作用域
+[English](2026-07-08-agent-scope-contexts.md) | 中文 | [Deutsch](2026-07-08-agent-scope-contexts.de.md)
 
 Status: implemented
 
-[English](2026-07-08-agent-scope-contexts.md) | 中文 | [Deutsch](2026-07-08-agent-scope-contexts.de.md)
 
 ## 问题
 

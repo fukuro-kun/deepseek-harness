@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cordis-api/registry.md
-registry.md: 5afb2662b8db4c859db226f2ea8d3329a1fee223
-registry.zh.md: 4ad1c6679f89ffda8b6355a2112ff86e444f3f69
-registry.de.md: e71bacbf31c3faea0bddd08cf0606edc784585b6
+registry.md: 8470586159deb105856da9487002e5c9d12e88e4
+registry.zh.md: 2b9dd7592718b2c8a95bdcef46da2c77ef979968
+registry.de.md: e31b1e4815bb8553141a3b0a7d38f8dde2fae426

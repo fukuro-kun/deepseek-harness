@@ -1,8 +1,8 @@
 # Agent Note: PTC mode 的类型化工具返回值
+[English](2026-07-20-ptc-typed-tool-returns.md) | 中文 | [Deutsch](2026-07-20-ptc-typed-tool-returns.de.md)
 
 Status: implemented
 
-[English](2026-07-20-ptc-typed-tool-returns.md) | 中文
 
 ## 问题
 

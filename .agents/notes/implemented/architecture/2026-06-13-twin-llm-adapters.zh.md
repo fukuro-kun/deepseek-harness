@@ -1,8 +1,8 @@
 # Agent Note: 以两个 LLM 适配器作为设计验证孪生体
+[English](2026-06-13-twin-llm-adapters.md) | 中文 | [Deutsch](2026-06-13-twin-llm-adapters.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.de.md)
 
 ## 问题
 

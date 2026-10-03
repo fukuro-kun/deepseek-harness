@@ -1,8 +1,8 @@
 # Agent Note: Client-Shell-Schichtung und dynamische Paketgrenzen
+[English](2026-08-15-client-shells-and-dynamic-packages.md) | [中文](2026-08-15-client-shells-and-dynamic-packages.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-15-client-shells-and-dynamic-packages.md) | [中文](2026-08-15-client-shells-and-dynamic-packages.zh.md) | Deutsch
 
 > Das [Client-Plugin-Lademodell](2026-07-23-client-plugin-loading-model.de.md) besitzt Modulankunft, Cordis-Lebenszyklus und HMR. Diese Note besitzt Paketplatzierung, Build Faces, Shared-Module-Anfragen und npm-Dependency-Deklarationen; diese Entscheidungen ersetzen die ältere Paket-Taxonomie und die Import-Edge-Regeln in der Lade-Note.
 

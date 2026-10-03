@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-subagent-spawn-in-process
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 

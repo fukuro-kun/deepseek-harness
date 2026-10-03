@@ -1,8 +1,8 @@
 # Agent Note: Das einzige Compaction-Backend in sein Service-Paket einklappen
+[English](2026-07-19-fold-compaction-package-split.md) | [中文](2026-07-19-fold-compaction-package-split.zh.md) | Deutsch
 
 Status: rejected — weitere Compaction-Backends sind geplant, daher bleiben das Service-Definition-Paket und das Basic-Provider-Paket getrennt.
 
-[English](2026-07-19-fold-compaction-package-split.md) | [中文](2026-07-19-fold-compaction-package-split.zh.md) | Deutsch
 
 ## Problem
 

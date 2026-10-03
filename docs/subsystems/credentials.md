@@ -1,6 +1,6 @@
 # User Credentials
+English | [中文](credentials.zh.md) | [Deutsch](credentials.de.md)
 
-English | [中文](credentials.zh.md)
 
 The credential seam of [dsh-credentials](../../packages/credentials/credentials) keeps secrets out of configuration: settings sections and `cordis.yml` entries carry *references* (environment-variable names), providers such as [dsh-credentials-local](../../packages/credentials/credentials-local) own the values, and consumers resolve a reference once per operation — the LLM adapters resolve once per model request, so a rotated credential reaches the very next request without any restart. One seam-wide rule binds every provider: an empty stored value is absent everywhere.
 
@@ -8,7 +8,6 @@ Source: [`packages/credentials/credentials/src/index.ts`](../../packages/credent
 
 ## Identity
 
-English | [中文](credentials.zh.md) | [Deutsch](credentials.de.md)
 
 A reference names one credential as a POSIX-style environment-variable name. The brand prevents callers from mixing credential references with other strings passed between packages or processes; construction validates the shell-identifier syntax.
 

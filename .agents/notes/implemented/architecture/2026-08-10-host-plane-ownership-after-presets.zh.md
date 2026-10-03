@@ -1,8 +1,8 @@
 # Agent Note: What stays host-plane once presets own the agent plane
+[English](2026-08-10-host-plane-ownership-after-presets.md) | 中文 | [Deutsch](2026-08-10-host-plane-ownership-after-presets.de.md)
 
 Status: implemented
 
-[English](2026-08-10-host-plane-ownership-after-presets.md) | 中文 | [Deutsch](2026-08-10-host-plane-ownership-after-presets.de.md)
 
 ## 问题
 

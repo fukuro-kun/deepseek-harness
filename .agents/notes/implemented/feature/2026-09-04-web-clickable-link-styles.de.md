@@ -1,8 +1,8 @@
 # Agent Note: Web-Klicklink-Sprache — Link-Alias, gepunktete Hover-Unterstreichung, Kategorie-Glyphen
+[English](2026-09-04-web-clickable-link-styles.md) | [中文](2026-09-04-web-clickable-link-styles.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-04-web-clickable-link-styles.md) | [中文](2026-09-04-web-clickable-link-styles.zh.md) | Deutsch
 
 ## Problem
 

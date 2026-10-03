@@ -1,8 +1,8 @@
 # Agent Note: 浏览器 GIF 保留单一证据链
+[English](2026-08-08-browser-gif-evidence-chain.md) | 中文 | [Deutsch](2026-08-08-browser-gif-evidence-chain.de.md)
 
 Status: implemented
 
-[English](2026-08-08-browser-gif-evidence-chain.md) | 中文
 
 ## 问题
 

@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-acp
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -48,11 +48,11 @@ Jede Session, die der Server erstellt, nutzt den hier konfigurierten Provider un
 | `model` | — | Modell für den Agent jeder Session |
 | `sessionListPageSize` | `100` | Maximale Anzahl Summaries in einer `session/list`-Seite |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-acp) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-acp) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Einen Server starten
 
-`pnpm dsh --profile acp` startet den ausgelieferten Stdio-Server. Das `acp`-Profil mountet Session-Persistenz, sodass Clients persistente Sessions listen, fortsetzen und schließen können. [`@deepseek-ai/dsh-subagent-acp`](../../subagent/subagent-acp/README.md) startet dasselbe Profil für Out-of-Process-Delegation.
+`pnpm dsh --profile acp` startet den ausgelieferten Stdio-Server. Das `acp`-Profil mountet Session-Persistenz, sodass Clients persistente Sessions listen, fortsetzen und schließen können. [`@deepseek-ai/dsh-subagent-acp`](../../subagent/subagent-acp/README.de.md) startet dasselbe Profil für Out-of-Process-Delegation.
 
 <a id="protocol-contract"></a><a id="standard-acp-v1-surface"></a>
 ### Protokoll-Contract
@@ -93,7 +93,7 @@ Der Server ist ein Automatisierungs-Transport mit einem absichtlich standardisie
 - **Wahrheitsgemäßer Capability- und Konfigurationszustand.** `initialize` bewirbt nur gemounteten Support, Topologieänderungen publizieren vollständige Konfigurationsoptionen, und ein Prompt pinnt die exakte Route, die er zugelassen hat.
 - **Quiescence vor Settlement.** Prompt- und Close-Operationen settlen erst, nachdem ihre eigene Admission, Agent-Aktivität, geordnete Updates, Descendants, Persistenz und Disposal den erforderlichen Endzustand erreicht haben.
 
-Die Entscheidungshistorie liegt im [ACP-as-an-Automation-Only-Protocol-Note](../../../.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.md) und im [Multi-Session-Note](../../../.agents/notes/archived/feature/2026-06-14-acp-multi-session.md).
+Die Entscheidungshistorie liegt im [ACP-as-an-Automation-Only-Protocol-Note](../../../.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.de.md) und im [Multi-Session-Note](../../../.agents/notes/archived/feature/2026-06-14-acp-multi-session.md).
 
 ### Quellcode-Karte
 
@@ -121,8 +121,8 @@ Jedes Session-Modul besitzt sein Agent-Handle, MCP-Mounts, zukünftige und turn-
 
 Lesen Sie diese Seiten, wenn der Paket-Contract nicht ausreicht. Sie führen vom passenden Client zu den Design-Records hinter dem Automatisierungs-Contract.
 
-- [dsh-subagent-acp](../../subagent/subagent-acp/README.md) — der Out-of-Process-ACP-Client, der diesen Server spawnt und steuert.
-- [ACP as an automation-only protocol](../../../.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.md) — der Design-Record für den Automatisierungs-Contract und seine Wire-Grenzen.
+- [dsh-subagent-acp](../../subagent/subagent-acp/README.de.md) — der Out-of-Process-ACP-Client, der diesen Server spawnt und steuert.
+- [ACP as an automation-only protocol](../../../.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.de.md) — der Design-Record für den Automatisierungs-Contract und seine Wire-Grenzen.
 - [Multiplex concurrent ACP sessions over one connection](../../../.agents/notes/archived/feature/2026-06-14-acp-multi-session.md) — Per-Session-Isolation-, Ownership- und Teardown-Entscheidungen.
 - [Extension-Cookbook](../../../docs/cookbook/extension-cookbook.de.md) — dieses Paket als das Nur-Automatisierungs-Beispiel für Extension-Autoren.
 

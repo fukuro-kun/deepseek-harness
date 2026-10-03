@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-llm-replay
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-llm-replay` 从已记录的 Session JSONL fixture（测试前置数据）回放模型流，让快照测试无需 API 密钥即可运行真实 agent（智能体）。每个 parent 与 subagent 会话按首次调用顺序取得各自的已记录脚本，而同一会话内的调用会独立推进。`replay.override.json` 伴随文件表示持久 settlement 无法重建的分片前失败、取消、挂起与注入重试。需要以固定模型输出确定性测试真实 loop 行为时，可在 ACP、headless 与 Web 浏览器场景中使用本包。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

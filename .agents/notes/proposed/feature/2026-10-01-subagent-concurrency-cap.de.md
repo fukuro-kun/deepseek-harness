@@ -1,8 +1,8 @@
 # Agent Note: Breitengrenze für gleichzeitige fortsetzbare subagents
+[English](2026-10-01-subagent-concurrency-cap.md) | [中文](2026-10-01-subagent-concurrency-cap.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-10-01-subagent-concurrency-cap.md) | [中文](2026-10-01-subagent-concurrency-cap.zh.md) | Deutsch
 
 ## Problem
 

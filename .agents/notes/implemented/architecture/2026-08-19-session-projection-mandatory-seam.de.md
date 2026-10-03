@@ -1,8 +1,8 @@
 # Agent Note: Session-Projektionen als erforderlicher Reader-Seam
+[English](2026-08-19-session-projection-mandatory-seam.md) | [中文](2026-08-19-session-projection-mandatory-seam.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-19-session-projection-mandatory-seam.md) | [中文](2026-08-19-session-projection-mandatory-seam.zh.md) | Deutsch
 
 ## Problem
 

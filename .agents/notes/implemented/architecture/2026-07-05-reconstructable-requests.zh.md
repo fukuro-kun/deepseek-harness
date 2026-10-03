@@ -1,8 +1,8 @@
 # Agent Note: 每个 LLM 请求都可从会话日志重建
+[English](2026-07-05-reconstructable-requests.md) | 中文 | [Deutsch](2026-07-05-reconstructable-requests.de.md)
 
 Status: implemented
 
-[English](2026-07-05-reconstructable-requests.md) | 中文 | [Deutsch](2026-07-05-reconstructable-requests.de.md)
 
 ## 问题
 

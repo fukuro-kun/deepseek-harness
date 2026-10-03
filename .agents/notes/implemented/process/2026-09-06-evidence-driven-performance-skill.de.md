@@ -1,8 +1,8 @@
 # Agent Note: Evidenzgetriebener Performance-Optimierungs-Workflow
+[English](2026-09-06-evidence-driven-performance-skill.md) | [中文](2026-09-06-evidence-driven-performance-skill.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-evidence-driven-performance-skill.md) | [中文](2026-09-06-evidence-driven-performance-skill.zh.md) | Deutsch
 
 ## Problem
 

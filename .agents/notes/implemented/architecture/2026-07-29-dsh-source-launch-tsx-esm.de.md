@@ -1,8 +1,8 @@
 # Agent Note: dsh-Source-Launch über den tsx-ESM-Hook
+[English](2026-07-29-dsh-source-launch-tsx-esm.md) | [中文](2026-07-29-dsh-source-launch-tsx-esm.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-29-dsh-source-launch-tsx-esm.md) | [中文](2026-07-29-dsh-source-launch-tsx-esm.zh.md) | Deutsch
 
 > Ersetzt [nativer TypeScript-Source-Launch](../../archived/architecture/2026-07-28-dsh-native-typescript-source-launch.md): Node hat die Capability entfernt, auf der jene Entscheidung aufbaute.
 

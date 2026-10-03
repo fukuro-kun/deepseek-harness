@@ -1,8 +1,8 @@
 # Agent Note: 凭据记录与授权 flow
+[English](2026-08-13-credential-records-and-authorization-flows.md) | 中文 | [Deutsch](2026-08-13-credential-records-and-authorization-flows.de.md)
 
 Status: implemented
 
-[English](2026-08-13-credential-records-and-authorization-flows.md) | 中文 | [Deutsch](2026-08-13-credential-records-and-authorization-flows.de.md)
 
 ## Problem
 

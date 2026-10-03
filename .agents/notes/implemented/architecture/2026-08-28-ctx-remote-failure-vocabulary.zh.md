@@ -1,8 +1,8 @@
 # Agent Note: One Remote failure vocabulary for ctx.remote
+[English](2026-08-28-ctx-remote-failure-vocabulary.md) | 中文 | [Deutsch](2026-08-28-ctx-remote-failure-vocabulary.de.md)
 
 Status: implemented
 
-[English](2026-08-28-ctx-remote-failure-vocabulary.md) | 中文 | [Deutsch](2026-08-28-ctx-remote-failure-vocabulary.de.md)
 
 ## Problem
 

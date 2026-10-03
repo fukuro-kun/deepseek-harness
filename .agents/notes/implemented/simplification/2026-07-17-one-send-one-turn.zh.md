@@ -1,8 +1,8 @@
 # Agent Note: 删除普通 send 的隐式批处理
+[English](2026-07-17-one-send-one-turn.md) | 中文 | [Deutsch](2026-07-17-one-send-one-turn.de.md)
 
 Status: implemented
 
-[English](2026-07-17-one-send-one-turn.md) | 中文
 
 ## 问题
 

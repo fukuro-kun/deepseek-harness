@@ -3,7 +3,6 @@ English | [中文](2026-09-02-projcache-cross-version-read-compat.zh.md) | [Deut
 
 Status: implemented
 
-English | [中文](2026-09-02-projcache-cross-version-read-compat.zh.md)
 
 ## Problem
 

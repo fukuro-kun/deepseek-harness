@@ -1,8 +1,8 @@
 # Agent Note: Serielle plattformübergreifende CI-Referenz
+[English](2026-07-21-serial-cross-platform-ci-reference.md) | [中文](2026-07-21-serial-cross-platform-ci-reference.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-21-serial-cross-platform-ci-reference.md) | [中文](2026-07-21-serial-cross-platform-ci-reference.zh.md) | Deutsch
 
 ## Problem
 

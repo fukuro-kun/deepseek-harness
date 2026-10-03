@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-host-plugin-inventory
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -74,9 +74,9 @@ Typert generiert die Host- und Client-Remote-Artefakte, die von `./typert` und `
 
 Lesen Sie diese, wenn der inventory-Vertrag nicht ausreicht: wie das Remote Clients erreicht, dann der Loader, den es projiziert, und die Oberfläche, die es rendert.
 
-- [Remote-Assembly](../../api/remotes/README.md) — wie Clients `pluginInventory/list` konsumieren, ohne die Host-Implementierung zu importieren.
+- [Remote-Assembly](../../api/remotes/README.de.md) — wie Clients `pluginInventory/list` konsumieren, ohne die Host-Implementierung zu importieren.
 - [Cordis plugin loader](../../../vendor/loader/README.md) — der Loader, dessen Einträge dieses Paket projiziert.
-- [Plugin-inventory-Einstellungsoberfläche](../../client/ui-settings-plugin-inventory/README.md) — die browserseitige Projektion, die das inventory rendert.
+- [Plugin-inventory-Einstellungsoberfläche](../../client/ui-settings-plugin-inventory/README.de.md) — die browserseitige Projektion, die das inventory rendert.
 
 -----
 

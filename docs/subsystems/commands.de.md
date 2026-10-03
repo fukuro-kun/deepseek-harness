@@ -1,6 +1,6 @@
 # Benutzerbefehle
-
 [English](commands.md) | [中文](commands.zh.md) | Deutsch
+
 
 Der Benutzerbefehls-Registry-Service aus [`dsh-commands`](../../packages/interaction/commands). Interaktive Adapter nutzen ihn, um plugin-eigene Befehle zu entdecken und für einen exakten agent direkt auszuführen, ohne eine Modellnachricht zu erzeugen. Der [Befehls-Agent-Note](../../.agents/notes/implemented/feature/2026-07-19-plugin-command-registration.de.md) hält die Entscheidungen zu Dispatch und Lebenszyklus; das [Package-README](../../packages/interaction/commands/README.de.md) hält Komposition und Einschränkungen.
 

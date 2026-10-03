@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-28-shell-tool-workdir-validation.md
-2026-09-28-shell-tool-workdir-validation.md: 1be86b6ad9deeba4d0f6843fe4ef68019e702ce9
-2026-09-28-shell-tool-workdir-validation.zh.md: b911087ce6d28c0ac64dc409712dfd9ee434135e
-2026-09-28-shell-tool-workdir-validation.de.md: 5cf288618c2b706b1eeb9ddb80082c56a8dfc51e
+2026-09-28-shell-tool-workdir-validation.md: 6f7f8026562ea1c1a433bc30d471e0c19489c050
+2026-09-28-shell-tool-workdir-validation.zh.md: 0dca9745e05665447b534b79c683eea8bc7a6045
+2026-09-28-shell-tool-workdir-validation.de.md: bfce8e4253b598c996c9015cecc1226e2fdaae71

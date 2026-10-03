@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-experimental-inspector
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用这个实验性 Inspector，可以在 Chrome DevTools 中检查一个运行中的 dsh Host 及其浏览器 Client。它提供 Host 与 Client Console context、Host Sources 与调试、Host fetch 采集和共享 Cordis 树，并让 Worker 独占全部 CDP 状态。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 本包为私有包，不进入正式发布。Worker 不访问实时 Cordis 对象；共享 Host/Client collector 会在传输前把它们投影成已验证 snapshot。Cordis 还负责插件组合、注册 `ctx.inspector`、注入 bootstrap 和资源释放。
 
 ## 目录

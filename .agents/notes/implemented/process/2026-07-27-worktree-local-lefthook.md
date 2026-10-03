@@ -1,9 +1,8 @@
 # Agent Note: Make Lefthook installation worktree-local
-English | [中文](.agents/notes/implemented/process/2026-07-27-worktree-local-lefthook.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-27-worktree-local-lefthook.de.md)
+English | [中文](2026-07-27-worktree-local-lefthook.zh.md) | [Deutsch](2026-07-27-worktree-local-lefthook.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-27-worktree-local-lefthook.zh.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Knip aus den Repository-Gates entfernen
+[English](2026-08-19-remove-knip.md) | [中文](2026-08-19-remove-knip.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-19-remove-knip.md) | [中文](2026-08-19-remove-knip.zh.md) | Deutsch
 
 ## Problem
 

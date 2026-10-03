@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-23-locale-owned-client-ui-copy.md
-2026-08-23-locale-owned-client-ui-copy.md: 0faa00ee74ea226eaa8f9e7606b128986d8266d7
-2026-08-23-locale-owned-client-ui-copy.zh.md: 723192b3f3fd2b46aa3f17f17608f15a1fed7ccb
-2026-08-23-locale-owned-client-ui-copy.de.md: f9d01baa98f69556cfcb4b6fd01c17df685bfa7c
+2026-08-23-locale-owned-client-ui-copy.md: 0b332a9917f6c7d5d309d1304041dd26d05bd488
+2026-08-23-locale-owned-client-ui-copy.zh.md: 5df8b6cb738f544bc492ed0410049db5bb9e0b43
+2026-08-23-locale-owned-client-ui-copy.de.md: ea38e2dd23fcbea600f44ec95231f62c5c9300d1

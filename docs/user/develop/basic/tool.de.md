@@ -1,6 +1,6 @@
 # Ein Tool entwickeln
-
 [English](tool.md) | [中文](tool.zh.md) | Deutsch
+
 
 Dieses Tutorial fügt der Web UI ein `greet`-Tool hinzu. Schließe zuerst [Dein erstes Plugin](./index.de.md) ab und behalte dessen `scratch-plugin`-Verzeichnis.
 

@@ -1,8 +1,8 @@
 # Agent Note: 由事件直接指定的 PR 评审状态命令
+[English](2026-08-10-event-directed-pr-review-status.md) | 中文 | [Deutsch](2026-08-10-event-directed-pr-review-status.de.md)
 
 Status: implemented
 
-[English](2026-08-10-event-directed-pr-review-status.md) | 中文
 
 ## 问题
 

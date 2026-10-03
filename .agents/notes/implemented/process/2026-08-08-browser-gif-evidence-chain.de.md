@@ -1,8 +1,8 @@
 # Agent Note: Browser-GIFs bewahren eine einzige Beweiskette
+[English](2026-08-08-browser-gif-evidence-chain.md) | [中文](2026-08-08-browser-gif-evidence-chain.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-08-browser-gif-evidence-chain.md) | [中文](2026-08-08-browser-gif-evidence-chain.zh.md) | Deutsch
 
 ## Problem
 

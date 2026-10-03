@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-06-windows-python-console-spawn-wait.md
-2026-09-06-windows-python-console-spawn-wait.md: 529887bf6bf503dc4b07ef17bb7edff9dc25dceb
-2026-09-06-windows-python-console-spawn-wait.zh.md: dba2f324b29955580fc11e7cea7a0525a8bc8c86
-2026-09-06-windows-python-console-spawn-wait.de.md: 5d43d575ad82c27afb9bb0dcfa310788db28175e
+2026-09-06-windows-python-console-spawn-wait.md: 518a58f82e313154bf293934059fa2e076328bde
+2026-09-06-windows-python-console-spawn-wait.zh.md: 248c7fce75710a944d760381ba56cff6403d2ff6
+2026-09-06-windows-python-console-spawn-wait.de.md: a90d0be9ceb8c8d40911d4c15ed36c4023ae9c3d

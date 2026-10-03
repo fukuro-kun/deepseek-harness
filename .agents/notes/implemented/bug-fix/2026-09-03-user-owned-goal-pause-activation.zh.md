@@ -1,8 +1,8 @@
 # Agent Note: 用户独占的 goal 暂停并暴露实时激活态
+[English](2026-09-03-user-owned-goal-pause-activation.md) | 中文 | [Deutsch](2026-09-03-user-owned-goal-pause-activation.de.md)
 
 Status: implemented
 
-[English](2026-09-03-user-owned-goal-pause-activation.md) | 中文
 
 ## 问题
 

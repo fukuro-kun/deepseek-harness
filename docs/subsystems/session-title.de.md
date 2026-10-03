@@ -1,6 +1,6 @@
 # Session-Titel
-
 [English](session-title.md) | [中文](session-title.zh.md) | Deutsch
+
 
 Der von [`@deepseek-ai/dsh-session-title`](../../packages/session/session-title) verwaltete dauerhafte Titelstatus mit Last-Write-Wins-Semantik sowie das Vokabular des optionalen asynchronen Providers. Der gemeinsame LLM-Helfer besitzt den exakten Hilfsanfrage-Datensatz. Timing, Fallback-, Fehler- und Fork-Verhalten sind in den Package-READMEs definiert; der generierte [Persistenzkatalog](../persistence-catalog.de.md) besitzt die vollständigen Event-Deklarationen.
 

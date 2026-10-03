@@ -1,8 +1,8 @@
 # Agent Note: 自动组合翻译配对记录
+[English](2026-08-08-automatic-translation-pairing-merges.md) | 中文 | [Deutsch](2026-08-08-automatic-translation-pairing-merges.de.md)
 
 Status: implemented
 
-[English](2026-08-08-automatic-translation-pairing-merges.md) | 中文 | [Deutsch](2026-08-08-automatic-translation-pairing-merges.de.md)
 
 ## 问题
 

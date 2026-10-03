@@ -1,8 +1,8 @@
 # Agent Note: fail-loud 在退出前释放终端
+[English](2026-07-31-fail-loud-releases-the-terminal.md) | 中文 | [Deutsch](2026-07-31-fail-loud-releases-the-terminal.de.md)
 
 Status: implemented
 
-[English](2026-07-31-fail-loud-releases-the-terminal.md) | 中文
 
 ## 问题
 

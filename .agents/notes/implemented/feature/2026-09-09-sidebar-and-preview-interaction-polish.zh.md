@@ -1,8 +1,8 @@
 # Agent Note: 侧边栏与文件预览交互打磨
+[English](2026-09-09-sidebar-and-preview-interaction-polish.md) | 中文 | [Deutsch](2026-09-09-sidebar-and-preview-interaction-polish.de.md)
 
 Status: implemented
 
-[English](2026-09-09-sidebar-and-preview-interaction-polish.md) | 中文
 
 ## Problem
 

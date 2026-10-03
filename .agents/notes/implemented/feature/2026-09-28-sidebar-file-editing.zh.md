@@ -1,8 +1,8 @@
 # Agent Note: Sidebar 文件编辑与带守卫的写入端点
+[English](2026-09-28-sidebar-file-editing.md) | 中文 | [Deutsch](2026-09-28-sidebar-file-editing.de.md)
 
 Status: implemented
 
-[English](2026-09-28-sidebar-file-editing.md) | 中文
 
 ## 问题
 

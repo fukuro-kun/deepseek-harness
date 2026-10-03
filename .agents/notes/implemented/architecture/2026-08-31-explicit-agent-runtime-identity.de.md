@@ -1,8 +1,8 @@
 # Agent Note: Explizite Agent-Identität an Runtime-Grenzen
+[English](2026-08-31-explicit-agent-runtime-identity.md) | [中文](2026-08-31-explicit-agent-runtime-identity.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-31-explicit-agent-runtime-identity.md) | [中文](2026-08-31-explicit-agent-runtime-identity.zh.md) | Deutsch
 
 ## Problem
 

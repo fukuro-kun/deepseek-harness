@@ -1,8 +1,8 @@
 # Agent Note: 持久化的同会话目标领域
+[English](2026-07-19-persisted-same-session-goal-domain.md) | 中文 | [Deutsch](2026-07-19-persisted-same-session-goal-domain.de.md)
 
 Status: implemented
 
-[English](2026-07-19-persisted-same-session-goal-domain.md) | 中文
 
 ## 问题
 

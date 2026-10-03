@@ -1,8 +1,8 @@
 # Agent Note: Tool-Call-Timeout-Policy als Plugin
+[English](2026-07-07-tool-call-timeout-policy.md) | [中文](2026-07-07-tool-call-timeout-policy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-07-tool-call-timeout-policy.md) | [中文](2026-07-07-tool-call-timeout-policy.zh.md) | Deutsch
 
 ## Problem
 
@@ -52,7 +52,7 @@ Das Plugin ist `@deepseek-ai/dsh-tool-call-timeout-policy`, ein Zero-Config-Funk
     searchTimeoutMs: 30000
 ```
 
-Timeouts leben auf Tool-Definitionen statt auf einer Freitext-Namensmap und eliminieren falsch geschriebene, ungenutzte Policy. `defineTool` validiert ein positives endliches Budget. Während Dispatch leitet der Enforcer ein Deadline-Signal ab und weist es `exec.signal` zu; die Registry fusioniert diese Deadline mit dem ursprünglichen Caller-Signal vor dem Body unter dem [Tool-Cancellation-Vertrag](2026-07-19-cooperative-tool-cancellation.md). Der Enforcer stellt das Caller-Signal danach wieder her und konvertiert seinen eigenen Ablauf in `TOOL_TIMEOUT`; Tools ohne Budget gehen unverändert durch.
+Timeouts leben auf Tool-Definitionen statt auf einer Freitext-Namensmap und eliminieren falsch geschriebene, ungenutzte Policy. `defineTool` validiert ein positives endliches Budget. Während Dispatch leitet der Enforcer ein Deadline-Signal ab und weist es `exec.signal` zu; die Registry fusioniert diese Deadline mit dem ursprünglichen Caller-Signal vor dem Body unter dem [Tool-Cancellation-Vertrag](2026-07-19-cooperative-tool-cancellation.de.md). Der Enforcer stellt das Caller-Signal danach wieder her und konvertiert seinen eigenen Ablauf in `TOOL_TIMEOUT`; Tools ohne Budget gehen unverändert durch.
 
 Signal-Ersetzung geschieht durch **In-place-Mutation von `exec.signal`**, nicht durch Übergabe eines neuen Objekts an `next()`. Cordis' Waterfall-`next()` ignoriert alle an es übergebenen Argumente und ruft Downstream-Listener mit dem gemeinsamen Payload-Array erneut auf (`vendor/cordis/src/events.ts`), sodass Mutation die Art ist, wie der Wrapper seine Deadline an die Registry liefert. Die Registry fusioniert das erfasste Caller-Signal unmittelbar vor dem Body erneut, und das Plugin stellt `exec.signal` in einem `finally` auf das Original des Callers zurück, sodass `tools/post-execute` das Deadline-Signal des Plugins nie sieht.
 

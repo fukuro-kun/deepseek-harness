@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-trajectory/README.md
 README.md: 34deb91d165eb4d983cb5091f77a5a3f7902e337
-README.zh.md: affe101e154d912c6d7dc2418877a0efd5f1f299
-README.de.md: 4825d4c1e87483ad65e2811b76cc67bec6ce8916
+README.zh.md: 2ba88912a2c9bc3d26c5df1c2ae555fa4e3ff3ca
+README.de.md: 5baa166381eee760e076530b5ff1383f9fa7f835

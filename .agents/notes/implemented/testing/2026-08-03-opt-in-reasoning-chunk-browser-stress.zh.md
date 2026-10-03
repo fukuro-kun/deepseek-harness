@@ -1,8 +1,8 @@
 # Agent Note: 推理（reasoning）分片的逐帧累计发布与浏览器压力验证
+[English](2026-08-03-opt-in-reasoning-chunk-browser-stress.md) | 中文 | [Deutsch](2026-08-03-opt-in-reasoning-chunk-browser-stress.de.md)
 
 Status: implemented
 
-[English](2026-08-03-opt-in-reasoning-chunk-browser-stress.md) | 中文
 
 ## 问题
 

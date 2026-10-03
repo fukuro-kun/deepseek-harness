@@ -3,7 +3,6 @@ English | [中文](2026-07-19-cooperative-tool-cancellation.zh.md) | [Deutsch](2
 
 Status: implemented
 
-English | [中文](2026-07-19-cooperative-tool-cancellation.zh.md)
 
 ## Problem
 

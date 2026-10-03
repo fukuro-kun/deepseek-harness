@@ -1,6 +1,6 @@
 # Python-Contributor-Workflows
-
 [English](development.md) | [中文](development.zh.md) | Deutsch
+
 
 Wählen Sie den Workflow für das benötigte Contributor-Ergebnis: Runtime-Artefakte bauen, das SDK validieren, gegen den Quellbaum laufen oder Distributionen bauen. Das Paketverhalten steht in der [SDK-Referenz](sdk/README.de.md) und der [Runtime-Carrier-Referenz](sdk-runtime/README.de.md).
 

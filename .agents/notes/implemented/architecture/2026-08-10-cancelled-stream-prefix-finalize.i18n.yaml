@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-10-cancelled-stream-prefix-finalize.md
-2026-08-10-cancelled-stream-prefix-finalize.md: 8572797e49c01cdc9375aad7e6309aa3b373bcba
-2026-08-10-cancelled-stream-prefix-finalize.zh.md: 401c46dcc40daa0f3386bb5c7cbdc8265362cd2e
-2026-08-10-cancelled-stream-prefix-finalize.de.md: 80e1446a3a925f788eb350a39ba7ec36eb2d28e2
+2026-08-10-cancelled-stream-prefix-finalize.md: c40fc987df2b962838782cc3f4ec87570684cb82
+2026-08-10-cancelled-stream-prefix-finalize.zh.md: 41eb543cb005f4630ff8710b6f121922ef521ee5
+2026-08-10-cancelled-stream-prefix-finalize.de.md: 4e6d8f7c31903c5f46c3f050997133d325fb4c34

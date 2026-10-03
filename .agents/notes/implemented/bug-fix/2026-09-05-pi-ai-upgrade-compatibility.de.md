@@ -1,8 +1,8 @@
 # Agent Note: pi-ai-Upgrade-Kompatibilität
+[English](2026-09-05-pi-ai-upgrade-compatibility.md) | [中文](2026-09-05-pi-ai-upgrade-compatibility.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-pi-ai-upgrade-compatibility.md) | [中文](2026-09-05-pi-ai-upgrade-compatibility.zh.md) | Deutsch
 
 ## Problem
 
@@ -12,7 +12,7 @@ Der pi-ai-Adapter klassifiziert Upstream-Kompatibilitätsfelder explizit und per
 
 Der Adapter folgt [pi-ai 0.85.1](https://github.com/earendil-works/pi/blob/v0.85.1/packages/ai/CHANGELOG.md). `thinkingTokenBudgetField`, `vllmPriority` und `supportsMaxOutputTokens` sind opt-in Gateway-Steuerungen; `thinking.budget` gesellt sich zu den vorhandenen Template-Platzhaltern. Das SDK besitzt Budget-Auflösung und -Serialisierung. `supportsMidConvoEffort` und `allowedFallbackModels` bleiben katalogeigen, weil ihre Korrektheit von exakten Anthropic-Transports, Modellfähigkeiten und Fallback-Preisen abhängt.
 
-Das optionale `providerThinkingLevel` bleibt in den replay-v2-Antwortmetadaten des Adapters, damit Anthropic-History ihren provider-nativen effort behält. Fehlen bleibt gültig; weder die Replay-Version noch das veröffentlichte Session-Format ändern sich. Die Replay-Herkunft behält das angeforderte Modell, während `responseModel` eine Anthropic-Alias-Auflösung oder einen Fallback behält. Die Rekonstruktion stellt dieses native Modell wieder her, damit pi-ai weiterhin seine modellübergreifenden Signaturregeln anwendet. Die provider-neutrale LLM-API bleibt unverändert; die [provider-gerouteten Replay-Ownership-Regeln](../architecture/2026-07-14-provider-routed-llm-adapters.md) gelten weiterhin. Der Anthropic-Adapter 0.84.2 [initialisiert `model` aus dem Request](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/api/anthropic-messages.ts#L510-L515) und [zeichnet zu Nachrichtenbeginn nur Antwort-ID und Nutzung auf](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/api/anthropic-messages.ts#L589-L605). Er schreibt niemals `responseModel`; seine Replay-Records behalten daher das angeforderte Modell ohne Native-Model-Metadaten.
+Das optionale `providerThinkingLevel` bleibt in den replay-v2-Antwortmetadaten des Adapters, damit Anthropic-History ihren provider-nativen effort behält. Fehlen bleibt gültig; weder die Replay-Version noch das veröffentlichte Session-Format ändern sich. Die Replay-Herkunft behält das angeforderte Modell, während `responseModel` eine Anthropic-Alias-Auflösung oder einen Fallback behält. Die Rekonstruktion stellt dieses native Modell wieder her, damit pi-ai weiterhin seine modellübergreifenden Signaturregeln anwendet. Die provider-neutrale LLM-API bleibt unverändert; die [provider-gerouteten Replay-Ownership-Regeln](../architecture/2026-07-14-provider-routed-llm-adapters.de.md) gelten weiterhin. Der Anthropic-Adapter 0.84.2 [initialisiert `model` aus dem Request](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/api/anthropic-messages.ts#L510-L515) und [zeichnet zu Nachrichtenbeginn nur Antwort-ID und Nutzung auf](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/api/anthropic-messages.ts#L589-L605). Er schreibt niemals `responseModel`; seine Replay-Records behalten daher das angeforderte Modell ohne Native-Model-Metadaten.
 
 ## Erwogene Alternativen
 

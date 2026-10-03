@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-ask-user
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `ask_user_question` 让模型暂停工作，向用户请求确认、选择或缺失的信息。它接受一个或多个问题，并以紧凑 JSON 返回回答。调用会等待回答被接受或当前轮次被取消；如果没有回答处理器接受请求，模型会收到错误。归属于运行时其他 agent 的子级不能调用此工具，必须在最终结果中报告尚未解决的问题。本包不渲染界面或收集输入，因此调用方必须提供兼容的用户交互表面。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

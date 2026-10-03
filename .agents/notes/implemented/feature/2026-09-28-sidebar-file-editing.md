@@ -1,9 +1,8 @@
 # Agent Note: Sidebar file editing with a guarded write endpoint
-English | [中文](.agents/notes/implemented/feature/2026-09-28-sidebar-file-editing.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-28-sidebar-file-editing.de.md)
+English | [中文](2026-09-28-sidebar-file-editing.zh.md) | [Deutsch](2026-09-28-sidebar-file-editing.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-28-sidebar-file-editing.zh.md)
 
 ## Problem
 

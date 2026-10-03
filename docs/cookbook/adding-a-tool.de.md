@@ -1,6 +1,6 @@
 # Tool-Authoring-Referenz
-
 [English](adding-a-tool.md) | [中文](adding-a-tool.zh.md) | Deutsch
+
 
 Referenz für die Verträge, die ein modellseitiges Tool erfüllen muss. Für ein erstes Tool mit Schrittfolge siehe [Tool erstellen](../user/develop/basic/tool.de.md). `packages/shell/tool-bash` ist das produktionsreife Drei-Paket-Beispiel.
 

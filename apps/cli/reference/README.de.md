@@ -1,9 +1,10 @@
 # `dsh`-CLI-Verhaltensreferenz
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Diese Referenz definiert die Befehlsmodi für Profil-Boot, den Web-Alias, das Plugin-Management und den Config-Dump. argv wird einmal durch [`src/args.ts`](../src/args.ts) geparst, und [`src/bin.ts`](../src/bin.ts) importiert dynamisch nur den ausgewählten Runner.
 
+<a id="profile-boot"></a>
 ## Profil-Boot
 
 `dsh --profile <name>` bootet das Profil unter `$DSH_HOME/profiles/<name>`. Der effektive Baum wird über einer leeren Wurzel komponiert, indem nacheinander angewendet werden: jeder Bundle-Patch, den die `dsh.profile.bundles`-Liste des Profil-Manifests nennt, die eigene `cordis.patch.yml` des Profils, die Home-Ebene `$DSH_HOME/cordis.patch.yml` (maschinenlokale Einstellungen, die von jedem Profil geteilt werden und daher die pro-Profil-Ebene überstimmen), und jedes `--patch <path>`-Overlay in argv-Reihenfolge. Pro Zeile gewinnen spätere Ebenen; ein Patch ersetzt den vollständigen `config`-Wert der Zielzeile statt deren Keys tief zu mergen, und kann neue Zeilen einfügen. `dsh.profile.patchReload` wählt `live`-Überwachung der Patch-Dateien oder einmaliges Laden bei `startup`; bei einem benutzerdefinierten Profil gilt ohne Angabe `live`. Ein Parse-, Schema-, Auflösungs- oder Plugin-Boot-Fehler wird gemeldet und endet mit einem Exit-Code ungleich null. SIGINT und SIGTERM disposen die gemountete Wurzel vor dem Exit.

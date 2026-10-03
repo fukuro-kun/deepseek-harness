@@ -1,8 +1,8 @@
 # Agent Note: ACP 快照测试——一次录制 / 确定性回放
+[English](2026-06-19-acp-snapshot-tests.md) | 中文 | [Deutsch](2026-06-19-acp-snapshot-tests.de.md)
 
 Status: implemented
 
-[English](2026-06-19-acp-snapshot-tests.md) | 中文
 
 ## 问题
 

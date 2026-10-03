@@ -1,8 +1,8 @@
 # Agent Note: Geteilte Dateityp-Icons
+[English](2026-09-08-shared-file-type-icons.md) | [中文](2026-09-08-shared-file-type-icons.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-shared-file-type-icons.md) | [中文](2026-09-08-shared-file-type-icons.zh.md) | Deutsch
 
 ## Problem
 

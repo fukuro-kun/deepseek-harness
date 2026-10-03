@@ -1,8 +1,8 @@
 # Agent Note: profile 插件组合包取代固定的表层 overlay
+[English](2026-08-05-profile-plugin-bundles.md) | 中文 | [Deutsch](2026-08-05-profile-plugin-bundles.de.md)
 
 Status: implemented
 
-[English](2026-08-05-profile-plugin-bundles.md) | 中文 | [Deutsch](2026-08-05-profile-plugin-bundles.de.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note：Present 声明交付工作区源文件
+[English](2026-09-08-present-workspace-source-files.md) | 中文 | [Deutsch](2026-09-08-present-workspace-source-files.de.md)
 
 Status: implemented
 
-[English](2026-09-08-present-workspace-source-files.md) | 中文
 
 ## 问题
 

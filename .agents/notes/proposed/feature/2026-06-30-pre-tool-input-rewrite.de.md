@@ -1,8 +1,8 @@
 # Agent Note: Pre-tool input rewrite — a consistent design
+[English](2026-06-30-pre-tool-input-rewrite.md) | [中文](2026-06-30-pre-tool-input-rewrite.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-06-30-pre-tool-input-rewrite.md) | [中文](2026-06-30-pre-tool-input-rewrite.zh.md) | Deutsch
 
 ## Problem
 

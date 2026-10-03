@@ -1,6 +1,6 @@
 # LSP 导航
+[English](lsp.md) | 中文 | [Deutsch](lsp.de.md)
 
-[English](lsp.md) | 中文
 
 LSP seam 是一个[能力 seam](../glossary.zh.md#capability-seam)：它在单一 `ctx.lsp` 服务上公开语义代码导航，并拆分到多个包：Service Definition（[dsh-lsp](../../packages/lsp/lsp)，`ctx.lsp` + 提供方注册表）、通用 Service Provider（[dsh-lsp-stdio](../../packages/lsp/lsp-stdio)，经过配置的 stdio 语言服务器宿主）和 Consumer（[dsh-tool-lsp](../../packages/lsp/tool-lsp)，即 `lsp` 工具 schema）。LSP 是**一项可选能力**，不属于 agent loop（智能体循环）主干，因此其词汇定义在此而非 [core.md](core.zh.md) 中。更换提供方不会改变模型请求导航的方式。
 
@@ -11,8 +11,6 @@ LSP seam 是一个[能力 seam](../glossary.zh.md#capability-seam)：它在单�
 seam 与模型恰好公开 4 项语义查询；该联合是闭合的，因此新增一项查询会通过编译强制要求同步修改 seam、提供方和工具。位置与范围采用从零开始的 UTF-16 坐标，与协议一致；面向模型的工具采用从 1 开始的光标约定，并在输入和输出时进行转换。
 
 ```ts type-equiv
-
-[English](lsp.md) | 中文 | [Deutsch](lsp.de.md)
 /**
  * The four semantic queries the seam and model expose. A closed union: adding an operation is a
  * compile-enforced change across the seam, providers, and the tool. Symbols and call hierarchy are

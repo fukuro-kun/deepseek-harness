@@ -1,6 +1,6 @@
 # Same-Session Goals
-
 [English](goal.md) | [中文](goal.zh.md) | Deutsch
+
 
 Typen, die der event-sourced Goal-Service und seine Policy-Consumer gemeinsam nutzen. Die [Goal-Domain-Agent-Note](../../.agents/notes/implemented/feature/2026-07-19-persisted-same-session-goal-domain.de.md) ist für die Persistenz- und Aktivierungsentscheidungen zuständig; diese Seite hält die exakten Felder und Varianten aus [`packages/goal/goal/src/types.ts`](../../packages/goal/goal/src/types.ts) fest.
 

@@ -1,8 +1,8 @@
 # Agent Note: API-Extractor-Reports
+[English](2026-06-11-api-extractor-reports.md) | [中文](2026-06-11-api-extractor-reports.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-06-11-api-extractor-reports.md) | [中文](2026-06-11-api-extractor-reports.zh.md) | Deutsch
 
 > Die Teile für Doc-Block-Typechecking und Event-Taxonomie sind ausgeliefert ([doc-sync-Erzwingung](../../archived/process/2026-06-11-doc-sync-enforcement.md)); der verbleibende API-Report-Teil ist als eigenständiger Vorschlag verschoben.
 

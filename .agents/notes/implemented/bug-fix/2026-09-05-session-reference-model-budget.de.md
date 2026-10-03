@@ -1,8 +1,8 @@
 # Agent Note: Modellrelative Session-Referenz-Budgets
+[English](2026-09-05-session-reference-model-budget.md) | [中文](2026-09-05-session-reference-model-budget.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-session-reference-model-budget.md) | [中文](2026-09-05-session-reference-model-budget.zh.md) | Deutsch
 
 ## Problem
 

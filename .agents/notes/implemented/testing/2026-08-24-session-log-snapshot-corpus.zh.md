@@ -1,8 +1,8 @@
 # Agent Note: Session-log snapshot corpus
+[English](2026-08-24-session-log-snapshot-corpus.md) | 中文 | [Deutsch](2026-08-24-session-log-snapshot-corpus.de.md)
 
 Status: implemented
 
-[English](2026-08-24-session-log-snapshot-corpus.md) | 中文
 
 ## Problem
 

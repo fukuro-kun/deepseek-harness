@@ -1,6 +1,6 @@
 # Postmortem 0001: ACP-Server stürzte beim Verbinden ab — `export default` verwirft `inject` des Plugins
-
 [English](0001-acp-default-export-drops-inject.md) | [中文](0001-acp-default-export-drops-inject.zh.md) | Deutsch
+
 
 Status: gelöst (Fix in PR #41 `feat/acp-2-bridge`)
 

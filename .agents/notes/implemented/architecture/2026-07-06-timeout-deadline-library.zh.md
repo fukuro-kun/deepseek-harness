@@ -1,8 +1,8 @@
 # Agent Note: 共享的超时/截止时间原语，硬终止留给各能力自行实现
+[English](2026-07-06-timeout-deadline-library.md) | 中文 | [Deutsch](2026-07-06-timeout-deadline-library.de.md)
 
 Status: implemented
 
-[English](2026-07-06-timeout-deadline-library.md) | 中文 | [Deutsch](2026-07-06-timeout-deadline-library.de.md)
 
 ## 问题
 

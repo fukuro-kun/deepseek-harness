@@ -1,8 +1,8 @@
 # Agent Note: Injizierter Content wird wörtlich projiziert — die XML-Envelopes entfallen
+[English](2026-07-20-unwrap-injected-content-envelopes.md) | [中文](2026-07-20-unwrap-injected-content-envelopes.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-20-unwrap-injected-content-envelopes.md) | [中文](2026-07-20-unwrap-injected-content-envelopes.zh.md) | Deutsch
 
 ## Problem
 

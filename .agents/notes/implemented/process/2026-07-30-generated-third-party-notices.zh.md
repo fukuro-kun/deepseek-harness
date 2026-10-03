@@ -1,8 +1,8 @@
 # Agent Note: 生成的第三方声明
+[English](2026-07-30-generated-third-party-notices.md) | 中文 | [Deutsch](2026-07-30-generated-third-party-notices.de.md)
 
 Status: implemented
 
-[English](2026-07-30-generated-third-party-notices.md) | 中文
 
 ## 问题
 

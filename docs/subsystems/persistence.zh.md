@@ -1,6 +1,6 @@
 # 会话持久化
+[English](persistence.md) | 中文 | [Deutsch](persistence.de.md)
 
-[English](persistence.md) | 中文
 
 事件日志的**持久性 seam**。[session.md](session.zh.md) 描述了内存中的 `Session`：仅追加的 `SessionEvent` 日志即为真源。本页描述如何使该日志持久化：抽象的 `SessionPersistence` 服务、它的提供方模型与随产品交付的 JSONL 后端、flush 检查点、崩溃恢复，以及随日志一同存储的元数据头。日志承载的事件词汇在生成的[持久化日志事件目录](../persistence-catalog.zh.md)中逐项列举。
 
@@ -11,8 +11,6 @@
 每一次日志读写都经由句柄流动，绝不经由按 id 寻址的服务方法：句柄是跨进程写租约把守的唯一入口。读取会返回调用方独占的外层 slice，以及由生产者建立的 event value 别名状态。一种句柄类型同时服务两种访问——在 `read` 句柄上执行修改是运行时的 `SessionReadOnlyError`，而非类型层面的拆分——而进程内单写者所有权使得在已有活跃持有者时第二次 `open(id, 'write')` 以 `SessionAlreadyOwnedError` 拒绝。
 
 ```ts type-equiv
-
-[English](persistence.md) | 中文 | [Deutsch](persistence.de.md)
 /** One persistence event slice returned by {@link SessionHandle.read}. */
 interface SessionHandleReadResult {
   /**

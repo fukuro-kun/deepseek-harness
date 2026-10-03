@@ -1,8 +1,8 @@
 # Agent Note: 拆分文件系统 seam——提供方文本变更操作与 `dsh-fs-observation-policy` 插件
+[English](2026-06-26-fsspec-style-fs-seam.md) | 中文 | [Deutsch](2026-06-26-fsspec-style-fs-seam.de.md)
 
 Status: implemented
 
-[English](2026-06-26-fsspec-style-fs-seam.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: 跟随符号链接指向的指令文件
+[English](2026-07-21-follow-instruction-symlinks.md) | 中文 | [Deutsch](2026-07-21-follow-instruction-symlinks.de.md)
 
 Status: implemented
 
-[English](2026-07-21-follow-instruction-symlinks.md) | 中文
 
 ## 问题
 

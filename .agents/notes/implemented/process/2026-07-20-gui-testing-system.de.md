@@ -1,10 +1,10 @@
 # Agent Note: GUI-Testsystem — die dreistufige Struktur
+[English](2026-07-20-gui-testing-system.md) | [中文](2026-07-20-gui-testing-system.zh.md) | Deutsch
 
 Status: implemented
 
 > Pfad-Update (2026-08-27, Remote-Migration): Die Drei-Tier-Philosophie und die Golden-Path-Methode hier bleiben aktuell; Object-Layer-Specs leben verteilt über `packages/api/session-controller/tests/` und `packages/test-support/client-runtime/tests/`, während Remote- und Carrier-Specs über `packages/api/gateway/tests/` und `packages/client/connection/tests/` verteilt sind. Component-Specs sind pro-Plugin-jsdom-Suites unter dem jeweiligen `packages/client/*/tests/`. Die Form der Component-Specs folgt dem [Slot-System-Standard](../architecture/2026-07-22-slot-type-chain-implementation.de.md): Props direkt füttern — der Store-Anteil kommt von `createXXXStore().create()` (die echte Engine, der freigegebene Zero-Machinery-Pfad), Framework-Hooks sind plain Stubs; keine Render-Machinerie, kein Provider-Mounting. Slot-Ownership und Registry-Semantik sind Tier-2-Gebiet (`ui-renderer`- + `ui-slots`-Suites), keine Component-Specs.
 
-[English](2026-07-20-gui-testing-system.md) | [中文](2026-07-20-gui-testing-system.zh.md) | Deutsch
 
 > Arbeitsteilung: Diese Note deckt nur die GUI-spezifische Teststruktur ab (`packages/{client,host}/*` + `apps/web`); die repo-weite Test-Policy (Tiering-Prinzipien, die With-Key-Policy, Real-Implementation-First, REAL-Composition) liegt in [docs/testing.md](../../../../docs/testing.de.md) und wird hier nicht wiederholt.
 

@@ -1,8 +1,8 @@
 # Agent Note: Architektur-Konformität — Dependency-Regeln und das Adapter-Kit
+[English](2026-06-11-architectural-conformance.md) | [中文](2026-06-11-architectural-conformance.zh.md) | Deutsch
 
 Status: rejected — premise gone: plugins depend on dsh-agent-loop by design; dsh-llm/invariant and the hygiene dependency gates own conformance
 
-[English](2026-06-11-architectural-conformance.md) | [中文](2026-06-11-architectural-conformance.zh.md) | Deutsch
 
 ## Problem
 

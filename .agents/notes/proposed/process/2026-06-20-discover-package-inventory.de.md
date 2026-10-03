@@ -1,8 +1,8 @@
 # Agent Note: Package-Inventare entdecken statt statische Listen pflegen
+[English](2026-06-20-discover-package-inventory.md) | [中文](2026-06-20-discover-package-inventory.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-06-20-discover-package-inventory.md) | [中文](2026-06-20-discover-package-inventory.zh.md) | Deutsch
 
 ## Problem
 

@@ -4,8 +4,8 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-session-format-v0-to-v1
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -72,8 +72,8 @@ Der physikalische Codec validiert jede gepackte Zeile atomar, emittiert sie als 
 <a id="further-exploration"></a>
 ## Weiterführende Lektüre
 
-- [Migrationsmaschinerie](../session-format/README.md) — reine Chain- und Codec-Kontrakte.
-- [Statischer Katalog](../session-format-catalog/README.md) — Build-seitige Assembly.
+- [Migrationsmaschinerie](../session-format/README.de.md) — reine Chain- und Codec-Kontrakte.
+- [Statischer Katalog](../session-format-catalog/README.de.md) — Build-seitige Assembly.
 - [Session-Subsystem](../../../docs/subsystems/session.de.md) — aktuelle logische Session-Semantik.
 
 -----

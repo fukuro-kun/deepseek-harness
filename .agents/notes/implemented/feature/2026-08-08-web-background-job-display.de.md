@@ -1,8 +1,8 @@
 # Agent Note: Web-Anzeige von Hintergrund-Tasks
+[English](2026-08-08-web-background-job-display.md) | [中文](2026-08-08-web-background-job-display.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-08-web-background-job-display.md) | [中文](2026-08-08-web-background-job-display.zh.md) | Deutsch
 
 ## Problem
 

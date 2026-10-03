@@ -1,6 +1,6 @@
 # 用户审批
+[English](approval.md) | 中文 | [Deutsch](approval.de.md)
 
-[English](approval.md) | 中文
 
 [dsh-user-approval](../../packages/interaction/user-approval) 的用户审批 seam 回答一个问题：这个具体操作是否可以继续？它拥有共享的请求/结果词汇、`ctx.approval` 分发服务、`approval/request` 应答者 waterfall（瀑布式事件）、仅记录日志的审计事件对，以及按会话的 `ask`/`never` 策略。UI 通道可以提供人类应答者；[ACP（Agent Client Protocol）自动化桥接层](../../packages/acp/acp)为其拥有的 agent（智能体）提供一次性机器决策。调用方如 [dsh-tools](../../packages/core/tools) 和 [dsh-tool-bash](../../packages/shell/tool-bash) 消费闭合的结果，除非结果为 `allowed-once`，否则一律拒绝。
 
@@ -11,8 +11,6 @@
 每个请求都会获得一个全新的 `ApprovalRequestId`。该品牌类型将 `approval/asked` 与 `approval/decided` 审计事件配对，同时不会让审批 id 与工具调用 id 或 agent/会话 id 互换。
 
 ```ts type-equiv
-
-[English](approval.md) | 中文 | [Deutsch](approval.de.md)
 /**
  * Pairs one `approval/asked` audit event with its `approval/decided`.
  * Service-issued (one fresh id per {@link ApprovalService.request} call).

@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-schedule
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 Schedule 让你向模型请求持久提醒；提醒会作为普通 follow-up 消息返回同一会话。你可以创建延时或绝对时间的一次性提醒、按固定间隔重复提醒、列出待处理提醒，也可以取消提醒。提醒在重启后仍然存在，但交付需要 live 根 agent：已关闭的会话会让提醒保持逾期，直到恢复。交付绝不会使用电子邮件、短信、推送或浏览器通知。启用 Schedule overlay 即可提供提醒工具和活动提醒目录；侧边栏闹钟只是已知活动提醒的尽力而为指示，不证明提醒交付当前正在运行。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

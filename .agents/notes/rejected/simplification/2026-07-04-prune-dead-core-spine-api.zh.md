@@ -1,8 +1,8 @@
 # Agent Note: 裁剪无用的公开与结果接口
+[English](2026-07-04-prune-dead-core-spine-api.md) | 中文 | [Deutsch](2026-07-04-prune-dead-core-spine-api.de.md)
 
 Status: rejected — stale 2026-07 inventory: rows were pruned piecemeal or gained callers; a fresh audit must supersede it
 
-[English](2026-07-04-prune-dead-core-spine-api.md) | 中文
 
 ## 问题
 

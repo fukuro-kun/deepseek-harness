@@ -1,6 +1,6 @@
 # Python-SDK-Beispiel
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Ausführbares Python-SDK-Beispiel über den einzigen Applikations-Launcher `dsh --profile sdk-minimal`. Der Python-Client besitzt JSON-RPC-stdio; das Profil besitzt die agent-Komposition, Persistenz, Execution-Policy und Plugins.
 

@@ -1,8 +1,8 @@
 # Agent Note: Open-anywhere vom Community-Plugin zum First-Party-Paket promoten
+[English](2026-08-25-promote-open-anywhere-plugin.md) | [中文](2026-08-25-promote-open-anywhere-plugin.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-25-promote-open-anywhere-plugin.md) | [中文](2026-08-25-promote-open-anywhere-plugin.zh.md) | Deutsch
 
 ## Problem
 

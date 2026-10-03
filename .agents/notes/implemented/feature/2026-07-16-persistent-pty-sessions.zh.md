@@ -1,8 +1,8 @@
 # Agent Note: 持久化 PTY 会话
+[English](2026-07-16-persistent-pty-sessions.md) | 中文 | [Deutsch](2026-07-16-persistent-pty-sessions.de.md)
 
 Status: implemented
 
-[English](2026-07-16-persistent-pty-sessions.md) | 中文
 
 ## 问题
 

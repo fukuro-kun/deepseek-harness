@@ -1,8 +1,8 @@
 # Agent Note: 通过合成的 Alt 按键让 Win32 选择器获得前台激活
+[English](2026-09-07-win32-picker-foreground-alt-key.md) | 中文 | [Deutsch](2026-09-07-win32-picker-foreground-alt-key.de.md)
 
 Status: implemented
 
-[English](2026-09-07-win32-picker-foreground-alt-key.md) | 中文
 
 ## Problem
 

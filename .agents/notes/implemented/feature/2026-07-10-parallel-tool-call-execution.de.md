@@ -1,8 +1,8 @@
 # Agent Note: Parallele Tool-Aufruf-Ausführung nach Aufrufsicherheit
+[English](2026-07-10-parallel-tool-call-execution.md) | [中文](2026-07-10-parallel-tool-call-execution.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-10-parallel-tool-call-execution.md) | [中文](2026-07-10-parallel-tool-call-execution.zh.md) | Deutsch
 
 ## Problem
 

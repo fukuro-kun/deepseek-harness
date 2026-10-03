@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/subprocess/win32-process/README.md
 README.md: 49ae064b781b5d69026a5d28afe1fd45336b9ad5
-README.zh.md: 071c84fa48b622016a978413dc5d06a300d9fa8e
-README.de.md: 99df88fd6ad1035b6894e23bcf6632924380f2b4
+README.zh.md: e8347831720c5ebe680411d616c0feb233d7e84f
+README.de.md: 9ffafef99fc8617bcf4fbd1273396c37e516a308

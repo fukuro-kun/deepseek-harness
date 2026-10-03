@@ -3,7 +3,6 @@ English | [中文](2026-09-05-workspace-files-service.zh.md) | [Deutsch](2026-09
 
 Status: implemented
 
-English | [中文](2026-09-05-workspace-files-service.zh.md)
 
 ## Problem
 

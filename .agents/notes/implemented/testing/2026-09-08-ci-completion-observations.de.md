@@ -1,8 +1,8 @@
 # Agent Note: CI-Fixture-Completion und -Isolation
+[English](2026-09-08-ci-completion-observations.md) | [中文](2026-09-08-ci-completion-observations.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-ci-completion-observations.md) | [中文](2026-09-08-ci-completion-observations.zh.md) | Deutsch
 
 ## Problem
 

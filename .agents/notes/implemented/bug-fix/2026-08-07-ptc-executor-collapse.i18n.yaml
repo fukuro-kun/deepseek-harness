@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-07-ptc-executor-collapse.md
-2026-08-07-ptc-executor-collapse.md: 7d366a245aba58ed153d22c589cc4dcf30017a3f
-2026-08-07-ptc-executor-collapse.zh.md: 03f93a323533b8507043c2fa8653b4c51c5fd56e
-2026-08-07-ptc-executor-collapse.de.md: 2d77ec874372496a4f66001121b2ee4a6cbb0b20
+2026-08-07-ptc-executor-collapse.md: 1cc3af5058034f3ebf2ea2cf6b121e401d42c25f
+2026-08-07-ptc-executor-collapse.zh.md: 232d7a0284a171e9db7a1fc73dd060f179b23404
+2026-08-07-ptc-executor-collapse.de.md: 8c59c8e4614c689289f03830cf2caaf6d2e4d03b

@@ -1,8 +1,8 @@
 # Agent Note: 投影缓存前代恢复与 Session 格式绑定（session_projcache v3-v6 → v7）
+[English](2026-09-02-projcache-cross-version-read-compat.md) | 中文 | [Deutsch](2026-09-02-projcache-cross-version-read-compat.de.md)
 
 Status: implemented
 
-[English](2026-09-02-projcache-cross-version-read-compat.md) | 中文 | [Deutsch](2026-09-02-projcache-cross-version-read-compat.de.md)
 
 ## 问题
 

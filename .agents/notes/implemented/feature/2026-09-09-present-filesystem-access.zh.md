@@ -1,8 +1,8 @@
 # Agent Note：Present 遵循 Session 文件系统访问规则
+[English](2026-09-09-present-filesystem-access.md) | 中文 | [Deutsch](2026-09-09-present-filesystem-access.de.md)
 
 Status: implemented
 
-[English](2026-09-09-present-filesystem-access.md) | 中文
 
 ## 问题
 

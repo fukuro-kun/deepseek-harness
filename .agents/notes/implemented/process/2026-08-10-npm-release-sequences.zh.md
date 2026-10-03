@@ -1,8 +1,8 @@
 # Agent Note: 三条独立序列的私有 NPM 发布
+[English](2026-08-10-npm-release-sequences.md) | 中文 | [Deutsch](2026-08-10-npm-release-sequences.de.md)
 
 Status: implemented
 
-[English](2026-08-10-npm-release-sequences.md) | 中文
 
 ## 问题
 

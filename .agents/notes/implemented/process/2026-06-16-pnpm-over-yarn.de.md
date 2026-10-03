@@ -1,8 +1,8 @@
 # Agent Note: pnpm als Package Manager statt Yarn 4
+[English](2026-06-16-pnpm-over-yarn.md) | [中文](2026-06-16-pnpm-over-yarn.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-16-pnpm-over-yarn.md) | [中文](2026-06-16-pnpm-over-yarn.zh.md) | Deutsch
 
 ## Problem
 

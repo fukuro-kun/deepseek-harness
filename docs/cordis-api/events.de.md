@@ -4,6 +4,7 @@
      Zum Aktualisieren zuerst `pnpm run gen-cordis-catalog` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/cordis-api/events.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
 # Events
+[English](events.md) | [中文](events.zh.md) | Deutsch
 
 Die Event-Dispatch-API, die in jeden Context gemischt wird. Die Harness-Event-Deklarationen und ihre Dispatch-Modi werden in die jeweils zugehörige [Subsystem-Seite](../subsystems/core.de.md) generiert.
 

@@ -1,8 +1,8 @@
 # Agent Note: Continuous Client connection recovery
+[English](2026-09-05-continuous-client-recovery.md) | [中文](2026-09-05-continuous-client-recovery.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-continuous-client-recovery.md) | [中文](2026-09-05-continuous-client-recovery.zh.md) | Deutsch
 
 ## Problem
 

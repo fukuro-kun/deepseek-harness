@@ -1,8 +1,8 @@
 # Agent Note: Vorgänger-Wiederherstellung des Projection-Cache und Bindung an das Session-Format (session_projcache v3-v6 → v7)
+[English](2026-09-02-projcache-cross-version-read-compat.md) | [中文](2026-09-02-projcache-cross-version-read-compat.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-02-projcache-cross-version-read-compat.md) | [中文](2026-09-02-projcache-cross-version-read-compat.zh.md) | Deutsch
 
 ## Problem
 

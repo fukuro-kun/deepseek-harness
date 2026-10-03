@@ -1,8 +1,8 @@
 # Agent Note: Verbindliches CI-Performance-Gate für das Öffnen großer Sessions
+[English](2026-09-04-session-open-performance-gate.md) | [中文](2026-09-04-session-open-performance-gate.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-04-session-open-performance-gate.md) | [中文](2026-09-04-session-open-performance-gate.zh.md) | Deutsch
 
 ## Problem
 

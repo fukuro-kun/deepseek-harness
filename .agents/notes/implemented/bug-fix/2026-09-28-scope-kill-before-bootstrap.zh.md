@@ -1,8 +1,8 @@
 # Agent Note: scope kill 与一次性 bootstrap 的竞态
+[English](2026-09-28-scope-kill-before-bootstrap.md) | 中文 | [Deutsch](2026-09-28-scope-kill-before-bootstrap.de.md)
 
 Status: implemented
 
-[English](2026-09-28-scope-kill-before-bootstrap.md) | 中文
 
 ## 问题
 

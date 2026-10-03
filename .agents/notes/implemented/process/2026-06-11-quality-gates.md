@@ -1,9 +1,8 @@
 # Agent Note: Mechanical quality gates over prose guidelines
-English | [中文](.agents/notes/implemented/process/2026-06-11-quality-gates.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-06-11-quality-gates.de.md)
+English | [中文](2026-06-11-quality-gates.zh.md) | [Deutsch](2026-06-11-quality-gates.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-11-quality-gates.zh.md)
 
 The hook/CI symmetry in this record is superseded by [Fast local Git hooks](../../archived/process/2026-07-22-fast-local-git-hooks.md); CI remains the exhaustive enforcement path.
 

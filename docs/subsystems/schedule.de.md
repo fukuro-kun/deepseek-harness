@@ -1,8 +1,8 @@
 # Session-lokaler Schedule
-
 [English](schedule.md) | [中文](schedule.zh.md) | Deutsch
 
-Schedule besitzt dauerhafte Erinnerungen, die als gewöhnliche spätere Konversations-Turns in die ursprüngliche Live-Session zurückkehren. Der [Durable-Schedule-Agent-Note](../../.agents/notes/implemented/feature/2026-08-05-durable-web-schedule.de.md) besitzt Persistenz, Lebenszyklus und Darstellung des aktiven Zustands, und die [explizite Zeitzonen-Grenze](../../.agents/notes/implemented/simplification/2026-08-09-explicit-schedule-time-zone.de.md) besitzt die browserlokale Interpretation. Diese Seite dokumentiert die dauerhaften und modellseitigen Formen aus [`packages/schedule/schedule/src/types.ts`](../../packages/schedule/schedule/src/types.ts); das [Package-README](../../packages/schedule/schedule/README.md) besitzt Komposition, Tool-Verhalten und das exakte Reminder-Framing.
+
+Schedule besitzt dauerhafte Erinnerungen, die als gewöhnliche spätere Konversations-Turns in die ursprüngliche Live-Session zurückkehren. Der [Durable-Schedule-Agent-Note](../../.agents/notes/implemented/feature/2026-08-05-durable-web-schedule.de.md) besitzt Persistenz, Lebenszyklus und Darstellung des aktiven Zustands, und die [explizite Zeitzonen-Grenze](../../.agents/notes/implemented/simplification/2026-08-09-explicit-schedule-time-zone.de.md) besitzt die browserlokale Interpretation. Diese Seite dokumentiert die dauerhaften und modellseitigen Formen aus [`packages/schedule/schedule/src/types.ts`](../../packages/schedule/schedule/src/types.ts); das [Package-README](../../packages/schedule/schedule/README.de.md) besitzt Komposition, Tool-Verhalten und das exakte Reminder-Framing.
 
 ## Dauerhafte Datensätze
 
@@ -181,7 +181,7 @@ Der generierte [Tool-Katalog](../tool-catalog.de.md#deepseek-aidsh-schedule) bes
 
 Ist die optionale Session-Projektions-Registry vorhanden, registriert Schedule den client-sichtbaren `schedule`-Key, dessen Wert das vollständige aktive `ScheduleRecord[]` ist. Live-, Cache-, History- und Detached-Lesevorgänge verwenden denselben Header-aware strikten Fold; fehlerhafte autoritative Eingabe lässt den bestehende Lesepfad fehlschlagen, statt einen Teilwert zu publizieren.
 
-Das ausgelieferte Web-Bundle hält `ui-schedule` standardmäßig deaktiviert, während das explizite Schedule-Overlay es zusammen mit der Host-Capability aktiviert. [`dsh-client-ui-schedule`](../../packages/client/ui-schedule/README.md) besitzt die Header-Interaktion, [`dsh-client-ui-workspace`](../../packages/client/ui-workspace/README.md) besitzt die Zeilendarstellung, und der Durable-Schedule-Agent-Note besitzt ihre gemeinsame Grenze für den aktiven Zustand. Der geteilte Wert repräsentiert den aktuellen aktiven Zustand, niemals Zustellhistorie oder eine Quittung; fällige Erinnerungen erscheinen weiterhin über die unten beschriebene gewöhnliche Assistant-Ausgabe.
+Das ausgelieferte Web-Bundle hält `ui-schedule` standardmäßig deaktiviert, während das explizite Schedule-Overlay es zusammen mit der Host-Capability aktiviert. [`dsh-client-ui-schedule`](../../packages/client/ui-schedule/README.de.md) besitzt die Header-Interaktion, [`dsh-client-ui-workspace`](../../packages/client/ui-workspace/README.de.md) besitzt die Zeilendarstellung, und der Durable-Schedule-Agent-Note besitzt ihre gemeinsame Grenze für den aktiven Zustand. Der geteilte Wert repräsentiert den aktuellen aktiven Zustand, niemals Zustellhistorie oder eine Quittung; fällige Erinnerungen erscheinen weiterhin über die unten beschriebene gewöhnliche Assistant-Ausgabe.
 
 ## Live-Zustellung
 

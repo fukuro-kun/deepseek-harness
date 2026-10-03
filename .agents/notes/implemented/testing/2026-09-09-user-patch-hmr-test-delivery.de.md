@@ -1,8 +1,8 @@
 # Agent Note: User-Patch-Transaktionen steuern die Zustellung von Dateisystem-Events
+[English](2026-09-09-user-patch-hmr-test-delivery.md) | [中文](2026-09-09-user-patch-hmr-test-delivery.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-09-user-patch-hmr-test-delivery.md) | [中文](2026-09-09-user-patch-hmr-test-delivery.zh.md) | Deutsch
 
 ## Problem
 

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-08-sidebar-last-tab-close-rules.md
-2026-09-08-sidebar-last-tab-close-rules.md: 49991a8a299f95954af4a67ccb65208899f364a4
-2026-09-08-sidebar-last-tab-close-rules.zh.md: bcc54c0c39cc65434f21ef8f6f81a382b6eecdb7
-2026-09-08-sidebar-last-tab-close-rules.de.md: 6d3145cf688b2c6585ca04387c9e619ae9a1b1b2
+2026-09-08-sidebar-last-tab-close-rules.md: 5b6c8c3a3fa4becbb042b189f34c2e3c69d815b2
+2026-09-08-sidebar-last-tab-close-rules.zh.md: b7c3158b715026b80f5b2c7ce867ab124427aabe
+2026-09-08-sidebar-last-tab-close-rules.de.md: 306a2f6e1b29fd40e9b0b4551287764313ed0915

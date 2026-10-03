@@ -1,8 +1,8 @@
 # Agent Note: 按单次调用安全性并行执行工具调用
+[English](2026-07-10-parallel-tool-call-execution.md) | 中文 | [Deutsch](2026-07-10-parallel-tool-call-execution.de.md)
 
 Status: implemented
 
-[English](2026-07-10-parallel-tool-call-execution.md) | 中文
 
 ## 问题
 

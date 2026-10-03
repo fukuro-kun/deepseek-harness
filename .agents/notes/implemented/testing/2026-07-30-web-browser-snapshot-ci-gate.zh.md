@@ -1,8 +1,8 @@
 # Agent Note: Web 浏览器预期输出的必需 CI 门禁
+[English](2026-07-30-web-browser-snapshot-ci-gate.md) | 中文 | [Deutsch](2026-07-30-web-browser-snapshot-ci-gate.de.md)
 
 Status: implemented
 
-[English](2026-07-30-web-browser-snapshot-ci-gate.md) | 中文
 
 ## 问题
 

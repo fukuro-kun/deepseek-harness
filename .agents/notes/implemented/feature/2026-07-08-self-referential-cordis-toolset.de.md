@@ -1,8 +1,8 @@
 # Agent Note: Das selbstreferenzielle cordis-Toolset
+[English](2026-07-08-self-referential-cordis-toolset.md) | [中文](2026-07-08-self-referential-cordis-toolset.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-08-self-referential-cordis-toolset.md) | [中文](2026-07-08-self-referential-cordis-toolset.zh.md) | Deutsch
 
 ## Problem
 

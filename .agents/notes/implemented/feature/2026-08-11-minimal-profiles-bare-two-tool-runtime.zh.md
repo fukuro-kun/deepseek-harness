@@ -1,8 +1,8 @@
 # Agent Note: minimal profile 使用裸运行时
+[English](2026-08-11-minimal-profiles-bare-two-tool-runtime.md) | 中文 | [Deutsch](2026-08-11-minimal-profiles-bare-two-tool-runtime.de.md)
 
 Status: implemented
 
-[English](2026-08-11-minimal-profiles-bare-two-tool-runtime.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Unabhängige Modell- und Nutzer-Skill-Invocation-Policy
+[English](2026-07-28-skill-invocation-policy.md) | [中文](2026-07-28-skill-invocation-policy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-28-skill-invocation-policy.md) | [中文](2026-07-28-skill-invocation-policy.zh.md) | Deutsch
 
 ## Problem
 

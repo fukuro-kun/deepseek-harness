@@ -1,8 +1,8 @@
 # Agent Note: credential-Grenzen, whole-snapshot-Anfragen und atomare route-Registrierung
+[English](2026-07-30-credential-boundaries-and-atomic-registration.md) | [中文](2026-07-30-credential-boundaries-and-atomic-registration.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-30-credential-boundaries-and-atomic-registration.md) | [中文](2026-07-30-credential-boundaries-and-atomic-registration.zh.md) | Deutsch
 
 > Scope: Härtung der [request-Level-LLM-Konfigurationsgrenze](../../archived/architecture/2026-07-29-request-level-llm-config-credentials.md) — wo ein gespeichertes credential liegt und wer es lesen kann, wie die facts einer Anfrage eine generation bleiben und wie ein route-set ohne Fenster wechselt. Begleitnote zur [settings-write-path-note](../../archived/architecture/2026-07-30-settings-write-path-integrity.md), deren provider-fixes diese note auf `credentials-local` anwendet und deren writer-lock sie zu `dsh-atomic-write` befördert.
 

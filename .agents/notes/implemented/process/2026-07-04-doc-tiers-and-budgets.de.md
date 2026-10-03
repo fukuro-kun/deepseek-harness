@@ -1,8 +1,8 @@
 # Agent Note: Dokumentationsstruktur, Ebenen und Budgets
+[English](2026-07-04-doc-tiers-and-budgets.md) | [中文](2026-07-04-doc-tiers-and-budgets.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-04-doc-tiers-and-budgets.md) | [中文](2026-07-04-doc-tiers-and-budgets.zh.md) | Deutsch
 
 ## Problem
 

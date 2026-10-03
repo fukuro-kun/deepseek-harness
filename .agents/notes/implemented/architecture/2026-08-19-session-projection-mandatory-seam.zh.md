@@ -1,8 +1,8 @@
 # Agent Note: 会话投影作为必需的读取 seam
+[English](2026-08-19-session-projection-mandatory-seam.md) | 中文 | [Deutsch](2026-08-19-session-projection-mandatory-seam.de.md)
 
 Status: implemented
 
-[English](2026-08-19-session-projection-mandatory-seam.md) | 中文 | [Deutsch](2026-08-19-session-projection-mandatory-seam.de.md)
 
 ## 问题
 

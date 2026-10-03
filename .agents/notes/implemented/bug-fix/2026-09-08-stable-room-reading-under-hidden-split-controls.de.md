@@ -1,8 +1,8 @@
 # Agent Note: Die Raummessung von versteckten Split-Controls unabhängig halten
+[English](2026-09-08-stable-room-reading-under-hidden-split-controls.md) | [中文](2026-09-08-stable-room-reading-under-hidden-split-controls.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-stable-room-reading-under-hidden-split-controls.md) | [中文](2026-09-08-stable-room-reading-under-hidden-split-controls.zh.md) | Deutsch
 
 ## Problem
 

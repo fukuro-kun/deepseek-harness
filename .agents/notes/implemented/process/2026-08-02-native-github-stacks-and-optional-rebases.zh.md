@@ -1,8 +1,8 @@
 # Agent Note: GitHub 原生堆叠与可选 PR rebase
+[English](2026-08-02-native-github-stacks-and-optional-rebases.md) | 中文 | [Deutsch](2026-08-02-native-github-stacks-and-optional-rebases.de.md)
 
 Status: implemented
 
-[English](2026-08-02-native-github-stacks-and-optional-rebases.md) | 中文
 
 ## 问题
 

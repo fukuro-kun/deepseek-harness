@@ -1,8 +1,8 @@
 # Agent Note: Terminale LLM-stream-Fehler
+[English](2026-07-29-terminal-llm-stream-failures.md) | [中文](2026-07-29-terminal-llm-stream-failures.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-29-terminal-llm-stream-failures.md) | [中文](2026-07-29-terminal-llm-stream-failures.zh.md) | Deutsch
 
 Diese note ersetzt nur die thrown-error-identity und den call-lokalen sidecar-Mechanismus in [begrenzte LLM-Anfragewiederherstellung](2026-06-21-bounded-llm-request-recovery.de.md) und [context-overflow-recovery nach dem call](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.de.md). Diese notes besitzen weiterhin strukturierte failure-facts, retry-policy, durable attempts und compaction-recovery.
 

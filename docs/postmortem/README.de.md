@@ -1,6 +1,6 @@
 # Postmortems
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Vorfallaufzeichnungen: Ein Bug erreichte einen Ort, an dem er nicht hingehört (ein echter Nutzer, ein gemergter PR, ein Release), und das Interessante ist *warum unser Prozess ihn durchgelassen hat*, nicht nur der Einzeilen-Fix.
 

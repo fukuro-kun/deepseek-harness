@@ -1,8 +1,8 @@
 # Agent Note: 将每条消息创建为带标识的不可变值
+[English](2026-07-28-identified-immutable-message-values.md) | 中文 | [Deutsch](2026-07-28-identified-immutable-message-values.de.md)
 
 Status: implemented
 
-[English](2026-07-28-identified-immutable-message-values.md) | 中文 | [Deutsch](2026-07-28-identified-immutable-message-values.de.md)
 
 ## 问题
 

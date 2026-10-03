@@ -1,6 +1,6 @@
 # 7. In den Harness
-
 [English](07-into-the-harness.md) | [中文](07-into-the-harness.zh.md) | Deutsch
+
 
 Dieses Kapitel registriert ein modellaufrufbares Tool beim `tools`-Service des Harness, führt es durch die Tool-Pipeline des Harness aus und beobachtet das Ergebnis-Event. Es bleibt schlüssellos und ruft kein Modell auf.
 

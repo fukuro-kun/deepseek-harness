@@ -1,8 +1,8 @@
 # Agent Note: 插入补丁插件的文件 URL
+[English](2026-09-05-patch-plugin-file-urls.md) | 中文 | [Deutsch](2026-09-05-patch-plugin-file-urls.de.md)
 
 Status: implemented
 
-[English](2026-09-05-patch-plugin-file-urls.md) | 中文
 
 ## Problem
 

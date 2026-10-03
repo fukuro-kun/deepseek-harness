@@ -1,8 +1,8 @@
 # Agent Note: pi-ai 目录变化后可修复的设置
+[English](2026-09-07-pi-ai-settings-catalog-recovery.md) | 中文 | [Deutsch](2026-09-07-pi-ai-settings-catalog-recovery.de.md)
 
 Status: implemented
 
-[English](2026-09-07-pi-ai-settings-catalog-recovery.md) | 中文
 
 ## Problem
 

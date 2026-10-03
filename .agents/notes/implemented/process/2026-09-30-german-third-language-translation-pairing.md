@@ -1,8 +1,8 @@
 # Agent Note: Make German a first-class translation pairing language
+English | [中文](2026-09-30-german-third-language-translation-pairing.zh.md) | [Deutsch](2026-09-30-german-third-language-translation-pairing.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-30-german-third-language-translation-pairing.zh.md) | [Deutsch](2026-09-30-german-third-language-translation-pairing.de.md)
 
 ## Problem
 

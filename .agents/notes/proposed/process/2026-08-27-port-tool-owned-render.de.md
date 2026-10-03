@@ -1,8 +1,8 @@
 # Agent Note: Tool-Ownership-Render in aktuelle DSH-APIs porten
+[English](2026-08-27-port-tool-owned-render.md) | [中文](2026-08-27-port-tool-owned-render.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-08-27-port-tool-owned-render.md) | [中文](2026-08-27-port-tool-owned-render.zh.md) | Deutsch
 
 ## Problem
 

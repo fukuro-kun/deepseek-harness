@@ -1,6 +1,6 @@
 # SessionTelemetryBackend
-
 [English](session-telemetry.md) | [中文](session-telemetry.zh.md) | Deutsch
+
 
 Die ausgehende Session-Berichterstattung ist als [capability seam](../capability-seams.de.md) aufgeteilt: Service Definition und Capture-Koordinator ([dsh-session-telemetry](../../packages/session/session-telemetry), `ctx.sessionTelemetry`) besitzen die vollständige Erfassung kanonischer Events, den `session-telemetry/record`-Redaktions-waterfall, den Handoff-Cursor und den minimalen Backend-Contract; der Service Provider, den ein Deployment lädt ([dsh-session-telemetry-otel](../../packages/session/session-telemetry-otel)), ist die wortgetreu konfigurierte Log-Pipeline des OpenTelemetry JS SDK. Es ist eine optionale Fähigkeit, nicht Teil der agent-loop-Spine, und nichts davon erreicht einen Model-Request. Das Boundary-Axiom — die Zuständigkeit des Harness endet bei `emit()`; Batching, Retry, Queueing und Verlustpolitik gehören dem Reporting-SDK — und die verworfenen Alternativen sind im [Revival-Agent-Note](../../.agents/notes/implemented/feature/2026-07-23-session-telemetry-otel-revival.de.md) festgehalten; die Capture- und Cursor-Contracts stehen im [Service-Definition-README](../../packages/session/session-telemetry/README.de.md).
 

@@ -1,8 +1,8 @@
 # Agent Note: dsh-web-Config-Tree-Boot und das Web-Transport-Layering
+[English](2026-07-24-web-config-tree-boot-and-transport-layering.md) | [中文](2026-07-24-web-config-tree-boot-and-transport-layering.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-24-web-config-tree-boot-and-transport-layering.md) | [中文](2026-07-24-web-config-tree-boot-and-transport-layering.zh.md) | Deutsch
 
 > Arbeitsteilung: Wie `dsh web` komponiert (cordis.yml + Pre-Cordis-Boot-Klassen + Config-Quellen) und wie sich der Web-Transport über Packages verteilt (Gateway / Carrier / Binding / Graph / Dev-Reload). Die [Client-Plugin-Loading-Note](2026-07-23-client-plugin-loading-model.de.md) besitzt die Browser-seitige Ladekette, die diese Composition speist.
 

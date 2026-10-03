@@ -1,8 +1,8 @@
 # Agent Note: Delegierte subagents laufen mit auf `'never'` fixierten Approvals
+[English](2026-08-10-subagent-approval-pinned-never.md) | [中文](2026-08-10-subagent-approval-pinned-never.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-subagent-approval-pinned-never.md) | [中文](2026-08-10-subagent-approval-pinned-never.zh.md) | Deutsch
 
 ## Problem
 

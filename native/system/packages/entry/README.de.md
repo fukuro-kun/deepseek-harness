@@ -3,8 +3,8 @@ description: "JavaScript-Einstieg für den vorgebauten Landlock-Launcher und asy
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Der `./landlock-run`-Einstieg exportiert den Landlock-Launcher-Pfad, die Enforcement-Probe, die Grant-Argumente und die Protokollkonstanten. Der unabhängige `./flock`-Einstieg exportiert `tryLockExclusive(fd): Promise<void>`; das Importieren eines der beiden Einstiege lädt `system.node` nicht. Das Paket hat keinen Root-Export.
 

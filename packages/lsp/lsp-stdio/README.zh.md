@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-lsp-stdio
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用 `dsh-lsp-stdio` 可让 agent 从显式配置的本地语言服务器获得定义、引用、实现与悬停信息。它把文件扩展名映射为语言标识符，按需为每个工作区启动一台服务器，并在每次查询时重新读取文件，不在查询之间保留文档状态。语言服务器进程与源文件读取共享已挂载的文件系统和子进程环境。本包不安装服务器，也不提供沙箱；部署方必须提供命令、映射和所需的隔离措施。同一服务器与工作区的查询串行执行，不同工作区可并行运行。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
@@ -34,18 +33,31 @@ kind: "package-reference"
 `servers` 记录把每个稳定的提供方 id 映射到一条服务器命令。提供方会在清理 credential 后于加载时解析每个可执行文件，因此一个坏配置项会阻止所有提供方注册；进程在第一次匹配查询时惰性启动。
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-fs-local'
+
 - name: '@deepseek-ai/dsh-subprocess-local'
+
 - name: '@deepseek-ai/dsh-lsp'
+
 - name: '@deepseek-ai/dsh-lsp-stdio'
+
   config:
+
     servers:
+
       typescript:
+
         command: typescript-language-server
+
         args: ['--stdio']
+
         extensionToLanguage:
+
           '.ts': typescript
+
 - name: '@deepseek-ai/dsh-tool-lsp'
+
 ```
 
 | 字段 | 默认值 | 含义 |

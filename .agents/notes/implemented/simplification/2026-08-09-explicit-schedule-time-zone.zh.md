@@ -1,8 +1,8 @@
 # Agent Note: 显式 Schedule 时区边界
+[English](2026-08-09-explicit-schedule-time-zone.md) | 中文 | [Deutsch](2026-08-09-explicit-schedule-time-zone.de.md)
 
 Status: implemented
 
-[English](2026-08-09-explicit-schedule-time-zone.md) | 中文
 
 ## 问题
 

@@ -4,6 +4,7 @@
      Zum Aktualisieren zuerst `pnpm run gen-persistence-catalog` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/persistence-catalog.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
 # Session-Persistenz-Event-Katalog
+[English](persistence-catalog.md) | [中文](persistence-catalog.zh.md) | Deutsch
 
 Jeder Ereignistyp, der im dauerhaften Ereignis-Log einer Session auftreten kann: die vollständige persistierte `SessionEvent`-Envelope und jedes Mitglied der merge-erweiterbaren `SessionEventMap` — das eigene Vokabular in `@deepseek-ai/dsh-session` plus jede Plugin-Deklaration, die in diesem Repository in `@deepseek-ai/dsh-session/types` gemergt wird — mit Quell-JSDoc, vollständiger Payload-Deklaration, Surface-Badge und Deklarationsort. Der Katalog ergänzt [session.md](subsystems/session.de.md) (Surface-Reihenfolge und die `deriveMessages()`-Projektion), [persistence.md](subsystems/persistence.de.md) (wie das Log dauerhaft gemacht wird) und den generierten Bereich von [session.md](subsystems/session.de.md#cordis-surface) (die Live-Bus-Anbindung — ein Log-Ereignis ist KEIN Cordis-Event; es erreicht die Listener über den einzelnen `session/event`-Emit).
 

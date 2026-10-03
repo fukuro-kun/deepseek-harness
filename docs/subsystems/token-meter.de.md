@@ -1,6 +1,6 @@
 # Token-Meter
-
 [English](token-meter.md) | [中文](token-meter.zh.md) | Deutsch
+
 
 `@deepseek-ai/dsh-token-meter` stellt einen losgelösten Replay-Snapshot für Request-Druck und positionsbezogene Surface-Bepreisung bereit. `logRevision` ist die Anzahl persistenter Events, die für jedes Feld der Messung konsumiert wurden.
 

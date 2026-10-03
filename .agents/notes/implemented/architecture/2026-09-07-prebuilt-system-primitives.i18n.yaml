@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-07-prebuilt-system-primitives.md
-2026-09-07-prebuilt-system-primitives.md: 2b87436cb9a0b264995902feceeee3bb0b38de81
-2026-09-07-prebuilt-system-primitives.zh.md: f7efb1776fd841856883c01f45b17f25dfa96d2d
-2026-09-07-prebuilt-system-primitives.de.md: 4bc90b0fa9c70c0fed4533fd3071bf9fab380745
+2026-09-07-prebuilt-system-primitives.md: 5ad0e06e9976a930d93828c636b04ea82856d8b6
+2026-09-07-prebuilt-system-primitives.zh.md: 1ec5aaed8db4ae3147a9cc9b8659385ff2628fbd
+2026-09-07-prebuilt-system-primitives.de.md: 6f4738b62fa6a6318e9d043733a0b3247cea41f8

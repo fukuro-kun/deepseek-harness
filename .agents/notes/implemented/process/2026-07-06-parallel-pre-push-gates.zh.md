@@ -1,8 +1,8 @@
 # Agent Note: 并行 pre-push 门禁
+[English](2026-07-06-parallel-pre-push-gates.md) | 中文 | [Deutsch](2026-07-06-parallel-pre-push-gates.de.md)
 
 Status: implemented
 
-[English](2026-07-06-parallel-pre-push-gates.md) | 中文
 
 本记录中的本地钩子部分已由[快速本地 Git 钩子](../../archived/process/2026-07-22-fast-local-git-hooks.md) 取代。有界门禁调度器和包级 `publint` 并行机制仍用于 CI、`doc-sync` 和显式本地命令。调度器的快速失败选项记录在[门禁运行器快速失败](../../archived/process/2026-08-27-gate-runner-fail-fast.md)。
 

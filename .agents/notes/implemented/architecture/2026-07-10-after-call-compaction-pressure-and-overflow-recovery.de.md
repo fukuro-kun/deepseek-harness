@@ -1,8 +1,8 @@
 # Agent Note: After-Call-Compaction-Pressure und Context-Overflow-Recovery
+[English](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.md) | [中文](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.md) | [中文](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.zh.md) | Deutsch
 
 ## Problem
 
@@ -22,7 +22,7 @@ Compact-basic umhüllt `agent/pre-step` vor jedem vorgeschlagenen Request. An ei
 
 ### Request-Recovery ist auf die finale Modell-Grenze begrenzt
 
-`agent/request-error` repräsentiert terminale Failures von der finalen Adapter-Grenze. Adapter-Auswahl, Dispatch, Iterator-Konstruktion und Iterations-Throws werden zu terminalen `error`- oder `aborted`-Finishes, bevor der Agent-Loop sie konsumiert; Adapter-emittierte terminale Finishes gehen in denselben Pfad. Prompt-Assembly, Request-Middleware, Request-Logging, Ergebnis-Verarbeitung, Tools, Step-Listener und Cleanup bleiben gewöhnliche Failures. [Terminale LLM-Stream-Failures](2026-07-29-terminal-llm-stream-failures.md) besitzt diese Normalisierungsgrenze.
+`agent/request-error` repräsentiert terminale Failures von der finalen Adapter-Grenze. Adapter-Auswahl, Dispatch, Iterator-Konstruktion und Iterations-Throws werden zu terminalen `error`- oder `aborted`-Finishes, bevor der Agent-Loop sie konsumiert; Adapter-emittierte terminale Finishes gehen in denselben Pfad. Prompt-Assembly, Request-Middleware, Request-Logging, Ergebnis-Verarbeitung, Tools, Step-Listener und Cleanup bleiben gewöhnliche Failures. [Terminale LLM-Stream-Failures](2026-07-29-terminal-llm-stream-failures.de.md) besitzt diese Normalisierungsgrenze.
 
 Der fehlgeschlagene Step schließt, bevor Recovery läuft. Ein handelnder Listener repariert durable Zustand, gibt `{ kind: 'retry' }` zurück und stoppt Waterfall-Delegation. Der Loop schließt dann den fehlgeschlagenen Turn und öffnet einen Retry-Turn aus dem durable Log ohne dazwischenliegende Idle-Benachrichtigung. Retry-Policy und Versuchs-Zähler bleiben Plugin-owned; compaction-basic räumt seinen Per-Agent-Overflow-Zähler auf, wenn die Kette terminales `agent/settled` erreicht. Beide DeepSeek-Adapter normalisieren erkannte Provider-Kontext-Limit-Failures zu `CONTEXT_WINDOW_EXCEEDED`. Die [Retry-Action-Entscheidung](../simplification/2026-07-27-request-error-retry-action.de.md) besitzt die Return-Grenze.
 
@@ -58,4 +58,4 @@ Der nächste Pre-Step-Pressure-Check beschreibt den vorhergehenden abgeschlossen
 
 Die Kosten sind Pressure-Arbeit im geteilten Pre-Step-Waterfall und Adapter-maintainte Overflow-Klassifikation. Provider-Formulierung und heuristische Zeichen-Dichte bleiben Wartungsrisiken. Surface-Compaction kann weiterhin kein Envelope reparieren, das allein das Fenster überschreitet, keinen unteilbaren Nicht-Tool-Knoten spalten oder eine Tool-Einheit reparieren, deren nicht-prunbarer Rest übergroß bleibt. Der optionale Pruner kann ein sonst unteilbares Tool-Paar reparieren, wenn entfernbarer text-tragender Tool-Result-Inhalt der Bulk ist.
 
-Die [Claimed-Pre-Step-Lifecycle](2026-07-31-claimed-pre-step-inbox-lifecycle.md) ersetzt den früheren Post-Step-Trigger dieser Note. Der Service-Split, das Standalone-Token-Meter, der Balanced-Range-Vertrag, das Log-recorded Lock, die Summary-Ersetzung und der einzige `summarize()`-Subclass-Hook bleiben unverändert.
+Die [Claimed-Pre-Step-Lifecycle](2026-07-31-claimed-pre-step-inbox-lifecycle.de.md) ersetzt den früheren Post-Step-Trigger dieser Note. Der Service-Split, das Standalone-Token-Meter, der Balanced-Range-Vertrag, das Log-recorded Lock, die Summary-Ersetzung und der einzige `summarize()`-Subclass-Hook bleiben unverändert.

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/feature/2026-08-04-task-surface.md
-2026-08-04-task-surface.md: b098dec803943bd2df1c658249c3ff2e68732d01
-2026-08-04-task-surface.zh.md: eafbc70de4e2d649d7af4d0085714f4bf8770bf0
-2026-08-04-task-surface.de.md: 009f70094be5dd37d0d0f7af9a15c5ed031db441
+2026-08-04-task-surface.md: 394ba62665a821f1e95b51b3b954d44f6bef1b64
+2026-08-04-task-surface.zh.md: 073904cc6bd8d28e9bd81188fb0618f09f4af9a7
+2026-08-04-task-surface.de.md: d546b2f82846e6f8cda208635859174696e10ee3

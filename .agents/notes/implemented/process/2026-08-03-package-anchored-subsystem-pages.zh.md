@@ -1,8 +1,8 @@
 # Agent Note: 按包锚定的子系统页面与精简的分组 README
+[English](2026-08-03-package-anchored-subsystem-pages.md) | 中文 | [Deutsch](2026-08-03-package-anchored-subsystem-pages.de.md)
 
 Status: implemented
 
-[English](2026-08-03-package-anchored-subsystem-pages.md) | 中文
 
 ## 问题
 

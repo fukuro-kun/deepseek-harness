@@ -1,8 +1,8 @@
 # Agent Note: 存储根目录落点与派生介质恢复
+[English](2026-07-28-storage-root-and-derived-medium-recovery.md) | 中文 | [Deutsch](2026-07-28-storage-root-and-derived-medium-recovery.de.md)
 
 Status: proposed
 
-[English](2026-07-28-storage-root-and-derived-medium-recovery.md) | 中文 | [Deutsch](2026-07-28-storage-root-and-derived-medium-recovery.de.md)
 
 ## 问题
 

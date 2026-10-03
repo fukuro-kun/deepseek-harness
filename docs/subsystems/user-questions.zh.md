@@ -1,6 +1,6 @@
 # 用户交互
+[English](user-questions.md) | 中文 | [Deutsch](user-questions.de.md)
 
-[English](user-questions.md) | 中文
 
 [dsh-user-questions](../../packages/interaction/user-questions) 的用户交互 seam。它是工具或权限插件需要人类回答后 agent（智能体）才能继续时所使用的、提供方无关的词汇。Agent-scoped waterfall listener 组合可用的 UI 界面，其中包括转发到已连接 client 的 listener。
 
@@ -11,8 +11,6 @@
 `AskUserQuestionOption` 包含一个可供选择的选项。`label` 是面向用户的选项文字，同时也是面向模型的选中值；`description` 是可选的 UI 帮助文本。
 
 ```ts type-equiv
-
-[English](user-questions.md) | 中文 | [Deutsch](user-questions.de.md)
 /** One selectable answer offered to the user. */
 interface AskUserQuestionOption {
   /** User-facing label. */

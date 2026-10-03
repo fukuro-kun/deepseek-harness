@@ -1,6 +1,6 @@
 # API-Gateway
-
 [English](api-gateway.md) | [中文](api-gateway.zh.md) | Deutsch
+
 
 Dies ist die Current-State-Referenz für das Typert API-Gateway. Sie beschreibt, wie Business-Services unäre Remote-Methoden deklarieren, wie der Build Host- und Client-Verträge generiert und wie Aufrufe die Connection-RPC und die `/api`-Route wiederverwenden. Session-Events, inkrementelle Daten und andere Streaming-Protokolle fallen nicht in den Anwendungsbereich dieses Dokuments; sie können dieselbe Connection verwenden, aber keine Remote-Methoden-Deskriptoren.
 

@@ -1,8 +1,8 @@
 # Agent Note: 权威反馈日志与请求投递
+[English](2026-09-05-canonical-feedback-log.md) | 中文 | [Deutsch](2026-09-05-canonical-feedback-log.de.md)
 
 Status: implemented
 
-[English](2026-09-05-canonical-feedback-log.md) | 中文 | [Deutsch](2026-09-05-canonical-feedback-log.de.md)
 
 ## 问题
 

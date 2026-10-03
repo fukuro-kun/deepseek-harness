@@ -1,6 +1,6 @@
 # Defensive Muster
-
 [English](defensive-patterns.md) | [中文](defensive-patterns.zh.md) | Deutsch
+
 
 Hart erarbeitete Regeln für Fehlerklassen: Jedes der folgenden Muster ist eine Klasse von Defekten, die hier tatsächlich ausgeliefert oder beinahe ausgeliefert wurde, formuliert als die Regel, die ihr Wiederauftreten verhindert. Lies dies, bevor du Lebenszyklus-, Nebenläufigkeits-, Unterprozess- oder Teardown-Code schreibst. Die Gegenstücke auf Test-Ebene (echter Einstiegspfad, Welt-Verifikation, Ressourcenverantwortlichkeit) stehen in [testing.md](testing.de.md).
 

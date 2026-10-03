@@ -1,8 +1,8 @@
 # Agent Note: Dynamische Workflows — ein skriptgetriebener Multi-Agent-Orchestrierungs-Seam
+[English](2026-07-05-dynamic-workflows.md) | [中文](2026-07-05-dynamic-workflows.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-05-dynamic-workflows.md) | [中文](2026-07-05-dynamic-workflows.zh.md) | Deutsch
 
 ## Problem
 
@@ -28,7 +28,7 @@ Eine bewusste Strenge-DIVERGENZ von CC: Hook-Missbrauch — unbekannte oder vers
 
 **Warum `node:worker_threads`**: Jeder Run erhält einen ungepoolten Worker. Ein VM-Context begrenzt die dokumentierte Skript-API, während Message-Port-RPC `agent()` zu hostseitigen Child-Loops brückt. Der Worker verhindert, dass synchrone Skriptarbeit den Host blockiert, stellt eine Serialisierungsgrenze bereit und erlaubt erzwungene Termination nach Cancellation. `isolated-vm` wurde wegen seines Wartungszustands und seiner Deployment-Anforderungen abgelehnt.
 
-Der Host validiert Metadaten und parst den Body vor der Veröffentlichung. Private Enum-keyed Payload-Maps definieren das Wire-Protokoll; ausstehende Starts, veröffentlichte Child-Records, ein Cancellation-Signal, Worker-Death-Reaping, Ergebnis-Priorität und Disposal-Quiescence erhalten den Subagent-Run-Vertrag darüber. Die [Agent-Scope-Runtime-Design-Agent-Note](../architecture/2026-07-12-agent-scope-runtime-design.md#workflow-children-are-pending-starts-or-published-records) besitzt diese Race-Algorithmen.
+Der Host validiert Metadaten und parst den Body vor der Veröffentlichung. Private Enum-keyed Payload-Maps definieren das Wire-Protokoll; ausstehende Starts, veröffentlichte Child-Records, ein Cancellation-Signal, Worker-Death-Reaping, Ergebnis-Priorität und Disposal-Quiescence erhalten den Subagent-Run-Vertrag darüber. Die [Agent-Scope-Runtime-Design-Agent-Note](../architecture/2026-07-12-agent-scope-runtime-design.de.md#workflow-children-are-pending-starts-or-published-records) besitzt diese Race-Algorithmen.
 
 Die Engine legt einen In-Process-`MessageChannel`-Testpfad offen, weil Main-Process-V8-Coverage Worker-Ausführung nicht sehen kann.
 
@@ -48,7 +48,7 @@ Für eine Top-Level-Tool-Ausführung schreibt derselbe Consumer auch den Run und
 
 Ein Output-Schema macht einen schema-validen committeten Capture für erfolgreiche Child-Vollendung obligatorisch. Die gescopte Runtime präsentiert Capture-Tool und Anweisung, committet nur ein erfolgreiches finales Outcome — einschließlich des umschließenden `run_code`-Outcome bei einem SDK-Call —, lehnt spätere Seiteneffekte ab, sobald der Capture pending ist, und stoppt das Child ohne weiteren Modellschritt nach dem Commit. Ein Validierungsfehler bleibt ein retrybarer Tool-Fehler; saubere Vollendung ohne committeten Capture rechnet als Fehler ab.
 
-`ObjectJsonSchema` ist die objektwurzelige Consumer-Sicht der vereinheitlichten durchsetzbaren Raw-JSON-Schema-Teilmenge in `dsh-tools`; nicht unterstützte Keywords schlagen laut fehl, weil diese Wire-Daten wörtlich die Parameter des Capture-Tools werden. Die [Unified-JSON-Value-Schema-Agent-Note](../architecture/2026-07-20-unified-json-value-schema-dsl.md) besitzt Vokabular und Validierungssemantik, während die [Agent-Scope-Runtime-Design-Agent-Note](../architecture/2026-07-12-agent-scope-runtime-design.md#structured-output-commits-only-authoritative-outcomes) die Assembly-, Commit-, Guard- und Terminal-Stop-Algorithmen besitzt.
+`ObjectJsonSchema` ist die objektwurzelige Consumer-Sicht der vereinheitlichten durchsetzbaren Raw-JSON-Schema-Teilmenge in `dsh-tools`; nicht unterstützte Keywords schlagen laut fehl, weil diese Wire-Daten wörtlich die Parameter des Capture-Tools werden. Die [Unified-JSON-Value-Schema-Agent-Note](../architecture/2026-07-20-unified-json-value-schema-dsl.de.md) besitzt Vokabular und Validierungssemantik, während die [Agent-Scope-Runtime-Design-Agent-Note](../architecture/2026-07-12-agent-scope-runtime-design.de.md#structured-output-commits-only-authoritative-outcomes) die Assembly-, Commit-, Guard- und Terminal-Stop-Algorithmen besitzt.
 
 ## Testing
 

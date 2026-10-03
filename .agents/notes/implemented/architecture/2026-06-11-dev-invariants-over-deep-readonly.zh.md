@@ -1,8 +1,8 @@
 # Agent Note: 源端拥有的会话不可变性与开发模式不变式
+[English](2026-06-11-dev-invariants-over-deep-readonly.md) | 中文 | [Deutsch](2026-06-11-dev-invariants-over-deep-readonly.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-11-dev-invariants-over-deep-readonly.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-dev-invariants-over-deep-readonly.de.md)
 
 ## 问题
 

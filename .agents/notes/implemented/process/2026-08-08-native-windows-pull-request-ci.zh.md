@@ -1,8 +1,8 @@
 # Agent Note: Wine 与原生 Windows CI
+[English](2026-08-08-native-windows-pull-request-ci.md) | 中文 | [Deutsch](2026-08-08-native-windows-pull-request-ci.de.md)
 
 Status: implemented
 
-[English](2026-08-08-native-windows-pull-request-ci.md) | 中文
 
 ## 问题
 

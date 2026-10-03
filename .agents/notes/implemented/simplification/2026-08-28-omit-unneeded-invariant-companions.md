@@ -1,9 +1,8 @@
 # Agent Note: Omit invariant companions without independent observations
-English | [中文](.agents/notes/implemented/simplification/2026-08-28-omit-unneeded-invariant-companions.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-08-28-omit-unneeded-invariant-companions.de.md)
+English | [中文](2026-08-28-omit-unneeded-invariant-companions.zh.md) | [Deutsch](2026-08-28-omit-unneeded-invariant-companions.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-28-omit-unneeded-invariant-companions.zh.md)
 
 ## Problem
 

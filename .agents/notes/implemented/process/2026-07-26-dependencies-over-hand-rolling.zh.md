@@ -1,8 +1,8 @@
 # Agent Note: 优先选用持续维护的依赖，而非手写实现
+[English](2026-07-26-dependencies-over-hand-rolling.md) | 中文 | [Deutsch](2026-07-26-dependencies-over-hand-rolling.de.md)
 
 Status: implemented
 
-[English](2026-07-26-dependencies-over-hand-rolling.md) | 中文
 
 ## 问题
 

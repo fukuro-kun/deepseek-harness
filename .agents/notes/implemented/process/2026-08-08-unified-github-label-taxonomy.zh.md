@@ -1,8 +1,8 @@
 # Agent Note: 统一 GitHub 标签分类体系
+[English](2026-08-08-unified-github-label-taxonomy.md) | 中文 | [Deutsch](2026-08-08-unified-github-label-taxonomy.de.md)
 
 Status: implemented
 
-[English](2026-08-08-unified-github-label-taxonomy.md) | 中文
 
 ## 问题
 

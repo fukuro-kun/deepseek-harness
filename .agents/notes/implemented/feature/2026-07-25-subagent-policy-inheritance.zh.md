@@ -1,8 +1,8 @@
 # Agent Note: 进程内 subagent 策略继承——子 agent 在父级的沙箱覆盖项下启动
+[English](2026-07-25-subagent-policy-inheritance.md) | 中文 | [Deutsch](2026-07-25-subagent-policy-inheritance.de.md)
 
 Status: implemented
 
-[English](2026-07-25-subagent-policy-inheritance.md) | 中文
 
 ## 问题
 

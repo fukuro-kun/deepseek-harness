@@ -1,8 +1,8 @@
 # Agent Note: Session-History, Control State und Remote-Event-Transport
+[English](2026-08-18-session-history-and-event-transport.md) | [中文](2026-08-18-session-history-and-event-transport.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-18-session-history-and-event-transport.md) | [中文](2026-08-18-session-history-and-event-transport.zh.md) | Deutsch
 
 ## Problem
 
@@ -377,6 +377,6 @@ Die allgemeinen Stream-Objekte fügen drei explizite Schichten hinzu und lösche
 
 Remote-Waterfalls erhalten First Claim über mehrere Clients, Fortsetzung der Host-Kette nachdem jeder Client `next` aufruft, Reconnect-Replay ausstehender Aufrufe und End-to-End-Cancellation. Das aktuelle Protokoll unterstützt nur Top-Level Agent Scope und verlustfreie JSON-Anfragen und -Ergebnisse.
 
-Diese Entscheidung erweitert die Allowlist und das Single-Cordis-Signature-Design aus [Remote event delivery](2026-08-10-remote-event-delivery.md): Gewöhnliche Benachrichtigungen verwenden `emit`, während Agent-scoped Async-Waterfalls dieselbe `ctx.remote.$on`-Fläche mit explizitem `waterfall`-Modus verwenden. Sie erzeugt keine zweite Invocation Map.
+Diese Entscheidung erweitert die Allowlist und das Single-Cordis-Signature-Design aus [Remote event delivery](2026-08-10-remote-event-delivery.de.md): Gewöhnliche Benachrichtigungen verwenden `emit`, während Agent-scoped Async-Waterfalls dieselbe `ctx.remote.$on`-Fläche mit explizitem `waterfall`-Modus verwenden. Sie erzeugt keine zweite Invocation Map.
 
 Diese Entscheidung übernimmt die von [simple unary API Proxy migration](../../archived/architecture/2026-08-10-unary-apiproxy-remote-migration.md) beibehaltenen Session-, Workspace- und Host-Event-Carrier und erhält dabei den vollständigen Jobs-Snapshot, den prozesslokalen Lebenszyklus und die „Beobachtung resumiert keinen Agent"-Semantik, die [background job display](../feature/2026-08-08-web-background-job-display.de.md) verlangt.

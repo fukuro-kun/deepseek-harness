@@ -1,9 +1,8 @@
 # Agent Note: Remote Web Markdown images
-English | [中文](.agents/notes/implemented/feature/2026-07-30-web-remote-markdown-images.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-30-web-remote-markdown-images.de.md)
+English | [中文](2026-07-30-web-remote-markdown-images.zh.md) | [Deutsch](2026-07-30-web-remote-markdown-images.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-30-web-remote-markdown-images.zh.md)
 
 ## Problem
 

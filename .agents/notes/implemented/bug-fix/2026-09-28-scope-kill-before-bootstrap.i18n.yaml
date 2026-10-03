@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-28-scope-kill-before-bootstrap.md
-2026-09-28-scope-kill-before-bootstrap.md: ef251dda9ec637a94045425117bde4cf178331b0
-2026-09-28-scope-kill-before-bootstrap.zh.md: e03ab7b92838a1003aeb1b818a7471d7816326d1
-2026-09-28-scope-kill-before-bootstrap.de.md: f8a8d260947e305107d49572addbc5a935e0d274
+2026-09-28-scope-kill-before-bootstrap.md: 36ba0e5eee3adcb02b36aa1fbec236ec2f70d89a
+2026-09-28-scope-kill-before-bootstrap.zh.md: fdf5aaf65b78c385af7a26f10b19fc55fa332883
+2026-09-28-scope-kill-before-bootstrap.de.md: d4003b619216694adb9f299e32b9ea91ee7db919

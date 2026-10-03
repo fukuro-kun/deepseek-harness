@@ -1,8 +1,8 @@
 # Agent Note: In-Process-subagent-Policy-Vererbung — das Child startet unter dem Sandbox-Override des Parent
+[English](2026-07-25-subagent-policy-inheritance.md) | [中文](2026-07-25-subagent-policy-inheritance.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-25-subagent-policy-inheritance.md) | [中文](2026-07-25-subagent-policy-inheritance.zh.md) | Deutsch
 
 ## Problem
 

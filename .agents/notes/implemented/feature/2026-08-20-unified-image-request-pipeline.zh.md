@@ -1,8 +1,8 @@
 # Agent Note: 统一规范化附件、请求版本与提供方文件
+[English](2026-08-20-unified-image-request-pipeline.md) | 中文 | [Deutsch](2026-08-20-unified-image-request-pipeline.de.md)
 
 Status: implemented
 
-[English](2026-08-20-unified-image-request-pipeline.md) | 中文
 
 ## Problem
 

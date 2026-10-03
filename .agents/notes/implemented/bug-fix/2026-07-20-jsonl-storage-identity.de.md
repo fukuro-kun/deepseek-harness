@@ -1,8 +1,8 @@
 # Agent Note: Bind JSONL session identity before mutation
+[English](2026-07-20-jsonl-storage-identity.md) | [中文](2026-07-20-jsonl-storage-identity.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-20-jsonl-storage-identity.md) | [中文](2026-07-20-jsonl-storage-identity.zh.md) | Deutsch
 
 ## Problem
 

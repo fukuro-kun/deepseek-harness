@@ -1,8 +1,8 @@
 # Agent Note: PowerShell-CI-Abschluss und Profil-Erwartungen
+[English](2026-09-07-pwsh-ci-observable-completion.md) | [中文](2026-09-07-pwsh-ci-observable-completion.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-pwsh-ci-observable-completion.md) | [中文](2026-09-07-pwsh-ci-observable-completion.zh.md) | Deutsch
 
 ## Problem
 

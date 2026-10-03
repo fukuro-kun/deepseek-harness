@@ -1,8 +1,8 @@
 # Agent Note: parent 自有的 subagent 目录事件
+[English](2026-09-01-parent-owned-subagent-catalog.md) | 中文 | [Deutsch](2026-09-01-parent-owned-subagent-catalog.de.md)
 
 Status: implemented
 
-[English](2026-09-01-parent-owned-subagent-catalog.md) | 中文 | [Deutsch](2026-09-01-parent-owned-subagent-catalog.de.md)
 
 ## 问题
 

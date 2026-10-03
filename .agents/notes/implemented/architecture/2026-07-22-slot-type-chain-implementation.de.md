@@ -1,10 +1,10 @@
 # Agent Note: Der Slot-System-Standard — ein einziges register, vier Props-Shares und der Framework-Store-Seat
+[English](2026-07-22-slot-type-chain-implementation.md) | [中文](2026-07-22-slot-type-chain-implementation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-22-slot-type-chain-implementation.md) | [中文](2026-07-22-slot-type-chain-implementation.zh.md) | Deutsch
 
-> Geltungsbereich: das definitive Slot-System-Design für den Web-Client — wie UI-Plugins die Seite komponieren, wo Render-Authority liegt, wie Komponenten-Props typisiert sind und wo Business-Live-Daten leben. Das [Web-Client-Architektur-RFC](2026-07-19-gui-web-client-architecture.md) besitzt den umgebenden Kontext (Ladekette, Objektschicht, Services) und verweist seine Slot-Abschnitte hierher.
+> Geltungsbereich: das definitive Slot-System-Design für den Web-Client — wie UI-Plugins die Seite komponieren, wo Render-Authority liegt, wie Komponenten-Props typisiert sind und wo Business-Live-Daten leben. Das [Web-Client-Architektur-RFC](2026-07-19-gui-web-client-architecture.de.md) besitzt den umgebenden Kontext (Ladekette, Objektschicht, Services) und verweist seine Slot-Abschnitte hierher.
 
 ## Problem
 
@@ -12,7 +12,7 @@ Die Seite wird zur Laufzeit aus unabhängig geladenen Plugins komponiert, daher 
 
 ## Entscheidung
 
-Globale Main-Panel-Auswahl und deren Root-Lifetime definiert die [Global-Main-Panels-Entscheidung](2026-09-08-global-main-panels.md).
+Globale Main-Panel-Auswahl und deren Root-Lifetime definiert die [Global-Main-Panels-Entscheidung](2026-09-08-global-main-panels.de.md).
 
 Ein Satz: **der ui-renderer rendert nur `'root'`; ein Plugin komponiert UI über einen einzigen `register`-Call, der gleichzeitig einen Slot besetzt, seine Child-Slots deklariert+autorisiert, seinen Store deklariert und seine Business-Face injiziert; Komponenten sind pure Funktionen, deren Props in vier Shares ankommen, jeder automatisch aus seiner einzigen Quelle abgeleitet.**
 

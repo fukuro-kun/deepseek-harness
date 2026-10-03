@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-04-busy-send-button-follows-enter-setting.md
-2026-09-04-busy-send-button-follows-enter-setting.md: 0eb5b9130bd03c315e3717182eae422bdb8dc973
-2026-09-04-busy-send-button-follows-enter-setting.zh.md: 7062f60320c4bc56f15f57388e79df9ce0e45c2f
-2026-09-04-busy-send-button-follows-enter-setting.de.md: f876c04eab7bdaa517fef95fcdf22202c0b081d5
+2026-09-04-busy-send-button-follows-enter-setting.md: c31f0bc4741d3b9d47425a0ea750893a0052bf11
+2026-09-04-busy-send-button-follows-enter-setting.zh.md: 3a6c462cbf63fb6495b97f840a61d000982f91c7
+2026-09-04-busy-send-button-follows-enter-setting.de.md: 4288453be1b47798ec69580e56620c853f5c8ec5

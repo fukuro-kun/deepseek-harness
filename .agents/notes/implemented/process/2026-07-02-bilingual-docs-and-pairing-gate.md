@@ -1,9 +1,8 @@
 # Agent Note: Bilingual documentation via paired sibling files and a pairing gate
-English | [中文](.agents/notes/implemented/process/2026-07-02-bilingual-docs-and-pairing-gate.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-02-bilingual-docs-and-pairing-gate.de.md)
+English | [中文](2026-07-02-bilingual-docs-and-pairing-gate.zh.md) | [Deutsch](2026-07-02-bilingual-docs-and-pairing-gate.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-02-bilingual-docs-and-pairing-gate.zh.md)
 
 ## Problem
 

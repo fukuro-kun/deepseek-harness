@@ -1,8 +1,8 @@
 # Agent Note: Minimal-Profile nutzen eine Bare-Runtime
+[English](2026-08-11-minimal-profiles-bare-two-tool-runtime.md) | [中文](2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-11-minimal-profiles-bare-two-tool-runtime.md) | [中文](2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md) | Deutsch
 
 ## Problem
 

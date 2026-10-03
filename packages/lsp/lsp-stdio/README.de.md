@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-lsp-stdio
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -32,18 +32,31 @@ Mounte diesen Provider, wenn ein Deployment lokale Language Server hat — etwa 
 Der `servers`-Record bildet jede stabile Provider-ID auf ein Server-Kommando ab. Der Provider löst jedes Executable beim Laden nach dem Credential-Scrubbing auf, sodass ein schlechter Eintrag jeden Provider an der Registrierung hindert; Prozesse starten lazy bei der ersten passenden Query.
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-fs-local'
+
 - name: '@deepseek-ai/dsh-subprocess-local'
+
 - name: '@deepseek-ai/dsh-lsp'
+
 - name: '@deepseek-ai/dsh-lsp-stdio'
+
   config:
+
     servers:
+
       typescript:
+
         command: typescript-language-server
+
         args: ['--stdio']
+
         extensionToLanguage:
+
           '.ts': typescript
+
 - name: '@deepseek-ai/dsh-tool-lsp'
+
 ```
 
 | Feld | Default | Bedeutung |

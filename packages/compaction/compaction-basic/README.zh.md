@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-compaction-basic
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 本包让长时 agent 会话在接近模型上下文上限时仍能正常工作。token 压力上升时，它会把最旧的历史压缩为摘要并保留近期消息；上下文溢出错误发生后，它会压缩并重试。你也可以通过 `/compact` 按需压缩，并选择先修剪超大工具输出。压缩使用一次额外的模型请求，并且只保留该请求返回的摘要文本。它无法缩减系统提示词、工具或会话前缀，也无法拆分单个不可分单元（例如一次超大工具调用）。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

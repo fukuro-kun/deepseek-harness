@@ -1,8 +1,8 @@
 # Agent Note: Profil-Plugin-Bundles ersetzen die fixierten Oberflächen-Overlays
+[English](2026-08-05-profile-plugin-bundles.md) | [中文](2026-08-05-profile-plugin-bundles.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-05-profile-plugin-bundles.md) | [中文](2026-08-05-profile-plugin-bundles.zh.md) | Deutsch
 
 ## Problem
 

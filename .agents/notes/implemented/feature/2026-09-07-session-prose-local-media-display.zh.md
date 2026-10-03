@@ -1,8 +1,8 @@
 # Agent Note: 会话正文本地媒体路径通过同源文件路由显示
+[English](2026-09-07-session-prose-local-media-display.md) | 中文 | [Deutsch](2026-09-07-session-prose-local-media-display.de.md)
 
 Status: implemented
 
-[English](2026-09-07-session-prose-local-media-display.md) | 中文
 
 ## Problem
 

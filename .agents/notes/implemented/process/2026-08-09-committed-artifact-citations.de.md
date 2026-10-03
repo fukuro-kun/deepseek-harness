@@ -1,8 +1,8 @@
 # Agent Note: Committete Artefakte zitieren, niemals Design-Session-Ordinalzahlen
+[English](2026-08-09-committed-artifact-citations.md) | [中文](2026-08-09-committed-artifact-citations.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-09-committed-artifact-citations.md) | [中文](2026-08-09-committed-artifact-citations.zh.md) | Deutsch
 
 ## Problem
 

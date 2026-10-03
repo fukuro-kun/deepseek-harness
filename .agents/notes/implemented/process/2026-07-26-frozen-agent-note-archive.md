@@ -1,9 +1,8 @@
 # Agent Note: Freeze low-future-value Agent Notes outside the active corpus
-English | [中文](.agents/notes/implemented/process/2026-07-26-frozen-agent-note-archive.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-26-frozen-agent-note-archive.de.md)
+English | [中文](2026-07-26-frozen-agent-note-archive.zh.md) | [Deutsch](2026-07-26-frozen-agent-note-archive.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-26-frozen-agent-note-archive.zh.md)
 
 ## Problem
 

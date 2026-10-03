@@ -1,6 +1,6 @@
 # Typert Remote Calls
-
 [English](typert.md) | [中文](typert.zh.md) | Deutsch
+
 
 Typen, die von generierten Remote-Artefakten, dem Host Gateway und Consumer-API-Assemblies gemeinsam genutzt werden. Die [Typert-Gateway-Agent-Note](../../.agents/notes/implemented/architecture/2026-08-02-typert-remote-method-calls.de.md) ist für die Architektur- und Transportentscheidungen zuständig; diese Seite hält die wörtlichen öffentlichen Verträge aus [`dsh-typert-protocol`](../../packages/typert/protocol/src/types.ts) und [`dsh-api-gateway`](../../packages/api/gateway/src/types.ts) fest.
 

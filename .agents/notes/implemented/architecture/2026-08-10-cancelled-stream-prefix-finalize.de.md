@@ -1,8 +1,8 @@
 # Agent Note: Abgebrochene Streams finalisieren ihr ausgeliefertes Präfix
+[English](2026-08-10-cancelled-stream-prefix-finalize.md) | [中文](2026-08-10-cancelled-stream-prefix-finalize.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-cancelled-stream-prefix-finalize.md) | [中文](2026-08-10-cancelled-stream-prefix-finalize.zh.md) | Deutsch
 
 ## Problem
 

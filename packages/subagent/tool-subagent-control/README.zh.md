@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-subagent-control
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-tool-subagent-control` 为可继续子级添加全局控制工具：`send_message` 在直接 parent 与 child 之间 steer，`interrupt_agent` 停止 child 当前轮次但保留其 inbox 与后代，`list_agents`（来自可单独加载的 `list-agents` 插件）按持久化 id 与标签列出可继续 child。parent 与可继续 child 继承相同的 `send_message` 定义和顺序，因此模型通信不会增加 child 专属工具 schema。是否加载这些工具不会决定委派工具是否启动可继续工作。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

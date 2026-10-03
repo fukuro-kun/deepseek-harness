@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-05-prompt-variables-and-tool-guidance-ownership.md
-2026-07-05-prompt-variables-and-tool-guidance-ownership.md: 148744fb6557576679c7515aa1854f7f46dc9f64
-2026-07-05-prompt-variables-and-tool-guidance-ownership.zh.md: 0f92e810f30112e76a732433d24f1f3c749c08fd
-2026-07-05-prompt-variables-and-tool-guidance-ownership.de.md: 69f88ea1c688a5db12c09f1b8f49571b84f3eafc
+2026-07-05-prompt-variables-and-tool-guidance-ownership.md: 004ec95b991363d30402daf9f4d0ea0fdca9d3f3
+2026-07-05-prompt-variables-and-tool-guidance-ownership.zh.md: cf9e24278c5a2d62c8f86d1fbf55c7fa5f981606
+2026-07-05-prompt-variables-and-tool-guidance-ownership.de.md: 35f70b886b16491a6fca64b4a2ccac8facf8c516

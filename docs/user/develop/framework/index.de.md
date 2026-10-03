@@ -1,6 +1,6 @@
 # Plugins und Lebenszyklus
-
 [English](index.md) | [中文](index.zh.md) | Deutsch
+
 
 Diese Seite beschreibt das Cordis-Plugin-Modell und die Lebenszyklus-Zustandsmaschine.
 

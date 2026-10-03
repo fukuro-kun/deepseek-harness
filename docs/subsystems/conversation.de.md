@@ -1,6 +1,6 @@
 # Conversation-Assembly
-
 [English](conversation.md) | [中文](conversation.zh.md) | Deutsch
+
 
 Conversation ist der target-neutrale Assembly-Layer zwischen einem Client-`SessionEventLikeEntry`-Fenster und Browser-Views. [`ui-conversation`](../../packages/client/ui-conversation/README.de.md) besitzt die Event- und View-Registries, ein identity-stabiles Binding pro `SessionBinding`, Turn/Step-Locations, inkrementelle Context-Assembly, Target-Sources, die geteilte Shell und die Input-Orchestrierung. Target-Pakete wie [`ui-chat`](../../packages/client/ui-chat/README.de.md) und [`ui-trajectory`](../../packages/client/ui-trajectory/README.de.md) besitzen ihre Definitions, finalen Snapshots und das Rendering.
 

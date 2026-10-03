@@ -3,7 +3,6 @@ English | [中文](2026-09-09-workspace-file-read-authority.zh.md) | [Deutsch](2
 
 Status: implemented
 
-English | [中文](2026-09-09-workspace-file-read-authority.zh.md)
 
 ## Problem
 

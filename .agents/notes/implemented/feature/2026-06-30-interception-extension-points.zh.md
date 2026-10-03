@@ -1,8 +1,8 @@
 # Agent Note: 拦截扩展点——钩子编程所面对的类型化 Decision 接口
+[English](2026-06-30-interception-extension-points.md) | 中文 | [Deutsch](2026-06-30-interception-extension-points.de.md)
 
 Status: implemented
 
-[English](2026-06-30-interception-extension-points.md) | 中文
 
 ## 问题
 

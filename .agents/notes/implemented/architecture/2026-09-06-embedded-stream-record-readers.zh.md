@@ -1,8 +1,8 @@
 # Agent Note: 内嵌 Assistant 流的消费方直接读取紧凑记录
+[English](2026-09-06-embedded-stream-record-readers.md) | 中文 | [Deutsch](2026-09-06-embedded-stream-record-readers.de.md)
 
 Status: implemented
 
-[English](2026-09-06-embedded-stream-record-readers.md) | 中文 | [Deutsch](2026-09-06-embedded-stream-record-readers.de.md)
 
 ## 问题
 

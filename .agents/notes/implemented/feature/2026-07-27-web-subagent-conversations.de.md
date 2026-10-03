@@ -1,8 +1,8 @@
 # Agent Note: Web-subagent-Katalog und menschliche Fortsetzung
+[English](2026-07-27-web-subagent-conversations.md) | [中文](2026-07-27-web-subagent-conversations.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-27-web-subagent-conversations.md) | [中文](2026-07-27-web-subagent-conversations.zh.md) | Deutsch
 
 ## Problem
 

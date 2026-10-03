@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/compaction/command-compact/README.md
-README.md: 3a19c737961be45b7f5de20e9bb3297ea960faaf
-README.zh.md: 4a146cb15367d23a08d9203257f4d9e7cb2ca847
-README.de.md: 3cab7906c52adfb823621fca53fabd2ae57da176
+README.md: 8130111b7be4d692f6ced316941c24c248a487ac
+README.zh.md: dc491c5bd228d992e011c08bb861184b4184ea57
+README.de.md: 42604a8542394fec8c2bee51e2ea19133a496b0d

@@ -1,6 +1,6 @@
 # 1. Dein erstes Plugin
-
 [English](01-first-plugin.md) | [中文](01-first-plugin.zh.md) | Deutsch
+
 
 In der in diesem Tutorial verwendeten Loader-Konfiguration exportiert ein Cordis-Plugin-Modul eine `apply`-Funktion als benannten Export. Wenn Cordis das Modul lädt, ruft es `apply` mit einem **Context** auf — dem `ctx`-Objekt, über das das Plugin alles registriert, was es beisteuert.
 

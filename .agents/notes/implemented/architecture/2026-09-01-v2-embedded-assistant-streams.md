@@ -3,7 +3,6 @@ English | [中文](2026-09-01-v2-embedded-assistant-streams.zh.md) | [Deutsch](2
 
 Status: implemented
 
-English | [中文](2026-09-01-v2-embedded-assistant-streams.zh.md)
 
 ## Problem
 

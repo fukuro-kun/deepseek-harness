@@ -1,8 +1,8 @@
 # Agent Note: Kooperative Tool-Cancellation an der Registry-Grenze
+[English](2026-07-19-cooperative-tool-cancellation.md) | [中文](2026-07-19-cooperative-tool-cancellation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-19-cooperative-tool-cancellation.md) | [中文](2026-07-19-cooperative-tool-cancellation.zh.md) | Deutsch
 
 ## Problem
 

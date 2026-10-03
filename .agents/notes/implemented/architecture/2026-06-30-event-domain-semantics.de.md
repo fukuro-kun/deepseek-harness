@@ -1,8 +1,8 @@
 # Agent Note: Event-Domain-Semantik — session ist das Fakten-Log, agent ist der Live-Event-Kanal
+[English](2026-06-30-event-domain-semantics.md) | [中文](2026-06-30-event-domain-semantics.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-30-event-domain-semantics.md) | [中文](2026-06-30-event-domain-semantics.zh.md) | Deutsch
 
 ## Problem
 

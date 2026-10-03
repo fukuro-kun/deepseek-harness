@@ -1,8 +1,8 @@
 # Agent Note: ACP als Automation-only-Protokoll
+[English](2026-07-23-acp-automation-only-protocol.md) | [中文](2026-07-23-acp-automation-only-protocol.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-23-acp-automation-only-protocol.md) | [中文](2026-07-23-acp-automation-only-protocol.zh.md) | Deutsch
 
 > Die Automation-only-Grenze bleibt aktuell. [Standard ACP v1 automation controls](../feature/2026-08-22-standard-acp-automation-controls.de.md) supersedet nur das Prompt-only-Methoden-, Konfigurations-, MCP-, Update- und Lifecycle-Inventar dieser Note; sie stellt ACP nicht als UI wieder her.
 

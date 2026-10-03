@@ -3,8 +3,8 @@ description: "渲染 Session 对话节点、历史图片、操作、本地化和
 kind: "package-reference"
 ---
 # @deepseek-ai/dsh-client-ui-chat
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
@@ -12,7 +12,6 @@ kind: "package-reference"
 
 文件引用提供方同时接收当前查看的 Session ID 与收尾 turn 的属主信息，因此继承历史中的链接可以指向 fork 自身。
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 目录
 

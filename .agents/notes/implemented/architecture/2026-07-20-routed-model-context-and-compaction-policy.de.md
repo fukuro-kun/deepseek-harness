@@ -1,8 +1,8 @@
 # Agent Note: Gerouteter Model-Kontext und Compaction-Policy
+[English](2026-07-20-routed-model-context-and-compaction-policy.md) | [中文](2026-07-20-routed-model-context-and-compaction-policy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-20-routed-model-context-and-compaction-policy.md) | [中文](2026-07-20-routed-model-context-and-compaction-policy.zh.md) | Deutsch
 
 ## Problem
 

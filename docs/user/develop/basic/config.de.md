@@ -1,6 +1,6 @@
 # Plugin-Konfiguration
-
 [English](config.md) | [中文](config.zh.md) | Deutsch
+
 
 Konfiguration akzeptieren, die über `cordis.yml` übergeben wird.
 

@@ -1,8 +1,8 @@
 # Agent Note: 让 JSON-RPC 完成结果与传输方向单一化
+[English](2026-07-19-make-jsonrpc-directional.md) | 中文 | [Deutsch](2026-07-19-make-jsonrpc-directional.de.md)
 
 Status: rejected — session/prompt became an enqueue receipt without status (2026-07-30-followup-enqueue-and-owned-runs); transport narrowing may be re-proposed alone
 
-[English](2026-07-19-make-jsonrpc-directional.md) | 中文
 
 ## 问题
 

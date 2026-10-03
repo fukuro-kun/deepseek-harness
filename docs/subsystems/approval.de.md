@@ -1,6 +1,6 @@
 # User Approval
-
 [English](approval.md) | [中文](approval.zh.md) | Deutsch
+
 
 Der User-Approval-seam von [dsh-user-approval](../../packages/interaction/user-approval) beantwortet eine Frage: Darf diese konkrete Aktion fortfahren? Er besitzt das geteilte Request/Outcome-Vokabular, den `ctx.approval`-Dispatch-Service, den `approval/request`-Answerer-waterfall, das nur geloggte Audit-Paar und die per-session `ask`/`never`-Policy. UI-Channels können menschliche Answerer bereitstellen; die [ACP-Automation-Bridge](../../packages/acp/acp) liefert One-shot-Maschinenentscheidungen für ihre eigenen Agents. Caller wie [dsh-tools](../../packages/core/tools) und [dsh-tool-bash](../../packages/shell/tool-bash) konsumieren das geschlossene Outcome und schlagen fehl-closed fehl, sofern es nicht `allowed-once` ist.
 

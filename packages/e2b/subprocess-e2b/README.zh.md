@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-subprocess-e2b
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-subprocess-e2b` 让 agent（智能体）的 shell 命令与交互式终端在 E2B 远程沙箱而非宿主中运行。现有的命令、终端与语言服务器工作流无需 E2B 专用工具即可继续使用。宿主环境变量与密钥不会传入沙箱；只有显式请求的环境条目会进入沙箱。请与 `dsh-e2b`、`dsh-fs-e2b` 一起使用，让命令、终端与文件共享同一个沙箱。远程执行会增加延迟，因为每条命令都需要异步初始化。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

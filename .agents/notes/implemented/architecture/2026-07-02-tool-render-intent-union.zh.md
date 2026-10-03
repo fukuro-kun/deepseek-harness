@@ -1,8 +1,8 @@
 # Agent Note: 用于工具调用展示的带标签 render-intent 联合类型
+[English](2026-07-02-tool-render-intent-union.md) | 中文 | [Deutsch](2026-07-02-tool-render-intent-union.de.md)
 
 Status: implemented
 
-[English](2026-07-02-tool-render-intent-union.md) | 中文 | [Deutsch](2026-07-02-tool-render-intent-union.de.md)
 
 > render-intent 联合类型对 UI 传输层仍然有效；其 ACP（Agent Client Protocol）映射已被 [ACP 作为仅面向自动化的协议](../simplification/2026-07-23-acp-automation-only-protocol.zh.md)取代。
 

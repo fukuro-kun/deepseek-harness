@@ -1,8 +1,8 @@
 # Agent Note: 用户 patch 事务控制文件系统事件投递
+[English](2026-09-09-user-patch-hmr-test-delivery.md) | 中文 | [Deutsch](2026-09-09-user-patch-hmr-test-delivery.de.md)
 
 Status: implemented
 
-[English](2026-09-09-user-patch-hmr-test-delivery.md) | 中文
 
 ## 问题
 

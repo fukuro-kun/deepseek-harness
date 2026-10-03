@@ -1,8 +1,8 @@
 # Agent Note: 隔离无法读取的历史附件
+[English](2026-08-20-attachment-read-quarantine.md) | 中文 | [Deutsch](2026-08-20-attachment-read-quarantine.de.md)
 
 Status: proposed
 
-[English](2026-08-20-attachment-read-quarantine.md) | 中文 | [Deutsch](.agents/notes/proposed/bug-fix/2026-08-20-attachment-read-quarantine.de.md)
 
 ## 问题
 

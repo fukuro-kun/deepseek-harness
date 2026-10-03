@@ -1,8 +1,8 @@
 # Agent Note: Produzent-deklarierte Kontextformen
+[English](2026-08-05-context-form-vocabulary.md) | [中文](2026-08-05-context-form-vocabulary.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-05-context-form-vocabulary.md) | [中文](2026-08-05-context-form-vocabulary.zh.md) | Deutsch
 
 ## Problem
 

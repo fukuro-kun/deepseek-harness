@@ -1,8 +1,8 @@
 # Agent Note: 跨平台串行 CI 参考流程
+[English](2026-07-21-serial-cross-platform-ci-reference.md) | 中文 | [Deutsch](2026-07-21-serial-cross-platform-ci-reference.de.md)
 
 Status: implemented
 
-[English](2026-07-21-serial-cross-platform-ci-reference.md) | 中文
 
 ## 问题
 

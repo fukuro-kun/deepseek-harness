@@ -1,8 +1,8 @@
 # Agent Note: ACP-Snapshot-Tests — record-once / replay-deterministic
+[English](2026-06-19-acp-snapshot-tests.md) | [中文](2026-06-19-acp-snapshot-tests.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-19-acp-snapshot-tests.md) | [中文](2026-06-19-acp-snapshot-tests.zh.md) | Deutsch
 
 ## Problem
 

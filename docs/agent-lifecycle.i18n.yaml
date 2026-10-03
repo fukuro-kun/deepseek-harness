@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/agent-lifecycle.md
-agent-lifecycle.md: 24926a442e11d1eb8766033ecde277b8418dc724
-agent-lifecycle.zh.md: ab23acc815148f15d7e460f96d30b3ec4af7168f
-agent-lifecycle.de.md: 0e6ac12456314600bb35826618a83b7033550396
+agent-lifecycle.md: a6554dc6e83d2dc3d36c8550f9cd23fe09e612d1
+agent-lifecycle.zh.md: 87bc80b6d7061ac52c4099796ce0b5d34188bc9a
+agent-lifecycle.de.md: 0d2a164c96f355bf8cd9c077d083a6f8217a1314

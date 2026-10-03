@@ -1,8 +1,8 @@
 # Agent Note: 自托管 Linux 上隔离的 Node 兼容性作业
+[English](2026-09-06-node-compatibility-selfhosted.md) | 中文 | [Deutsch](2026-09-06-node-compatibility-selfhosted.de.md)
 
 Status: implemented
 
-[English](2026-09-06-node-compatibility-selfhosted.md) | 中文
 
 ## 问题
 

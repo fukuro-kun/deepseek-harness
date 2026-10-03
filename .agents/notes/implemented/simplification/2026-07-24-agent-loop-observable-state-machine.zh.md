@@ -1,8 +1,8 @@
 # Agent Note: 围绕可观察状态机收拢 agent loop 事件
+[English](2026-07-24-agent-loop-observable-state-machine.md) | 中文 | [Deutsch](2026-07-24-agent-loop-observable-state-machine.de.md)
 
 Status: implemented
 
-[English](2026-07-24-agent-loop-observable-state-machine.md) | 中文
 
 ## 问题
 

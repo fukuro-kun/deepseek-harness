@@ -1,9 +1,8 @@
 # Agent Note: Remove Knip from repository gates
-English | [中文](.agents/notes/implemented/process/2026-08-19-remove-knip.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-19-remove-knip.de.md)
+English | [中文](2026-08-19-remove-knip.zh.md) | [Deutsch](2026-08-19-remove-knip.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-19-remove-knip.zh.md)
 
 ## Problem
 

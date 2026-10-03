@@ -1,8 +1,8 @@
 # Agent Note: Implizites Batching aus gewöhnlichen Sends entfernen
+[English](2026-07-17-one-send-one-turn.md) | [中文](2026-07-17-one-send-one-turn.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-17-one-send-one-turn.md) | [中文](2026-07-17-one-send-one-turn.zh.md) | Deutsch
 
 ## Problem
 
@@ -16,7 +16,7 @@ Diese Gruppierung ändert Verhalten, nicht nur die Zahl der Modell-Calls. Ein ge
 
 Jeder erfolgreiche `send()` erzeugt ein unabhängiges FIFO-Queue-Item. Wenn dieses Item läuft, ist es die einzige gewöhnliche Message in seinem Turn. Ein Item kann vor seinem Start gedroppt werden, sodass die präzise Garantie höchstens ein Turn statt exakt einem ist; zwei Sends werden nie still kombiniert.
 
-Vor dem Insert einer Message prüft `send()` den Agent-State und akzeptiert einen bereits identifizierten, deep-gefrozene Wert. Der durable Splice und `agent/inbox/inserted { message }` behalten seine `MessageId`; die pending Message bleibt über `Inbox.replace()` und `Inbox.remove()` adressierbar, bis der Driver sie claimt oder discarded. Die [Claimed-Pre-Step-Inbox-Entscheidung](../architecture/2026-07-31-claimed-pre-step-inbox-lifecycle.md) besitzt den aktuellen Lifecycle.
+Vor dem Insert einer Message prüft `send()` den Agent-State und akzeptiert einen bereits identifizierten, deep-gefrozene Wert. Der durable Splice und `agent/inbox/inserted { message }` behalten seine `MessageId`; die pending Message bleibt über `Inbox.replace()` und `Inbox.remove()` adressierbar, bis der Driver sie claimt oder discarded. Die [Claimed-Pre-Step-Inbox-Entscheidung](../architecture/2026-07-31-claimed-pre-step-inbox-lifecycle.de.md) besitzt den aktuellen Lifecycle.
 
 Wenn die Messages A und B beide verarbeitet werden, beginnt B's Turn erst, nachdem A `turn/end` aufgezeichnet hat und A's Durability-Checkpoint settled. B's Request sieht daher das geschlossene Ergebnis, das A im selben Session-Log hinterlassen hat. Ein Checkpoint-Error wird gemeldet, aber Settlement löst nur diese Ordering-Barriere; es macht einen fehlgeschlagenen Write nicht durable. Breites `cancel()`, Disposal oder ein Fehler vor `turn/start` können stattdessen ein ungestartetes Item discarden, ohne einen leeren Turn zu öffnen.
 

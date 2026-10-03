@@ -1,8 +1,8 @@
 # Agent Note: Microkernel — Extension über die Cordis-Event-taxonomy, ein konkreter loop
+[English](2026-06-11-microkernel-event-taxonomy.md) | [中文](2026-06-11-microkernel-event-taxonomy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-11-microkernel-event-taxonomy.md) | [中文](2026-06-11-microkernel-event-taxonomy.zh.md) | Deutsch
 
 ## Problem
 

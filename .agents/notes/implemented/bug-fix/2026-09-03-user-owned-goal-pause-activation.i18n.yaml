@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-03-user-owned-goal-pause-activation.md
-2026-09-03-user-owned-goal-pause-activation.md: 97439ae9388546278494d40f7c72765ae9a28261
-2026-09-03-user-owned-goal-pause-activation.zh.md: 675d61009f0a7d0f98c8f6d7568466d6651f2a42
-2026-09-03-user-owned-goal-pause-activation.de.md: b6339d7656608464ed47fb901a7dd0cf326cb998
+2026-09-03-user-owned-goal-pause-activation.md: c95b9f3add1287a321c39c9aa194fe20051c01b2
+2026-09-03-user-owned-goal-pause-activation.zh.md: c49e6d450ecb6e3e8693df66c1a6264a35f30618
+2026-09-03-user-owned-goal-pause-activation.de.md: de5fd2f5a2c60a75fd3e8c05b1e2b97d00340d7b

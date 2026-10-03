@@ -1,8 +1,8 @@
 # Agent Note: 由 dsh-llm 拥有的提供方无关内容块词汇
+[English](2026-06-11-content-block-vocabulary.md) | 中文 | [Deutsch](2026-06-11-content-block-vocabulary.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-11-content-block-vocabulary.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-content-block-vocabulary.de.md)
 
 ## 问题
 

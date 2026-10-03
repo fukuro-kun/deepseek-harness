@@ -1,8 +1,8 @@
 # Agent Note: Portable Consumer über Filesystem- und Subprocess-Execution-Worlds
+[English](2026-07-28-portable-execution-world-consumers.md) | [中文](2026-07-28-portable-execution-world-consumers.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-28-portable-execution-world-consumers.md) | [中文](2026-07-28-portable-execution-world-consumers.zh.md) | Deutsch
 
 ## Problem
 
@@ -18,7 +18,7 @@ Gewöhnliche Pipes decken eine Anforderung nicht ab. Ein persistentes Terminal b
 
 Das Filesystem-Interface besitzt die Path-Fakten, die eine andere Capability braucht, ohne seine opaque Target-Identität zu exposen: einen kanonischen Process-Path, eine kanonische `file:`-URI und Containment. Bestehende Whole- und Streaming-Text-Operationen bleiben im Besitz des Filesystems; Protocol-Consumer erzwingen ihre eigenen Retention-Limits während sie den Stream konsumieren.
 
-Das Subprocess-Interface besitzt Executable-Lookup und Prozess-Primitive: gewöhnliches raw oder collected Process-Spawning und `spawnTerminal()`. Ein gewöhnlicher Handle hält die Target-Identität privat: `.done` berichtet das direkte Target, während `terminate()` und `waitForExit()` denselben Provider-verwalteten Bereich kontrollieren und beobachten. Die [Native-Containment-Entscheidung](2026-08-28-subprocess-native-containment.md) besitzt lokale Linux-Scopes, Windows Jobs und deren offengelegte Fallbacks. Die Terminal-Operation ist ein tiefes Primitiv, dessen Handle Text-I/O, Foreground-Groups, Signalisierung und eine awaited TERM-to-KILL-Operation besitzt, die in-flight Handle-Calls settlet und für jedes Mitglied ihres Provider-eigenen Bereichs Quiescence erreicht; ein observationeller Fallback begrenzt diesen Bereich auf Identitäten, die er noch beobachten kann. Sein Signal cancelled nur die Allocation; der publizierte Handle besitzt seine Lebensdauer. Prompt-Detection, Idle-Inference, Scrollback, Sandbox-Policy und Owner-Lifecycle bleiben im PTY-Consumer.
+Das Subprocess-Interface besitzt Executable-Lookup und Prozess-Primitive: gewöhnliches raw oder collected Process-Spawning und `spawnTerminal()`. Ein gewöhnlicher Handle hält die Target-Identität privat: `.done` berichtet das direkte Target, während `terminate()` und `waitForExit()` denselben Provider-verwalteten Bereich kontrollieren und beobachten. Die [Native-Containment-Entscheidung](2026-08-28-subprocess-native-containment.de.md) besitzt lokale Linux-Scopes, Windows Jobs und deren offengelegte Fallbacks. Die Terminal-Operation ist ein tiefes Primitiv, dessen Handle Text-I/O, Foreground-Groups, Signalisierung und eine awaited TERM-to-KILL-Operation besitzt, die in-flight Handle-Calls settlet und für jedes Mitglied ihres Provider-eigenen Bereichs Quiescence erreicht; ein observationeller Fallback begrenzt diesen Bereich auf Identitäten, die er noch beobachten kann. Sein Signal cancelled nur die Allocation; der publizierte Handle besitzt seine Lebensdauer. Prompt-Detection, Idle-Inference, Scrollback, Sandbox-Policy und Owner-Lifecycle bleiben im PTY-Consumer.
 
 Generische Consumer nutzen diese Execution World:
 

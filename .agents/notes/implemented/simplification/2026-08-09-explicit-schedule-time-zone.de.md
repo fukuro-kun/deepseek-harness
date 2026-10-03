@@ -1,8 +1,8 @@
 # Agent Note: Explizite Schedule-Time-Zone-Grenze
+[English](2026-08-09-explicit-schedule-time-zone.md) | [中文](2026-08-09-explicit-schedule-time-zone.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-09-explicit-schedule-time-zone.md) | [中文](2026-08-09-explicit-schedule-time-zone.zh.md) | Deutsch
 
 ## Problem
 

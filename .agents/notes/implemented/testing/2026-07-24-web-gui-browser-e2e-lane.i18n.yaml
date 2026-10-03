@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-07-24-web-gui-browser-e2e-lane.md
-2026-07-24-web-gui-browser-e2e-lane.md: dbf22457ca0573ed2ae7d1cf5bbb0ca0ba134ce8
-2026-07-24-web-gui-browser-e2e-lane.zh.md: 3a7e5ea5547cf5584a2ad3f61b90c91326379de5
-2026-07-24-web-gui-browser-e2e-lane.de.md: 93f205f836d4c254d8effc56fbfd6658623802cf
+2026-07-24-web-gui-browser-e2e-lane.md: 4d1c4f94f84102011041f65622d87199944f3cf6
+2026-07-24-web-gui-browser-e2e-lane.zh.md: 550a06b5e8121540d78bcfbbde2d31419fe25dae
+2026-07-24-web-gui-browser-e2e-lane.de.md: c9305191d2c16cfd7f6f38d714cb868f02eb342b

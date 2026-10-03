@@ -1,8 +1,8 @@
 # Agent Note: Periodische Human-Review-Wartung für dsh-code-review
+[English](2026-07-13-human-review-skill-maintenance.md) | [中文](2026-07-13-human-review-skill-maintenance.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-13-human-review-skill-maintenance.md) | [中文](2026-07-13-human-review-skill-maintenance.zh.md) | Deutsch
 
 ## Problem
 
@@ -52,7 +52,7 @@ Der Promote-Helper startet von einer sauberen Checkout auf aktuellem `origin/mas
 
 ### Standort des Mechanismus
 
-Der Tool-Quellcode, die Adapter-Binaries, die Provider-Credentials und der vorgesehene tägliche Scheduler werden privat auf der Maschine des Warters aufbewahrt, statt in diesem Repository eingecheckt zu sein. Dieses Dokument speifiziert das Protokoll; die Referenzimplementierung ist private Infrastruktur. Der Mechanismus dient einem einzigen Skill, der von einem einzelnen Betreiber gewartet wird, daher übersteigt die laufende Kosten der Prüfung von Mechanismus-Änderungen durch Repository-Review den Nutzen, das Tool und seine Geschichte einzuchecken. Wenn der Mechanismus jemals einem zweiten Warten übergeben wird, ist diese Übergabe eine Folge-Agent-Note, die diese Entscheidung revidiert — das Betreiber-Dokument unter [docs/cookbook/maintaining-dsh-code-review.md](../../../../docs/cookbook/maintaining-dsh-code-review.md) ist der Einstiegspunkt für jeden Übernehmenden.
+Der Tool-Quellcode, die Adapter-Binaries, die Provider-Credentials und der vorgesehene tägliche Scheduler werden privat auf der Maschine des Warters aufbewahrt, statt in diesem Repository eingecheckt zu sein. Dieses Dokument speifiziert das Protokoll; die Referenzimplementierung ist private Infrastruktur. Der Mechanismus dient einem einzigen Skill, der von einem einzelnen Betreiber gewartet wird, daher übersteigt die laufende Kosten der Prüfung von Mechanismus-Änderungen durch Repository-Review den Nutzen, das Tool und seine Geschichte einzuchecken. Wenn der Mechanismus jemals einem zweiten Warten übergeben wird, ist diese Übergabe eine Folge-Agent-Note, die diese Entscheidung revidiert — das Betreiber-Dokument unter [docs/cookbook/maintaining-dsh-code-review.md](../../../../docs/cookbook/maintaining-dsh-code-review.de.md) ist der Einstiegspunkt für jeden Übernehmenden.
 
 ## In Erwägung gezogene Alternativen
 

@@ -1,12 +1,12 @@
 # Agent Note: Nur loop-bewiesene Message-Freezes wiederverwenden
+[English](2026-09-06-agent-request-freeze-provenance.md) | [中文](2026-09-06-agent-request-freeze-provenance.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-agent-request-freeze-provenance.md) | [中文](2026-09-06-agent-request-freeze-provenance.zh.md) | Deutsch
 
 ## Problem
 
-Lange Tool-Konversationen traversieren beim Request-Bau wiederholt die immutable History. Die [Backend-Continuation-Baseline](../testing/2026-09-06-backend-continuation-performance.md) attribuiert 132,876 ms gesampelte CPU-Self-Time auf `buildRequest`s `deepFreeze` während einer 211,300-ms-Request-History-Operation. Alle frozen Roots zu überspringen ist unsicher: Restore übernimmt unabhängig besessene Graphen, ohne sie zu freezen, und eine shallow-gefrozene Message kann noch mutable Content enthalten.
+Lange Tool-Konversationen traversieren beim Request-Bau wiederholt die immutable History. Die [Backend-Continuation-Baseline](../testing/2026-09-06-backend-continuation-performance.de.md) attribuiert 132,876 ms gesampelte CPU-Self-Time auf `buildRequest`s `deepFreeze` während einer 211,300-ms-Request-History-Operation. Alle frozen Roots zu überspringen ist unsicher: Restore übernimmt unabhängig besessene Graphen, ohne sie zu freezen, und eine shallow-gefrozene Message kann noch mutable Content enthalten.
 
 ## Entscheidung
 
@@ -14,7 +14,7 @@ Jeder `ReactLoopAgent` besitzt ein privates WeakSet<Message>, das nur Identität
 
 Der Loop deep-friert den kleinen lokalen canonical Header bei jedem Request. `canonicalHeader` teilt geschachtelte Werte, und `Session.append` friert einen separaten Snapshot: Keine der beiden Operationen beweist die lokalen Tools oder das Stop-Array eines `NO_ADAPTER`-Fallbacks als immutable. Der Loop friert separat sein frisches Messages-Array und den Request-Envelope, behält `markAgentLoopRequest` und lässt das live `AbortSignal` mutable. Restored-Message-Identität und die Mutabilität der enthaltenden Event-Wrapper bleiben unverändert.
 
-Dies spezialisiert den Request-Bau, nicht das Session-Ownership oder das allgemeine `deepFreeze`-Verhalten. `Session.deriveMessages` und `fromRestore` bleiben unverändert. LLM-File-, Image- und Replay-Projektionen behalten ihre eigenen Freezes, weil ihre neu erzeugten Werte keinen loop-lokalen Beweis haben. Die [Reconstructable-Request-Entscheidung](../architecture/2026-07-05-reconstructable-requests.md) bleibt weiterhin Owner der beobachtbaren Immutabilität und der geloggten Request-Rekonstruktion.
+Dies spezialisiert den Request-Bau, nicht das Session-Ownership oder das allgemeine `deepFreeze`-Verhalten. `Session.deriveMessages` und `fromRestore` bleiben unverändert. LLM-File-, Image- und Replay-Projektionen behalten ihre eigenen Freezes, weil ihre neu erzeugten Werte keinen loop-lokalen Beweis haben. Die [Reconstructable-Request-Entscheidung](../architecture/2026-07-05-reconstructable-requests.de.md) bleibt weiterhin Owner der beobachtbaren Immutabilität und der geloggten Request-Rekonstruktion.
 
 ## Messbelege
 

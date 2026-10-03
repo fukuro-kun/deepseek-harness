@@ -1,6 +1,6 @@
 # Cookbook: Hinzufügen eines vendorten Pakets
-
 [English](adding-a-vendored-package.md) | [中文](adding-a-vendored-package.zh.md) | Deutsch
+
 
 Wenn der Harness ein weiteres Upstream-Cordis-Paket benötigt (z. B. `@cordisjs/plugin-http`), wird es als gepinnter Source unter `vendor/` **vendort**, nicht als NPM-Dependency hinzugefügt. [vendor/README.md](../../vendor/README.md) begründet das und behandelt das *Aktualisieren* eines bereits vendorten Pakets; dieser Guide ist die Datei-für-Datei-Checkliste für das Hinzufügen eines **neuen**. (Validiert gegen den bestehenden vendorten Set; bei Abweichung hier korrigieren.)
 

@@ -3,7 +3,6 @@ English | [中文](2026-07-31-claimed-pre-step-inbox-lifecycle.zh.md) | [Deutsch
 
 Status: implemented
 
-English | [中文](2026-07-31-claimed-pre-step-inbox-lifecycle.zh.md)
 
 ## Problem
 

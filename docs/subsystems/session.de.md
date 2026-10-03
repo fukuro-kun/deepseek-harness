@@ -1,6 +1,6 @@
 # Sessions
-
 [English](session.md) | [中文](session.zh.md) | Deutsch
+
 
 Das in-memory, ereignisgesteuerte Modell von [dsh-session](../../packages/core/session). Eine `Session` ist ein **append-only-Log** typisierter `SessionEvent`s — die einzige Quelle der Wahrheit für die gesamte Interaktionshistorie eines Agents. Der LLM-Nachverlauf wird *abgeleitet* aus dem Log, nie separat gespeichert; Replay ist die erneute Ableitung aus denselben Ereignissen. Wie das Log **dauerhaft** gemacht wird (die Persistence-Seam, Backends, Crash-Wiederherstellung) ist das Schwestenthema auf [persistence.md](persistence.de.md).
 
@@ -165,7 +165,7 @@ interface SessionEventMap {
 
 ### The request header event: `request/header`
 
-Die Request-Envelope — der `EpochHeader` (Aufrufkonfiguration + Marker für Adapter-Vorgaben + assemblierte Tool-Schemata) — ist protokollierter Session-Zustand, sodass jede Konversationsanfrage eine reine Funktion des Logs ist (die Rekonstruierbarkeit-Agent-Note). Der gerenderte System-Prompt ist kein Teil des Headers: Er ist abgeleitete Historie, das `system/message`-Ereignis am Surface-Knoten 0 und jeder spätere In-History-System-Knoten ([Entscheidung](../../.agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.md)), sodass eine Prompt-Änderung einen System-Knoten ersetzt oder einen neuen anhängt und den Header unverändert lässt. Ein vollständiger `request/header`-Snapshot mit dem Grund `'initial'` oder `'resume'` protokolliert jede Loop-Instanzen-Grenze; eine geänderte Anfrage hängt einen Snapshot mit dem Grund `'change'` an; und eine unveränderte Envelope, die eine explizit deklarierte Nachrichtenserie beginnt oder auf eine Surface-Ersatzfolge folgt, hängt einen Snapshot mit dem Grund `'series'` an. Ein geänderter Snapshot trägt `startsSeries: true`, wenn diese Anfrage auch eine Serie beginnt. Ordentliche append-only-spätere Turns, weitere Steps und Retries in derselben Modell-Nachrichtenserie erben den neuesten Snapshot. `foldRequestHeader(events)` rekonstruiert den Header, indem er den neuesten Snapshot auswählt. Das Ereignis ist kein `SurfaceEventType`: Es erzeugt keine LLM-Nachricht.
+Die Request-Envelope — der `EpochHeader` (Aufrufkonfiguration + Marker für Adapter-Vorgaben + assemblierte Tool-Schemata) — ist protokollierter Session-Zustand, sodass jede Konversationsanfrage eine reine Funktion des Logs ist (die Rekonstruierbarkeit-Agent-Note). Der gerenderte System-Prompt ist kein Teil des Headers: Er ist abgeleitete Historie, das `system/message`-Ereignis am Surface-Knoten 0 und jeder spätere In-History-System-Knoten ([Entscheidung](../../.agents/notes/implemented/architecture/2026-09-02-system-prompt-as-surface-node.de.md)), sodass eine Prompt-Änderung einen System-Knoten ersetzt oder einen neuen anhängt und den Header unverändert lässt. Ein vollständiger `request/header`-Snapshot mit dem Grund `'initial'` oder `'resume'` protokolliert jede Loop-Instanzen-Grenze; eine geänderte Anfrage hängt einen Snapshot mit dem Grund `'change'` an; und eine unveränderte Envelope, die eine explizit deklarierte Nachrichtenserie beginnt oder auf eine Surface-Ersatzfolge folgt, hängt einen Snapshot mit dem Grund `'series'` an. Ein geänderter Snapshot trägt `startsSeries: true`, wenn diese Anfrage auch eine Serie beginnt. Ordentliche append-only-spätere Turns, weitere Steps und Retries in derselben Modell-Nachrichtenserie erben den neuesten Snapshot. `foldRequestHeader(events)` rekonstruiert den Header, indem er den neuesten Snapshot auswählt. Das Ereignis ist kein `SurfaceEventType`: Es erzeugt keine LLM-Nachricht.
 
 ```ts type-equiv
 /**
@@ -184,11 +184,11 @@ interface EpochHeader {
 }
 ```
 
-Der aktuelle Ereignis-Empfang erfordert den kanonischen `request/header.header`: jedes `system`-Feld ist verboten, und `tools: []` sowie `adapterDefaults: {}` müssen weggelassen werden. Leerraum-allein-System-Nachrichteninhalte, `config.stop: []` und verschachtelte Erweiterungen bleiben unverändert. Seed-, Append- und aktuelle Persistence-Lesungen lehnen nicht-kanonische Header ab, statt sie still zu normalisieren; [die V3-Envelope-Entscheidung](../../.agents/notes/implemented/architecture/2026-09-06-v3-canonical-session-envelopes.md) besitzt die historische Konversion. Legacy-v0-Logs mit `request/header-delta` oder deren Voll-Snapshot-`fallback`-Grund werden abgelehnt, statt unvollständig regeplayt zu werden.
+Der aktuelle Ereignis-Empfang erfordert den kanonischen `request/header.header`: jedes `system`-Feld ist verboten, und `tools: []` sowie `adapterDefaults: {}` müssen weggelassen werden. Leerraum-allein-System-Nachrichteninhalte, `config.stop: []` und verschachtelte Erweiterungen bleiben unverändert. Seed-, Append- und aktuelle Persistence-Lesungen lehnen nicht-kanonische Header ab, statt sie still zu normalisieren; [die V3-Envelope-Entscheidung](../../.agents/notes/implemented/architecture/2026-09-06-v3-canonical-session-envelopes.de.md) besitzt die historische Konversion. Legacy-v0-Logs mit `request/header-delta` oder deren Voll-Snapshot-`fallback`-Grund werden abgelehnt, statt unvollständig regeplayt zu werden.
 
 ### The route capacity event: `request/context`
 
-Die Kontextmetadaten der Route, auf die eine Anfrage aufgelöst wurde, sind separater protokollierter Zustand, neben `request/header` im selben Step angehängt und nur dann, wenn sich Provider, Modell, Kapazität oder `systemPromptUpdate`-Modus vom vorherigen Datensatz unterscheidet. Er bleibt außerhalb von `EpochHeader`, weil dieser Typ der Rekonstruktionsvertrag ist, der feldweise von `headerEquals` verglichen wird: Kapazität und das Update-Modus beschreiben eine Route, keine Eingabe der Anfrage, sodass deren Einbeziehen eine Routenänderung als `change` der Request-Envelope registrieren ließe und Adapter-Metadaten in die Rekonstruktionsinvariante der Loop ziehen würde. Wie `request/header` ist es kein `SurfaceEventType` und erzeugt keine LLM-Nachricht. `session.requestContext()` faltet den neuesten Datensatz inkrementell; die Agent-Loop liest dessen `systemPromptUpdate`, wenn sie entscheidet, ob ein geänderter System-Prompt den neuesten System-Knoten ersetzt oder nach dem zwischengespeicherten Verlauf angehängt wird ([Entscheidungsregel](../../packages/core/agent-loop/README.md#understand-the-implementation)). Eine Route, deren Adapter keine Kapazität anzeigt, wird mit abwesendem `contextWindow` protokolliert, sodass der neue Datensatz die Kapazität einer älteren Route löscht; eine Route ohne deklariertes Update-Modus löscht analog das `systemPromptUpdate` einer älteren Route.
+Die Kontextmetadaten der Route, auf die eine Anfrage aufgelöst wurde, sind separater protokollierter Zustand, neben `request/header` im selben Step angehängt und nur dann, wenn sich Provider, Modell, Kapazität oder `systemPromptUpdate`-Modus vom vorherigen Datensatz unterscheidet. Er bleibt außerhalb von `EpochHeader`, weil dieser Typ der Rekonstruktionsvertrag ist, der feldweise von `headerEquals` verglichen wird: Kapazität und das Update-Modus beschreiben eine Route, keine Eingabe der Anfrage, sodass deren Einbeziehen eine Routenänderung als `change` der Request-Envelope registrieren ließe und Adapter-Metadaten in die Rekonstruktionsinvariante der Loop ziehen würde. Wie `request/header` ist es kein `SurfaceEventType` und erzeugt keine LLM-Nachricht. `session.requestContext()` faltet den neuesten Datensatz inkrementell; die Agent-Loop liest dessen `systemPromptUpdate`, wenn sie entscheidet, ob ein geänderter System-Prompt den neuesten System-Knoten ersetzt oder nach dem zwischengespeicherten Verlauf angehängt wird ([Entscheidungsregel](../../packages/core/agent-loop/README.de.md#understand-the-implementation)). Eine Route, deren Adapter keine Kapazität anzeigt, wird mit abwesendem `contextWindow` protokolliert, sodass der neue Datensatz die Kapazität einer älteren Route löscht; eine Route ohne deklariertes Update-Modus löscht analog das `systemPromptUpdate` einer älteren Route.
 
 ```ts type-equiv
 /** Registration-bound metadata for one resolved model route. */
@@ -276,7 +276,7 @@ Jedes Surface-Ereignis erfordert `surfaceOp`; bekannte log-only-Ereignisse verbi
 
 ## Surface types
 
-Die vier nachrichtenerzeugenden Typen (`SurfaceEventType` — `system/message`, `user/message`, `assistant/message`, `tool/result`) tragen Surface-Metadaten, die erklären, wie sie die geordnete abgeleitete Surface betreten. `system/message` hält den gerenderten System-Prompt: Die Loop hängt den ersten als Surface-Knoten 0 an und ersetzt bei einer Prompt-Änderung genau den neuesten System-Knoten oder hängt auf einer In-History-Route einen neuen an; der Surface-Fold lehnt jede andere Ersatzabdeckung einer `system/message` am Knoten 0 ab, während ein späterer System-Knoten gewöhnliche Historie ist, die ein Compaction-Ersatz verschatten darf. Siehe die [Session-Surface-Agent-Note](../../.agents/notes/implemented/architecture/2026-06-18-session-surface.md).
+Die vier nachrichtenerzeugenden Typen (`SurfaceEventType` — `system/message`, `user/message`, `assistant/message`, `tool/result`) tragen Surface-Metadaten, die erklären, wie sie die geordnete abgeleitete Surface betreten. `system/message` hält den gerenderten System-Prompt: Die Loop hängt den ersten als Surface-Knoten 0 an und ersetzt bei einer Prompt-Änderung genau den neuesten System-Knoten oder hängt auf einer In-History-Route einen neuen an; der Surface-Fold lehnt jede andere Ersatzabdeckung einer `system/message` am Knoten 0 ab, während ein späterer System-Knoten gewöhnliche Historie ist, die ein Compaction-Ersatz verschatten darf. Siehe die [Session-Surface-Agent-Note](../../.agents/notes/implemented/architecture/2026-06-18-session-surface.de.md).
 
 ### `SurfaceEventType` — the message-producing subset of event types
 
@@ -335,7 +335,7 @@ type SurfaceIntent<T extends SurfaceEventType = SurfaceEventType> = {
 })
 ```
 
-Erforderlich für `SurfaceEventType`-Ereignisse — jedes nachrichtenerzeugende Ereignis muss erklären, wie es die Surface betritt, die einzige Quelle des abgeleiteten Modell-Verlaufs. Ein benutzerorientiertes Transkript ist die andere Projektion und liest die Append-Ursprungs-Ereignisse des Logs, weil die Surface die Bereiche, die ein Ersatz zusammenfasst, bewusst verschattet (`isAppendSurfaceEvent` in [dsh-session](../../packages/core/session/README.md)). Nicht-Surface-Typen lehnen es zur Compile-Zeit ab.
+Erforderlich für `SurfaceEventType`-Ereignisse — jedes nachrichtenerzeugende Ereignis muss erklären, wie es die Surface betritt, die einzige Quelle des abgeleiteten Modell-Verlaufs. Ein benutzerorientiertes Transkript ist die andere Projektion und liest die Append-Ursprungs-Ereignisse des Logs, weil die Surface die Bereiche, die ein Ersatz zusammenfasst, bewusst verschattet (`isAppendSurfaceEvent` in [dsh-session](../../packages/core/session/README.de.md)). Nicht-Surface-Typen lehnen es zur Compile-Zeit ab.
 
 `assistant/message` kann `sourceEventSeqs` nicht tragen; sein `stream` besitzt den exakten Provider-Nachweis. Andere Surface-Ereignisse lassen das Feld weg, wenn sie kein früheres Ereignis zitieren, und verwenden eine vollständige nicht-leere Liste, wenn sie es tun.
 
@@ -434,7 +434,7 @@ declare class Session {
    * When this lifecycle appends the marker, it occupies this seq before the
    * store attaches and therefore does not publish either. Otherwise this seq
    * holds an ordinary published write.
-   */
+  */
   readonly firstLiveSeq: SessionLogOffset;
   /**
    * Create a detached session by validating and snapshotting borrowed seed
@@ -480,7 +480,7 @@ declare class Session {
   /**
    * Materialize an immutable snapshot of a half-open event sequence range.
    * A full current snapshot is reused until the next append; every previously
-   * taken snapshot remains stable after later appends.
+   * returned snapshot remains stable after later appends.
    * @param fromSeq - non-negative inclusive sequence number; defaults to the log start.
    * @param toSeqExclusive - non-negative exclusive sequence number; defaults to the current end.
    * @returns a frozen array of the selected deeply frozen events.
@@ -650,7 +650,7 @@ interface TurnEndReasonMap {
 
 Ein Turn umschließt eine Modell-Loop-Ausführung, nicht das ganze Session-Log. AgentLoop protokolliert injizierte `user/message`-Ereignisse nur von eintretenden Pre-Step-Batches innerhalb eines Turns; plugin-eigene log-only-Ereignisse können weiterhin zwischen `turn/end` und dem nächsten `turn/start` erscheinen, die Ereignissequenzen verbrauchen, ohne Turn-Nummern zu inkrementieren. Persistence lässt jedes zusammenhängende akzeptierte Ereignis in ein begrenztes dauerhafter Batch zu, während Crash-Reparatur nur einen wirklich offenen Nachfolge-Turn schließt. Ein Produzent, der eine sofortige Dauerhaftigkeitsbarriere benötigt, wartet explizit auf `ctx.sessions.flush(session)`.
 
-Das optionale `dsh-session/invariant`-Companion erzwingt die von Core besessenen Beziehungen: Turn- und Step-Nummerierung, Ausführungs-Ereignis-Umschließung und Same-Step-Tool-Aufruf/Ergebnis-Paarung. Merge-erweiterbare Ereignis-Beziehungen gehören zum Plugin, das sie deklariert, sodass Core ein unbekanntes Ereignis nicht allein deshalb ablehnt, weil kein Turn offen ist. Siehe [die Eigenständiges-Ereignis-Entscheidung](../../.agents/notes/implemented/simplification/2026-07-28-remove-synthetic-log-only-turns.md).
+Das optionale `dsh-session/invariant`-Companion erzwingt die von Core besessenen Beziehungen: Turn- und Step-Nummerierung, Ausführungs-Ereignis-Umschließung und Same-Step-Tool-Aufruf/Ergebnis-Paarung. Merge-erweiterbare Ereignis-Beziehungen gehören zum Plugin, das sie deklariert, sodass Core ein unbekanntes Ereignis nicht allein deshalb ablehnt, weil kein Turn offen ist. Siehe [die Eigenständiges-Ereignis-Entscheidung](../../.agents/notes/implemented/simplification/2026-07-28-remove-synthetic-log-only-turns.de.md).
 
 ## The end-seed boundary: `session/end-seed`
 
@@ -688,7 +688,7 @@ Die Backends, die diesen Vertrag konsumieren, stehen auf [persistence.md](persis
 
 ## Cordis API
 
-Von `scripts/gen-cordis-catalog.ts` aus dem Quellcode generiert (frischheit-geprüft durch `pnpm run verify-cordis-catalog` in doc-sync; regenerieren mit `pnpm run gen-cordis-catalog`) — die Sprachseiten unterscheiden sich nur in den lokalspezifischen gepaarten Dokumentenpfaden. Signaturblöcke verwenden ein `ts cordis-catalog`-Fence und behalten die originalen Quell-JSDoc; Dispatch-Modi sind in der [Einleitung](../cordis-primer.de.md#dispatch-modes) definiert, und die framework-geerbte `ctx`-API steht in [cordis-api/inherited.md](../cordis-api/inherited.de.md).
+Von `scripts/gen-cordis-catalog.ts` aus dem Quellcode generiert (frischheit-geprüft durch `pnpm run verify-cordis-catalog` in doc-sync; regenerieren mit `pnpm run gen-cordis-catalog`) — die Sprachseiten unterscheiden sich nur in den lokalspezifischen gepaarten Dokumentenpfaden. Signaturblöcke verwenden ein `ts cordis-catalog`-Fence und behalten die originalen Quell-JSDoc; Dispatch-Modi sind in der [Einleitung](../cordis-primer.de.md#dispatch-modes) definiert, und die framework-geerbte `ctx`-API steht in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsessioncontroller--sessioncontroller"></a>
 

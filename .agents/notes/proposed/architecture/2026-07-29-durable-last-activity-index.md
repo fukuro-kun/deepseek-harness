@@ -3,7 +3,6 @@ English | [中文](2026-07-29-durable-last-activity-index.zh.md) | [Deutsch](202
 
 Status: proposed
 
-English | [中文](2026-07-29-durable-last-activity-index.zh.md)
 
 ## Problem
 

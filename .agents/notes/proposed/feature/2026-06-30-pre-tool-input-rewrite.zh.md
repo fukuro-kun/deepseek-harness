@@ -1,8 +1,8 @@
 # Agent Note: 工具执行前输入重写——一致性设计
+[English](2026-06-30-pre-tool-input-rewrite.md) | 中文 | [Deutsch](2026-06-30-pre-tool-input-rewrite.de.md)
 
 Status: proposed
 
-[English](2026-06-30-pre-tool-input-rewrite.md) | 中文 | [Deutsch](2026-06-30-pre-tool-input-rewrite.de.md)
 
 ## 问题
 

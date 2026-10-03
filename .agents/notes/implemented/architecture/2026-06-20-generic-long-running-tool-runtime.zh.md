@@ -1,8 +1,8 @@
 # Agent Note: 后台任务运行时（`ctx.jobs`）与通用任务控制工具
+[English](2026-06-20-generic-long-running-tool-runtime.md) | 中文 | [Deutsch](2026-06-20-generic-long-running-tool-runtime.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.de.md)
 
 ## 问题
 

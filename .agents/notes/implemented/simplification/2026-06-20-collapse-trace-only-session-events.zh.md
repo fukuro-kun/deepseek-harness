@@ -1,8 +1,8 @@
 # Agent Note: 将仅用于追踪的会话事实折叠进承载实际功能的事件
+[English](2026-06-20-collapse-trace-only-session-events.md) | 中文 | [Deutsch](2026-06-20-collapse-trace-only-session-events.de.md)
 
 Status: implemented
 
-[English](2026-06-20-collapse-trace-only-session-events.md) | 中文
 
 ## 问题
 

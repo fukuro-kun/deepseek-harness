@@ -1,8 +1,8 @@
 # Agent Note: Subagent-Teardown-Tests erben die Budgets ihrer Ausführungs-Lane
+[English](2026-09-07-subagent-teardown-test-budgets.md) | [中文](2026-09-07-subagent-teardown-test-budgets.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-subagent-teardown-test-budgets.md) | [中文](2026-09-07-subagent-teardown-test-budgets.zh.md) | Deutsch
 
 ## Problem
 

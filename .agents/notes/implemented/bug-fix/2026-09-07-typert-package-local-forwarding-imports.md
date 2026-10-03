@@ -1,9 +1,8 @@
 # Agent Note: Follow package-local forwarding modules in Typert references
-English | [中文](.agents/notes/implemented/bug-fix/2026-09-07-typert-package-local-forwarding-imports.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-07-typert-package-local-forwarding-imports.de.md)
+English | [中文](2026-09-07-typert-package-local-forwarding-imports.zh.md) | [Deutsch](2026-09-07-typert-package-local-forwarding-imports.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-07-typert-package-local-forwarding-imports.zh.md)
 
 ## Problem
 

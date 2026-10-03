@@ -1,8 +1,8 @@
 # Agent Note: Playwright-Video erfasst kontinuierliche Browser-Demos
+[English](2026-09-08-playwright-video-gif.md) | [中文](2026-09-08-playwright-video-gif.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-playwright-video-gif.md) | [中文](2026-09-08-playwright-video-gif.zh.md) | Deutsch
 
 ## Problem
 

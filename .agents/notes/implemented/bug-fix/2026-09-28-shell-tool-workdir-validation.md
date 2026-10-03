@@ -1,9 +1,8 @@
 # Agent Note: Shell tool workdir validation
-English | [中文](.agents/notes/implemented/bug-fix/2026-09-28-shell-tool-workdir-validation.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-28-shell-tool-workdir-validation.de.md)
+English | [中文](2026-09-28-shell-tool-workdir-validation.zh.md) | [Deutsch](2026-09-28-shell-tool-workdir-validation.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-28-shell-tool-workdir-validation.zh.md)
 
 ## Problem
 

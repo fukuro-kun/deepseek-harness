@@ -1,8 +1,8 @@
 # Agent Note: 无需生成索引即可发现 Agent Note
+[English](2026-07-19-remove-generated-agent-note-index.md) | 中文 | [Deutsch](2026-07-19-remove-generated-agent-note-index.de.md)
 
 Status: implemented
 
-[English](2026-07-19-remove-generated-agent-note-index.md) | 中文
 
 ## 问题
 

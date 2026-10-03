@@ -1,6 +1,6 @@
 # Session-Persistenz
-
 [English](persistence.md) | [中文](persistence.zh.md) | Deutsch
+
 
 Die **Durability-Seam** für das Event-Log. [session.md](session.de.md) beschreibt die in-memory `Session` — das append-only `SessionEvent`-Log, das die Quelle der Wahrheit ist. Diese Seite beschreibt, wie dieses Log dauerhaft gemacht wird: der abstrakte `SessionPersistence`-Service, sein Provider-Modell und der ausgelieferte JSONL-Backend, der Flush-Checkpoint, die Crash-Wiederherstellung und der Metadaten-Header, der neben dem Log mitgeführt wird. Das Event-Vokabular, das das Log trägt, wird im generierten [Persistence-Log-Event-Katalog](../persistence-catalog.de.md) Mitglied für Mitglied aufgezählt.
 

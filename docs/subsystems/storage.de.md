@@ -1,6 +1,6 @@
 # Storage
-
 [English](storage.md) | [中文](storage.zh.md) | Deutsch
+
 
 Das Storage-Subsystem persistiert alles, was kein Session-Event-Log ist (Session-Logs haben ihr eigenes Seam — [persistence.md](persistence.de.md)). Es ist eine optionale Capability, nicht Teil der Agent-Loop-Spine, aufgeteilt als [Capability-Seam](../../.agents/notes/implemented/architecture/2026-06-13-capability-seams.de.md): der Hub und die Service Definition ([dsh-storage](../../packages/storage/storage), `ctx.storage`), die Service Providers ([dsh-storage-json](../../packages/storage/storage-json), registriert als `json`, und [dsh-storage-sqlite](../../packages/storage/storage-sqlite), registriert als `sqlite`) und die Consumer-Datenform ([dsh-storage-domain](../../packages/storage/storage-domain), `ctx.storageDomain`, auch erreichbar als `ctx.storage.domain`) — der einzige Consumer des Backend-Contracts und die typisierte API, die alles andere verwendet. Der Hub führt selbst kein IO aus: Backends besitzen Medien, Datenformen besitzen Semantik, und Produktpakete berühren Backends niemals direkt. Design-Record: [Domain-KV-Storage Agent Note](../../.agents/notes/proposed/architecture/2026-07-24-domain-kv-storage-and-workspace.de.md).
 

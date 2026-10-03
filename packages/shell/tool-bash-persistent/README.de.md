@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-bash-persistent
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -48,7 +48,7 @@ Das Default-`shell`-Backend startet ein interaktives bash über `dsh-terminal-ba
 | `maxOutputChars` | `16,000` | Maximal zurückbehaltene Kommandoausgabe-Zeichen; fixe Diagnostik wird danach angehängt |
 | `description` | `Run commands in a persistent bash shell. State, including the current directory and exported environment variables, persists across calls for this agent.` | Modellseitiger Umgebungs-Contract; Deployments dürfen ihre Umgebung beschreiben |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-tool-bash-persistent) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-tool-bash-persistent) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Worauf sich der agent verlassen kann
 
@@ -100,8 +100,8 @@ Lies diese Seiten, wenn der Paket-Contract nicht ausreicht. Sie führen von der 
 - [terminal-bash-Backend](../../terminal/terminal-bash/README.de.md) — das Default-`shell`-Backend.
 - [tool-terminal](../../terminal/tool-terminal/README.de.md) — sechs modellseitige Terminal-Tools für interaktive Arbeit.
 - [Agent Note zu persistenten PTY-Sessions](../../../.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.de.md) — das owner-scoped Session-Design und seine Begründung.
-- [Generierter Tool-Katalog](../../../docs/tool-catalog.md#deepseek-aidsh-tool-bash-persistent) — das exakte `bash`-Argument-Schema.
-- [Generierter Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-tool-bash-persistent) — jedes akzeptierte Config-Feld und seine Quelldeklaration.
+- [Generierter Tool-Katalog](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-bash-persistent) — das exakte `bash`-Argument-Schema.
+- [Generierter Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-tool-bash-persistent) — jedes akzeptierte Config-Feld und seine Quelldeklaration.
 
 -----
 
@@ -112,7 +112,7 @@ Lies diese Seiten, wenn der Paket-Contract nicht ausreicht. Sie führen von der 
 
 #### Was das Modell sieht
 
-Das generierte [`bash`-Schema](../../../docs/tool-catalog.md#deepseek-aidsh-tool-bash-persistent), einschließlich der konfigurierten `description`. Das Plugin trägt keine eigenständige System-Prompt-Sektion bei; das Deployment besitzt Persona- und Umgebungs-Guidance.
+Das generierte [`bash`-Schema](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-bash-persistent), einschließlich der konfigurierten `description`. Das Plugin trägt keine eigenständige System-Prompt-Sektion bei; das Deployment besitzt Persona- und Umgebungs-Guidance.
 
 #### Token-Effekt
 

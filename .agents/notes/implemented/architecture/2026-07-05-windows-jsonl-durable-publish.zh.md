@@ -1,8 +1,8 @@
 # Agent Note: Windows 原生持久 JSONL 发布
+[English](2026-07-05-windows-jsonl-durable-publish.md) | 中文 | [Deutsch](2026-07-05-windows-jsonl-durable-publish.de.md)
 
 Status: implemented
 
-[English](2026-07-05-windows-jsonl-durable-publish.md) | 中文 | [Deutsch](2026-07-05-windows-jsonl-durable-publish.de.md)
 
 ## 问题
 

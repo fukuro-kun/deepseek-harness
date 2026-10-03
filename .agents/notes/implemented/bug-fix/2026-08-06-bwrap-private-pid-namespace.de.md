@@ -1,8 +1,8 @@
 # Agent Note: isolate bwrap from the host PID namespace
+[English](2026-08-06-bwrap-private-pid-namespace.md) | [中文](2026-08-06-bwrap-private-pid-namespace.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-06-bwrap-private-pid-namespace.md) | [中文](2026-08-06-bwrap-private-pid-namespace.zh.md) | Deutsch
 
 ## Problem
 

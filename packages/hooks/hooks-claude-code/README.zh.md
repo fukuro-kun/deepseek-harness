@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-hooks-claude-code
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-hooks-claude-code` 在 agent（智能体）运行期间执行你现有 Claude Code `hooks.json` 或 settings 文件中的 command 钩子，无需重写。受支持的钩子会在会话、提示词、工具、停止或子 agent 到达对应时刻时运行。它们可以带模型可见的原因阻塞提示词或工具调用、添加对话上下文，或强制模型再执行一轮。需要在 harness 中复用 Claude Code command 钩子时选择本包；没有 Claude Code 对应物的行为应使用原生插件。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

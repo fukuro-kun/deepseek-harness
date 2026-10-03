@@ -1,6 +1,6 @@
 # 仅限 Session 内的 Schedule
+[English](schedule.md) | 中文 | [Deutsch](schedule.de.md)
 
-[English](schedule.md) | 中文
 
 Schedule 拥有持久提醒；这些提醒会作为普通的后续对话轮次返回原 live Session。[持久 Schedule Agent Note](../../.agents/notes/implemented/feature/2026-08-05-durable-web-schedule.zh.md) 负责持久化、生命周期与活动状态呈现，[显式时区边界](../../.agents/notes/implemented/simplification/2026-08-09-explicit-schedule-time-zone.zh.md) 负责浏览器本地解释。本页记录 [`packages/schedule/schedule/src/types.ts`](../../packages/schedule/schedule/src/types.ts) 中的持久数据形状和面向模型的数据形状；[包 README](../../packages/schedule/schedule/README.zh.md) 负责组合、工具行为与确切的提醒 framing。
 
@@ -11,8 +11,6 @@ Schedule 拥有持久提醒；这些提醒会作为普通的后续对话轮次�
 ```ts type-equiv
 /** Durable one-shot reminder created from a positive delay. */
 interface AfterScheduleRecord {
-
-[English](schedule.md) | 中文 | [Deutsch](schedule.de.md)
   /** Session-local stable identity. */
   readonly id: ScheduleId
   /** Rule discriminator for a delayed one-shot reminder. */

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-07-28-storage-root-and-derived-medium-recovery.md
-2026-07-28-storage-root-and-derived-medium-recovery.md: 5c414298ee4301f6b444db775cc70147285c52e8
-2026-07-28-storage-root-and-derived-medium-recovery.zh.md: 13ecb2d57fb0797caedcccc44f7d8bc33fac40c4
-2026-07-28-storage-root-and-derived-medium-recovery.de.md: 44f3f50780e758dbff6fd2bf4ca850b370c50491
+2026-07-28-storage-root-and-derived-medium-recovery.md: 99d900a74ff21616074cf62befb27d1e04c5101e
+2026-07-28-storage-root-and-derived-medium-recovery.zh.md: e695375356db6d4147b28bd5dc8b7c2a4f83e35a
+2026-07-28-storage-root-and-derived-medium-recovery.de.md: b4e65e013ee9ef3c8f5e9d575fb05c8717c1d7a6

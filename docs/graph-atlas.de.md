@@ -2,8 +2,8 @@
      Zum Aktualisieren zuerst `pnpm run gen-doc-graphs` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/graph-atlas.md` zur erneuten Paaraufzeichnung ausführen. -->
 
 # Dokumentationsgraph-Index
-
 [English](graph-atlas.md) | [中文](graph-atlas.zh.md) | Deutsch
+
 
 Diese Diagramme zeigen Beziehungen, die die generierten Kataloge nicht enthalten. Nutze sie, um Paketbeziehungen, capability seams, Eventfluss, modellseitige Tools, App-Komposition und Laufzeit-Lebenszykluspfade zu finden. Exakte Signaturen und Typdefinitionen bleiben in den [Subsystem-Seiten](subsystems/core.de.md) (Typen und generierte `cordis-surface`-Regionen) und [tool-catalog.md](tool-catalog.de.md).
 

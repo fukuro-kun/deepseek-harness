@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-subagent
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -52,7 +52,7 @@ Laden Sie den subagent-Service, ein In-Process- oder Remote-Backend und dieses T
 | `toolFilter` | — | Globale Tool-Einschränkung pro Child; erfordert die `toolFilter`-Capability |
 | `maxDepth` | `3` | Absolute Delegationstiefen-Obergrenze (`0` verbietet Delegation); `'provider-managed'` sendet keine Obergrenze an einen Out-of-Process-Provider |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-tool-subagent) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-tool-subagent) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Foreground- und Background-Modi
 
@@ -114,11 +114,11 @@ Die Tool-Beschreibung leitet sich aus `provider.inheritsParentContext` ab: Ein f
 Lesen Sie diese Seiten, wenn der Paketvertrag nicht ausreicht; sie führen vom Laufzeitverhalten des Tools zur Seam, über die es delegiert, und zu den benachbarten Child-Tools.
 
 - [Subagent-Subsystem](../../../docs/subsystems/subagent.de.md) — Provider, one-shot-Startanfragen, continuable Childs und Activations.
-- [dsh-tool-subagent-control](../tool-subagent-control/README.md) — Messaging-, Interrupt- und Listing-Tools für continuable Childs.
-- [Generierter Tool-Katalog](../../../docs/tool-catalog.md#deepseek-aidsh-tool-subagent) — das Default-Schema und die Formulierung pro Modus.
-- [Generierter Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-tool-subagent) — jedes akzeptierte Config-Feld.
+- [dsh-tool-subagent-control](../tool-subagent-control/README.de.md) — Messaging-, Interrupt- und Listing-Tools für continuable Childs.
+- [Generierter Tool-Katalog](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-subagent) — das Default-Schema und die Formulierung pro Modus.
+- [Generierter Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-tool-subagent) — jedes akzeptierte Config-Feld.
 - [Background-first-Continuable-Delegation](../../../.agents/notes/archived/feature/2026-08-11-background-first-continuable-delegation.md) — warum continuable Arbeit standardmäßig im Hintergrund läuft.
-- [Modellgewählte subagent-Routen](../../../.agents/notes/implemented/feature/2026-08-18-model-selected-subagent-routes.md) — Auswahlpolicy, Vererbung, Discovery und die Fork-Einschränkung.
+- [Modellgewählte subagent-Routen](../../../.agents/notes/implemented/feature/2026-08-18-model-selected-subagent-routes.de.md) — Auswahlpolicy, Vererbung, Discovery und die Fork-Einschränkung.
 
 -----
 
@@ -129,7 +129,7 @@ Lesen Sie diese Seiten, wenn der Paketvertrag nicht ausreicht; sie führen vom L
 
 #### Was das Modell sieht
 
-Das generierte Default-[`subagent`-Schema](../../../docs/tool-catalog.md#deepseek-aidsh-tool-subagent) unter dem konfigurierten Namen dieser Instanz, solange ihr Provider existiert. Eine aktivierte Session-Policy fügt `provider`, `model` und `reasoning_effort` plus Vererbungs- und Auswahlanleitung hinzu; der Provider muss `agentOptions` unterstützen. Provider-Kontextvererbung ändert die Tool- und Prompt-Beschreibungen. Ein aktivierter Background-Modus fügt `run_in_background` hinzu: Der continuable-Modus dokumentiert seinen `true`-Default, die Runtime-Settlement-Notiz und das explizite Foreground-Override, während der one-shot-Modus seinen `false`-Default und die mit `job_output` eingesammelte oder mit `job_kill` gestoppte job id dokumentiert. Solange das Tool im Scope einer Assembly sichtbar ist, sagt eine `tool:<toolName>`-System-Prompt-Sektion dem Modell, unabhängige continuable Delegationen gemeinsam zu starten, während ihrer Ausführung weiterzuarbeiten und Foreground nur zu wählen, wenn die nächste Aktion vom Ergebnis abhängt; eine Tool-Restriktion entfernt sowohl sein Schema als auch diese Anleitung.
+Das generierte Default-[`subagent`-Schema](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-subagent) unter dem konfigurierten Namen dieser Instanz, solange ihr Provider existiert. Eine aktivierte Session-Policy fügt `provider`, `model` und `reasoning_effort` plus Vererbungs- und Auswahlanleitung hinzu; der Provider muss `agentOptions` unterstützen. Provider-Kontextvererbung ändert die Tool- und Prompt-Beschreibungen. Ein aktivierter Background-Modus fügt `run_in_background` hinzu: Der continuable-Modus dokumentiert seinen `true`-Default, die Runtime-Settlement-Notiz und das explizite Foreground-Override, während der one-shot-Modus seinen `false`-Default und die mit `job_output` eingesammelte oder mit `job_kill` gestoppte job id dokumentiert. Solange das Tool im Scope einer Assembly sichtbar ist, sagt eine `tool:<toolName>`-System-Prompt-Sektion dem Modell, unabhängige continuable Delegationen gemeinsam zu starten, während ihrer Ausführung weiterzuarbeiten und Foreground nur zu wählen, wenn die nächste Aktion vom Ergebnis abhängt; eine Tool-Restriktion entfernt sowohl sein Schema als auch diese Anleitung.
 
 #### Token-Effekt
 

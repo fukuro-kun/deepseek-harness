@@ -1,8 +1,8 @@
 # Agent Note: Present folgt dem Dateisystemzugriff der Session
+[English](2026-09-09-present-filesystem-access.md) | [中文](2026-09-09-present-filesystem-access.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-09-present-filesystem-access.md) | [中文](2026-09-09-present-filesystem-access.zh.md) | Deutsch
 
 ## Problem
 

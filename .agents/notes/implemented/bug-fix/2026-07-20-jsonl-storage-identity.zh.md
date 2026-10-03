@@ -1,8 +1,8 @@
 # Agent Note: 在变更前绑定 JSONL 会话身份
+[English](2026-07-20-jsonl-storage-identity.md) | 中文 | [Deutsch](2026-07-20-jsonl-storage-identity.de.md)
 
 Status: implemented
 
-[English](2026-07-20-jsonl-storage-identity.md) | 中文
 
 ## 问题
 

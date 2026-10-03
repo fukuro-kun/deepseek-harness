@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-11-minimal-profiles-bare-two-tool-runtime.md
-2026-08-11-minimal-profiles-bare-two-tool-runtime.md: 484d93af7c010a4255904249414b0c8971f37350
-2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md: f1f916bdde92fd104c3d879ff058b2e0474eef38
-2026-08-11-minimal-profiles-bare-two-tool-runtime.de.md: a16a904525da47e1e09df435541081b3d2a99314
+2026-08-11-minimal-profiles-bare-two-tool-runtime.md: 8922a6f6c296fdfa0881cd8c787e3408ca13fc1d
+2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md: 1f33520ba150bd52f06ce1707e288937d0506649
+2026-08-11-minimal-profiles-bare-two-tool-runtime.de.md: 3ca76325b37ac3c0ea2d3573670e80333589f7f8

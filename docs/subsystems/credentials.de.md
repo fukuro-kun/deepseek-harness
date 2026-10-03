@@ -1,6 +1,6 @@
 # User Credentials
-
 [English](credentials.md) | [中文](credentials.zh.md) | Deutsch
+
 
 Die Credential-Seam von [dsh-credentials](../../packages/credentials/credentials) hält Secrets aus der Konfiguration heraus: Settings-Abschnitte und `cordis.yml`-Einträge tragen *Referenzen* (Umgebungsvariablennamen), Provider wie [dsh-credentials-local](../../packages/credentials/credentials-local) besitzen die Werte, und Consumer lösen eine Referenz einmal pro Operation auf — die LLM-Adapter lösen einmal pro Model-Request auf, sodass eine rotierte Credential ohne Neustart schon den allernächsten Request erreicht. Eine seam-weite Regel bindet jeden Provider: ein leerer gespeicherter Wert ist überall abwesend.
 

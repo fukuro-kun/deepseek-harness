@@ -1,8 +1,8 @@
 # Agent Note: Python runtime 依赖安装的有界重试
+[English](2026-09-06-python-runtime-install-retry.md) | 中文 | [Deutsch](2026-09-06-python-runtime-install-retry.de.md)
 
 Status: implemented
 
-[English](2026-09-06-python-runtime-install-retry.md) | 中文
 
 ## 问题
 

@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-reference
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -64,7 +64,7 @@ Datei-Picks bewahren den natürlichen Text, den die geteilte `@path`-Grammatik d
 
 Diese Seiten behandeln die Suggestion-Maschinerie, die Referenz-Seams und die Input-Pipeline.
 
-- [ui-input-trigger](../ui-input-trigger/README.md) — die Inline-Suggestion-Maschinerie, in die sich die Source registriert.
+- [ui-input-trigger](../ui-input-trigger/README.de.md) — die Inline-Suggestion-Maschinerie, in die sich die Source registriert.
 - [file-reference](../../context/file-reference/README.de.md) — der `@file`-Seam und sein Provider-Vertrag.
 - [session-reference](../../context/session-reference/README.de.md) — der `@session`-Seam und die Prepared-Snapshot-Semantik.
 - [Web-Input-Machine und Slash-Pipeline](../../../.agents/notes/archived/architecture/2026-07-25-web-input-machine-and-slash-pipeline.md) — wie Referenzen und Commands die Input-Machine teilen.

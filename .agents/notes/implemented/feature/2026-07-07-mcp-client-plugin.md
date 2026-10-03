@@ -1,9 +1,8 @@
 # Agent Note: MCP client plugin — connect to external MCP servers and bridge their tools
-English | [中文](.agents/notes/implemented/feature/2026-07-07-mcp-client-plugin.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-07-mcp-client-plugin.de.md)
+English | [中文](2026-07-07-mcp-client-plugin.zh.md) | [Deutsch](2026-07-07-mcp-client-plugin.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-07-mcp-client-plugin.zh.md)
 
 ## Problem
 

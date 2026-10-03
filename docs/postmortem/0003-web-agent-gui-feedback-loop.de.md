@@ -1,6 +1,6 @@
 # Postmortem 0003: Web-agent validierte einen Ersatz-Server statt seines aktuellen GUI
-
 [English](0003-web-agent-gui-feedback-loop.md) | [中文](0003-web-agent-gui-feedback-loop.zh.md) | Deutsch
+
 
 Status: gelöst
 

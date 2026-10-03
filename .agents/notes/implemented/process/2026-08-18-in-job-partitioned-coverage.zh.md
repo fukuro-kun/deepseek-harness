@@ -1,8 +1,8 @@
 # Agent Note: 单 job 分区覆盖率
+[English](2026-08-18-in-job-partitioned-coverage.md) | 中文 | [Deutsch](2026-08-18-in-job-partitioned-coverage.de.md)
 
 Status: implemented
 
-[English](2026-08-18-in-job-partitioned-coverage.md) | 中文
 
 ## 问题
 

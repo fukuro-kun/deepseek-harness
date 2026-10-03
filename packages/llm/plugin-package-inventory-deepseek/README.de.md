@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-plugin-package-inventory-deepseek
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 

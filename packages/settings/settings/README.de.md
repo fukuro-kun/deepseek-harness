@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-settings
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -36,9 +36,13 @@ Wähle Settings, wenn die Konfiguration eines Plugins zur Laufzeit änderbar sei
 Der Service speichert selbst nichts; mounte einen Provider wie den mitgelieferten dateibasierten:
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-settings-file'
+
   config:
+
     path: /absolute/path/to/settings.yaml
+
 ```
 
 `ctx.settings` erscheint, sobald der Provider live ist. Das Provider-README besitzt die vollständige Konfigurations-Oberfläche; der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-settings-file) listet jedes akzeptierte Feld.
@@ -48,11 +52,17 @@ Der Service speichert selbst nichts; mounte einen Provider wie den mitgelieferte
 Ein Plugin registriert seinen eigenen Namespace mit einem schemastery-Schema und kann optional den Kompositions-Eintrag als `base`-Layer übergeben, damit der aufgelöste Wert von dem startet, was das Deployment bereits konfiguriert hat:
 
 ```text
+
 const scope = ctx.settings.register('ui-theme', ThemeSchema, {
+
   base: config,   // composition entry config; the user layer resolves above it
+
 })
+
 const theme = scope.get()              // deep-frozen resolved snapshot
+
 scope.update({ density: 'compact' })   // merges into the user section and persists
+
 ```
 
 Literale Namespace-Argumente prüft TypeScript gegen die Grammatik aus Kleinbuchstaben, Ziffern und Bindestrich; dynamisch übergebene Strings erhalten zur Laufzeit dieselbe Validierung. `ctx.settings.installSection(owner, ns, schema, entry, hooks)` bündelt die Verdrahtung des optionalen Services für ein Consumer-Plugin: solange ein Settings-Service existiert, registriert es den Namespace mit dem Kompositions-Eintrag des Plugins als `base`; wenn der Service verschwindet, fällt das Plugin auf seine Entry-Config zurück und arbeitet exakt wie komponiert weiter.

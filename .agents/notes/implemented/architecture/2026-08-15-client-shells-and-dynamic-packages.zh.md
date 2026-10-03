@@ -1,8 +1,8 @@
 # Agent Note: 客户端壳分层与动态包边界
+[English](2026-08-15-client-shells-and-dynamic-packages.md) | 中文 | [Deutsch](2026-08-15-client-shells-and-dynamic-packages.de.md)
 
 Status: implemented
 
-[English](2026-08-15-client-shells-and-dynamic-packages.md) | 中文 | [Deutsch](2026-08-15-client-shells-and-dynamic-packages.de.md)
 
 > [Client 插件装载模型](2026-07-23-client-plugin-loading-model.zh.md)负责模块到达、Cordis 生命周期和 HMR。本 Note 负责包归属、构建 face、共享模块请求及 npm 依赖声明；这些决定取代装载 Note 中较早的包分类和 import 边规则。
 

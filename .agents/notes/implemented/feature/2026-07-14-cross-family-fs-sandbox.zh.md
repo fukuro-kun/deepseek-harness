@@ -1,8 +1,8 @@
 # Agent Note: 跨家族文件沙箱——统一策略归属、沙箱化 fs 提供方、fs 升级对等
+[English](2026-07-14-cross-family-fs-sandbox.md) | 中文 | [Deutsch](2026-07-14-cross-family-fs-sandbox.de.md)
 
 Status: implemented
 
-[English](2026-07-14-cross-family-fs-sandbox.md) | 中文
 
 ## 问题
 

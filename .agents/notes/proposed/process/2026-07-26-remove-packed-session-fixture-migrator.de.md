@@ -1,8 +1,8 @@
 # Agent Note: Packed-Session-Fixture-Branch-Migrator entfernen
+[English](2026-07-26-remove-packed-session-fixture-migrator.md) | [中文](2026-07-26-remove-packed-session-fixture-migrator.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-26-remove-packed-session-fixture-migrator.md) | [中文](2026-07-26-remove-packed-session-fixture-migrator.zh.md) | Deutsch
 
 ## Problem
 

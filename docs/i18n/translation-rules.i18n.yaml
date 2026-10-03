@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/i18n/translation-rules.md
-translation-rules.md: 0cd19e8e5792ea3eca5a2f43fc1c67c3f54e35b4
-translation-rules.zh.md: 83acd87f49911dd0e337ea1e18d3588223e99cee
-translation-rules.de.md: f9a032c541e506e9695f59444793d6ea051abae9
+translation-rules.md: f766747442559a0ae94ad578f604214231b67fa1
+translation-rules.zh.md: 9a5ce1129219169814234a397b639adcf9c2a516
+translation-rules.de.md: a46428e442f7a9f76200a5a2b654d3f887728f47

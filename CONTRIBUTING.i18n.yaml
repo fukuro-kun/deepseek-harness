@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write CONTRIBUTING.md
-CONTRIBUTING.md: a3a8ce35fb1bb2d5341435a927d142406fb12d6e
-CONTRIBUTING.zh.md: 6ff0714e50869b91d9a5dc15b6f655e54bed036c
-CONTRIBUTING.de.md: b9c14c3eb70ed86cce1e9bc08f0d82ea197e6d91
+CONTRIBUTING.md: 9ae7270fbdce8e5e58fb4ca7e8d23433b09a5fbf
+CONTRIBUTING.zh.md: c72510bd752802a163368ad6d342daf35da8e35e
+CONTRIBUTING.de.md: 3b8e9697621bff4ffbc9a09b70d364987b807cfa

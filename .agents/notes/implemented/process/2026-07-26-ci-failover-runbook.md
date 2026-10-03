@@ -1,9 +1,8 @@
 # Agent Note: CI failover runbook — hosted pools → in-house pool
-English | [中文](.agents/notes/implemented/process/2026-07-26-ci-failover-runbook.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-26-ci-failover-runbook.de.md)
+English | [中文](2026-07-26-ci-failover-runbook.zh.md) | [Deutsch](2026-07-26-ci-failover-runbook.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-26-ci-failover-runbook.zh.md)
 
 ## Problem
 

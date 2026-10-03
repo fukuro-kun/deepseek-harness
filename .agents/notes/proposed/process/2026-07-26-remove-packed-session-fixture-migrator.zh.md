@@ -1,8 +1,8 @@
 # Agent Note: 移除打包会话 fixture 分支迁移器
+[English](2026-07-26-remove-packed-session-fixture-migrator.md) | 中文 | [Deutsch](2026-07-26-remove-packed-session-fixture-migrator.de.md)
 
 Status: proposed
 
-[English](.agents/notes/proposed/process/2026-07-26-remove-packed-session-fixture-migrator.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-07-26-remove-packed-session-fixture-migrator.de.md)
 
 ## 问题
 

@@ -1,6 +1,6 @@
 # 会话投影
+[English](session-projection.md) | 中文 | [Deutsch](session-projection.de.md)
 
-[English](session-projection.md) | 中文
 
 会话投影 seam 是一项[能力 seam](../capability-seams.zh.md)：领域 host 插件经由它向客户端载体供给按会话的日志派生状态的当前全量值；三方分别是 Service Definition 与注册表（[dsh-session-projection](../../packages/session/session-projection)，`ctx.sessionProjections`）、领域贡献方（每个领域注册一个纯单元）与载体（[dsh-session-controller](../../packages/api/session-controller) 的历史尾页与 `session/projection` 推送帧）。它是一项可选能力，不属于 agent loop（智能体循环）主干。框架负责驱动，领域负责计算：注册表只订阅一次 `session/event`，并把每个已提交事件折叠进每个单元；领域不持有任何订阅，客户端也从不折叠领域事件——它们收到的是成品值。设计权威：[session-projection RFC](../../.agents/notes/proposed/architecture/2026-07-27-session-projection-and-command-log.zh.md)；驱动、缓存与变更流约定：[包 README](../../packages/session/session-projection/README.zh.md)。
 
@@ -11,8 +11,6 @@
 `SessionProjectionStateMap` 是 host 侧折叠状态的 merge-extensible 类型表，`SessionProjectionMap` 则继续表示客户端可见的全量值。领域为每个状态 key 贡献一个 `ProjectionDefinition`；`wire` 块使该 key 对客户端可见，渲染归 slot 体系管，永远不归本层：
 
 ```ts type-equiv
-
-[English](session-projection.md) | 中文 | [Deutsch](session-projection.de.md)
 /**
  * One domain's state-driven computation unit: a pure synchronous fold plus
  * declarations and an optional client view — never an opaque getter. The framework drives

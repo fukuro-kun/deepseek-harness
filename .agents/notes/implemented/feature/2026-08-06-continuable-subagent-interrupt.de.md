@@ -1,8 +1,8 @@
 # Agent Note: Interrupt der aktuellen Turn eines continuable subagent
+[English](2026-08-06-continuable-subagent-interrupt.md) | [中文](2026-08-06-continuable-subagent-interrupt.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-06-continuable-subagent-interrupt.md) | [中文](2026-08-06-continuable-subagent-interrupt.zh.md) | Deutsch
 
 ## Problem
 

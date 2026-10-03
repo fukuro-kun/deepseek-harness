@@ -1,6 +1,6 @@
 # 长 Session 浏览器基准
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 [long-session.bench.ts](long-session.bench.ts) 中必需的 Chromium 工作流测量打开合成的 240 轮 Session、加载所有更早的分页、访问 Trajectory，以及在有节奏的流式回复期间输入下一条草稿。随产品维护的 Web scaffold 拥有隔离的主目录、持久化、重放适配器和回环监听器；Chromium 加载构建后的 Web 产物，而非替代开发服务器。
 

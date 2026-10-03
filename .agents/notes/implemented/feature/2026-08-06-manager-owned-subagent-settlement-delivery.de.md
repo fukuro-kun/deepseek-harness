@@ -1,8 +1,8 @@
 # Agent Note: Settlement-Zustellung gehört dem continuation manager
+[English](2026-08-06-manager-owned-subagent-settlement-delivery.md) | [中文](2026-08-06-manager-owned-subagent-settlement-delivery.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-06-manager-owned-subagent-settlement-delivery.md) | [中文](2026-08-06-manager-owned-subagent-settlement-delivery.zh.md) | Deutsch
 
 ## Problem
 

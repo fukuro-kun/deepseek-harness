@@ -1,8 +1,8 @@
 # Agent Note: Sidebar-Dateibearbeitung mit abgesichertem Schreib-Endpunkt
+[English](2026-09-28-sidebar-file-editing.md) | [中文](2026-09-28-sidebar-file-editing.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-28-sidebar-file-editing.md) | [中文](2026-09-28-sidebar-file-editing.zh.md) | Deutsch
 
 ## Problem
 

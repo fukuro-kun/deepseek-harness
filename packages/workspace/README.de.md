@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # packages/workspace
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -32,9 +32,9 @@ Die Workspace-Familie lässt ein Host-Produkt eine geordnete Liste benannter Pro
 ## Verwandte Dokumentation
 
 - [Workspace-Subsystem](../../docs/subsystems/workspace.de.md) — der verbindliche Feature-Vertrag für Projekte und ihre Sessions.
-- [Domain-KV-Storage Agent Note](../../.agents/notes/proposed/architecture/2026-07-24-domain-kv-storage-and-workspace.md) — das Speicherdesign hinter den Projekteinträgen.
+- [Domain-KV-Storage Agent Note](../../.agents/notes/proposed/architecture/2026-07-24-domain-kv-storage-and-workspace.de.md) — das Speicherdesign hinter den Projekteinträgen.
 - [Workspace-UI-Produktfluss Agent Note](../../.agents/notes/archived/feature/2026-07-25-workspace-ui-product-flow.md) — wie der erste Start Projekte aus dem Session-Verlauf aufbaut und wie die GUI sie ordnet.
-- [Entscheidung zum Löschen von Workspace-Registrierungen](../../.agents/notes/implemented/feature/2026-07-27-workspace-registration-deletion.md) — warum das Entfernen eines Projekts niemals dessen Ordner oder Sessions löscht.
+- [Entscheidung zum Löschen von Workspace-Registrierungen](../../.agents/notes/implemented/feature/2026-07-27-workspace-registration-deletion.de.md) — warum das Entfernen eines Projekts niemals dessen Ordner oder Sessions löscht.
 
 -----
 

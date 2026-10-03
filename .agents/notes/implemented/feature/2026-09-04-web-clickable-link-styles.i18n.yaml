@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-04-web-clickable-link-styles.md
-2026-09-04-web-clickable-link-styles.md: a3292ba0a13dfc943b27bc054b2036d4cd8abc77
-2026-09-04-web-clickable-link-styles.zh.md: 0b15a6c72df9151ffb79f7fb41d582e191e79be6
-2026-09-04-web-clickable-link-styles.de.md: 3f26a817d9b170ea0fc8e4ce004bdf7eb274f35d
+2026-09-04-web-clickable-link-styles.md: dc778f7b57f244ec05cfa30c509e37735445db6e
+2026-09-04-web-clickable-link-styles.zh.md: f3b2ff0f9295c02d44403b29f955aa74774d582d
+2026-09-04-web-clickable-link-styles.de.md: 3653205c8634601cde7f52638135f19724347a95

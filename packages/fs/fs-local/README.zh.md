@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-fs-local
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用 `dsh-fs-local` 可在宿主文件系统上读取、列出、原子写入和编辑文件。相对路径从可配置的基准目录解析，而绝对路径和父目录遍历不受限制。到达同一文件的路径和符号链接共享一个身份。写入保留文件权限，可选版本防护会拒绝陈旧覆盖。直接访问宿主文件时选择本包；需要约束变更时使用 `fs-sandbox`，文件位于远程执行世界时使用 `fs-e2b`。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

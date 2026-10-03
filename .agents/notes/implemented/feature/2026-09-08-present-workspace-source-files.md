@@ -1,9 +1,8 @@
 # Agent Note: Present declares workspace source files
-English | [中文](.agents/notes/implemented/feature/2026-09-08-present-workspace-source-files.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-08-present-workspace-source-files.de.md)
+English | [中文](2026-09-08-present-workspace-source-files.zh.md) | [Deutsch](2026-09-08-present-workspace-source-files.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-08-present-workspace-source-files.zh.md)
 
 ## Problem
 

@@ -1,8 +1,7 @@
 # 实操手册：添加 Session 日志格式版本
-
-[English](adding-a-session-format-version.md) | 中文
-
 [English](adding-a-session-format-version.md) | 中文 | [Deutsch](adding-a-session-format-version.de.md)
+
+
 
 ## 概述
 

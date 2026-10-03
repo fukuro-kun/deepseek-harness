@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-fs-search
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -66,7 +66,7 @@ Routine-Budgets bleiben aus dem modellseitigen Schema heraus: Ein Modell, das Um
 | `stderrMaxBytes` | `65536` | Diagnose-Endstück-Budget für `rg`-stderr |
 | `searchMetaMaxBytes` | `65536` | Maximale Bytes des serialisierten `presentationMeta` einer Suche; darüber hinaus werden hintere Gruppen/Pfade verworfen |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-tool-fs-search) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-tool-fs-search) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Deployment-Anforderung
 
@@ -121,9 +121,9 @@ Lesen Sie diese Seiten, wenn der Paketvertrag nicht ausreicht. Sie führen von d
 - [Filesystem-Subsystem](../../../docs/subsystems/filesystem.de.md) — erschöpfender Provider-Vertrag, Policy-Events und Fehlertaxonomie.
 - [tool-fs](../tool-fs/README.de.md) — die Schwester-`read`/`write`/`edit`-Tools für Folge-Reads.
 - [Subprocess-Fähigkeit](../../../docs/subsystems/subprocess.de.md) — die Spawn-Seam, über die diese Tools ausführen.
-- [Spill-Store](../../spill/spill/README.md) — das optionale Backend, das gekappte Ergebnisse vollständig wiederherstellbar macht.
-- [Timeout-Utility](../../util/timeout/README.md) — die `MAX_TIMER_DELAY_MS`-Grenze der Terminate-Grace.
-- [Generierter Tool-Katalog](../../../docs/tool-catalog.md#deepseek-aidsh-tool-fs-search) — die erschöpfenden Schemas, die dieses Paket registriert.
+- [Spill-Store](../../spill/spill/README.de.md) — das optionale Backend, das gekappte Ergebnisse vollständig wiederherstellbar macht.
+- [Timeout-Utility](../../util/timeout/README.de.md) — die `MAX_TIMER_DELAY_MS`-Grenze der Terminate-Grace.
+- [Generierter Tool-Katalog](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-fs-search) — die erschöpfenden Schemas, die dieses Paket registriert.
 
 -----
 
@@ -166,7 +166,7 @@ Präfix-stabil, solange sichtbarer Tool-Satz, Plugin-Scope, Sampling-Wahl und An
 
 #### Was das Modell sieht
 
-Die glob-Beschreibung nennt die konfigurierte Ordnung bei Überschreitung. Die generierten [`glob`- und `grep`-Schemas](../../../docs/tool-catalog.md#deepseek-aidsh-tool-fs-search) verwenden `sampleOverCapGlobResults: true`; die Tools werden bedingungslos registriert.
+Die glob-Beschreibung nennt die konfigurierte Ordnung bei Überschreitung. Die generierten [`glob`- und `grep`-Schemas](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-fs-search) verwenden `sampleOverCapGlobResults: true`; die Tools werden bedingungslos registriert.
 
 #### Token-Effekt
 

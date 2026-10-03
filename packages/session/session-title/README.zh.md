@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-session-title
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用 `dsh-session-title` 为每个会话提供客户端可见标题，标题可以来自第一条符合条件的用户消息、可选异步生成器或显式用户重命名。已接受的标题在回放、恢复与分页后仍然存在，但绝不会进入模型输入。自动生成绝不会延迟主 agent 响应，较新的标题请求会取代旧工作。当客户端需要带可配置长度上限的持久标题，以及通过 `refresh()` 主动重新生成标题的路径时，请选择本包。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

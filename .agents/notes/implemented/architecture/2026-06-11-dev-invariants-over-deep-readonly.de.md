@@ -1,8 +1,8 @@
 # Agent Note: Quellseitig gesicherte Session-Immutabilität und Dev-Mode-Invarianten
+[English](2026-06-11-dev-invariants-over-deep-readonly.md) | [中文](2026-06-11-dev-invariants-over-deep-readonly.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-11-dev-invariants-over-deep-readonly.md) | [中文](2026-06-11-dev-invariants-over-deep-readonly.zh.md) | Deutsch
 
 ## Problem
 

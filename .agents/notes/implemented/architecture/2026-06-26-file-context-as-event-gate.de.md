@@ -1,8 +1,8 @@
 # Agent Note: `dsh-fs-observation-policy` als Event-Gate-Plugin, nicht als Methoden-Interface
+[English](2026-06-26-file-context-as-event-gate.md) | [中文](2026-06-26-file-context-as-event-gate.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-26-file-context-as-event-gate.md) | [中文](2026-06-26-file-context-as-event-gate.zh.md) | Deutsch
 
 ## Problem
 

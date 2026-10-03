@@ -1,9 +1,8 @@
 # Agent Note: Web background-job display
-English | [中文](.agents/notes/implemented/feature/2026-08-08-web-background-job-display.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-08-web-background-job-display.de.md)
+English | [中文](2026-08-08-web-background-job-display.zh.md) | [Deutsch](2026-08-08-web-background-job-display.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-08-web-background-job-display.zh.md)
 
 ## Problem
 

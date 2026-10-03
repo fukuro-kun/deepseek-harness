@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.md
-2026-07-31-web-workspace-file-links.md: a10725ecf36f82c6d21a30dbeda4988dfec14cc6
-2026-07-31-web-workspace-file-links.zh.md: 8cb1d06562398a832fed0743a7c06894d0a4212b
-2026-07-31-web-workspace-file-links.de.md: fe942c38e81bc32d99028c7aa6b12e4d1ad88248
+2026-07-31-web-workspace-file-links.md: f752529a311a877ea5a99389fe92a690ef1520f2
+2026-07-31-web-workspace-file-links.zh.md: c54dd3ff1b33c50ede7357384aab6f9f2f60c6c5
+2026-07-31-web-workspace-file-links.de.md: 7a5a352202ace1a8c80502541cdb5a70e2d5013b

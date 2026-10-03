@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-03-per-session-agent-presets.md
-2026-08-03-per-session-agent-presets.md: 42b8f58c143643a2bfe733c2328cd5cb7c6a8308
-2026-08-03-per-session-agent-presets.zh.md: 4302c8938c914d059521e01367d48974a7e50892
-2026-08-03-per-session-agent-presets.de.md: c9bb0dc49ea09ea9e3940a01d2ca7ba1e3549115
+2026-08-03-per-session-agent-presets.md: 983312b4da8e1004ff49075c24a11ecea7332301
+2026-08-03-per-session-agent-presets.zh.md: 44883fe91a95c34b673fcb32440d105e51664712
+2026-08-03-per-session-agent-presets.de.md: 2a9bd79f090dab57ca0faaf76b5c8cad3867b261

@@ -2,8 +2,8 @@
      Aktualisiere zuerst das Englische mit `pnpm run gen-cordis-catalog`, dann diese Datei und zeichne die Paarung mit `pnpm run verify-translation-pairing --write docs/cordis-api/service.md` neu auf. -->
 
 # Service
-
 [English](service.md) | [中文](service.zh.md) | Deutsch
+
 
 Die Basisklasse für Context-Services. Eine als Plugin geladene Unterklasse registriert sich als `ctx.<name>`.
 

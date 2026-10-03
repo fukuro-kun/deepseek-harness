@@ -1,8 +1,8 @@
 # Agent Note: Gepflegte Abhängigkeiten der Eigenimplementierung vorziehen
+[English](2026-07-26-dependencies-over-hand-rolling.md) | [中文](2026-07-26-dependencies-over-hand-rolling.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-26-dependencies-over-hand-rolling.md) | [中文](2026-07-26-dependencies-over-hand-rolling.zh.md) | Deutsch
 
 ## Problem
 

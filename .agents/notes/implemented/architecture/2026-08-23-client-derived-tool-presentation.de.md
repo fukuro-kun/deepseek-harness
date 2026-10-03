@@ -1,8 +1,8 @@
 # Agent Note: Client-abgeleitete Darstellung aus rohen Session-Tool-Ereignissen
+[English](2026-08-23-client-derived-tool-presentation.md) | [中文](2026-08-23-client-derived-tool-presentation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-23-client-derived-tool-presentation.md) | [中文](2026-08-23-client-derived-tool-presentation.zh.md) | Deutsch
 
 ## Problem
 

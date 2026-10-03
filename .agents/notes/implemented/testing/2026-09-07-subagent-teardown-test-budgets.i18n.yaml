@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-07-subagent-teardown-test-budgets.md
-2026-09-07-subagent-teardown-test-budgets.md: 2f1fbbd8080c6e181a521a98deae47e610467bdd
-2026-09-07-subagent-teardown-test-budgets.zh.md: 1487351d498c9d0ef9eb6c2e83e47425ac82b9c9
-2026-09-07-subagent-teardown-test-budgets.de.md: f26ef4f7675b51943a7a49b638073837f1dbf9bf
+2026-09-07-subagent-teardown-test-budgets.md: ec1dba9ea83b5b8e3f1120bd5305753f19ba68c8
+2026-09-07-subagent-teardown-test-budgets.zh.md: dbe0141ee67096dad9e478237062e03e3e5207f4
+2026-09-07-subagent-teardown-test-budgets.de.md: 6482570f93d02216cf43904762b509354186aeeb

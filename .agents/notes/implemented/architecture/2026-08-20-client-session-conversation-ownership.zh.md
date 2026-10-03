@@ -1,8 +1,8 @@
 # Agent Note: Client Session、Conversation 与 UI 所有权分层
+[English](2026-08-20-client-session-conversation-ownership.md) | 中文 | [Deutsch](2026-08-20-client-session-conversation-ownership.de.md)
 
 Status: implemented
 
-[English](2026-08-20-client-session-conversation-ownership.md) | 中文 | [Deutsch](2026-08-20-client-session-conversation-ownership.de.md)
 
 ## 问题
 

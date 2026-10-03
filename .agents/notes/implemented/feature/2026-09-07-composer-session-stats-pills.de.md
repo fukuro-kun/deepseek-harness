@@ -1,8 +1,8 @@
 # Agent Note: Composer-Sitzungsstatistik — zwei Icon-Pills mit Statistikdialogen per Klick
+[English](2026-09-07-composer-session-stats-pills.md) | [中文](2026-09-07-composer-session-stats-pills.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-composer-session-stats-pills.md) | [中文](2026-09-07-composer-session-stats-pills.zh.md) | Deutsch
 
 ## Problem
 

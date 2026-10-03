@@ -1,8 +1,8 @@
 # Agent Note: MCP-Client-Plugin — externe MCP-Server anbinden und ihre Tools bridgen
+[English](2026-07-07-mcp-client-plugin.md) | [中文](2026-07-07-mcp-client-plugin.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-07-mcp-client-plugin.md) | [中文](2026-07-07-mcp-client-plugin.zh.md) | Deutsch
 
 ## Problem
 

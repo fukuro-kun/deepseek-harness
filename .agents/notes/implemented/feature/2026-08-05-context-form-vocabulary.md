@@ -1,9 +1,8 @@
 # Agent Note: Producer-declared context forms
-English | [中文](.agents/notes/implemented/feature/2026-08-05-context-form-vocabulary.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-05-context-form-vocabulary.de.md)
+English | [中文](2026-08-05-context-form-vocabulary.zh.md) | [Deutsch](2026-08-05-context-form-vocabulary.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-05-context-form-vocabulary.zh.md)
 
 ## Problem
 

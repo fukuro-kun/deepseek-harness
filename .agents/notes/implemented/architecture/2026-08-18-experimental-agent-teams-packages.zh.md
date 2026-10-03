@@ -1,8 +1,8 @@
 # Agent Note: 以实验性包名发布 Agent Teams
+[English](2026-08-18-experimental-agent-teams-packages.md) | 中文 | [Deutsch](2026-08-18-experimental-agent-teams-packages.de.md)
 
 Status: implemented
 
-[English](2026-08-18-experimental-agent-teams-packages.md) | 中文 | [Deutsch](2026-08-18-experimental-agent-teams-packages.de.md)
 
 ## 问题
 

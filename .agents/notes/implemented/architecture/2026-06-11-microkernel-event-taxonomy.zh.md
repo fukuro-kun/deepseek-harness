@@ -1,8 +1,8 @@
 # Agent Note: 微内核——通过 Cordis 事件分类体系实现扩展，唯一具体循环
+[English](2026-06-11-microkernel-event-taxonomy.md) | 中文 | [Deutsch](2026-06-11-microkernel-event-taxonomy.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-11-microkernel-event-taxonomy.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-microkernel-event-taxonomy.de.md)
 
 ## 问题
 

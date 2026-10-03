@@ -1,9 +1,8 @@
 # Agent Note: File URLs for inserted patch plugins
-English | [中文](.agents/notes/implemented/bug-fix/2026-09-05-patch-plugin-file-urls.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-05-patch-plugin-file-urls.de.md)
+English | [中文](2026-09-05-patch-plugin-file-urls.zh.md) | [Deutsch](2026-09-05-patch-plugin-file-urls.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-05-patch-plugin-file-urls.zh.md)
 
 ## Problem
 

@@ -4,15 +4,14 @@ kind: "package-group"
 ---
 
 # util/：共享工具
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `util/` 组为能力包提供共享的机制原语，避免重复实现。它涵盖原子写入、品牌化 id、双端队列、无损 JSON 值、UUID、Harness home 路径、启动环境、出站代理策略、原生命令、输出保留、时区规范化和超时处理。这里的每个根入口都是库：它不注册产品服务或事件，业务语义仍由消费它的能力负责。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [包](#packages)

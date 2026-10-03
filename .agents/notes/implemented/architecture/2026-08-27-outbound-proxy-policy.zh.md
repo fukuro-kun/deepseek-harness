@@ -1,8 +1,8 @@
 # Agent Note: 一份出站代理策略，在任何请求发生之前装好
+[English](2026-08-27-outbound-proxy-policy.md) | 中文 | [Deutsch](2026-08-27-outbound-proxy-policy.de.md)
 
 Status: implemented
 
-[English](2026-08-27-outbound-proxy-policy.md) | 中文 | [Deutsch](2026-08-27-outbound-proxy-policy.de.md)
 
 ## Problem
 

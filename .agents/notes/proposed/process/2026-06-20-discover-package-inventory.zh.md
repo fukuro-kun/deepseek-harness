@@ -1,8 +1,8 @@
 # Agent Note: 通过发现机制获取包清单，而非维护静态列表
+[English](2026-06-20-discover-package-inventory.md) | 中文 | [Deutsch](2026-06-20-discover-package-inventory.de.md)
 
 Status: proposed
 
-[English](.agents/notes/proposed/process/2026-06-20-discover-package-inventory.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-06-20-discover-package-inventory.de.md)
 
 ## 问题
 

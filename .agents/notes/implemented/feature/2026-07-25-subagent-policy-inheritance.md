@@ -1,9 +1,8 @@
 # Agent Note: In-process subagent policy inheritance — the child starts under the parent's sandbox override
-English | [中文](.agents/notes/implemented/feature/2026-07-25-subagent-policy-inheritance.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-25-subagent-policy-inheritance.de.md)
+English | [中文](2026-07-25-subagent-policy-inheritance.zh.md) | [Deutsch](2026-07-25-subagent-policy-inheritance.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-25-subagent-policy-inheritance.zh.md)
 
 ## Problem
 

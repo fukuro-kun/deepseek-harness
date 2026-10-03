@@ -1,6 +1,6 @@
 # Tools
-
 [English](tools.md) | [中文](tools.zh.md) | Deutsch
+
 
 Die Tool-Pipeline von [dsh-tools](../../packages/core/tools). [core.md](core.de.md) führt `ToolDefinition` als den Pipeline-Authoring-Typ ein, der von den Core-Paketen geteilt wird; der modellseitige [`ToolSchema`](llm-streaming.de.md#the-model-request-and-result)-Wire-Typ wird zusammen mit der Modellanfrage deklariert. Diese Seite dokumentiert jedes `ToolDefinition`-Feld, die typisierte Schema-DSL, die es erzeugt, die abgesicherten Ausführungstypen und die UI-Präsentationstypen.
 

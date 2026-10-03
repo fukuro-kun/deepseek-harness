@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-07-pwsh-ci-observable-completion.md
-2026-09-07-pwsh-ci-observable-completion.md: f6e7f201e136c9fa46878de2c6b629c764b5d3d4
-2026-09-07-pwsh-ci-observable-completion.zh.md: 8c76d165466821913b17de92c6ac0b3ee9bc06d8
-2026-09-07-pwsh-ci-observable-completion.de.md: 01f4eac008a881a87e95d108faafb53e932bc7eb
+2026-09-07-pwsh-ci-observable-completion.md: 2b8153b0928cb79c11d3fd2357c68b0b139ed492
+2026-09-07-pwsh-ci-observable-completion.zh.md: f8afc7c7cffcab2a829da25982bc46e231078ab6
+2026-09-07-pwsh-ci-observable-completion.de.md: c8d1ec64cbb6594b6079344ef68801a24f91cd85

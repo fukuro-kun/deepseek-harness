@@ -1,9 +1,8 @@
 # Agent Note: Nested terminal cards
-English | [中文](.agents/notes/implemented/bug-fix/2026-09-05-nested-terminal-cards.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-05-nested-terminal-cards.de.md)
+English | [中文](2026-09-05-nested-terminal-cards.zh.md) | [Deutsch](2026-09-05-nested-terminal-cards.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-05-nested-terminal-cards.zh.md)
 
 ## Problem
 

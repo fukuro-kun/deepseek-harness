@@ -1,8 +1,8 @@
 # Agent Note: Schlüssellose Browser-e2e-Lane für das Web GUI
+[English](2026-07-24-web-gui-browser-e2e-lane.md) | [中文](2026-07-24-web-gui-browser-e2e-lane.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-24-web-gui-browser-e2e-lane.md) | [中文](2026-07-24-web-gui-browser-e2e-lane.zh.md) | Deutsch
 
 ## Problem
 

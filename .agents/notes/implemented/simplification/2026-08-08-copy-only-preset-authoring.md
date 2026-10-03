@@ -1,9 +1,8 @@
 # Agent Note: Copy-only preset authoring, and the way into a preset's files
-English | [中文](.agents/notes/implemented/simplification/2026-08-08-copy-only-preset-authoring.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-08-08-copy-only-preset-authoring.de.md)
+English | [中文](2026-08-08-copy-only-preset-authoring.zh.md) | [Deutsch](2026-08-08-copy-only-preset-authoring.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-08-copy-only-preset-authoring.zh.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: 输入框下的会话统计 —— 双图标 pill 与点击展开的统计弹层
+[English](2026-09-07-composer-session-stats-pills.md) | 中文 | [Deutsch](2026-09-07-composer-session-stats-pills.de.md)
 
 Status: implemented
 
-[English](2026-09-07-composer-session-stats-pills.md) | 中文
 
 ## 问题
 

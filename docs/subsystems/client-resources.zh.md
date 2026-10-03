@@ -1,6 +1,6 @@
 # 客户端资源
+[English](client-resources.md) | 中文 | [Deutsch](client-resources.de.md)
 
-[English](client-resources.md) | 中文
 
 客户端资源模型把一个地址变成任何 Web Client 组件都能读的活数据。[`dsh-client-resources`](../../packages/client/resources/README.zh.md) 提供 `ctx.resources` 服务与 `useResource` 全局标准 hook；拥有某类内容的包为它的**协议**注册一个**提供方**，组件按**地址**读取该内容的当前状态，而无需引用拥有者的运行时。右侧 Sidebar 的 tab 是这个模型的第一个消费方（[右侧 Sidebar](sidebar-right.zh.md)）；决策记录见 [客户端资源模型 Agent Note](../../.agents/notes/implemented/architecture/2026-09-05-client-resource-model.zh.md)。
 
@@ -12,7 +12,6 @@
 
 | 地址 | 协议键 | 读作 |
 
-[English](client-resources.md) | 中文 | [Deutsch](client-resources.de.md)
 |---|---|---|
 | `dsh-resource://file/session/s1/notes/a.md` | `file` | 会话 `s1` 工作区根下 `notes/a.md` 的元数据（`file` 提供方已注册时） |
 | `dsh-resource://file/absolute/home/me/notes.md` | `file` | 可解析，但没有授权 Session，以 `workspace-file/unknown-workspace` 失败；不借用当前或 Tab Session |

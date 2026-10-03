@@ -1,8 +1,8 @@
 # Agent Note: 工作区文件读取权限
+[English](2026-09-09-workspace-file-read-authority.md) | 中文 | [Deutsch](2026-09-09-workspace-file-read-authority.de.md)
 
 Status: implemented
 
-[English](2026-09-09-workspace-file-read-authority.md) | 中文 | [Deutsch](2026-09-09-workspace-file-read-authority.de.md)
 
 ## Problem
 

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-09-09-blocked-weighted-approvals-remain-pending.md
-2026-09-09-blocked-weighted-approvals-remain-pending.md: e0d2d3112a17a3e0afa249eb6b3ed66a86b5529c
-2026-09-09-blocked-weighted-approvals-remain-pending.zh.md: 58ab10b3acb3bee92c720b622d92170a1a8bcf03
-2026-09-09-blocked-weighted-approvals-remain-pending.de.md: dc567074272d24730d9515fc69def7332420f5a3
+2026-09-09-blocked-weighted-approvals-remain-pending.md: f534aef9a304023ff9a62500b9dc88ccf4497898
+2026-09-09-blocked-weighted-approvals-remain-pending.zh.md: 6cdc509ae5ddd59a9dc409cab113d1a7795e9dae
+2026-09-09-blocked-weighted-approvals-remain-pending.de.md: 4a05cdfcbcf248e216f4ea03d98067d4246e2cf7

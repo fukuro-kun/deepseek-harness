@@ -1,8 +1,8 @@
 # Agent Note: Scope-Kill im Wettlauf mit dem One-Shot-Bootstrap
+[English](2026-09-28-scope-kill-before-bootstrap.md) | [中文](2026-09-28-scope-kill-before-bootstrap.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-28-scope-kill-before-bootstrap.md) | [中文](2026-09-28-scope-kill-before-bootstrap.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: 会话持久化作为基于现有 `SessionEvent` 的抽象服务
+[English](2026-06-14-session-persistence.md) | 中文 | [Deutsch](2026-06-14-session-persistence.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-14-session-persistence.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-14-session-persistence.de.md)
 
 ## 问题
 

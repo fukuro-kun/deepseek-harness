@@ -1,8 +1,8 @@
 # Agent Note: Child agents join their parent's preset composition
+[English](2026-08-10-child-agents-join-their-parent-preset.md) | [中文](2026-08-10-child-agents-join-their-parent-preset.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-child-agents-join-their-parent-preset.md) | [中文](2026-08-10-child-agents-join-their-parent-preset.zh.md) | Deutsch
 
 ## Problem
 

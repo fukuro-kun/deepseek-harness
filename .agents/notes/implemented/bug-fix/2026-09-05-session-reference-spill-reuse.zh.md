@@ -1,8 +1,8 @@
 # Agent Note: 为截断的会话引用复用 spill 存储
+[English](2026-09-05-session-reference-spill-reuse.md) | 中文 | [Deutsch](2026-09-05-session-reference-spill-reuse.de.md)
 
 Status: implemented
 
-[English](2026-09-05-session-reference-spill-reuse.md) | 中文
 
 ## 问题
 

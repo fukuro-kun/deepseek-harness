@@ -1,8 +1,8 @@
 # Agent Note: 嵌套 terminal 卡片
+[English](2026-09-05-nested-terminal-cards.md) | 中文 | [Deutsch](2026-09-05-nested-terminal-cards.de.md)
 
 Status: implemented
 
-[English](2026-09-05-nested-terminal-cards.md) | 中文
 
 ## 问题
 

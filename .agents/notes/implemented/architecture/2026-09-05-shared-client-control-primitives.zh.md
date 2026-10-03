@@ -1,8 +1,8 @@
 # Agent Note: Shared client control primitives
+[English](2026-09-05-shared-client-control-primitives.md) | 中文 | [Deutsch](2026-09-05-shared-client-control-primitives.de.md)
 
 Status: implemented
 
-[English](2026-09-05-shared-client-control-primitives.md) | 中文 | [Deutsch](2026-09-05-shared-client-control-primitives.de.md)
 
 ## Problem
 

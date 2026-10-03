@@ -1,8 +1,8 @@
 # Agent Note: Kanonisches Feedback-Log und Request-Zustellung
+[English](2026-09-05-canonical-feedback-log.md) | [中文](2026-09-05-canonical-feedback-log.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-canonical-feedback-log.md) | [中文](2026-09-05-canonical-feedback-log.zh.md) | Deutsch
 
 ## Problem
 

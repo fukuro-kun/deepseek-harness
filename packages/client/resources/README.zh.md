@@ -3,8 +3,8 @@ description: "客户端资源模型：按协议注册的提供方把 URL 地址�
 kind: "package-reference"
 ---
 # @deepseek-ai/dsh-client-resources
-
 [English](README.md) | 中文 | [Deutsch](README.de.md)
+
 
 ## 概述
 
@@ -12,7 +12,6 @@ kind: "package-reference"
 
 ## 目录
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 - [使用本包](#use-this-package)
   - [读取资源](#read-a-resource)

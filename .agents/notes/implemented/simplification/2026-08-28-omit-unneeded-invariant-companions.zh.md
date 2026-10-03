@@ -1,8 +1,8 @@
 # Agent Note: 没有独立观察时省略不变量伴生入口
+[English](2026-08-28-omit-unneeded-invariant-companions.md) | 中文 | [Deutsch](2026-08-28-omit-unneeded-invariant-companions.de.md)
 
 Status: implemented
 
-[English](2026-08-28-omit-unneeded-invariant-companions.md) | 中文
 
 ## 问题
 

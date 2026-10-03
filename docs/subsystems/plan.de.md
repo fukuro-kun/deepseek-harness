@@ -1,6 +1,6 @@
 # Plan Mode
-
 [English](plan.md) | [中文](plan.zh.md) | Deutsch
+
 
 Plan Mode ist ein geloggter, pro-Agent-Kollaborationszustand im Besitz von [dsh-plan-mode](../../packages/plan/plan-mode) (`ctx.planMode`, `PlanModeController`): Solange er aktiv ist, wird jeder Modellanfrage ein deployment-eigener Guidance-Abschnitt beigefügt. Plan Mode ist **weiche Führung**. [Sandbox Mode](sandbox.de.md) und die [Approval-Policy](approval.de.md) erzwingen Einschränkungen unabhängig; keine der beiden liest oder schreibt Plan-Zustand, daher konfigurieren Deployments sie getrennt. Das Paket ist optional, und der Agent Loop hängt nicht von ihm ab. Es trägt den `plan:policy`-Prompt-Abschnitt bei und registriert das `exit_plan_mode`-Tool und das `/plan`-Kommando. Die [Design-Notiz](../../.agents/notes/implemented/simplification/2026-07-22-plan-specific-collaboration-state.de.md) besitzt die Begründung; das [Paket-README](../../packages/plan/plan-mode/README.de.md) besitzt die Model-Experience- und Limitationsdetails.
 

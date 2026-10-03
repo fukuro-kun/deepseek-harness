@@ -1,6 +1,6 @@
 # Auf Review-Kommentare in einer gestapelten PR-Kette antworten
-
 [English](responding-to-pr-review-on-a-stack.md) | [中文](responding-to-pr-review-on-a-stack.zh.md) | Deutsch
+
 
 Review-Kommentare können mehrere PRs in einer abhängigen stack (`A ← B ← C …`) betreffen. Diese Kette über die offizielle GitHub-Stacked-PR-Funktion verknüpft halten. Dieser Leitfaden verantwortet Platzierung und Propagation von Review-Fixes; der [dsh-merging-stacked-prs](../../.agents/skills/dsh-merging-stacked-prs/SKILL.md) skill verantwortet Verknüpfungsprüfungen und Landing.
 

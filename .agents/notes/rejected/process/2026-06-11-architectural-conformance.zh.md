@@ -1,8 +1,8 @@
 # Agent Note: 架构一致性——依赖规则与适配器套件
+[English](2026-06-11-architectural-conformance.md) | 中文 | [Deutsch](2026-06-11-architectural-conformance.de.md)
 
 Status: rejected — premise gone: plugins depend on dsh-agent-loop by design; dsh-llm/invariant and the hygiene dependency gates own conformance
 
-[English](2026-06-11-architectural-conformance.md) | 中文
 
 ## 问题
 

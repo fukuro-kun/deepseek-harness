@@ -1,6 +1,6 @@
 # Laufzeit-Invarianten
-
 [English](invariants.md) | [中文](invariants.zh.md) | Deutsch
+
 
 [dsh-invariants](../../packages/runtime-diagnostics/invariants) ist der konfigurierbare Registry-Service (`ctx.invariants`) für paketeigene Laufzeit-Invariantenprüfungen. Es ist ein einzelnes Support-Gruppen-Paket, keine Capability Seam aus drei Paketen und nicht Teil der Agent-Loop-Spine: Die Registry besitzt Auswahl, Namensreservierung, Child-Fiber-Lebenszyklus und paketattribuierte Fehler, während jedes Workspace-Paket ein `./invariant`-Begleit-Plugin veröffentlicht, das Prüfungen unter seinem exakten npm-Paketnamen registriert. Was eine Prüfung asserten darf — autoritative Event-Streams oder mutable Daten, niemals die Anwesenheit eines Services oder einer Methode — ist die Laufzeit-Invarianten-Konvention in [AGENTS.md](../../AGENTS.md#conventions).
 

@@ -1,8 +1,8 @@
 # Agent Note: Nur-Explicit-Feedback-Upload über OpenTelemetry
+[English](2026-09-05-nonofficial-feedback-otel.md) | [中文](2026-09-05-nonofficial-feedback-otel.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-nonofficial-feedback-otel.md) | [中文](2026-09-05-nonofficial-feedback-otel.zh.md) | Deutsch
 
 ## Problem
 

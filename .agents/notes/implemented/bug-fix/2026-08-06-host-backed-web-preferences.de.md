@@ -1,8 +1,8 @@
 # Agent Note: Persist Web user preferences through Host settings
+[English](2026-08-06-host-backed-web-preferences.md) | [中文](2026-08-06-host-backed-web-preferences.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-06-host-backed-web-preferences.md) | [中文](2026-08-06-host-backed-web-preferences.zh.md) | Deutsch
 
 ## Problem
 

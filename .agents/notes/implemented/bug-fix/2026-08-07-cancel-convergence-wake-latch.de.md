@@ -1,8 +1,8 @@
 # Agent Note: Latch wake-ups that land in the cancel-convergence window
+[English](2026-08-07-cancel-convergence-wake-latch.md) | [中文](2026-08-07-cancel-convergence-wake-latch.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-07-cancel-convergence-wake-latch.md) | [中文](2026-08-07-cancel-convergence-wake-latch.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Composer 占位提示的判空规则
+[English](2026-09-09-composer-placeholder-whitespace.md) | 中文 | [Deutsch](2026-09-09-composer-placeholder-whitespace.de.md)
 
 Status: implemented
 
-[English](2026-09-09-composer-placeholder-whitespace.md) | 中文
 
 ## Problem
 

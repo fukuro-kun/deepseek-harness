@@ -1,8 +1,8 @@
 # Agent Note: 共享文件类型图标
+[English](2026-09-08-shared-file-type-icons.md) | 中文 | [Deutsch](2026-09-08-shared-file-type-icons.de.md)
 
 Status: implemented
 
-[English](2026-09-08-shared-file-type-icons.md) | 中文
 
 ## 问题
 

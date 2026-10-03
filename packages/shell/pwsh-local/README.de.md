@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-pwsh-local
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -53,7 +53,7 @@ Lade den Executor mit den gewünschten Budgets; jedes Feld hat einen Default, so
 | `graceMs` | `3,000` | Karenzzeit für Kill-Escalation und Pipe-Draining nach dem Exit |
 | `pwshPath` | resolved | Explizites pwsh-Executable; sonst bekannte Orte, dann PATH |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-pwsh-local) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-pwsh-local) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Kommandos ausführen
 

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/feature/2026-10-01-subagent-concurrency-cap.md
-2026-10-01-subagent-concurrency-cap.md: 9e3b2aa3ab016170d610163c9d11fba41c229e45
-2026-10-01-subagent-concurrency-cap.zh.md: ba5d669f3e1888846261a89330edba6fc6ae9264
-2026-10-01-subagent-concurrency-cap.de.md: 53dcc7c7cdb8e730453fe8da95bdf6bf55d1ca09
+2026-10-01-subagent-concurrency-cap.md: 13f4898b17e9f886f3994887d6d43d6ed54360a4
+2026-10-01-subagent-concurrency-cap.zh.md: fbe252c6d09a6ddc631b7846bf1050f363ca31ca
+2026-10-01-subagent-concurrency-cap.de.md: c27743880b81a6d5556a1a75e16c8b010bb2d960

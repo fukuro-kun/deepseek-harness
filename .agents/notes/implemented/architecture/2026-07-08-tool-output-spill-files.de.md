@@ -1,8 +1,8 @@
 # Agent Note: Tool-Output-Spill-Policy
+[English](2026-07-08-tool-output-spill-files.md) | [中文](2026-07-08-tool-output-spill-files.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-08-tool-output-spill-files.md) | [中文](2026-07-08-tool-output-spill-files.zh.md) | Deutsch
 
 ## Problem
 
@@ -10,7 +10,7 @@ Tool-Outputs brauchen begrenzte modellseitige Previews, aber manche übergroße 
 
 Vor dieser Änderung war das Verhalten uneinheitlich. `dsh-bash-local` schreibt vollständige stdout/stderr-Streams bereits in private Temp-Spill-Dateien, wenn sein In-Memory-Tail überläuft, aber gewöhnliche Text-Tool-Ergebnisse wurden inline zurückgegeben, es sei denn, das Tool baute seine eigene Begrenzung von Hand. Die [Tool-Result-Retention-Bibliothek](../../archived/architecture/2026-07-06-tool-result-retention-library.md) besitzt Preview-Mechanik, aber sie besitzt weder Storage noch eine Execution-Pipeline-Policy, die diese Mechanik auf finale Tool-Ergebnisse anwendet.
 
-Die Form entspricht dem Timeout-Policy-Design: Ein Tool-Autor deklariert einen kanonischen Wert plus nativen Renderer, und ein Policy-Plugin setzt das Default-Kontext-Budget des Deployments auf gerenderten Inhalt durch. Tool-spezifischer früher Spill bleibt für Provider-Acquisition-Grenzen möglich; Tool-eigener Präsentations-Spill darf einen vollständigen akquirierten kanonischen Wert behalten, während er nur die Präsentation ersetzt. Der [kanonische Tool-Output-Vertrag](2026-07-20-canonical-tool-output-contract.md) besitzt diese Trennung.
+Die Form entspricht dem Timeout-Policy-Design: Ein Tool-Autor deklariert einen kanonischen Wert plus nativen Renderer, und ein Policy-Plugin setzt das Default-Kontext-Budget des Deployments auf gerenderten Inhalt durch. Tool-spezifischer früher Spill bleibt für Provider-Acquisition-Grenzen möglich; Tool-eigener Präsentations-Spill darf einen vollständigen akquirierten kanonischen Wert behalten, während er nur die Präsentation ersetzt. Der [kanonische Tool-Output-Vertrag](2026-07-20-canonical-tool-output-contract.de.md) besitzt diese Trennung.
 
 ## Entscheidung
 

@@ -3,7 +3,6 @@ English | [中文](2026-07-19-zstandard-jsonl-session-logs.zh.md) | [Deutsch](20
 
 Status: implemented
 
-English | [中文](2026-07-19-zstandard-jsonl-session-logs.zh.md)
 
 ## Problem
 

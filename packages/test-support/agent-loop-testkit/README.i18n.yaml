@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/test-support/agent-loop-testkit/README.md
 README.md: e9031c59026bdc53bd208cded806148ada4ce13c
-README.zh.md: eaea08d6ba8c8355e6983b571c0839ddc18b19ef
-README.de.md: eef1ef60721d3df5ec5cb067d226f9ad045e94ba
+README.zh.md: bd6bba094f91619e13a02afc18d6c905de710907
+README.de.md: c8e32eb754c16c4452d891b676f7e20563137248

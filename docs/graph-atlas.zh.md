@@ -2,10 +2,9 @@
      更新时先运行 `pnpm run gen-doc-graphs` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/graph-atlas.md` 重新记录配对。 -->
 
 # 文档图索引
-
-[English](graph-atlas.md) | 中文
-
 [English](graph-atlas.md) | 中文 | [Deutsch](graph-atlas.de.md)
+
+
 
 这些图展示生成目录未包含的关系。可以用它们查找包之间的关系、能力 seam、事件流、面向模型的工具、应用组合和运行时生命周期路径。精确签名和类型定义仍以[子系统页面](subsystems/core.zh.md)（类型和生成的 `cordis-surface` 区域）及[工具目录](tool-catalog.zh.md)为准。
 

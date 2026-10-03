@@ -1,8 +1,8 @@
 # Agent Note: Handle-basierte Session-Persistence
+[English](2026-08-27-handle-based-session-persistence.md) | [中文](2026-08-27-handle-based-session-persistence.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-27-handle-based-session-persistence.md) | [中文](2026-08-27-handle-based-session-persistence.zh.md) | Deutsch
 
 ## Problem
 
@@ -38,5 +38,5 @@ Resume-, fork-, subagent-, ACP-, webhook- und SDK-Sessions persistieren alle üb
 
 - [Session persistence as an abstract service](2026-06-14-session-persistence.de.md) — der seam, den dies umformt; seine interface-Liste spiegelt die handle-API.
 - [Persistence export() and pre-release trims](../../archived/simplification/2026-08-27-persistence-export-and-pre-release-trims.md) — die vorbereitenden Entfernungen, einschließlich der stillgelegten kalten blank-probe.
-- [Retain ignorable external session events](2026-08-30-retain-ignorable-external-session-events.md) — der read-seitige Ablehnungs-contract, jetzt über `storage-contract`-Helfer geteilt.
+- [Retain ignorable external session events](2026-08-30-retain-ignorable-external-session-events.de.md) — der read-seitige Ablehnungs-contract, jetzt über `storage-contract`-Helfer geteilt.
 - [Bounded session-persistence write batching](../../archived/architecture/2026-08-08-bounded-session-persistence-write-batching.md) — die batching-Semantik, die der geroutete write path als interne Scheduling-Policy bewahrt.

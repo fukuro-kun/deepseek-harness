@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-plan-mode
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 计划模式要求 agent 先探索和设计再执行，然后把完成的计划呈交你批准。用 `/plan` 进入，并可附带一条消息或按顺序排列的图片与文件附件；用 `/plan off` 离开，批准评审以继续执行，或反馈意见以要求继续规划。部署方定义的引导控制规划行为，但每个工具仍然可用，因此请用沙箱模式与审批提示施加强制限制。激活状态会在会话恢复和 fork 后保留。当你希望 agent 行动前先提交一份经评审的计划时，选择计划模式。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

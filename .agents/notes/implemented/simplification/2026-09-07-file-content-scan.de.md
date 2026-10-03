@@ -1,8 +1,8 @@
 # Agent Note: Datei-Content-Scan ohne Per-Array-Callbacks
+[English](2026-09-07-file-content-scan.md) | [中文](2026-09-07-file-content-scan.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-file-content-scan.md) | [中文](2026-09-07-file-content-scan.zh.md) | Deutsch
 
 ## Problem
 

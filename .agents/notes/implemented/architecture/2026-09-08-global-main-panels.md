@@ -3,7 +3,6 @@ English | [中文](2026-09-08-global-main-panels.zh.md) | [Deutsch](2026-09-08-g
 
 Status: implemented
 
-English | [中文](2026-09-08-global-main-panels.zh.md)
 
 ## Problem
 

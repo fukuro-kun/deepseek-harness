@@ -4,4 +4,4 @@
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-30-router-capability-enrichment-model-discovery.md
 2026-09-30-router-capability-enrichment-model-discovery.md: a728837326bc11b7b21b943bf90b7687af149c00
 2026-09-30-router-capability-enrichment-model-discovery.zh.md: d84b5841ae5e59f3f9bed2e3bfc50a482ea0a5db
-2026-09-30-router-capability-enrichment-model-discovery.de.md: 31d0c1e8a2f42891b419a49df105230bc7af8ff0
+2026-09-30-router-capability-enrichment-model-discovery.de.md: 22a55473c32c94fead4558064632cd58b06a9b15

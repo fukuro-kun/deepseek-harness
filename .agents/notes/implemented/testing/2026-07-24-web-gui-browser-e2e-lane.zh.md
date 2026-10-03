@@ -1,8 +1,8 @@
 # Agent Note: Web GUI 的无密钥浏览器 e2e 车道
+[English](2026-07-24-web-gui-browser-e2e-lane.md) | 中文 | [Deutsch](2026-07-24-web-gui-browser-e2e-lane.de.md)
 
 Status: implemented
 
-[English](2026-07-24-web-gui-browser-e2e-lane.md) | 中文
 
 ## 问题
 

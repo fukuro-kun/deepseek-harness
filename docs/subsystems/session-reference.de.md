@@ -1,6 +1,6 @@
 # Session-Referenzen
-
 [English](session-reference.md) | [中文](session-reference.zh.md) | Deutsch
+
 
 Host-gestützte Dateikandidaten-Suche plus strukturierte Session-übergreifende Referenzanfragen und vorbereitete Nachrichtenkontexte. Der [File-Reference-Vertrag](../../packages/context/file-reference) besitzt die rein pfadbasierten Vervollständigungsdatensätze und die Grammatik; der [Session-Reference-Vertrag](../../packages/context/session-reference) definiert kanonische URIs, die Projektion der aktuellen Oberfläche, tag-sichere JSON- und Byte-Aufbewahrung, stabile Fehler und den nicht vertrauenswürdigen Modell-Prompt. Host-Adapter verwenden diese Typen, statt ihre UI-Mention-Syntax in den Agent-Kern zu reichen.
 

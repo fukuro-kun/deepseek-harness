@@ -1,8 +1,8 @@
 # Agent Note: Standard-gehosteter Runner für Pflicht-Benchmarks
+[English](2026-09-06-standard-hosted-benchmark-runner.md) | [中文](2026-09-06-standard-hosted-benchmark-runner.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-standard-hosted-benchmark-runner.md) | [中文](2026-09-06-standard-hosted-benchmark-runner.zh.md) | Deutsch
 
 ## Problem
 

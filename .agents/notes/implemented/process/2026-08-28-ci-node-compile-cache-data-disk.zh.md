@@ -1,8 +1,8 @@
 # Agent Note: 将 Node 编译缓存重定向到数据卷 runner 临时目录
+[English](2026-08-28-ci-node-compile-cache-data-disk.md) | 中文 | [Deutsch](2026-08-28-ci-node-compile-cache-data-disk.de.md)
 
 Status: implemented
 
-[English](2026-08-28-ci-node-compile-cache-data-disk.md) | 中文
 
 ## 问题
 

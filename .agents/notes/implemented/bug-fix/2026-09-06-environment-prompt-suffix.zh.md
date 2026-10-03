@@ -1,8 +1,8 @@
 # Agent Note: 环境事实位于可复用提示词指令之后
+[English](2026-09-06-environment-prompt-suffix.md) | 中文 | [Deutsch](2026-09-06-environment-prompt-suffix.de.md)
 
 Status: implemented
 
-[English](2026-09-06-environment-prompt-suffix.md) | 中文
 
 ## 问题
 

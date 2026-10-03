@@ -1,8 +1,8 @@
 # Agent Note: Recallable compaction — index checkpoints, a state checkpoint, and in-session history recall
+[English](2026-07-06-recallable-compaction.md) | [中文](2026-07-06-recallable-compaction.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-06-recallable-compaction.md) | [中文](2026-07-06-recallable-compaction.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Playwright 视频录制连续浏览器演示
+[English](2026-09-08-playwright-video-gif.md) | 中文 | [Deutsch](2026-09-08-playwright-video-gif.de.md)
 
 Status: implemented
 
-[English](2026-09-08-playwright-video-gif.md) | 中文
 
 ## 问题
 

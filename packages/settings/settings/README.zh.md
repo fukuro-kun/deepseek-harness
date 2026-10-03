@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-settings
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 当用户需要在运行时修改插件配置，且不能重启或重新读取 `cordis.yml` 时，请使用本包。每个 namespace 合并 schema 默认值、部署配置与用户覆盖；读取方会得到深冻结的解析值快照，并可观察已提交的变更。写入只影响用户覆盖、按 namespace 串行执行，并可拒绝陈旧 revision，避免覆盖较新的变更。持久化运行时编辑需要先配置设置存储；否则插件仍可继续使用组合配置。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
@@ -38,9 +37,13 @@ kind: "package-reference"
 服务本身不存储任何内容；请挂载一个提供方，例如随附的文件型提供方：
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-settings-file'
+
   config:
+
     path: /absolute/path/to/settings.yaml
+
 ```
 
 提供方上线后 `ctx.settings` 即出现。完整配置面由提供方 README 负责；生成的[配置目录](../../../docs/config-catalog.zh.md#deepseek-aidsh-settings-file)列出每个受支持字段。
@@ -50,11 +53,17 @@ kind: "package-reference"
 插件用 schemastery schema 注册自己的 namespace，并可选地把组合配置作为 `base` 层传入，让解析值从部署已配置的内容起步：
 
 ```text
+
 const scope = ctx.settings.register('ui-theme', ThemeSchema, {
+
   base: config,   // composition entry config; the user layer resolves above it
+
 })
+
 const theme = scope.get()              // deep-frozen resolved snapshot
+
 scope.update({ density: 'compact' })   // merges into the user section and persists
+
 ```
 
 TypeScript 会按小写字母、数字与连字符文法检查字面量 namespace 参数；运行时动态传入的字符串接受相同校验。`ctx.settings.installSection(owner, ns, schema, entry, hooks)` 为消费方插件封装可选服务接线：只要设置服务存在，它就用插件的组合配置作为 `base` 注册 namespace；服务消失时插件回退到组合配置，行为与原先完全一致。

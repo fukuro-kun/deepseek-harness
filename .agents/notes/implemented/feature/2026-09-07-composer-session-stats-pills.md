@@ -1,9 +1,8 @@
 # Agent Note: Composer session stats — two icon pills with click-open stat dialogs
-English | [中文](.agents/notes/implemented/feature/2026-09-07-composer-session-stats-pills.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-07-composer-session-stats-pills.de.md)
+English | [中文](2026-09-07-composer-session-stats-pills.zh.md) | [Deutsch](2026-09-07-composer-session-stats-pills.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-07-composer-session-stats-pills.zh.md)
 
 ## Problem
 

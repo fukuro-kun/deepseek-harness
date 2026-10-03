@@ -1,8 +1,8 @@
 # Agent Note: Eine produzierte Datei aus der Web-UI öffnen
+[English](2026-07-31-web-workspace-file-links.md) | [中文](2026-07-31-web-workspace-file-links.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-31-web-workspace-file-links.md) | [中文](2026-07-31-web-workspace-file-links.zh.md) | Deutsch
 
 > Scope: die Produced-Files-Zeile, mit der ein abgeschlossener Turn endet, der Dateipfad-Link, der als einer lesbar ist, und der Host-Öffner, der bei Dokumenten, die ein Browser rendert, den Default-Browser bevorzugt. Bewusst nicht im Scope: Workspace-Dateien über HTTP ausliefern und Previews für einen Client, der nicht auf der Host-Maschine läuft.
 

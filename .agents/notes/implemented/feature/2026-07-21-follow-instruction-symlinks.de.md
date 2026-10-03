@@ -1,8 +1,8 @@
 # Agent Note: Symlinks auf Instruktionsdateien folgen
+[English](2026-07-21-follow-instruction-symlinks.md) | [中文](2026-07-21-follow-instruction-symlinks.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-21-follow-instruction-symlinks.md) | [中文](2026-07-21-follow-instruction-symlinks.zh.md) | Deutsch
 
 ## Problem
 

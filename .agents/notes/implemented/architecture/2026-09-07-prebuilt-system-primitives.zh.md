@@ -1,8 +1,8 @@
 # Agent Note: 预编译系统原语
+[English](2026-09-07-prebuilt-system-primitives.md) | 中文 | [Deutsch](2026-09-07-prebuilt-system-primitives.de.md)
 
 Status: implemented
 
-[English](2026-09-07-prebuilt-system-primitives.md) | 中文 | [Deutsch](2026-09-07-prebuilt-system-primitives.de.md)
 
 ## Problem
 

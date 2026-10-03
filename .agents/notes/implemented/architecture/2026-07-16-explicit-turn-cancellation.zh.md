@@ -1,8 +1,8 @@
 # Agent Note: 显式轮次取消能力
+[English](2026-07-16-explicit-turn-cancellation.md) | 中文 | [Deutsch](2026-07-16-explicit-turn-cancellation.de.md)
 
 Status: implemented
 
-[English](2026-07-16-explicit-turn-cancellation.md) | 中文 | [Deutsch](2026-07-16-explicit-turn-cancellation.de.md)
 
 ## 问题
 

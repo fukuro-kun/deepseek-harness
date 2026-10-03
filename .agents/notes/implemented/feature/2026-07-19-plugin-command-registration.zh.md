@@ -1,8 +1,8 @@
 # Agent Note: 插件自有的人类命令注册
+[English](2026-07-19-plugin-command-registration.md) | 中文 | [Deutsch](2026-07-19-plugin-command-registration.de.md)
 
 Status: implemented
 
-[English](2026-07-19-plugin-command-registration.md) | 中文
 
 ## 问题
 

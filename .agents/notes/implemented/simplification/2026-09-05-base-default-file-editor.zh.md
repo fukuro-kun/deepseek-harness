@@ -1,8 +1,8 @@
 # Agent Note: 共享 base 默认文件编辑器选择
+[English](2026-09-05-base-default-file-editor.md) | 中文 | [Deutsch](2026-09-05-base-default-file-editor.de.md)
 
 Status: implemented
 
-[English](2026-09-05-base-default-file-editor.md) | 中文
 
 ## Problem
 

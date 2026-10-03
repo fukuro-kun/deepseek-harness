@@ -1,8 +1,8 @@
 # Agent Note: Providerneutrale Content-Block-Vocabulary in Verantwortung von dsh-llm
+[English](2026-06-11-content-block-vocabulary.md) | [中文](2026-06-11-content-block-vocabulary.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-11-content-block-vocabulary.md) | [中文](2026-06-11-content-block-vocabulary.zh.md) | Deutsch
 
 ## Problem
 

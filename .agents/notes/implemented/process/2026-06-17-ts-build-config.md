@@ -1,9 +1,8 @@
 # Agent Note: TSC-first build and one compiler ownership
-English | [中文](.agents/notes/implemented/process/2026-06-17-ts-build-config.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-06-17-ts-build-config.de.md)
+English | [中文](2026-06-17-ts-build-config.zh.md) | [Deutsch](2026-06-17-ts-build-config.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-17-ts-build-config.zh.md)
 
 > Root project topology uses a solution root over two aggregate programs; see the [solution-root note](../../archived/process/2026-07-22-tsconfig-solution-root-two-aggregates.md). The [API Remotes build note](../../archived/process/2026-08-08-api-remotes-generated-contract-build.md) defines the current command order in which the Host generates Remote contracts before the Client compiles. The tsc-first ownership decided here is unchanged.
 

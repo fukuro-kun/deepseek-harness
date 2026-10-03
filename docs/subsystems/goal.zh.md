@@ -1,6 +1,6 @@
 # 同会话目标
+[English](goal.md) | 中文 | [Deutsch](goal.de.md)
 
-[English](goal.md) | 中文
 
 事件溯源目标服务及其策略消费方共享的类型。[目标领域 Agent Note](../../.agents/notes/implemented/feature/2026-07-19-persisted-same-session-goal-domain.zh.md) 负责记录持久化与激活决策；本页记录 [`packages/goal/goal/src/types.ts`](../../packages/goal/goal/src/types.ts) 中的确切字段和变体。
 
@@ -11,8 +11,6 @@
 ```ts type-equiv
 /** Compare-and-set identity for one exact goal revision. */
 interface GoalRef {
-
-[English](goal.md) | 中文 | [Deutsch](goal.de.md)
   /** Stable goal identity. */
   readonly id: GoalId
   /** Positive revision; every durable mutation increments it. */

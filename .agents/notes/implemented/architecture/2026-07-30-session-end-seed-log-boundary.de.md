@@ -1,8 +1,8 @@
 # Agent Note: die end-seed-log-Grenze
+[English](2026-07-30-session-end-seed-log-boundary.md) | [中文](2026-07-30-session-end-seed-log-boundary.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-30-session-end-seed-log-boundary.md) | [中文](2026-07-30-session-end-seed-log-boundary.zh.md) | Deutsch
 
 ## Problem
 

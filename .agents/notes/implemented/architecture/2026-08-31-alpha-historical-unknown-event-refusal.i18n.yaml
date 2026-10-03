@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-31-alpha-historical-unknown-event-refusal.md
-2026-08-31-alpha-historical-unknown-event-refusal.md: 66166def0b0ca33362c8a501e6da36c8a9ac4d86
-2026-08-31-alpha-historical-unknown-event-refusal.zh.md: 84256e7b452e7cb0865a8658fd2293e4b4d80624
-2026-08-31-alpha-historical-unknown-event-refusal.de.md: 557a2e813f416bca513b485e29ea6bb187443359
+2026-08-31-alpha-historical-unknown-event-refusal.md: f7968ff7e11ce94f3016ed623871b2cb7d25b028
+2026-08-31-alpha-historical-unknown-event-refusal.zh.md: 8abb7c12165bec44a0e29596129fc9ce9c873cca
+2026-08-31-alpha-historical-unknown-event-refusal.de.md: e7d262a845d3624a7426f25744d04401ed200c13

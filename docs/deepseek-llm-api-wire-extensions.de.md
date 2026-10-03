@@ -1,6 +1,6 @@
 # Offizielle DeepSeek LLM API-Wire-Erweiterungen
-
 [English](deepseek-llm-api-wire-extensions.md) | [中文](deepseek-llm-api-wire-extensions.zh.md) | Deutsch
+
 
 Diese Referenz definiert jeden DeepSeek-Harness-spezifischen HTTP-Header und jedes additiven JSON-Feld, das von [`@deepseek-ai/dsh-llm-deepseek`](../packages/llm/llm-deepseek/README.de.md) bei `deepseek-official`-Chat-Completion-Anfragen gesendet wird. Sie definiert keine Felder neu, die der Upstream-DeepSeek-API gehören. Die Provider-neutrale LLM-Schnittstelle und `llm-pi-ai` implementieren diese Erweiterungen nicht.
 

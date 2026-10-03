@@ -3,7 +3,6 @@ English | [中文](2026-09-05-sidebar-tab-types-and-navigation.zh.md) | [Deutsch
 
 Status: implemented
 
-English | [中文](2026-09-05-sidebar-tab-types-and-navigation.zh.md)
 
 ## Problem
 

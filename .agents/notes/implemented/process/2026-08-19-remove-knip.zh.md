@@ -1,8 +1,8 @@
 # Agent Note: 从仓库门禁中移除 Knip
+[English](2026-08-19-remove-knip.md) | 中文 | [Deutsch](2026-08-19-remove-knip.de.md)
 
 Status: implemented
 
-[English](2026-08-19-remove-knip.md) | 中文
 
 ## 问题
 

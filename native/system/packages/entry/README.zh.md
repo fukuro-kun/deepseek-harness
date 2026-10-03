@@ -3,8 +3,8 @@ description: "预编译 Landlock 启动器与异步 POSIX flock 的 JavaScript �
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 `./landlock-run` 入口导出 Landlock 启动器路径、强制执行探测、授权参数和协议常量。独立的 `./flock` 入口导出 `tryLockExclusive(fd): Promise<void>`；导入任一入口都不会加载 `system.node`。包不提供根导出。
 

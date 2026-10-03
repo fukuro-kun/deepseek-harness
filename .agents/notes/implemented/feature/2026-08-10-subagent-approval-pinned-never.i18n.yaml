@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-10-subagent-approval-pinned-never.md
-2026-08-10-subagent-approval-pinned-never.md: c3466530ad6eb65ec021db420c15df37a5d647c9
-2026-08-10-subagent-approval-pinned-never.zh.md: 32f367303559eecbfd5049cd370e48c8ce57de33
-2026-08-10-subagent-approval-pinned-never.de.md: 472fcb41b0b1503098da8f420dbd5c5d1858bd1a
+2026-08-10-subagent-approval-pinned-never.md: 21a3baf05843f643e26cd99927cccf8236a745c5
+2026-08-10-subagent-approval-pinned-never.zh.md: d1df45f106b9286b816b5f439df61233eb6d14ab
+2026-08-10-subagent-approval-pinned-never.de.md: f47d158b9a209ac474c51b16d4609a5c4f4e61fa

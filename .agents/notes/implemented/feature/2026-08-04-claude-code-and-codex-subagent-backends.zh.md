@@ -1,8 +1,8 @@
 # Agent Note: Claude Code 与 Codex subagent 后端
+[English](2026-08-04-claude-code-and-codex-subagent-backends.md) | 中文 | [Deutsch](2026-08-04-claude-code-and-codex-subagent-backends.de.md)
 
 Status: implemented
 
-[English](2026-08-04-claude-code-and-codex-subagent-backends.md) | 中文
 
 ## 问题
 

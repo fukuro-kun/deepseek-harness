@@ -1,8 +1,8 @@
 # Agent Note: 统一未读取文件系统工具诊断
+[English](2026-09-03-normalized-unread-fs-tool-diagnostic.md) | 中文 | [Deutsch](2026-09-03-normalized-unread-fs-tool-diagnostic.de.md)
 
 Status: implemented
 
-[English](2026-09-03-normalized-unread-fs-tool-diagnostic.md) | 中文
 
 ## 问题
 

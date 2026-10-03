@@ -1,8 +1,8 @@
 # Agent Note: Datei-URLs für eingefügte Patch-Plugins
+[English](2026-09-05-patch-plugin-file-urls.md) | [中文](2026-09-05-patch-plugin-file-urls.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-patch-plugin-file-urls.md) | [中文](2026-09-05-patch-plugin-file-urls.zh.md) | Deutsch
 
 ## Problem
 

@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/experimental/webworker-packer/README.md
 README.md: 7ad697b210df44ebdc205eb8742ec6a56788d673
-README.zh.md: b575f5f4e0555647b22ee46e8cccbef2c5209db6
-README.de.md: 5b6109237fd42dc069f7fc426cda96f920a6aafa
+README.zh.md: 9f5d96a85b62bd8ba7751fcb2a8d4cc83a8adf54
+README.de.md: e103e3d53204420f9bcd4ba5284fc0518e0e9dec

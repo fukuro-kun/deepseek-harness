@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-terminal
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 当 agent 需要跨调用保留终端状态或提供交互式输入时，使用 `dsh-tool-terminal`。它可以打开、发送、读取、传递信号、关闭和列出终端会话，同时防止一个 agent 操作其他 agent 的会话。发送可以等待有界的前台输出，也可以返回供后续收集或中断的后台 job id。`maxResultBytes` 限制每个结果的大小，而结果会保留在会话历史中直到压缩（compaction）。指引会让模型对有界工作优先使用单次工具。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

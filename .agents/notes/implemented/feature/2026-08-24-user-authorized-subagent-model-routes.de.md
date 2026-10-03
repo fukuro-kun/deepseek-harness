@@ -1,8 +1,8 @@
 # Agent Note: Nutzerautorisierte Subagent-Modellrouten
+[English](2026-08-24-user-authorized-subagent-model-routes.md) | [中文](2026-08-24-user-authorized-subagent-model-routes.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-24-user-authorized-subagent-model-routes.md) | [中文](2026-08-24-user-authorized-subagent-model-routes.zh.md) | Deutsch
 
 ## Problem
 

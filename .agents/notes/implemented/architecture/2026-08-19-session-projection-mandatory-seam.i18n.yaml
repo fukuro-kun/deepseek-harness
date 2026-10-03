@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-19-session-projection-mandatory-seam.md
-2026-08-19-session-projection-mandatory-seam.md: c62935a8506c35b3a32c7e7f6e7ed03bb89d7181
-2026-08-19-session-projection-mandatory-seam.zh.md: dd71e3345eadd18b4104fcc06bfe311b9dd2759c
-2026-08-19-session-projection-mandatory-seam.de.md: f57cbd22a3c546bbc4b495eeffe50c49b462c530
+2026-08-19-session-projection-mandatory-seam.md: a730f91ad67cdac0b10c650108e08a0a9a5afff4
+2026-08-19-session-projection-mandatory-seam.zh.md: 25e708faa2cf6674f133c2c203eec4ee00db74a2
+2026-08-19-session-projection-mandatory-seam.de.md: 9c129744cfc8c016d5c149cb43bc50581066fa6e

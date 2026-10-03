@@ -1,8 +1,8 @@
 # Agent Note: Prompt-Variablen und Tool-Guidance-Eigentümerschaft
+[English](2026-07-05-prompt-variables-and-tool-guidance-ownership.md) | [中文](2026-07-05-prompt-variables-and-tool-guidance-ownership.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-05-prompt-variables-and-tool-guidance-ownership.md) | [中文](2026-07-05-prompt-variables-and-tool-guidance-ownership.zh.md) | Deutsch
 
 ## Problem
 

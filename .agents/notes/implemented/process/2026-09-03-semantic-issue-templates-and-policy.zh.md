@@ -1,8 +1,8 @@
 # Agent Note: 语义化 Issue template 与不检查展示形式的 policy
+[English](2026-09-03-semantic-issue-templates-and-policy.md) | 中文 | [Deutsch](2026-09-03-semantic-issue-templates-and-policy.de.md)
 
 Status: implemented
 
-[English](2026-09-03-semantic-issue-templates-and-policy.md) | 中文
 
 ## 问题
 

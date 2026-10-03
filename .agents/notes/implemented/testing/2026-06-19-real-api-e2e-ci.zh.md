@@ -1,8 +1,8 @@
 # Agent Note: 在 CI 中对外部 DeepSeek API 运行真实 API e2e 测试
+[English](2026-06-19-real-api-e2e-ci.md) | 中文 | [Deutsch](2026-06-19-real-api-e2e-ci.de.md)
 
 Status: implemented
 
-[English](2026-06-19-real-api-e2e-ci.md) | 中文
 
 ## 问题
 

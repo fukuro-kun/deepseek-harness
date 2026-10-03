@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-28-session-archive-restore.md
-2026-09-28-session-archive-restore.md: f68bac3eea03d989db24d471e19e0be31a065438
-2026-09-28-session-archive-restore.zh.md: 72ad8ef6fe64a5e5ed649197b87fba176e9223a9
-2026-09-28-session-archive-restore.de.md: c3c715617e915aa58edf46e8abd04ab10a2bcaef
+2026-09-28-session-archive-restore.md: ca6bb24497156ca3b636c6a123144e92ace60fec
+2026-09-28-session-archive-restore.zh.md: 82ef3ad17094cdd009d1206eef2a28e1b284cc4a
+2026-09-28-session-archive-restore.de.md: e607ae4689f6fc6848f90e855bfacf1530d1cd6a

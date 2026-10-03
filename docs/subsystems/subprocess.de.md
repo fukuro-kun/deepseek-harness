@@ -1,6 +1,6 @@
 # Subprocess
-
 [English](subprocess.md) | [中文](subprocess.zh.md) | Deutsch
+
 
 Der Subprocess-Seam ist auf eine Service Definition ([dsh-subprocess](../../packages/subprocess/subprocess), `ctx.subprocess`) und einen Service Provider ([dsh-subprocess-local](../../packages/subprocess/subprocess-local)) aufgeteilt; seine Consumer sind andere Capability-Seams und Out-of-Process-Backends: die [bash-Executor-Familie](shell.de.md) verwendet collected Batch-Output, LSP verwendet rohe Protocol-Pipes, das PTY-Backend verwendet das Terminal-Primitiv, und das ACP-Subagent-Backend verwendet gepipetes ndjson plus geerbtes stderr. Dieser Seam besitzt den managed `DSH_*`-Environment-Namespace, den geteilten Credential-Scrub (`scrubbedParentEnv`) und die `CollectedOutput`-Form; [dsh-shell](../../packages/shell/shell) re-exportiert das Vokabular, sodass bash-Consumer eine Import-Wurzel behalten.
 

@@ -1,9 +1,8 @@
 # Agent Note: Unified normalized attachments, request versions, and provider files
-English | [中文](.agents/notes/implemented/feature/2026-08-20-unified-image-request-pipeline.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-20-unified-image-request-pipeline.de.md)
+English | [中文](2026-08-20-unified-image-request-pipeline.zh.md) | [Deutsch](2026-08-20-unified-image-request-pipeline.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-20-unified-image-request-pipeline.zh.md)
 
 ## Problem
 

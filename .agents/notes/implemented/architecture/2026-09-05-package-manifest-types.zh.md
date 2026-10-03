@@ -1,8 +1,8 @@
 # Agent Note: Package manifest 声明归属
+[English](2026-09-05-package-manifest-types.md) | 中文 | [Deutsch](2026-09-05-package-manifest-types.de.md)
 
 Status: implemented
 
-[English](2026-09-05-package-manifest-types.md) | 中文 | [Deutsch](2026-09-05-package-manifest-types.de.md)
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Historische Session-Lesevorgänge bereiten vor der Schreibveröffentlichung vor
+[English](2026-09-05-read-only-session-migration-preparation.md) | [中文](2026-09-05-read-only-session-migration-preparation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-read-only-session-migration-preparation.md) | [中文](2026-09-05-read-only-session-migration-preparation.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Produkt-Subagents verwenden Profile-gewählte nicht-interaktive Permissions
+[English](2026-08-15-product-subagent-noninteractive-permissions.md) | [中文](2026-08-15-product-subagent-noninteractive-permissions.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-15-product-subagent-noninteractive-permissions.md) | [中文](2026-08-15-product-subagent-noninteractive-permissions.zh.md) | Deutsch
 
 ## Problem
 

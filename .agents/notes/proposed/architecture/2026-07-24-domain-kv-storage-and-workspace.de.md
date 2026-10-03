@@ -1,8 +1,8 @@
 # Agent Note: Domain-KV-Storage als capability seam und die Workspace-Entität
+[English](2026-07-24-domain-kv-storage-and-workspace.md) | [中文](2026-07-24-domain-kv-storage-and-workspace.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-24-domain-kv-storage-and-workspace.md) | [中文](2026-07-24-domain-kv-storage-and-workspace.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,12 +1,11 @@
 # Typert remote calls
+English | [中文](typert.zh.md) | [Deutsch](typert.de.md)
 
-English | [中文](typert.zh.md)
 
 Types shared by generated Remote artifacts, the Host Gateway, and consumer API assemblies. The [Typert Gateway Agent Note](../../.agents/notes/implemented/architecture/2026-08-02-typert-remote-method-calls.md) owns the architecture and transport decisions; this page records the literal public contracts from [`dsh-typert-protocol`](../../packages/typert/protocol/src/types.ts) and [`dsh-api-gateway`](../../packages/api/gateway/src/types.ts).
 
 ## Lookup and Context declarations
 
-English | [中文](typert.zh.md) | [Deutsch](typert.de.md)
 
 Business-object packages extend two empty maps through declaration merging. A lookup associates one Host object type with its wire identity; a Context declaration associates one scoped Context kind with its wire identity. Generated descriptors name these keys, while runtime providers supply the live resolution behavior.
 

@@ -1,9 +1,8 @@
 # Agent Note: Deterministic tests, the replay invariant fixture, and race stress
-English | [中文](.agents/notes/proposed/testing/2026-06-11-deterministic-and-stress-testing.zh.md) | [Deutsch](.agents/notes/proposed/testing/2026-06-11-deterministic-and-stress-testing.de.md)
+English | [中文](2026-06-11-deterministic-and-stress-testing.zh.md) | [Deutsch](2026-06-11-deterministic-and-stress-testing.de.md)
 
 Status: proposed
 
-English | [中文](2026-06-11-deterministic-and-stress-testing.zh.md)
 
 The [CI test reliability skill](../../../skills/dsh-ci-test-reliability/SKILL.md) provides current authoring and diagnosis guidance without implementing the lint rule, universal replay fixture, or nightly stress job proposed here. Those mechanisms remain proposed.
 

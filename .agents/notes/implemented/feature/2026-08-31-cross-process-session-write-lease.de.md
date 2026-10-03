@@ -1,8 +1,8 @@
 # Agent Note: Prozessübergreifendes Session-Schreibleasing
+[English](2026-08-31-cross-process-session-write-lease.md) | [中文](2026-08-31-cross-process-session-write-lease.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-31-cross-process-session-write-lease.md) | [中文](2026-08-31-cross-process-session-write-lease.zh.md) | Deutsch
 
 ## Problem
 

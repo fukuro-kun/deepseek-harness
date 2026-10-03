@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-05-session-reference-model-budget.md
-2026-09-05-session-reference-model-budget.md: 848781c7c0bbd28ab07792807c3bf1ca64858683
-2026-09-05-session-reference-model-budget.zh.md: 84f4fee76c7fb54f3ec37f0ae3417cc56d772af7
-2026-09-05-session-reference-model-budget.de.md: 6d6dd2977a6e60b59e267c011bb4450977195bbd
+2026-09-05-session-reference-model-budget.md: 242bc41ce99838a47c5e46258013c74c1d5e34ca
+2026-09-05-session-reference-model-budget.zh.md: 30466bef3196fb580f45c3c5c8f617f38b97f184
+2026-09-05-session-reference-model-budget.de.md: ca28448a06de04c19075e9ccca4dc47baf8d4573

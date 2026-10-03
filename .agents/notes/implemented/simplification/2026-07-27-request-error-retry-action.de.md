@@ -1,8 +1,8 @@
 # Agent Note: Retry-Aktion bei Request-Fehlern
+[English](2026-07-27-request-error-retry-action.md) | [中文](2026-07-27-request-error-retry-action.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-27-request-error-retry-action.md) | [中文](2026-07-27-request-error-retry-action.zh.md) | Deutsch
 
 ## Problem
 

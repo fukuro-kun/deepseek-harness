@@ -1,8 +1,8 @@
 # Agent Note: Session log 版本机制：单调整数、升级器链、逐事件可忽略标记
+[English](2026-08-10-session-log-version-mechanism.md) | 中文 | [Deutsch](2026-08-10-session-log-version-mechanism.de.md)
 
 Status: implemented
 
-[English](2026-08-10-session-log-version-mechanism.md) | 中文 | [Deutsch](2026-08-10-session-log-version-mechanism.de.md)
 
 ## 问题
 

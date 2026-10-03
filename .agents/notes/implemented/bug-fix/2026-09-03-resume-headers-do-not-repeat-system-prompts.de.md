@@ -1,8 +1,8 @@
 # Agent Note: Resume headers do not repeat system prompts
+[English](2026-09-03-resume-headers-do-not-repeat-system-prompts.md) | [中文](2026-09-03-resume-headers-do-not-repeat-system-prompts.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-03-resume-headers-do-not-repeat-system-prompts.md) | [中文](2026-09-03-resume-headers-do-not-repeat-system-prompts.zh.md) | Deutsch
 
 ## Problem
 

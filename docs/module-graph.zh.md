@@ -2,8 +2,8 @@
      运行 `pnpm run gen-module-graph` 重新生成。 -->
 
 # 共享实例依赖关系图
+[English](module-graph.md) | 中文 | [Deutsch](module-graph.de.md)
 
-[English](module-graph.md) | 中文 | [Deutsch](docs/module-graph.de.md)
 
 `@deepseek-ai/dsh-*` harness 包之间的 peer 依赖关系。peer 表示消费端需要提供共享实例，不包括普通运行时 dependency 或仅开发期关系。该图按 `packages/<group>/<pkg>` 层级分组；边 `a --> b` 表示包 `a` peer 依赖包 `b`。名称中的 `@deepseek-ai/dsh-` 前缀已移除。
 

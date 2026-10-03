@@ -1,6 +1,6 @@
 # apps/web Browser-e2e
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Diese Tests booten die echte Web-Komposition in-process und steuern sie mit einem echten Chromium über echtes HTTP. Die Mechanik der Lane — Modi, Fixtures, Goldens und die bewussten Kompositionsabweichungen von `dsh web` — ist in [`scaffold.ts`](scaffold.ts) und im [Browser-e2e-Agent-Note](../../../.agents/notes/implemented/testing/2026-07-24-web-gui-browser-e2e-lane.de.md) dokumentiert.
 

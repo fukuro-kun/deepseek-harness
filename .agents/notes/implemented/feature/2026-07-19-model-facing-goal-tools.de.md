@@ -1,8 +1,8 @@
 # Agent Note: Modellsichtbare Same-Session-Goal-Tools
+[English](2026-07-19-model-facing-goal-tools.md) | [中文](2026-07-19-model-facing-goal-tools.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-19-model-facing-goal-tools.md) | [中文](2026-07-19-model-facing-goal-tools.zh.md) | Deutsch
 
 ## Problem
 

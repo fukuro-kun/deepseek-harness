@@ -1,8 +1,8 @@
 # Agent Note: Context-Injection von Turn-Execution getrennt
+[English](2026-07-24-separate-context-injection-from-turn-execution.md) | [中文](2026-07-24-separate-context-injection-from-turn-execution.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-24-separate-context-injection-from-turn-execution.md) | [中文](2026-07-24-separate-context-injection-from-turn-execution.zh.md) | Deutsch
 
 ## Problem
 

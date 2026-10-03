@@ -1,8 +1,8 @@
 # Agent Note: 规范工具输出约定
+[English](2026-07-20-canonical-tool-output-contract.md) | 中文 | [Deutsch](2026-07-20-canonical-tool-output-contract.de.md)
 
 Status: implemented
 
-[English](2026-07-20-canonical-tool-output-contract.md) | 中文 | [Deutsch](2026-07-20-canonical-tool-output-contract.de.md)
 
 ## 问题
 

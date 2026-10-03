@@ -1,8 +1,8 @@
 # Agent Note: 已交付组合中的默认 Web 搜索
+[English](2026-07-31-web-default-search.md) | 中文 | [Deutsch](2026-07-31-web-default-search.de.md)
 
 Status: implemented
 
-[English](2026-07-31-web-default-search.md) | 中文
 
 [共享 base 的 Web 抓取默认值](../../archived/feature/2026-09-01-shared-base-web-fetch-default.md)取代本文关于抓取按需启用的决策。本文继续负责默认搜索提供方、凭据解析、端点、超时，以及提供方可用性与模型工具注册之间的区分。
 

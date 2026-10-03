@@ -4,8 +4,8 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-client-ui-slots
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -66,9 +66,9 @@ Das Design ist eine Tabelle: Deklaration = Render-Autorisierung = Runtime-Spec. 
 
 Diese Seiten behandeln die Engine, den Renderer und das Kompositionsmodell.
 
-- [ui-renderer](../ui-renderer/README.md) — der React-Slot-Renderer, der den Install-Vertrag dieses Pakets implementiert.
-- [Slot-System-Standard](../../../.agents/notes/implemented/architecture/2026-07-22-slot-type-chain-implementation.md) — das definitive Kompositionsmodell.
-- [Web-Client-Architektur](../../../.agents/notes/implemented/architecture/2026-07-19-gui-web-client-architecture.md) — die Loading-Chain und Object Layer, in die sich diese Registry einsteckt.
+- [ui-renderer](../ui-renderer/README.de.md) — der React-Slot-Renderer, der den Install-Vertrag dieses Pakets implementiert.
+- [Slot-System-Standard](../../../.agents/notes/implemented/architecture/2026-07-22-slot-type-chain-implementation.de.md) — das definitive Kompositionsmodell.
+- [Web-Client-Architektur](../../../.agents/notes/implemented/architecture/2026-07-19-gui-web-client-architecture.de.md) — die Loading-Chain und Object Layer, in die sich diese Registry einsteckt.
 
 -----
 

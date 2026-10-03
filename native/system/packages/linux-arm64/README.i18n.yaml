@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write native/system/packages/linux-arm64/README.md
-README.md: 6d98428022c3aa2af3c39cecce9905fe4c9f857d
-README.zh.md: 79f3b75e16570c4dff8d7249bcd75481f11cc85c
-README.de.md: 88f597f942983dd30e9a06e70b5d9b980e98436a
+README.md: 732b5a26ae1a3366fa7bbb5df7963fba0e01db9d
+README.zh.md: 84d0e53db99f64f33944f12ff4eabaad459cd14b
+README.de.md: 02fa31df25a6e306e02ece872bd3730cccdb8ac0

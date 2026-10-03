@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/rejected/simplification/2026-06-20-fold-session-persistence-interface.md
-2026-06-20-fold-session-persistence-interface.md: 608f96cb7d2015698d6febca69b576588d9bc55f
-2026-06-20-fold-session-persistence-interface.zh.md: 9fb53d16fced3d17ee0a76a05df04628ac9d8c95
-2026-06-20-fold-session-persistence-interface.de.md: 73465059cac7ab87840ebbb98aa0968ce545cc51
+2026-06-20-fold-session-persistence-interface.md: 5aedcc3cfb4f357167e9cf328b883a961089fdb8
+2026-06-20-fold-session-persistence-interface.zh.md: b0fca87ed3ab1a04eb5ca41431079890e00f6357
+2026-06-20-fold-session-persistence-interface.de.md: e580ff06516965485ce415050dae4ce6c8ee73f9

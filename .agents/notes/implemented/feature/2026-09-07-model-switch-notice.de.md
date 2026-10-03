@@ -1,8 +1,8 @@
 # Agent Note: Modell-sichtbare Routenwechsel-Hinweise
+[English](2026-09-07-model-switch-notice.md) | [中文](2026-09-07-model-switch-notice.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-model-switch-notice.md) | [中文](2026-09-07-model-switch-notice.zh.md) | Deutsch
 
 ## Problem
 

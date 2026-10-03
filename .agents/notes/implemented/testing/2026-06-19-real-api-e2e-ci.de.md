@@ -1,8 +1,8 @@
 # Agent Note: Real-API e2e in CI gegen die externe DeepSeek-API
+[English](2026-06-19-real-api-e2e-ci.md) | [中文](2026-06-19-real-api-e2e-ci.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-19-real-api-e2e-ci.md) | [中文](2026-06-19-real-api-e2e-ci.zh.md) | Deutsch
 
 ## Problem
 

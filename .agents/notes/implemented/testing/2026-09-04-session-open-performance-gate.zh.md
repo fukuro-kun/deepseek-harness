@@ -1,8 +1,8 @@
 # Agent Note: 打开大型 Session 的必需 CI 性能 gate
+[English](2026-09-04-session-open-performance-gate.md) | 中文 | [Deutsch](2026-09-04-session-open-performance-gate.de.md)
 
 Status: implemented
 
-[English](2026-09-04-session-open-performance-gate.md) | 中文
 
 ## 问题
 

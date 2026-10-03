@@ -1,8 +1,8 @@
 # Agent Note: Typert Gateway gezielte Methodenaufrufe
+[English](2026-08-02-typert-remote-method-calls.md) | [中文](2026-08-02-typert-remote-method-calls.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-02-typert-remote-method-calls.md) | [中文](2026-08-02-typert-remote-method-calls.zh.md) | Deutsch
 
 ## Problem
 
@@ -288,7 +288,7 @@ agentCtx.remote.goals.create(request)
 
 Der Agent-Scope liefert seine eigene `SessionId` automatisch. Eine `@Remote`-Methode mit einem `agent`-Lookup kann daher sowohl Root- als auch gescopte Konsumentensignaturen erzeugen. Eine `@RemoteScope('agent')`-Methode lässt ebenfalls eine separate Scope-Identität weg, erzeugt aber nur die gescopte Signatur. Der Root-`Context` exponiert direkte Namensräume über `ctx.remote`, während `AgentContext.remote` jene direkte Oberfläche mit der gescopten Oberfläche schneidet. Ein künftiges TUI muss dieselbe Unterscheidung bewahren.
 
-Jede generierte Methode löst zu `Promise<RemoteResult<T>>` auf: Ein Aufruf meldet sein Ergebnis im `ok`-Zweig des Result statt zu rejecten; nur ein Assembly-Fehler (Arität, eine nicht gemountete Methode, ein fehlender Context-Adapter) wirft weiterhin. Ein Konsument verzweigt auf `result.ok` und liest `result.error.code`, wenn er Fehler unterscheiden muss; das Fehlervokabular selbst ist [eine Remote-Fehlerklasse plus eine gemergte Code-Tabelle](2026-08-28-ctx-remote-failure-vocabulary.md).
+Jede generierte Methode löst zu `Promise<RemoteResult<T>>` auf: Ein Aufruf meldet sein Ergebnis im `ok`-Zweig des Result statt zu rejecten; nur ein Assembly-Fehler (Arität, eine nicht gemountete Methode, ein fehlender Context-Adapter) wirft weiterhin. Ein Konsument verzweigt auf `result.ok` und liest `result.error.code`, wenn er Fehler unterscheiden muss; das Fehlervokabular selbst ist [eine Remote-Fehlerklasse plus eine gemergte Code-Tabelle](2026-08-28-ctx-remote-failure-vocabulary.de.md).
 
 `TypertClientRemote` bleibt plattformunabhängig, und der Browser-Client exponiert es als `ctx.remote`. Wenn ein künftiges TUI diesen Typ wiederverwendet, muss es ihn ebenfalls über ein dediziertes Remote-Objekt und Agent-Scope zugreifen statt den Host-`Context` als breitere Service-Sammlung zu behandeln. Öffentliche Service-Methoden ohne Remote-Marker gehen nicht in die Remote-Maps ein. Neben den generierten Namensräumen fügt das Client-Gesicht des Gateways `$mount`, `$on`, `$stream` und `$host` hinzu — letzteres exponiert die fixierten Host-Fakten der Verbindung (`home`, `isLoopback`) als schlichte Reads, sodass ein Konsument nie den Träger injizieren muss, um sie zu erfahren.
 
@@ -440,7 +440,7 @@ ctx.remote.goals.create(sessionId, request, signal?)
 → Client result codec 验证并返回 CreateGoalResult
 ```
 
-Remote definiert keine zweischichtige `{ ok, value/error }`-Antwort auf der Leitung. Erfolgreiche Werte und Fehler nutzen direkt das `result` der bestehenden RPC-Antwort, und der Fehlerzweig trägt die geteilten `{ code, message, details }`-Daten. Owner, Resolver und das Gateway werfen alle eine Klasse, `RemoteError`, deren Code aus der gemergten `RemoteErrorDetailsMap` stammt: Der Host kodiert einen strukturell identifizierten `RemoteError` unverändert auf die Leitung — einschließlich der eigenen `gateway/*`-Assembly-Codes des Gateways und eines `session/not-found` oder `session/agent-busy` eines Resolvers — und faltet nur einen unklassifizierten Wurf in `gateway/internal`, wobei die Diagnose in der message bleibt. Das Client-Gesicht rekonstruiert eine Instanz für den `RemoteResult`-Fehlerzweig; `throw result.error` behält also Wurf-Semantik. [Die Failure-Vocabulary-Agent-Note](2026-08-28-ctx-remote-failure-vocabulary.md) besitzt die Code-Tabelle, ihre Ownership-Regeln und warum die Unterscheidung `code` statt `instanceof` liest.
+Remote definiert keine zweischichtige `{ ok, value/error }`-Antwort auf der Leitung. Erfolgreiche Werte und Fehler nutzen direkt das `result` der bestehenden RPC-Antwort, und der Fehlerzweig trägt die geteilten `{ code, message, details }`-Daten. Owner, Resolver und das Gateway werfen alle eine Klasse, `RemoteError`, deren Code aus der gemergten `RemoteErrorDetailsMap` stammt: Der Host kodiert einen strukturell identifizierten `RemoteError` unverändert auf die Leitung — einschließlich der eigenen `gateway/*`-Assembly-Codes des Gateways und eines `session/not-found` oder `session/agent-busy` eines Resolvers — und faltet nur einen unklassifizierten Wurf in `gateway/internal`, wobei die Diagnose in der message bleibt. Das Client-Gesicht rekonstruiert eine Instanz für den `RemoteResult`-Fehlerzweig; `throw result.error` behält also Wurf-Semantik. [Die Failure-Vocabulary-Agent-Note](2026-08-28-ctx-remote-failure-vocabulary.de.md) besitzt die Code-Tabelle, ihre Ownership-Regeln und warum die Unterscheidung `code` statt `instanceof` liest.
 
 Das Gateway behandelt weder pro-Methode-Permissions, Caller-Identität, Idempotenz noch langlebigen Verbindungs-State. Es propagiert nur kooperativen Abbruch von Connection in explizit abbruchfähige Geschäftsmethoden. Jeder Request auf dem geteilten Kanal — Typert-Endpoint oder exakte Fetch-Route — passiert Connections Browser-Authentifizierung und Trusted-Host-Policy vor dem Dispatch; das Gateway fügt keine zweite Policy hinzu. Connections WebSocket-Migration bleibt separate Folge-Arbeit.
 

@@ -4,15 +4,14 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-anonymous-user-id
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 DeepSeek Harness 为每个 harness home 使用一个匿名标识符，以关联同一套安装产生的遥测、反馈与 DeepSeek 请求，同时不识别用户身份。该随机 UUID 存储在 `$DSH_HOME/.anonymous-user-id`（默认 `~/.dsh`）中，可跨重启保留，并在你删除文件后重新生成。不同 harness home 使用不同的标识符，且该值不包含机器或账户数据。内置功能会自动创建并附加该值；包使用者可以复用同一个值进行安装范围的关联，但无法跨 home 关联记录。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

@@ -1,8 +1,8 @@
 # Agent Note: 前端长 Session 性能预算
+[English](2026-09-06-frontend-performance-budgets.md) | 中文 | [Deutsch](2026-09-06-frontend-performance-budgets.de.md)
 
 Status: implemented
 
-[English](2026-09-06-frontend-performance-budgets.md) | 中文
 
 ## 问题
 

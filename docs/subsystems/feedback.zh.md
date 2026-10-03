@@ -1,6 +1,6 @@
 # 消息反馈
+[English](feedback.md) | 中文 | [Deutsch](feedback.de.md)
 
-[English](feedback.md) | 中文
 
 [`@deepseek-ai/dsh-message-feedback`](../../packages/feedback/message-feedback)拥有针对单条 assistant 消息的可编辑反馈。权威 Session 日志保存 `feedback/message-put` 和 `feedback/message-delete`；不可变的 Session 级备注仍使用 `feedback/record`，由 [`@deepseek-ai/dsh-command-feedback`](../../packages/feedback/command-feedback) 连同两种反馈共用的 `FeedbackCategory` 分类表一起拥有。三者都是仅写日志的事件，绝不进入模型上下文。
 
@@ -11,8 +11,6 @@
 ```ts type-equiv
 /** Opaque compare-and-set token for one exact feedback item revision. */
 type MessageFeedbackVersion = Branded<'MessageFeedbackVersion'>
-
-[English](feedback.md) | 中文 | [Deutsch](feedback.de.md)
 ```
 
 ```ts type-equiv

@@ -1,8 +1,8 @@
 # Agent Note: Durable Step-Boundary-Events streichen
+[English](2026-06-20-drop-durable-step-boundaries.md) | [中文](2026-06-20-drop-durable-step-boundaries.zh.md) | Deutsch
 
 Status: rejected — `step/end` ist die durable Anzeige dafür, dass ein Model-Step abgeschlossen wurde, und das Behalten des symmetrischen `step/start`-/`step/end`-Paars macht Crash-Repair, Invarianten und Transcript-Inspektion klarer, als den Abschluss aus angrenzenden step-scoped Events abzuleiten.
 
-[English](2026-06-20-drop-durable-step-boundaries.md) | [中文](2026-06-20-drop-durable-step-boundaries.zh.md) | Deutsch
 
 ## Problem
 

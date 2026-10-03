@@ -1,8 +1,8 @@
 # Agent Note: Resume header 不重复系统提示词
+[English](2026-09-03-resume-headers-do-not-repeat-system-prompts.md) | 中文 | [Deutsch](2026-09-03-resume-headers-do-not-repeat-system-prompts.de.md)
 
 Status: implemented
 
-[English](2026-09-03-resume-headers-do-not-repeat-system-prompts.md) | 中文
 
 ## 问题
 

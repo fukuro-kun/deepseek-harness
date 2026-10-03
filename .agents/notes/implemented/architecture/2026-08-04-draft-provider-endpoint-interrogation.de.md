@@ -1,8 +1,8 @@
 # Agent Note: Einen Draft-Provider-Endpoint befragen
+[English](2026-08-04-draft-provider-endpoint-interrogation.md) | [中文](2026-08-04-draft-provider-endpoint-interrogation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-04-draft-provider-endpoint-interrogation.md) | [中文](2026-08-04-draft-provider-endpoint-interrogation.zh.md) | Deutsch
 
 ## Problem
 

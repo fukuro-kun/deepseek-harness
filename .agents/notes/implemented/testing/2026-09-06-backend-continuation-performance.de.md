@@ -1,8 +1,8 @@
 # Agent Note: Performance-Baselines für Tool-lastige Backend-Continuation
+[English](2026-09-06-backend-continuation-performance.md) | [中文](2026-09-06-backend-continuation-performance.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-backend-continuation-performance.md) | [中文](2026-09-06-backend-continuation-performance.zh.md) | Deutsch
 
 ## Problem
 

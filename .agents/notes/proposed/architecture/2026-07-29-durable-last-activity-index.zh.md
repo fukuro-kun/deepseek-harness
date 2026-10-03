@@ -1,8 +1,8 @@
 # Agent Note: 在会话索引中记录最后活动
+[English](2026-07-29-durable-last-activity-index.md) | 中文 | [Deutsch](2026-07-29-durable-last-activity-index.de.md)
 
 Status: proposed
 
-[English](2026-07-29-durable-last-activity-index.md) | 中文 | [Deutsch](2026-07-29-durable-last-activity-index.de.md)
 
 ## 问题
 

@@ -3,8 +3,8 @@ description: "通过作用域交互路径响应 Host 权限请求的浏览器批
 kind: "package-reference"
 ---
 # @deepseek-ai/dsh-client-ui-approval
-
 [English](README.md) | 中文 | [Deutsch](README.de.md)
+
 
 ## 概述
 

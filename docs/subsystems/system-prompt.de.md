@@ -1,6 +1,6 @@
 # System-Prompt-Assembly
-
 [English](system-prompt.md) | [中文](system-prompt.zh.md) | Deutsch
+
 
 Das [system-prompt-Paket](../../packages/core/system-prompt) besitzt die Daten, die zwischen Prompt-Beitragenden und einem Assembly-Aufruf ausgetauscht werden. Das Paket-[README](../../packages/core/system-prompt/README.de.md) dokumentiert Registrierung, Reihenfolge, Scoping und Rendering-Verhalten; diese Seite hält die exakten paketübergreifenden Typen fest, die Plugins implementieren oder übergeben.
 

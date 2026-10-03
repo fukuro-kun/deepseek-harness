@@ -1,8 +1,8 @@
 # Agent Note: 不增加默认界面的全局主面板
+[English](2026-09-08-global-main-panels.md) | 中文 | [Deutsch](2026-09-08-global-main-panels.de.md)
 
 Status: implemented
 
-[English](2026-09-08-global-main-panels.md) | 中文 | [Deutsch](2026-09-08-global-main-panels.de.md)
 
 ## 问题
 

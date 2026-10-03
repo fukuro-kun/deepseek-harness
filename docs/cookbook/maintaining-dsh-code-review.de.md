@@ -1,6 +1,6 @@
 # Wartung des dsh-code-review-Skills
-
 [English](maintaining-dsh-code-review.md) | [中文](maintaining-dsh-code-review.zh.md) | Deutsch
+
 
 Das [`dsh-code-review`](../../.agents/skills/dsh-code-review/SKILL.md)-Skill wird von einem einzelnen benannten Operator aktuell gehalten, der ein privates periodisches Wartungstool betreibt. Dieses Cookbook ist der Einstiegspunkt für diesen Operator — und für jeden, der die Rolle übernimmt — sowie für Repository-Beitragende, die verstehen wollen, warum Skill-Updates als kleine periodische PRs ankommen und nicht als Einmal-Audits. Der Workflow selbst ist in der [human-review skill-maintenance Agent Note](../../.agents/notes/proposed/process/2026-07-13-human-review-skill-maintenance.de.md) spezifiziert.
 

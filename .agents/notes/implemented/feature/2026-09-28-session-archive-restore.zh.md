@@ -1,8 +1,8 @@
 # Agent Note：Session 归档恢复与归档区块
+[English](2026-09-28-session-archive-restore.md) | 中文 | [Deutsch](2026-09-28-session-archive-restore.de.md)
 
 Status: implemented
 
-[English](2026-09-28-session-archive-restore.md) | 中文
 
 ## 问题
 

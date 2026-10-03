@@ -1,8 +1,8 @@
 # Agent Note: Typert 引用追踪包内转发模块
+[English](2026-09-07-typert-package-local-forwarding-imports.md) | 中文 | [Deutsch](2026-09-07-typert-package-local-forwarding-imports.de.md)
 
 Status: implemented
 
-[English](2026-09-07-typert-package-local-forwarding-imports.md) | 中文
 
 ## Problem
 

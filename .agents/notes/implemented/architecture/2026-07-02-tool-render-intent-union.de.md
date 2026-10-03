@@ -1,8 +1,8 @@
 # Agent Note: Getaggte Render-Intent-Union für die Tool-Call-Darstellung
+[English](2026-07-02-tool-render-intent-union.md) | [中文](2026-07-02-tool-render-intent-union.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-02-tool-render-intent-union.md) | [中文](2026-07-02-tool-render-intent-union.zh.md) | Deutsch
 
 > Die Render-Intent-Union bleibt aktuell für UI-Transports; ihr ACP-Mapping ist durch [ACP as an automation-only protocol](../simplification/2026-07-23-acp-automation-only-protocol.de.md) ersetzt.
 
@@ -78,5 +78,5 @@ Ein neuer Render-Intent ist ein Compile-breakender Change am Bridge-Switch — a
 ## Verwandt
 
 - Ersetzt den Aufschub im früheren verworfenen collapse-tool-owned-presentation-Vorschlag (verworfen — „auf zwei echte Tools und zwei echte Consumer warten, dann eine getaggte Render-Intent-Union"). Diese Messlatte ist jetzt erreicht; dies ist jene Union.
-- Erweitert durch [Result-time applied-hunk diffs](../../archived/architecture/2026-07-02-result-time-applied-hunk-diffs.md) (archiviert), die einen persistierten `meta`-Channel hinzufügten — der Value/Presentation-Split und der persistierte `presentationMeta`-Channel werden jetzt vom [canonical tool output contract](2026-07-20-canonical-tool-output-contract.md) besessen, sodass write/edit eine Result-time-`DiffResultView` — die applizierte Änderung (ein kontextueller Hunk mit Kontextzeilen / einer pro `replace_all`-Stelle, oder eine Whole-File-Diff bei einem Create) — zusätzlich zur Call-time-Diff-Card dieser Union emittieren.
+- Erweitert durch [Result-time applied-hunk diffs](../../archived/architecture/2026-07-02-result-time-applied-hunk-diffs.md) (archiviert), die einen persistierten `meta`-Channel hinzufügten — der Value/Presentation-Split und der persistierte `presentationMeta`-Channel werden jetzt vom [canonical tool output contract](2026-07-20-canonical-tool-output-contract.de.md) besessen, sodass write/edit eine Result-time-`DiffResultView` — die applizierte Änderung (ein kontextueller Hunk mit Kontextzeilen / einer pro `replace_all`-Stelle, oder eine Whole-File-Diff bei einem Create) — zusätzlich zur Call-time-Diff-Card dieser Union emittieren.
 - Faltet `ToolTerminal` in die getaggten `terminal`-Views, die aktuelle UI-Transports nutzen.

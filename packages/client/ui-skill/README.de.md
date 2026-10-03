@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-skill
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -62,7 +62,7 @@ Die `/client`-Exports sind nur der Plugin-Body (`apply`/`inject`); das Quell-Obj
 
 Diese Seiten decken die Eingabemaschinerie, den Tool-Zeilen-Host und das host-seitige skill-Tool ab.
 
-- [ui-input-trigger](../ui-input-trigger/README.md) — die Inline-Vorschlagsmaschinerie, in die sich die Quelle registriert.
+- [ui-input-trigger](../ui-input-trigger/README.de.md) — die Inline-Vorschlagsmaschinerie, in die sich die Quelle registriert.
 - [ui-tool](../ui-tool/README.de.md) — die Tool-Aufruf-Präsentationsschicht, die den `tool.call.toolview`-slot hostet.
 - [tool-skill](../../skill/tool-skill/README.de.md) — das host-seitige `skill`-Tool, das die pre-step-Gesten-Grenze besitzt.
 - [Web-Eingabemaschine und Slash-Pipeline](../../../.agents/notes/archived/architecture/2026-07-25-web-input-machine-and-slash-pipeline.md) — wie Referenzen und Befehle die Eingabemaschine teilen.

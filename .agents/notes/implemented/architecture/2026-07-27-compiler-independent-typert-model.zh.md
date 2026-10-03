@@ -1,8 +1,8 @@
 # Agent Note: 编译器无关的 Typert 类型模型
+[English](2026-07-27-compiler-independent-typert-model.md) | 中文 | [Deutsch](2026-07-27-compiler-independent-typert-model.de.md)
 
 Status: implemented
 
-[English](2026-07-27-compiler-independent-typert-model.md) | 中文 | [Deutsch](2026-07-27-compiler-independent-typert-model.de.md)
 
 ## Problem
 

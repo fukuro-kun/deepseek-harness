@@ -1,6 +1,6 @@
 # 用户设置
+[English](settings.md) | 中文 | [Deutsch](settings.de.md)
 
-[English](settings.md) | 中文
 
 [dsh-settings](../../packages/settings/settings) 的用户设置 seam 持有一份按 namespace 分节的用户文档，并把每个已注册 namespace 解析为：schema 默认值，然后注册方的组合 `base`，最后用户分节。[dsh-settings-file](../../packages/settings/settings-file) 这类提供方存储原始文档并推送外部编辑；消费方插件注册 schema 后读取或观察解析值。组合配置仍留在 `cordis.yml`——namespace 只承载用户可编辑子集。
 
@@ -11,8 +11,6 @@
 namespace 命名用户文档中一个归插件所有的分节。brand 防止调用方将设置 namespace 与在包或进程之间传递的其他 id 混用；构造时校验小写 kebab-case 语法。
 
 ```ts type-equiv
-
-[English](settings.md) | 中文 | [Deutsch](settings.de.md)
 /** Nominal id of one registered settings namespace. */
 type SettingsNamespace = Branded<'SettingsNamespace'>
 ```

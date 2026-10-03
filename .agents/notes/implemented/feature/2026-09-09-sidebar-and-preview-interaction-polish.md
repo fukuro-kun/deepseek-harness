@@ -1,9 +1,8 @@
 # Agent Note: Sidebar and preview interaction polish
-English | [中文](.agents/notes/implemented/feature/2026-09-09-sidebar-and-preview-interaction-polish.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-09-sidebar-and-preview-interaction-polish.de.md)
+English | [中文](2026-09-09-sidebar-and-preview-interaction-polish.zh.md) | [Deutsch](2026-09-09-sidebar-and-preview-interaction-polish.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-09-sidebar-and-preview-interaction-polish.zh.md)
 
 ## Problem
 

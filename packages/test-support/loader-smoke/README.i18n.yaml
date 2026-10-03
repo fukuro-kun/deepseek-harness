@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/test-support/loader-smoke/README.md
 README.md: a2a81823b824f7d5c7e992a81e89f88504e95dc9
-README.zh.md: 779157ca103c0b16cc5ae67ef4b3c9f9b9e437a5
-README.de.md: 60dcddacaa3db644ea345c43e220039129cc9298
+README.zh.md: a0e5e859166a1dabffa3193a233f893a16ba2cb7
+README.de.md: dab1ea7d9171c342164905a0061b5131dad09418

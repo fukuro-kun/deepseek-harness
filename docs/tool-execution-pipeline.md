@@ -2,10 +2,10 @@
      Run `pnpm run gen-doc-graphs` to regenerate. -->
 
 # Tool Execution Pipeline
+English | [中文](tool-execution-pipeline.zh.md) | [Deutsch](tool-execution-pipeline.de.md)
 
 This graph shows where policy, hooks, sandboxing, filesystem guards, result rewriting, final-outcome observation, and UI rendering run without changing the loop. The `tools/pre-execute` waterfall runs first, monotonic guards run next, and the `tools/execute` and `tools/post-execute` waterfalls follow; the three waterfalls may transform a call. Definition-owned `finalizeContent` and `tools/result` run afterward.
 
-English | [中文](tool-execution-pipeline.zh.md) | [Deutsch](tool-execution-pipeline.de.md)
 
 ```mermaid
 flowchart TD

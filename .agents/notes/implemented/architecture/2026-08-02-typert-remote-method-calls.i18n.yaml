@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-02-typert-remote-method-calls.md
-2026-08-02-typert-remote-method-calls.md: b1a4a32fd4f51a9a11a9c6aa122392879e430d8e
-2026-08-02-typert-remote-method-calls.zh.md: 35456234d8ea2c2757839cb33291545a0e76b2af
-2026-08-02-typert-remote-method-calls.de.md: d4538360838931305f5c08dc547c395286d190b0
+2026-08-02-typert-remote-method-calls.md: ee2e57d5c0e9cc1b4f3ab6b503d3d65abc555515
+2026-08-02-typert-remote-method-calls.zh.md: f2fc9acd8bc0a2beeb0c4005a8362dadbc0c2f6f
+2026-08-02-typert-remote-method-calls.de.md: bf6cb294daa4e5cb797840dfaa1f07f9a5c8bc68

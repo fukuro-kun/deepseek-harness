@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-input-trigger/README.md
 README.md: 8c18965748d8905c665418d4a6e9d0cc7e2a080e
-README.zh.md: 7ba8fe9cccef9a7f9a14797a78651cd0a0ee40e5
-README.de.md: 5164bf582d7fbcff4e973e6baced4cc50398dd38
+README.zh.md: a2dc1e769e3fe4905b9e5f5e3c0523ae283ce44f
+README.de.md: 26ec0e78e8b4c8fd4a02b6e50c40b2cc62834cf7

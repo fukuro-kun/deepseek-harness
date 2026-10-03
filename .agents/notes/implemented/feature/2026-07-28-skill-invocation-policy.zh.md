@@ -1,8 +1,8 @@
 # Agent Note: 模型与用户彼此独立的 skill（技能）调用策略
+[English](2026-07-28-skill-invocation-policy.md) | 中文 | [Deutsch](2026-07-28-skill-invocation-policy.de.md)
 
 Status: implemented
 
-[English](2026-07-28-skill-invocation-policy.md) | 中文
 
 ## 问题
 

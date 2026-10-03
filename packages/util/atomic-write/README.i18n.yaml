@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/util/atomic-write/README.md
 README.md: 42f9b3df9f9208b7b84c86e57a05f006f2d7c0e5
-README.zh.md: 0cd83e8fd03c4cc5e17acc2c52c30126a3d8a8f6
-README.de.md: 916d4fc0120f3bf4e2d2045be2815d3fb55d7249
+README.zh.md: a27c8038c480f30d2c109326b684571345b1b0b0
+README.de.md: f0631f46c51c1f4a85934efd002b94447166c5fb

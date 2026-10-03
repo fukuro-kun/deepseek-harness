@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/bundle/sdk-app/README.md
 README.md: e085b3729926e6d671f860c892c1eabf2ba625e3
-README.zh.md: c57d10488a214fbae3c18e966a9675f3e8d3c57f
-README.de.md: 77c08e9b8edc1f70a476e609e637f8d4c8c734e8
+README.zh.md: 7f4fb949de18598819578b72c0cda4a9bb7a7d9c
+README.de.md: d3bafa7b9fffc1d56946073be309964754438bec

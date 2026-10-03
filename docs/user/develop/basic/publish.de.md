@@ -1,6 +1,6 @@
 # Plugin paketieren und installieren
-
 [English](publish.md) | [中文](publish.zh.md) | Deutsch
+
 
 Die bisherigen Tutorials haben ein lokales Plugin über ein `--patch`-Overlay geladen. Dieses Tutorial paketiert es als installierbares **Bundle**, installiert es mit `dsh plugin add` in ein **Profil** und erklärt die Schichtenreihenfolge, die die zusammengesetzte Konfiguration bestimmt. Es setzt eine installierte `dsh`-CLI voraus. Schließen Sie zuerst die [Plugin-Konfiguration](./config.de.md) ab.
 
@@ -70,7 +70,7 @@ Ein Profilverzeichnis enthält zwei Dateien:
 - `package.json` — die Out-of-Tree-Plugin-Abhängigkeiten des Profils (von pnpm verwaltet) plus das `dsh.profile`-Manifest mit seiner geordneten `bundles`-Liste.
 - `cordis.patch.yml` — die eigene Patch-Schicht des Benutzers, angewendet nach jeder Bundle-Schicht.
 
-Ein Profil-Manifest wird nie von Hand geschrieben: `dsh --profile <name> --from-default-profile <template>` kann eines aus einer mitgelieferten Anwendungsvorlage erzeugen, während `dsh plugin` ein base-gestütztes Profil erstellt und dessen Liste installierter Bundles pflegt. Die Erstellungsregeln definiert die [CLI-Verhaltensreferenz](../../../../apps/cli/reference/README.de.md#profil-boot); der nächste Abschnitt zeigt den Plugin-Weg.
+Ein Profil-Manifest wird nie von Hand geschrieben: `dsh --profile <name> --from-default-profile <template>` kann eines aus einer mitgelieferten Anwendungsvorlage erzeugen, während `dsh plugin` ein base-gestütztes Profil erstellt und dessen Liste installierter Bundles pflegt. Die Erstellungsregeln definiert die [CLI-Verhaltensreferenz](../../../../apps/cli/reference/README.de.md#profile-boot); der nächste Abschnitt zeigt den Plugin-Weg.
 
 ## In ein Profil installieren
 
@@ -136,7 +136,7 @@ Ein Bundle, das eine lauffähige App definiert, mountet ein gewöhnliches Provid
   name: 'dsh-hello-plugin/startup'
 ```
 
-Das Plugin exportiert `inject = ['cmdlineArgs']`, ruft `parseCmdline` aus [`@deepseek-ai/dsh-cmdline`](../../../../packages/boot/cmdline/README.md) mit einem eigenen commander-Programm auf und stellt seinen app-eigenen Dienst aus der Action des Programms bereit. Der Launcher gibt jedem Plugin dieselben unveränderlichen Argumente nach den Launcher-Flags, sodass app-spezifische Flags keine Launcher-Änderung brauchen und mehrere Plugins den Snapshot parsen dürfen. Die Loader-Zeile braucht keinen Launcher-Marker und keine besondere Art.
+Das Plugin exportiert `inject = ['cmdlineArgs']`, ruft `parseCmdline` aus [`@deepseek-ai/dsh-cmdline`](../../../../packages/boot/cmdline/README.de.md) mit einem eigenen commander-Programm auf und stellt seinen app-eigenen Dienst aus der Action des Programms bereit. Der Launcher gibt jedem Plugin dieselben unveränderlichen Argumente nach den Launcher-Flags, sodass app-spezifische Flags keine Launcher-Änderung brauchen und mehrere Plugins den Snapshot parsen dürfen. Die Loader-Zeile braucht keinen Launcher-Marker und keine besondere Art.
 
 Zeilen, die durch diese Argumente konfiguriert werden, injizieren den Dienst des Providers und lesen ihn in ihren eigenen `!!js`-Optionen, mit dem Deployment-Wert als Fallback daneben:
 

@@ -1,8 +1,8 @@
 # Agent Note: Provider-geroutete LLM-Adapter und ein generisches pi-ai-Backend
+[English](2026-07-14-provider-routed-llm-adapters.md) | [中文](2026-07-14-provider-routed-llm-adapters.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-14-provider-routed-llm-adapters.md) | [中文](2026-07-14-provider-routed-llm-adapters.zh.md) | Deutsch
 
 ## Problem
 

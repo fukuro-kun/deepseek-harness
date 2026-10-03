@@ -1,6 +1,6 @@
 # Web Client 架构
+[English](web-client.md) | 中文 | [Deutsch](web-client.de.md)
 
-[English](web-client.md) | 中文
 
 Web Client 是由独立加载插件组装而成的浏览器侧 Cordis 应用。它有四个可复用底座：[Client Modules](client-modules.zh.md) 加载插件图，[API Gateway](../api-gateway.zh.md) 提供类型化 Host 通信，[Slots](slots.zh.md) 组合 React UI，[Conversation](conversation.zh.md) 把 Session 历史窗口变成各 target 自有的视图。本文串联这些系统，并规定 Client model 与功能包各自所在的位置。
 
@@ -12,7 +12,6 @@ Web Client 是由独立加载插件组装而成的浏览器侧 Cordis 应用。�
 | 传输与 API assembly | `client/connection`、`api/gateway`、`api/remotes` | 建立 Client generation，公开生成的 `ctx.remote` method 与 stream，转发选定的 Cordis event，并承载取消和结果。 |
 | Client model | `api/session-controller/client`、`api/workspace-controller/client` | 维护不依赖 React 的 Host 状态镜像，处理 stream/unary 竞态，拥有对象 identity 与订阅，并公开收窄的 command service。 |
 
-[English](web-client.md) | 中文 | [Deutsch](web-client.de.md)
 | UI adapter | `client/ui-session`、`client/ui-workspace` | 把 model observable 转换为 root 或 Session scope 的标准 Slot source，不接管业务状态所有权。 |
 | Conversation 数据 | `client/ui-conversation`、`ui-chat` 与 `ui-trajectory` 等 target package | 把标准 event 与紧凑的 Assistant 历史批次组装成相互独立的 target snapshot，并拥有共享的 Conversation shell 与输入流程。 |
 | 组合与渲染 | `client/ui-slots`、`client/ui-renderer`、`client/ui-layout`、各 UI 功能包 | 声明扩展位置、推导组件 props、把 observable 绑定成 React hook，并挂载最终组件树。 |

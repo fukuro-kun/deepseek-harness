@@ -1,6 +1,6 @@
 # 5. Konfiguration
-
 [English](05-config.md) | [中文](05-config.zh.md) | Deutsch
+
 
 Jeder `cordis.yml`-Eintrag kann einen `config`-Block enthalten. Das Plugin deklariert ein schema, das diesen Block vor der Ausführung von `apply` validiert. Ungültige Konfiguration lässt den Laden mit einer präzisen Fehlermeldung scheitern — das Plugin startet nie halb konfiguriert.
 

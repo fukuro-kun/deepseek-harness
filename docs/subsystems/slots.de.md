@@ -1,6 +1,6 @@
 # Web Client Slots
-
 [English](slots.md) | [中文](slots.zh.md) | Deutsch
+
 
 Slots sind das typisierte React-Kompositionssystem des Web Client. [`dsh-client-ui-slots`](../../packages/client/ui-slots/README.de.md) definiert die React-freie Registry und die Typ-Algebra; [`dsh-client-ui-renderer`](../../packages/client/ui-renderer/README.de.md) bindet observable Quellen an Hooks, rendert den Baum und besitzt die React-Kontexte intern. Ein Feature-Plugin trägt UI über `ctx.slots.register()` bei und importiert niemals eine Komponente eines anderen Feature-Plugins.
 

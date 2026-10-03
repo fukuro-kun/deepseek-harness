@@ -1,8 +1,8 @@
 # Agent Note: Project 局部 Issue 规划字段
+[English](2026-09-02-project-local-issue-planning-fields.md) | 中文 | [Deutsch](2026-09-02-project-local-issue-planning-fields.de.md)
 
 Status: implemented
 
-[English](2026-09-02-project-local-issue-planning-fields.md) | 中文
 
 ## 问题
 

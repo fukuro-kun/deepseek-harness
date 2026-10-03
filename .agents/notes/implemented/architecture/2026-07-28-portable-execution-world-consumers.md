@@ -3,7 +3,6 @@ English | [中文](2026-07-28-portable-execution-world-consumers.zh.md) | [Deuts
 
 Status: implemented
 
-English | [中文](2026-07-28-portable-execution-world-consumers.zh.md)
 
 ## Problem
 

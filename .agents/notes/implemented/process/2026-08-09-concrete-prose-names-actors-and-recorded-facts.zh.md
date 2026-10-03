@@ -1,8 +1,8 @@
 # Agent Note: 具体表述说明执行者和记录的事实
+[English](2026-08-09-concrete-prose-names-actors-and-recorded-facts.md) | 中文 | [Deutsch](2026-08-09-concrete-prose-names-actors-and-recorded-facts.de.md)
 
 Status: implemented
 
-[English](2026-08-09-concrete-prose-names-actors-and-recorded-facts.md) | 中文
 
 ## 问题
 

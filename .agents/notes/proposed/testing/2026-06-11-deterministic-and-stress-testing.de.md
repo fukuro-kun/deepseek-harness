@@ -1,8 +1,8 @@
 # Agent Note: Deterministische Tests, das Fixture für die Replay-Invariante und Race-Stress
+[English](2026-06-11-deterministic-and-stress-testing.md) | [中文](2026-06-11-deterministic-and-stress-testing.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-06-11-deterministic-and-stress-testing.md) | [中文](2026-06-11-deterministic-and-stress-testing.zh.md) | Deutsch
 
 Der [CI test reliability skill](../../../skills/dsh-ci-test-reliability/SKILL.md) liefert aktuelle Leitlinien für die Erstellung und Diagnose von Tests, ohne die hier vorgeschlagene Lint-Regel, das universelle Replay-Fixture oder den nächtlichen Stress-Job zu implementieren. Diese Mechanismen bleiben im Vorschlagsstatus.
 

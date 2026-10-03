@@ -1,9 +1,8 @@
 # Agent Note: Last-tab close rules on the Sidebar's docked surface
-English | [中文](.agents/notes/implemented/feature/2026-09-08-sidebar-last-tab-close-rules.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-08-sidebar-last-tab-close-rules.de.md)
+English | [中文](2026-09-08-sidebar-last-tab-close-rules.zh.md) | [Deutsch](2026-09-08-sidebar-last-tab-close-rules.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-08-sidebar-last-tab-close-rules.zh.md)
 
 ## Problem
 

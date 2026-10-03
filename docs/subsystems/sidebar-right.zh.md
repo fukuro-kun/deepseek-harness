@@ -1,6 +1,6 @@
 # 右侧 Sidebar
+[English](sidebar-right.md) | 中文 | [Deutsch](sidebar-right.de.md)
 
-[English](sidebar-right.md) | 中文
 
 右侧 Sidebar 是 Web Client 里每个会话一份的停靠面：会话区旁的一列 pane 与 tab，按地址寻址的内容——工作区文件、目录树、产品自带页面——在这里打开、分栏、浮出、关闭。[`dsh-client-ui-sidebar-right`](../../packages/client/ui-sidebar-right/README.zh.md) 拥有这个面、tab 类型注册表与导航服务；[`dsh-client-ui-dockkit`](../../packages/client/ui-dockkit/README.zh.md) 是它内部的布局引擎；[`dsh-client-resources`](../../packages/client/resources/README.zh.md) 把地址变成任何组件都能读的活数据；[`dsh-api-workspace-files`](../../packages/api/workspace-files/README.zh.md) 同时提供 Host 工作区文件服务与 Client `file` 资源提供者。
 
@@ -12,7 +12,6 @@
 
 一个 tab 类型是共用定义 `id` 的两次注册：在 `ctx.sidebarRightTabs` 里的静态定义说明其 `kind` 打开哪些地址，一次 keyed slot 注册提供它的正文。框架注入 `useTabInfo()` 以读取 Sidebar、窗格和标签的实时信息；各类型把自身状态放在 slot store 里。各包之间只以类型形式引用彼此的声明。
 
-[English](sidebar-right.md) | 中文 | [Deutsch](sidebar-right.de.md)
 
 | 包 | 职责 |
 |---|---|

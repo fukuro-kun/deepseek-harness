@@ -1,8 +1,8 @@
 # Agent Note: Zwei LLM-adapters als Design-Verifizierungs-Twin
+[English](2026-06-13-twin-llm-adapters.md) | [中文](2026-06-13-twin-llm-adapters.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-13-twin-llm-adapters.md) | [中文](2026-06-13-twin-llm-adapters.zh.md) | Deutsch
 
 ## Problem
 

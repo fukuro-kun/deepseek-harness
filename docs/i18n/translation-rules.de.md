@@ -1,6 +1,6 @@
 # Übersetzungsregeln
-
 [English](translation-rules.md) | [中文](translation-rules.zh.md) | Deutsch
+
 
 Wie zwischen den drei Seiten eines Dokumentenpaares in diesem Repository übersetzt wird. Alle drei Sprachen sind gleichberechtigt ([README.md](README.de.md)): Eine Änderung wird in jeder Sprache verfasst, und diese Seite ist die Quelle für diese Aktualisierung — diese Regeln regeln die Erstellung oder Aktualisierung der Gegenstücke. Sie binden Menschen und Agenten gleichermaßen. Die agentliche Routinearbeit übersetzt den geänderten Inhalt direkt in einem terminologiegeleiteten Durchgang; der erweiterte Workflow [.agents/skills/dsh-translate-docs](../../.agents/skills/dsh-translate-docs/SKILL.md) läuft nur, wenn der Benutzer ihn explizit aufruft. Die Regelstufen folgen der RFC-2119-Verwendung: **MUST** / **MUST NOT** blockieren Gate oder Review; für **SHOULD** ist ein Abweichungsgrund zu nennen; **MAY** ist Ermessenssache.
 

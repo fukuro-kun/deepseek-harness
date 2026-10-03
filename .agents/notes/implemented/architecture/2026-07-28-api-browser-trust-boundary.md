@@ -3,7 +3,6 @@ English | [中文](2026-07-28-api-browser-trust-boundary.zh.md) | [Deutsch](2026
 
 Status: implemented
 
-English | [中文](2026-07-28-api-browser-trust-boundary.zh.md)
 
 ## Problem
 

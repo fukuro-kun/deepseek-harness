@@ -4,8 +4,8 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-home-paths
-
 [English](README.md) | 中文 | [Deutsch](README.de.md)
+
 
 ## 概述
 

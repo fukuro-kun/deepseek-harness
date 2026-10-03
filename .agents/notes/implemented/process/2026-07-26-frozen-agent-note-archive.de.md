@@ -1,8 +1,8 @@
 # Agent Note: Agent Notes mit geringem Zukunftswert außerhalb des aktiven Bestands einfrieren
+[English](2026-07-26-frozen-agent-note-archive.md) | [中文](2026-07-26-frozen-agent-note-archive.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-26-frozen-agent-note-archive.md) | [中文](2026-07-26-frozen-agent-note-archive.zh.md) | Deutsch
 
 ## Problem
 

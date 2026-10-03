@@ -1,8 +1,8 @@
 # Agent Note: 仅在显式反馈后通过 OpenTelemetry 上传
+[English](2026-09-05-nonofficial-feedback-otel.md) | 中文 | [Deutsch](2026-09-05-nonofficial-feedback-otel.de.md)
 
 Status: implemented
 
-[English](2026-09-05-nonofficial-feedback-otel.md) | 中文 | [Deutsch](2026-09-05-nonofficial-feedback-otel.de.md)
 
 ## 问题
 

@@ -1,6 +1,6 @@
 # 扩展
+[English](extensions.md) | 中文 | [Deutsch](extensions.de.md)
 
-[English](extensions.md) | 中文
 
 extensions 子系统允许 agent（智能体）定义带版本的 Cordis 包、运行其 host 与浏览器两半，并在编写代码前查询获准公开的运行时元数据。包生命周期与沙箱行为由 [`packages/extensions`](../../packages/extensions/README.zh.md) 包组说明。
 
@@ -12,7 +12,6 @@ extensions 子系统允许 agent（智能体）定义带版本的 Cordis 包、�
 
 Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.zh.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
-[English](extensions.md) | 中文 | [Deutsch](extensions.de.md)
 
 <a id="ctxcordisinspect--cordisinspectregistryservice"></a>
 

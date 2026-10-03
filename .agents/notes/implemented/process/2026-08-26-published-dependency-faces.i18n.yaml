@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-26-published-dependency-faces.md
-2026-08-26-published-dependency-faces.md: 06c147e9d6f14e59ec5e73c2d7c0c82c962bb255
-2026-08-26-published-dependency-faces.zh.md: 4ac3f461018c21047af6359ca5e27d050da5a2c4
-2026-08-26-published-dependency-faces.de.md: 78d98ab230c7959a2b3a45380d1b1fb867c96088
+2026-08-26-published-dependency-faces.md: 28d3c783a995b1b15f9d639922b958d1b4bb6a8f
+2026-08-26-published-dependency-faces.zh.md: 7e5796f2b500a032ce5330390dc13b488fad82d5
+2026-08-26-published-dependency-faces.de.md: 3ee88b04f185c50982a00fb0ba0fce7402bb1baa

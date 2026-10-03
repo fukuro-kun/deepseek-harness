@@ -1,6 +1,6 @@
 # Vendored-Package-Rescope
-
 [English](rescope.md) | [中文](rescope.zh.md) | Deutsch
+
 
 Das Cordis-Framework und seine Foundation-Libraries werden unter [`vendor/`](../vendor/README.md) vendored und unter dem `@deepseek-ai`-Scope veröffentlicht, weil jedes Harness-Paket das Framework als Peer-Dependency deklariert: das Veröffentlichen des Harness veröffentlicht diese Schicht mit, und unter den Upstream-Namen würde diese Veröffentlichung sie auf der Registry squatten. Diese Seite ist die Namens-Mapping; die Entscheidung und ihre Konsequenzen leben in der [Rescope-Agent-Note](../.agents/notes/archived/process/2026-08-10-vendor-package-rescope.md), und die Upstream-Commits in [`vendor/README.md`](../vendor/README.md).
 

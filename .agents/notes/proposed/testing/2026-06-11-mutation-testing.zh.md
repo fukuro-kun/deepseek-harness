@@ -1,8 +1,8 @@
 # Agent Note: 变异测试作为覆盖率的制衡手段
+[English](2026-06-11-mutation-testing.md) | 中文 | [Deutsch](2026-06-11-mutation-testing.de.md)
 
 Status: proposed
 
-[English](2026-06-11-mutation-testing.md) | 中文 | [Deutsch](.agents/notes/proposed/testing/2026-06-11-mutation-testing.de.md)
 
 ## 问题
 

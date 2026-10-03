@@ -1,8 +1,8 @@
 # Agent Note: Frame-koaleszierte Reasoning-Chunk-Publikation und Browser-Stress-Validierung
+[English](2026-08-03-opt-in-reasoning-chunk-browser-stress.md) | [中文](2026-08-03-opt-in-reasoning-chunk-browser-stress.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-03-opt-in-reasoning-chunk-browser-stress.md) | [中文](2026-08-03-opt-in-reasoning-chunk-browser-stress.zh.md) | Deutsch
 
 ## Problem
 

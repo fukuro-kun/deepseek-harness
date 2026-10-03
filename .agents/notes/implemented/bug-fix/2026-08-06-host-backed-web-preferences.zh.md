@@ -1,8 +1,8 @@
 # Agent Note: 通过 Host settings 持久化 Web 用户偏好
+[English](2026-08-06-host-backed-web-preferences.md) | 中文 | [Deutsch](2026-08-06-host-backed-web-preferences.de.md)
 
 Status: implemented
 
-[English](2026-08-06-host-backed-web-preferences.md) | 中文
 
 ## 问题
 

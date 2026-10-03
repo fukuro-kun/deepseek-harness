@@ -1,8 +1,8 @@
 # Agent Note: Jede Message wird als identifizierter immutabler Wert erzeugt
+[English](2026-07-28-identified-immutable-message-values.md) | [中文](2026-07-28-identified-immutable-message-values.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-28-identified-immutable-message-values.md) | [中文](2026-07-28-identified-immutable-message-values.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,6 +1,6 @@
 # 2. Lebenszyklus und Effects
-
 [English](02-lifecycle-and-effects.md) | [中文](02-lifecycle-and-effects.zh.md) | Deutsch
+
 
 Ein Cordis-Plugin kann durch eine Config-Änderung, Hot Reload, expliziten Dispose oder Verlust eines benötigten Service entladen werden. Registrierungen über Cordis-APIs sind Effects und werden beim Entladen des besitzenden Plugins rückgängig gemacht; Ressourcen, die außerhalb dieser APIs verwaltet werden, müssen in `ctx.effect()` gewrappt werden.
 

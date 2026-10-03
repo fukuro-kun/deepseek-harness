@@ -2,8 +2,8 @@
      Run `pnpm run gen-config-catalog` to regenerate. -->
 
 # Plugin-Konfigurationskatalog
-
 [English](config-catalog.md) | [中文](config-catalog.zh.md) | Deutsch
+
 
 Jeder `config:`-Block, den ein `cordis.yml`-Eintrag setzen kann: Für jedes ladbare Harness-Paket die wortgetreue Konfigurations-Deklaration (inklusive JSDoc), die ihre `apply`-Funktion oder ihr Service-Konstruktor empfängt; jeder referenzierte Typ wird daneben eingefügt (Paket-lokale Typen) oder verlinkt (alles andere). Das eingefügte Fragment ist der vollständige deklarierte Konfigurations-Typ des Plugins — ein Feld, das das Runtime-Schema bewusst ausschließt, ist eine nur zur Laufzeit vorhandene Seam (ihre eigene JSDoc sagt das) und kann nicht aus `cordis.yml` gesetzt werden. Dies ist die Referenz auf der **Deployment**-Achse — die Verdrahtung, an der ein Plugin-Autor arbeitet, ist der generierte Cordis-API-Abschnitt auf jeder [Subsystem-Seite](subsystems/core.de.md), die modellseitigen Tool-Schemas sind der [Tool-Katalog](tool-catalog.de.md), und [subsystems/](subsystems/core.de.md) dokumentiert die Typen, auf die diese Deklarationen verweisen.
 

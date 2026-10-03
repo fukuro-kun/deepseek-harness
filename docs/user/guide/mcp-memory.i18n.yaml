@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/user/guide/mcp-memory.md
-mcp-memory.md: ade2fb33e38667638113ce11af8ba46d480c0d52
-mcp-memory.zh.md: 6f8fc8cb62131b11bc6f1920367ac23fa8c0877c
-mcp-memory.de.md: 97724ef73b6e59dc8cc193a033d61600c77f0684
+mcp-memory.md: bc3e1b9e923eccb1967fe862ca1ec140cde847f0
+mcp-memory.zh.md: c46a92dc57f55495ecb5cd3f34b8ca149c791097
+mcp-memory.de.md: e338c7e4b5f3361f7d9955c75ca2dab5ae098cf8

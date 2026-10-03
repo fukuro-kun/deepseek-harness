@@ -1,8 +1,8 @@
 # Agent Note: Web subagent 目录与用户继续交互
+[English](2026-07-27-web-subagent-conversations.md) | 中文 | [Deutsch](2026-07-27-web-subagent-conversations.de.md)
 
 Status: implemented
 
-[English](2026-07-27-web-subagent-conversations.md) | 中文
 
 ## 问题
 

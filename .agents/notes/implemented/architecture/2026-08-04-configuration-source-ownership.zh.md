@@ -1,8 +1,8 @@
 # Agent Note: 配置来源的统一顺序，以及被发现的文件不得决定什么
+[English](2026-08-04-configuration-source-ownership.md) | 中文 | [Deutsch](2026-08-04-configuration-source-ownership.de.md)
 
 Status: implemented
 
-[English](2026-08-04-configuration-source-ownership.md) | 中文 | [Deutsch](2026-08-04-configuration-source-ownership.de.md)
 
 ## Problem
 

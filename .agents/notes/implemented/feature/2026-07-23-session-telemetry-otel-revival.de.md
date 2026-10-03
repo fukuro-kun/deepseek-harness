@@ -1,8 +1,8 @@
 # Agent Note: Session-Telemetrie-seam mit obligatorischem Redaktionspunkt und dem OTel-Backend
+[English](2026-07-23-session-telemetry-otel-revival.md) | [中文](2026-07-23-session-telemetry-otel-revival.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-23-session-telemetry-otel-revival.md) | [中文](2026-07-23-session-telemetry-otel-revival.zh.md) | Deutsch
 
 ## Problem
 

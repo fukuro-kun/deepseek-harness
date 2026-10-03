@@ -1,8 +1,8 @@
 # Agent Note: Right-Sidebar-Docking-Infrastruktur
+[English](2026-09-04-right-sidebar-docking-infrastructure.md) | [中文](2026-09-04-right-sidebar-docking-infrastructure.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-04-right-sidebar-docking-infrastructure.md) | [中文](2026-09-04-right-sidebar-docking-infrastructure.zh.md) | Deutsch
 
 ## Problem
 

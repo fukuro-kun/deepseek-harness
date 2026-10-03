@@ -1,8 +1,8 @@
 # Agent Note: The busy Send button follows the Enter setting
+[English](2026-09-04-busy-send-button-follows-enter-setting.md) | [中文](2026-09-04-busy-send-button-follows-enter-setting.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-04-busy-send-button-follows-enter-setting.md) | [中文](2026-09-04-busy-send-button-follows-enter-setting.zh.md) | Deutsch
 
 ## Problem
 

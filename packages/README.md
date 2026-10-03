@@ -4,10 +4,9 @@ kind: "package-group"
 ---
 
 # Packages
-
-
 English | [中文](README.zh.md) | [Deutsch](README.de.md)
-English | [中文](README.zh.md)
+
+
 
 ## Summary
 

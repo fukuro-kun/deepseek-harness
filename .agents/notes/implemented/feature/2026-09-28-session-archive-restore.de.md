@@ -1,8 +1,8 @@
 # Agent Note: Session-Archivwiederherstellung und der Archivbereich
+[English](2026-09-28-session-archive-restore.md) | [中文](2026-09-28-session-archive-restore.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-28-session-archive-restore.md) | [中文](2026-09-28-session-archive-restore.zh.md) | Deutsch
 
 ## Problem
 

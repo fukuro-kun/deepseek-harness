@@ -1,8 +1,8 @@
 # Agent Note: 按项目分组的会话目录
+[English](2026-07-24-project-session-directories.md) | 中文 | [Deutsch](2026-07-24-project-session-directories.de.md)
 
 Status: implemented
 
-[English](2026-07-24-project-session-directories.md) | 中文 | [Deutsch](2026-07-24-project-session-directories.de.md)
 
 ## 问题
 

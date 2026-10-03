@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-subagent-control
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -97,7 +97,7 @@ Lesen Sie diese Seiten, wenn der Paket-Contract nicht ausreicht; sie führen von
 
 - [Subagent-Subsystem](../../../docs/subsystems/subagent.de.md) — continuable Childs, Activations, Inbox, Interrupt und Follow-up-Autorität.
 - [dsh-tool-subagent](../tool-subagent/README.de.md) — das Delegation-Tool, das continuable Childs startet.
-- [Generierter Tool-Katalog](../../../docs/tool-catalog.md#deepseek-aidsh-tool-subagent-control) — die drei Tool-Schemas.
+- [Generierter Tool-Katalog](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-subagent-control) — die drei Tool-Schemas.
 
 -----
 
@@ -108,7 +108,7 @@ Lesen Sie diese Seiten, wenn der Paket-Contract nicht ausreicht; sie führen von
 
 #### Was das Modell sieht
 
-Die generierten [Schemas](../../../docs/tool-catalog.md#deepseek-aidsh-tool-subagent-control): `send_message` nimmt `agent_id` und `message`; `interrupt_agent` nimmt `agent_id`; `list_agents` nimmt das optionale `scope`-Enum.
+Die generierten [Schemas](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-subagent-control): `send_message` nimmt `agent_id` und `message`; `interrupt_agent` nimmt `agent_id`; `list_agents` nimmt das optionale `scope`-Enum.
 
 #### Token-Effekt
 

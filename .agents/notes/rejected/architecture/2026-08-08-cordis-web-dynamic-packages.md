@@ -1,9 +1,8 @@
 # Agent Note: Cordis Host/Client Dynamic Plugin Runtime
-English | [中文](.agents/notes/rejected/architecture/2026-08-08-cordis-web-dynamic-packages.zh.md) | [Deutsch](.agents/notes/rejected/architecture/2026-08-08-cordis-web-dynamic-packages.de.md)
+English | [中文](2026-08-08-cordis-web-dynamic-packages.zh.md) | [Deutsch](2026-08-08-cordis-web-dynamic-packages.de.md)
 
 Status: rejected — closed as a proposal: the shipped packages/extensions runtime and its READMEs own the design
 
-English | [中文](2026-08-08-cordis-web-dynamic-packages.zh.md)
 
 ## Problem
 

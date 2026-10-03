@@ -1,8 +1,8 @@
 # Agent Note: Web 可点击链接语言——链接别名、hover 点状下划线、分类图标
+[English](2026-09-04-web-clickable-link-styles.md) | 中文 | [Deutsch](2026-09-04-web-clickable-link-styles.de.md)
 
 Status: implemented
 
-[English](2026-09-04-web-clickable-link-styles.md) | 中文
 
 ## 问题
 

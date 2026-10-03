@@ -1,9 +1,8 @@
 # Agent Note: Shared file-type icons
-English | [中文](.agents/notes/implemented/feature/2026-09-08-shared-file-type-icons.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-08-shared-file-type-icons.de.md)
+English | [中文](2026-09-08-shared-file-type-icons.zh.md) | [Deutsch](2026-09-08-shared-file-type-icons.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-08-shared-file-type-icons.zh.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: dsh 通过 tsx ESM 钩子源码启动
+[English](2026-07-29-dsh-source-launch-tsx-esm.md) | 中文 | [Deutsch](2026-07-29-dsh-source-launch-tsx-esm.de.md)
 
 Status: implemented
 
-[English](2026-07-29-dsh-source-launch-tsx-esm.md) | 中文 | [Deutsch](2026-07-29-dsh-source-launch-tsx-esm.de.md)
 
 > 取代[原生 TypeScript 源码启动](../../archived/architecture/2026-07-28-dsh-native-typescript-source-launch.md)：Node 移除了该决策所依赖的能力。
 

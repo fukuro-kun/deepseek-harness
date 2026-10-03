@@ -1,8 +1,8 @@
 # Agent Note: 将上下文注入与轮次执行分离
+[English](2026-07-24-separate-context-injection-from-turn-execution.md) | 中文 | [Deutsch](2026-07-24-separate-context-injection-from-turn-execution.de.md)
 
 Status: implemented
 
-[English](2026-07-24-separate-context-injection-from-turn-execution.md) | 中文 | [Deutsch](2026-07-24-separate-context-injection-from-turn-execution.de.md)
 
 ## 问题
 

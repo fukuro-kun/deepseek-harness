@@ -1,9 +1,8 @@
 # Agent Note: Default Web search in shipped compositions
-English | [中文](.agents/notes/implemented/feature/2026-07-31-web-default-search.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-31-web-default-search.de.md)
+English | [中文](2026-07-31-web-default-search.zh.md) | [Deutsch](2026-07-31-web-default-search.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-31-web-default-search.zh.md)
 
 The [shared-base Web fetch default](../../archived/feature/2026-09-01-shared-base-web-fetch-default.md) supersedes this record's fetch opt-in decision. This record remains authoritative for the default search provider, credential resolution, endpoint, timeout, and the separation between provider availability and model-tool registration.
 

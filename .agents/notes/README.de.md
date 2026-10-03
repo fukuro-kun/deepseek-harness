@@ -1,8 +1,8 @@
 # Agent Notes
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
 
-Hier lebt eine Art von Design-Dokument. Eine **Agent Note** dokumentiert eine Entscheidung oder einen Vorschlag, der diese Codebase betrifft — das *Warum* und *was wir aufgegeben haben*, die Anteile, die Code und Docs nicht tragen können. Diese Datei definiert, wo Agent Notes liegen, wann man eine schreibt und [das Dateiformat](#das-dateiformat).
+
+Hier lebt eine Art von Design-Dokument. Eine **Agent Note** dokumentiert eine Entscheidung oder einen Vorschlag, der diese Codebase betrifft — das *Warum* und *was wir aufgegeben haben*, die Anteile, die Code und Docs nicht tragen können. Diese Datei definiert, wo Agent Notes liegen, wann man eine schreibt und [das Dateiformat](#the-file-format).
 
 ## Layout und Benennung
 
@@ -12,7 +12,7 @@ Jede Agent Note hat zwei Achsen, beide in ihrem **Pfad** kodiert — `{lifecycle
   - **`proposed/`** — Vorschläge, die vor der Implementierung geprüft wurden; noch nicht gebaut (oder nur teilweise).
   - **`implemented/`** — die Entscheidung ist ausgeliefert. Die Datei dokumentiert, was entschieden und was abgelehnt wurde, und wird **mit dem tatsächlich Ausgelieferten aktuell gehalten**: Wenn der Code später eine Datei verschiebt, ein Paket umbenennt oder einen Key/Default ändert, wird die Agent Note im selben Change entsprechend aktualisiert (nur Fakten — Pfade, Namen, Struktur — nicht die Entscheidung selbst). Siehe [implemented/AGENTS.md](implemented/AGENTS.md).
   - **`rejected/`** — der Vorschlag wurde geprüft und abgelehnt. Behalten wird er nur, solange seine Begründung einen verführerischen, bedeutsamen Fehler verhindert; andernfalls wird der komplette Triplet gelöscht.
-- **Class** (der verschachtelte Ordner) ist die *Art* der Entscheidung — siehe [Klassifizierung](#klassifizierung) unten.
+- **Class** (der verschachtelte Ordner) ist die *Art* der Entscheidung — siehe [Klassifizierung](#classification) unten.
 
 Das Datum im Dateinamen ist der Zeitpunkt, zu dem das Thema **zum ersten Mal vorgeschlagen** wurde (laut Git-Historie). Querverweise zwischen Agent Notes nutzen relative Markdown-Links (`[topic](../../implemented/architecture/2026-…-….md)`) — nie bloßen Fließtext oder Nummern — damit sie maschinell prüfbar sind und Verschiebungen zwischen Ordnern überstehen.
 
@@ -43,7 +43,7 @@ Sobald versiegelt, ist jeder archivierte Triplet dauerhaft eingefroren. Bearbeit
 
 ## Wann man eine schreibt
 
-Jede nicht triviale Änderung muss mindestens eine Agent Note im selben PR hinzufügen oder aktualisieren. Eine Änderung ist nicht trivial, wenn sie Verhalten, Architecture, einen über Dateien oder Pakete geteilten Contract, Process oder Tooling, die Teststrategie, ein On-Disk-, Wire- oder Konfigurationsformat oder eine andere Entscheidung ändert, die ein Maintainer nachvollziehen kann. Ein Vorschlag für umfangreiche künftige Arbeit beginnt in `proposed/`; eine bereits gefällte Entscheidung beginnt in `implemented/`. Wähle den Class-Ordner, der zur Entscheidung passt (siehe [Klassifizierung](#klassifizierung)).
+Jede nicht triviale Änderung muss mindestens eine Agent Note im selben PR hinzufügen oder aktualisieren. Eine Änderung ist nicht trivial, wenn sie Verhalten, Architecture, einen über Dateien oder Pakete geteilten Contract, Process oder Tooling, die Teststrategie, ein On-Disk-, Wire- oder Konfigurationsformat oder eine andere Entscheidung ändert, die ein Maintainer nachvollziehen kann. Ein Vorschlag für umfangreiche künftige Arbeit beginnt in `proposed/`; eine bereits gefällte Entscheidung beginnt in `implemented/`. Wähle den Class-Ordner, der zur Entscheidung passt (siehe [Klassifizierung](#classification)).
 
 Die Aktualisierung der Agent Note, der die Entscheidung bereits gehört, erfüllt die Regel; erstelle keine Duplikate. Nur eine rein mechanische oder lokale Änderung ohne Veränderung von Verhalten, Contracts, Struktur, Process oder Begründung ist befreit. Eine Agent Note wird nie zu einer *anderen Entscheidung* umgeschrieben: Ersetze sie durch eine neue und behalte beide Notes cross-verlinkt, außer die alte Note wird später nach der Regel unten vollständig konsolidiert. Die Bearbeitung einer `implemented/` Agent Note, um zu verfolgen, wo ihre bestehende Entscheidung lebt, ist Pflicht, kein Verstoß; siehe [implemented/AGENTS.md](implemented/AGENTS.md).
 
@@ -51,6 +51,7 @@ Eine vollständig abgelöste implemented Agent Note kann in die aktuelle tragend
 
 Eine Note über eine Feature-Hinzufügung kann in die spätere Note über deren Entfernung konsolidiert werden, nur wenn das Feature in Produktivcode, Configuration, Schemas, durable- oder Wire-Formaten, Migration und Kompatibilitätsverhalten fehlt; keine aktuelle Dokumentation es als verfügbar darstellt; und kein Test es als unterstütztes Verhalten übt. Die Begründung der Entfernung und Tests, die das Fehlen verifizieren, dürfen bleiben. Der Owner der Entfernung erhält die ursprüngliche Motivation, warum das Feature nicht mehr gerechtfertigt war, Alternativen zur vollständigen Entfernung, die aufgegebenen Capability, die Reintroduktionsbedingungen und die Verifikation der vollständigen Abwesenheit. Veraltete Implementierungs-Inventare und Tests, die nur das gelöschte Verhalten verifiziert haben, sind keine aktuelle Verifikations-Evidenz. Die Entfernung eines einzelnen Transports, Defaults, einer Implementierung oder einer Präsentation ist eine teilweise Ablösung, ebenso wie jedes überlebende durable-Datum oder jede Kompatibilitäts-Handhabung.
 
+<a id="the-file-format"></a>
 ## Das Dateiformat
 
 Jede aktive Agent Note folgt einem Dateiformat, erzwungen durch `pnpm run verify-agent-note-format` ([scripts/verify-agent-note-format.ts](../../scripts/verify-agent-note-format.ts), Teil von `doc-sync`); die Begründung für das Format — und die Alternativen, die es abgelehnt hat — ist die [uniform-format-Agent Note](implemented/process/2026-07-05-uniform-agent-note-format.de.md). Archivierte Notes behalten das Format, das sie bei der Versiegelung hatten, plus die Archiv-Datums-Zeile oben.

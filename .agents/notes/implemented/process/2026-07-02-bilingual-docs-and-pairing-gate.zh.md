@@ -1,8 +1,8 @@
 # Agent Note: 通过配对兄弟文件与配对门禁实现双语文档
+[English](2026-07-02-bilingual-docs-and-pairing-gate.md) | 中文 | [Deutsch](2026-07-02-bilingual-docs-and-pairing-gate.de.md)
 
 Status: implemented
 
-[English](2026-07-02-bilingual-docs-and-pairing-gate.md) | 中文
 
 ## 问题
 

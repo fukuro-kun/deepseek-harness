@@ -1,8 +1,8 @@
 # Agent Note: Hintergrund-Job-Vollendung weckt einen idle Owner
+[English](2026-08-11-background-job-completion-wakes-an-idle-owner.md) | [中文](2026-08-11-background-job-completion-wakes-an-idle-owner.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-11-background-job-completion-wakes-an-idle-owner.md) | [中文](2026-08-11-background-job-completion-wakes-an-idle-owner.zh.md) | Deutsch
 
 ## Problem
 
@@ -10,7 +10,7 @@ Status: implemented
 
 Die Lücke war als Limitation dokumentiert statt durchdacht, sodass der Fallback `job_output(wait: true)` wurde — das blockierende Warten, das derselbe Prompt abrät.
 
-Diese Entscheidung ersetzt einen Fakt der [Background-Job-Runtime-Entscheidung](../architecture/2026-06-20-generic-long-running-tool-runtime.md) — dass eine Vollendung nie einen idle Owner weckt — und fügt Teardown als `reported`-Setzer hinzu. Jene Note behält jede andere Task-Runtime-Entscheidung und wird in-place aktualisiert statt ersetzt.
+Diese Entscheidung ersetzt einen Fakt der [Background-Job-Runtime-Entscheidung](../architecture/2026-06-20-generic-long-running-tool-runtime.de.md) — dass eine Vollendung nie einen idle Owner weckt — und fügt Teardown als `reported`-Setzer hinzu. Jene Note behält jede andere Task-Runtime-Entscheidung und wird in-place aktualisiert statt ersetzt.
 
 Die Delivery-Maschinerie war nie das Hindernis. `Agent.send(message, target, wakeup)` deckt die `target` × `wakeup`-Matrix seit der [Unified-Send-Entscheidung](../../archived/architecture/2026-07-22-unified-send-and-coalesced-user-messages.md) ab, und `wakeDriver()` behandelt bereits idle, maintenance und cancelled-converging Phasen. Das fehlende Stück war die Policy-Wahl, welche Spur eine Vollendung nimmt, plus die Grenze, die diese Wahl braucht.
 

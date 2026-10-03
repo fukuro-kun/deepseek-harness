@@ -1,8 +1,8 @@
 # Agent Note: Native GitHub-Stacks und optionale PR-Rebases
+[English](2026-08-02-native-github-stacks-and-optional-rebases.md) | [中文](2026-08-02-native-github-stacks-and-optional-rebases.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-02-native-github-stacks-and-optional-rebases.md) | [中文](2026-08-02-native-github-stacks-and-optional-rebases.zh.md) | Deutsch
 
 ## Problem
 

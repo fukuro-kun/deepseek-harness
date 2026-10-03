@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write benchmarks/active-stream-reconnect/README.md
-README.md: 8afbcb778029045382901d2a2b4c47fbdf242e5b
-README.zh.md: acf0260f53855f9f4e643b2e72c67aa7a8afd6bb
-README.de.md: 0c127a54b6f2cc0d7af8167953b41aa53ddcb03b
+README.md: 120395505ecfd6f12d2d9b3b87413a7be16629ba
+README.zh.md: 212a7ac26d5460d833b7af7be6b2ccc4ee12b016
+README.de.md: 28d6e10192c098aadefc75e98231df6288f7d429

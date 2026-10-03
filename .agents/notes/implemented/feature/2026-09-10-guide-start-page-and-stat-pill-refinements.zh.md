@@ -1,8 +1,8 @@
 # Agent Note: 引导起始页与统计 pill 的细化
+[English](2026-09-10-guide-start-page-and-stat-pill-refinements.md) | 中文 | [Deutsch](2026-09-10-guide-start-page-and-stat-pill-refinements.de.md)
 
 Status: implemented
 
-[English](2026-09-10-guide-start-page-and-stat-pill-refinements.md) | 中文
 
 ## Problem
 

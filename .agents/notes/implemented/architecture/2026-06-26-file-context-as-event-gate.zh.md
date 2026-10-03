@@ -1,8 +1,8 @@
 # Agent Note: 将 `dsh-fs-observation-policy` 改为事件门禁插件，而非方法接口
+[English](2026-06-26-file-context-as-event-gate.md) | 中文 | [Deutsch](2026-06-26-file-context-as-event-gate.de.md)
 
 Status: implemented
 
-[English](2026-06-26-file-context-as-event-gate.md) | 中文 | [Deutsch](2026-06-26-file-context-as-event-gate.de.md)
 
 ## 问题
 

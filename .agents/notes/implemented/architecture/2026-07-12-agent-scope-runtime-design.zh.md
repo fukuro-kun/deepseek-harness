@@ -1,8 +1,8 @@
 # Agent Note: Agent 作用域运行时设计与正确性
+[English](2026-07-12-agent-scope-runtime-design.md) | 中文 | [Deutsch](2026-07-12-agent-scope-runtime-design.de.md)
 
 Status: implemented
 
-[English](2026-07-12-agent-scope-runtime-design.md) | 中文 | [Deutsch](2026-07-12-agent-scope-runtime-design.de.md)
 
 ## 问题
 

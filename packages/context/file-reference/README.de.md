@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-file-reference
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -77,8 +77,8 @@ Lies diese Seiten, wenn der Paket-Vertrag nicht ausreicht. Sie führen vom mitge
 
 - [Lokaler File-Reference-Provider](../file-reference-local/README.de.md) — die mitgelieferte Local-Workspace-Implementierung dieses Seam.
 - [Session-Reference-Subsystem](../../../docs/subsystems/session-reference.de.md) — die gemeinsamen File-Reference- und Session-Reference-Verträge hinter Host-UIs.
-- [Context-Gruppenkarte](../README.md) — benachbarte Request-Context-Pakete.
-- [Filesystem-Tool-Katalog](../../../docs/tool-catalog.md#deepseek-aidsh-tool-fs) — das `read`-Tool, für das die referenzierten Pfade gedacht sind.
+- [Context-Gruppenkarte](../README.de.md) — benachbarte Request-Context-Pakete.
+- [Filesystem-Tool-Katalog](../../../docs/tool-catalog.de.md#deepseek-aidsh-tool-fs) — das `read`-Tool, für das die referenzierten Pfade gedacht sind.
 
 -----
 

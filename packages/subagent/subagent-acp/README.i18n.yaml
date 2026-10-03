@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/subagent/subagent-acp/README.md
-README.md: 6017324d767b028d676e2144a4ad3b175037cf06
-README.zh.md: b9a73edb5320f58a672ad380bff247db8da790b2
-README.de.md: 89726375906409c93c0dfd7260a4683a7436f708
+README.md: 619efcf0c4680c059b0b897961c82a1f8fd78c66
+README.zh.md: a866c2ce964752981b8ac00dfa0915c77e00b6b6
+README.de.md: 7f43b565b93b456425692eb0a0b01128a63f2075

@@ -1,8 +1,8 @@
 # Agent Note: 提示词变量与工具指导归属
+[English](2026-07-05-prompt-variables-and-tool-guidance-ownership.md) | 中文 | [Deutsch](2026-07-05-prompt-variables-and-tool-guidance-ownership.de.md)
 
 Status: implemented
 
-[English](2026-07-05-prompt-variables-and-tool-guidance-ownership.md) | 中文 | [Deutsch](2026-07-05-prompt-variables-and-tool-guidance-ownership.de.md)
 
 ## 问题
 

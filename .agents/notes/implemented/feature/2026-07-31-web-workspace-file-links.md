@@ -1,9 +1,8 @@
 # Agent Note: opening a produced file from the web UI
-English | [中文](.agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.de.md)
+English | [中文](2026-07-31-web-workspace-file-links.zh.md) | [Deutsch](2026-07-31-web-workspace-file-links.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-31-web-workspace-file-links.zh.md)
 
 > Scope: the produced-files row a finished turn ends with, the file-path link that reads as one, and the Host opener preferring the default browser for documents a browser renders. Not in scope, by decision: serving workspace files over HTTP, and previews for a client that is not on the Host machine.
 

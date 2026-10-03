@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # packages/e2b
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文 | [Deutsch](packages/e2b/README.de.md)
 
 ## 概述
 

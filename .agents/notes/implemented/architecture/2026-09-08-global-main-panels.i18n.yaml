@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-08-global-main-panels.md
-2026-09-08-global-main-panels.md: 4185c070b4a5f63c7deb20d94afb981413f880f6
-2026-09-08-global-main-panels.zh.md: 25f6fff216fbddef7201aa6f1268d86ce72ece74
-2026-09-08-global-main-panels.de.md: 63ddf1bedc0177102964a328b2ccbdb33fc4eece
+2026-09-08-global-main-panels.md: 631c6803ed4e9f149fb7222c68635cb00591e813
+2026-09-08-global-main-panels.zh.md: 51cc42118a71aa04505a299c48bc768504ac23c6
+2026-09-08-global-main-panels.de.md: 91fe3054a3d9a2c0253b8e150f29e2119ee8a604

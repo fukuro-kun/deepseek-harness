@@ -1,8 +1,8 @@
 # Agent Note: 工作区文件统一为 API 双面包
+[English](2026-09-07-workspace-files-dual-face-package.md) | 中文 | [Deutsch](2026-09-07-workspace-files-dual-face-package.de.md)
 
 Status: implemented
 
-[English](2026-09-07-workspace-files-dual-face-package.md) | 中文 | [Deutsch](2026-09-07-workspace-files-dual-face-package.de.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: MCP 客户端插件——连接外部 MCP 服务器并桥接其工具
+[English](2026-07-07-mcp-client-plugin.md) | 中文 | [Deutsch](2026-07-07-mcp-client-plugin.de.md)
 
 Status: implemented
 
-[English](2026-07-07-mcp-client-plugin.md) | 中文
 
 ## 问题
 

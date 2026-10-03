@@ -1,8 +1,8 @@
 # Agent Note: 仅 master 执行的平台 CI
+[English](2026-09-06-master-only-platform-ci.md) | 中文 | [Deutsch](2026-09-06-master-only-platform-ci.de.md)
 
 Status: implemented
 
-[English](2026-09-06-master-only-platform-ci.md) | 中文
 
 ## Problem
 

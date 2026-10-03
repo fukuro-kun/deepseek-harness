@@ -1,8 +1,8 @@
 # Agent Note: 在 v2 attempt settlement 中嵌入 Assistant stream
+[English](2026-09-01-v2-embedded-assistant-streams.md) | 中文 | [Deutsch](2026-09-01-v2-embedded-assistant-streams.de.md)
 
 Status: implemented
 
-[English](2026-09-01-v2-embedded-assistant-streams.md) | 中文 | [Deutsch](2026-09-01-v2-embedded-assistant-streams.de.md)
 
 ## 问题
 

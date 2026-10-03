@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # packages/todo
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -32,8 +32,8 @@ Die todo-Gruppe gibt Agents eine sitzungsweite Aufgabenliste zum Planen: Aufgabe
 ## Verwandte Dokumentation
 
 - [Todo-Subsystem](../../docs/subsystems/todo.de.md) — die `todo/write`-Event-Nutzlast, Eigentumsregeln und `TodoItem`.
-- [Generierter Tool-Katalog](../../docs/tool-catalog.md#deepseek-aidsh-tool-todo) — das `todo_write`-Schema, das das Modell erhält.
-- [Generierter Konfigurationskatalog](../../docs/config-catalog.md#deepseek-aidsh-tool-todo) — jedes akzeptierte Konfigurationsfeld.
+- [Generierter Tool-Katalog](../../docs/tool-catalog.de.md#deepseek-aidsh-tool-todo) — das `todo_write`-Schema, das das Modell erhält.
+- [Generierter Konfigurationskatalog](../../docs/config-catalog.de.md#deepseek-aidsh-tool-todo) — jedes akzeptierte Konfigurationsfeld.
 - [todo_write-Tool Agent Note](../../.agents/notes/archived/feature/2026-06-29-todo-write-tool.md) — das ursprüngliche Design und seine Alternativen.
 
 -----

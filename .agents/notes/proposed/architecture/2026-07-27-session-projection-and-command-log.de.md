@@ -1,8 +1,8 @@
 # Agent Note: Session-Projektionen und Command-Lifecycle-Logging
+[English](2026-07-27-session-projection-and-command-log.md) | [中文](2026-07-27-session-projection-and-command-log.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-27-session-projection-and-command-log.md) | [中文](2026-07-27-session-projection-and-command-log.zh.md) | Deutsch
 
 ## Problem
 
@@ -153,3 +153,22 @@ Infrastruktur zuerst; die drei in-flight PRs bleiben unangetastet und retargeten
 **Ein Live-only-Overlay-Hook (`live?(agent, base)`) für Plans Pending-Intent** — abgelehnt: er existierte nur, weil die Plan-*Auswahl* des Users nicht im Log war. Die Auswahl über den Standard-Command-Channel zu routen stellt `command/run` auf dem Konto bereit, Pending wird eine reine Replay-Größe, und die Projektion bleibt ein reiner fold mit optionalem Client-View.
 
 **Die Registrierungs-API `registerFold` nennen** — ersetzt durch den Einheitenvertrag: das registrierte Objekt ist jetzt zwar genuin ein fold, aber `fold*` benennt in diesem Repo reine `(events) => state`-Hilfsfunktionen, während diese Registry eine gekeyte, geschemate, versionierte Einheit annimmt. Projection bleibt der Event-Sourcing-Begriff für die Read-Model-Rolle, und sowohl #587s Note-Titel als auch #497s Kommentare nutzen ihn bereits.
+
+## Akzeptanzkriterien
+
+- Ein Domänen-Plugin liefert pro-Session-Log-abgeleiteten Zustand nach React, indem es nur schreibt: die Whole-Value-Event-Deklaration, einen Host-Unit-`register`, seinen `SessionProjectionMap`-Merge und Inject-Callbacks — null Client-seitiger Code, keine Edits an der Client-`Session`-Klasse, `ConversationSnapshot`, api-proxy oder den Wire-Schema-Dateien.
+- Die History-Tail-Seite trägt `projections` mit `asOfSeq` gleich dem Fenster-Tail-seq; loadOlder-Seiten tragen es nie; ein Deployment ohne das Registry dient Historien ohne den Block und Clients behandeln jeden Key als abwesend.
+- Eine veraltete Baseline kann keinen neueren `session/projection`-Frame überschreiben, und ein replayed Frame kann den Value-Store nicht zurücksetzen (higher-seq-wins-Tests auf beiden Pfaden).
+- Ein auf einem Tab ausgeführter Slash-Befehl rendert einen dauerhaften Knoten im Flow beim Refresh, auf einem zweiten Tab und nach Resume; nicht registrierte Befehle rendert die generische Karte; der Composer-Benachrichtigungspfad für Befehlsausgänge ist weg.
+- `useProjection` erreicht Komponenten über das Standard-Props-Kit; kein Hook überquert einen Inject-Vertrag (einschließlich `useSelection`).
+- Session-Titel reiten auf dem generischen Paar (Baseline-Block + Projektions-Frame); der spezielle `session/title`-Frame und die Client-Titel-Snapshot-Map sind weg.
+
+## Risiken
+
+- **Whole-Value-Regel ist tragend**: ein zukünftiges Domänen-Logging mit bloßen Deltas kann Konsumenten nicht von seinem neuesten Event bedienen und verkompliziert seine eigene Einheit. Minderung: die Regel ist hier und im Projektions-Paket-README stated; der Unit-Vertrag macht den vollen Zustand bei jeder Transition explizit.
+- **Synchroner Unit-Diziplin**: `init`/`apply`/`view`, die awaiten würden, würden den Konsistenz-Schnitt zerreissen. Das Registry dokumentiert und der Invariant-Companion assertet Synchronizität so weit wie praktisch; Review besitzt den Rest.
+- **Live-Registry-Churn wird nicht gepusht**: Laden oder Entladen eines Domänen-Plugins mid-Session ändert den Key-Satz, aber kein Session-Event feuert und kein Frame wird gepusht; offene Clients halten den veralteten Key bis zum nächsten Tail-Pull (Reconnect, Gap-Repair, Open). Akzeptiert als dev-only (HMR) Staleness-Fenster — ein Registry-Änderungs-Push kann später zum Änderungs-Feed hinzugefügt werden ohne Vertrag-Impact.
+- **Eager-Drive-Kosten bei besetzten Sessions**: jedes committe Event durchläuft jede registrierte Einheits-`apply`. Einheiten sind pro-Event billig durch Konstruktion (Whole-Value-Regel), nicht passende Events geben denselben Reference zurück, und die Anzahl registrierter Domänen ist klein; wenn ein Hot-Pfad je zeigt, können pro-Unit-Event-Typ-Prefilter ohne Vertragsänderung hinzugefügt werden.
+- **Projektions-Payload-Wachstum**: jede Tail-Seite trägt jeden registrierten Key. Payloads sind Whole-Values von UI-Skalen-Zustand (eine todo-Liste, ein goal-Snapshot); wenn ein zukünftiges Domänen-Wert groß ist, können pro-Key-Opt-out oder lazy Keys zur Anfrage hinzugefügt werden ohne das Modell zu ändern.
+- **Command-Log-Volumen**: zwei log-only-Events pro Slash-Befehl; begrenzt durch menschliche Befehlsfrequenz, vernachlässigbar gegen Chunk-Volumen.
+- **Re-target-Churn**: drei offene PRs rebasen auf eine verschobene Grundlage. Akzeptierte Kosten von Infrastructure-first.

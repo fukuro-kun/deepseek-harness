@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-31-cross-process-session-write-lease.md
-2026-08-31-cross-process-session-write-lease.md: 36ef45deb7f846e6868b8caddd94572c08762846
-2026-08-31-cross-process-session-write-lease.zh.md: b287ab7d6cb4202745fd1112bcb313cb261d674e
-2026-08-31-cross-process-session-write-lease.de.md: b1af0ad624b90fb8436efb9a3067a405d21ec7e2
+2026-08-31-cross-process-session-write-lease.md: b9ac0ce5af7c0c7194d0d14d59f58c48fdffce68
+2026-08-31-cross-process-session-write-lease.zh.md: 9e441147f0d7874d055b860e4328ae6619b3b7b7
+2026-08-31-cross-process-session-write-lease.de.md: 1f4a2d2267bb3e09de9aa7ad00f79ac9bbc8279b

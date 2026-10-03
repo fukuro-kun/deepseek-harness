@@ -1,8 +1,8 @@
 # Agent Note: 打包并更新 Electron 桌面应用
+[English](2026-08-25-electron-desktop-packaging-and-updates.md) | 中文 | [Deutsch](2026-08-25-electron-desktop-packaging-and-updates.de.md)
 
 Status: implemented
 
-[English](2026-08-25-electron-desktop-packaging-and-updates.md) | 中文 | [Deutsch](2026-08-25-electron-desktop-packaging-and-updates.de.md)
 
 ## 问题
 

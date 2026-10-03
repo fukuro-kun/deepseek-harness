@@ -1,6 +1,6 @@
 # LSP-Navigation
-
 [English](lsp.md) | [中文](lsp.zh.md) | Deutsch
+
 
 Der LSP-Seam — ein [Capability Seam](../glossary.de.md#capability-seam), der semantische Code-Navigation über einen einzigen `ctx.lsp`-Service bereitstellt und auf mehrere Packages aufgeteilt ist: Service Definition ([dsh-lsp](../../packages/lsp/lsp), `ctx.lsp` + die Provider-Registry), ein generischer Service Provider ([dsh-lsp-stdio](../../packages/lsp/lsp-stdio), ein konfigurierter stdio-Language-Server-Host) und Consumer ([dsh-tool-lsp](../../packages/lsp/tool-lsp), das `lsp`-Tool-Schema). LSP ist **eine optionale Capability**, nicht Teil der Agent-Loop-Spine — deshalb lebt sein Vokabular hier und nicht in [core.md](core.de.md). Ein Provider-Wechsel ändert nichts daran, wie das Modell Navigation anfordert.
 

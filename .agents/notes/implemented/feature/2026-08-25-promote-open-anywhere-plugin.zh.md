@@ -1,8 +1,8 @@
 # Agent Note: 将 open-anywhere 从社区插件转正为第一方包
+[English](2026-08-25-promote-open-anywhere-plugin.md) | 中文 | [Deutsch](2026-08-25-promote-open-anywhere-plugin.de.md)
 
 Status: implemented
 
-[English](2026-08-25-promote-open-anywhere-plugin.md) | 中文
 
 ## 问题
 

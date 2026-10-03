@@ -1,8 +1,8 @@
 # Agent Note: Ein gegates in-file-Format für Agent Notes
+[English](2026-07-05-uniform-agent-note-format.md) | [中文](2026-07-05-uniform-agent-note-format.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-05-uniform-agent-note-format.md) | [中文](2026-07-05-uniform-agent-note-format.zh.md) | Deutsch
 
 ## Problem
 

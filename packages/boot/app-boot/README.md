@@ -4,9 +4,8 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-app-boot
-English | [中文](packages/boot/app-boot/README.zh.md) | [Deutsch](packages/boot/app-boot/README.de.md)
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

@@ -1,9 +1,8 @@
 # Agent Note: Breadth cap on concurrent continuable subagents
-English | [中文](.agents/notes/proposed/feature/2026-10-01-subagent-concurrency-cap.zh.md) | [Deutsch](.agents/notes/proposed/feature/2026-10-01-subagent-concurrency-cap.de.md)
+English | [中文](2026-10-01-subagent-concurrency-cap.zh.md) | [Deutsch](2026-10-01-subagent-concurrency-cap.de.md)
 
 Status: proposed
 
-English | [中文](2026-10-01-subagent-concurrency-cap.zh.md)
 
 ## Problem
 

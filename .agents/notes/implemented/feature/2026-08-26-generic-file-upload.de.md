@@ -1,8 +1,8 @@
 # Agent Note: Generischer Datei-Upload
+[English](2026-08-26-generic-file-upload.md) | [中文](2026-08-26-generic-file-upload.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-26-generic-file-upload.md) | [中文](2026-08-26-generic-file-upload.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,6 +1,6 @@
 # Todo
-
 [English](todo.md) | [中文](todo.zh.md) | Deutsch
+
 
 Das durable todo-Vokabular im Besitz von [`@deepseek-ai/dsh-tool-todo`](../../packages/todo/tool-todo/README.de.md). Das dem Modell zugewandte Tool ersetzt die gesamte Liste einer agent-Session; das Paket besitzt außerdem die Event-Deklaration, die Replay-Projektion und das Invarianten-Begleitplugin. Tool-Verhalten und -Konfiguration stehen im [Package-README](../../packages/todo/tool-todo/README.de.md).
 

@@ -1,8 +1,8 @@
 # Agent Note: 以产物为先的 NPM 基线发布
+[English](2026-08-04-artifact-first-npm-baseline-publication.md) | 中文 | [Deutsch](2026-08-04-artifact-first-npm-baseline-publication.de.md)
 
 Status: rejected — superseded by 2026-08-10-npm-release-sequences: numbered versions and pack→protected publish shipped; timestamp versions were not adopted
 
-[English](2026-08-04-artifact-first-npm-baseline-publication.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Typert Gateway 定向方法调用
+[English](2026-08-02-typert-remote-method-calls.md) | 中文 | [Deutsch](2026-08-02-typert-remote-method-calls.de.md)
 
 Status: implemented
 
-[English](2026-08-02-typert-remote-method-calls.md) | 中文 | [Deutsch](2026-08-02-typert-remote-method-calls.de.md)
 
 ## Problem
 

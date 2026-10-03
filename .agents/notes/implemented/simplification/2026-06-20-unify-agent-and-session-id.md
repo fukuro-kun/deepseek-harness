@@ -1,9 +1,8 @@
 # Agent Note: Unify the agent id and the session id
-English | [中文](.agents/notes/implemented/simplification/2026-06-20-unify-agent-and-session-id.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-06-20-unify-agent-and-session-id.de.md)
+English | [中文](2026-06-20-unify-agent-and-session-id.zh.md) | [Deutsch](2026-06-20-unify-agent-and-session-id.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-20-unify-agent-and-session-id.zh.md)
 
 ## Problem
 

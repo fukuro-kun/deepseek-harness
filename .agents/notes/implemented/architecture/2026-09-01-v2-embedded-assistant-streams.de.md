@@ -1,8 +1,8 @@
 # Agent Note: Assistant-Streams in v2-Versuchsabrechnungen einbetten
+[English](2026-09-01-v2-embedded-assistant-streams.md) | [中文](2026-09-01-v2-embedded-assistant-streams.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-01-v2-embedded-assistant-streams.md) | [中文](2026-09-01-v2-embedded-assistant-streams.zh.md) | Deutsch
 
 ## Problem
 
@@ -14,7 +14,7 @@ Event-Kardinalität zu ändern ändert auch Session-Sequenznummern. Eine ausgeli
 
 ## Entscheidung
 
-Die [V3-Canonical-Envelope-Entscheidung](2026-09-06-v3-canonical-session-envelopes.md) besitzt die aktuellen Replacement-Key- und Header-Akzeptanzregeln. Sie bewahrt die hier beschriebenen eingebetteten Streams, Versuchsabrechnungen und die eingefrorene v1-zu-v2-Konvertierung.
+Die [V3-Canonical-Envelope-Entscheidung](2026-09-06-v3-canonical-session-envelopes.de.md) besitzt die aktuellen Replacement-Key- und Header-Akzeptanzregeln. Sie bewahrt die hier beschriebenen eingebetteten Streams, Versuchsabrechnungen und die eingefrorene v1-zu-v2-Konvertierung.
 
 Session-Format v2 hat kein Top-Level-`assistant/chunk`-Event. Jeder Modellversuch committet eine dauerhafte Abrechnung mit `stream: AssistantStreamRecord[]`:
 

@@ -1,8 +1,8 @@
 # Agent Note: Sidebar 默认页
+[English](2026-09-08-sidebar-default-pages.md) | 中文 | [Deutsch](2026-09-08-sidebar-default-pages.de.md)
 
 Status: implemented
 
-[English](2026-09-08-sidebar-default-pages.md) | 中文
 
 ## 问题
 

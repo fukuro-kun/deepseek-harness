@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/bundle/headless/README.md
 README.md: b64ee26da1b670d0a9fd5e45f97d658e0cb91d80
-README.zh.md: 4aa2e8280c88f48e5fc7a538df44fd01cd4ffd23
-README.de.md: 986784aed7734cb744b71eb2730c0c2933946641
+README.zh.md: 5573a0945b2307a813156f344806975aa20a5534
+README.de.md: 1be63c70ef109dadcc0634e1de95d2b29df3a99d

@@ -1,9 +1,8 @@
 # Agent Note: One gated in-file format for Agent Notes
-English | [中文](.agents/notes/implemented/process/2026-07-05-uniform-agent-note-format.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-05-uniform-agent-note-format.de.md)
+English | [中文](2026-07-05-uniform-agent-note-format.zh.md) | [Deutsch](2026-07-05-uniform-agent-note-format.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-05-uniform-agent-note-format.zh.md)
 
 ## Problem
 

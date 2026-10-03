@@ -3,7 +3,6 @@ English | [中文](2026-08-18-experimental-agent-teams-packages.zh.md) | [Deutsc
 
 Status: implemented
 
-English | [中文](2026-08-18-experimental-agent-teams-packages.zh.md)
 
 ## Problem
 

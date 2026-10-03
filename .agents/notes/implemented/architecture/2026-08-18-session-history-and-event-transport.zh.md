@@ -1,8 +1,8 @@
 # Agent Note: 会话历史、控制状态与 Remote 事件传输
+[English](2026-08-18-session-history-and-event-transport.md) | 中文 | [Deutsch](2026-08-18-session-history-and-event-transport.de.md)
 
 Status: implemented
 
-[English](2026-08-18-session-history-and-event-transport.md) | 中文 | [Deutsch](2026-08-18-session-history-and-event-transport.de.md)
 
 ## 问题
 

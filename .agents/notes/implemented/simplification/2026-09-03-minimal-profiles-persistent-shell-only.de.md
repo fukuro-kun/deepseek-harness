@@ -1,8 +1,8 @@
 # Agent Note: Minimal-Profiles stellen nur eine persistente Shell bereit
+[English](2026-09-03-minimal-profiles-persistent-shell-only.md) | [中文](2026-09-03-minimal-profiles-persistent-shell-only.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-03-minimal-profiles-persistent-shell-only.md) | [中文](2026-09-03-minimal-profiles-persistent-shell-only.zh.md) | Deutsch
 
 ## Problem
 

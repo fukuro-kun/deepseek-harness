@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-08-sidebar-default-pages.md
-2026-09-08-sidebar-default-pages.md: af65f57bc4f994efba7c030f6968de420e9346b4
-2026-09-08-sidebar-default-pages.zh.md: 6730a87fbe9c59ef6d448fe0f2d4c3c2cb75e6bb
-2026-09-08-sidebar-default-pages.de.md: 614671adf93741110d324d35404631d8e496ea4d
+2026-09-08-sidebar-default-pages.md: 188e1025fbe95181dbb447b9f565b1c5e22c429c
+2026-09-08-sidebar-default-pages.zh.md: 11479e8c9b2f4dcb5377fd23f99484c8e852bc1b
+2026-09-08-sidebar-default-pages.de.md: d8b94908a5aef739b5dd9126c17e242bd5bcc6d5

@@ -1,8 +1,8 @@
 # Agent Note: Die background job runtime (`ctx.jobs`) und generische task-control tools
+[English](2026-06-20-generic-long-running-tool-runtime.md) | [中文](2026-06-20-generic-long-running-tool-runtime.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-20-generic-long-running-tool-runtime.md) | [中文](2026-06-20-generic-long-running-tool-runtime.zh.md) | Deutsch
 
 ## Problem
 

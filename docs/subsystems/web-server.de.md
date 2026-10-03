@@ -1,8 +1,8 @@
 # HTTP Server
-
 [English](web-server.md) | [中文](web-server.zh.md) | Deutsch
 
-[dsh-host-webserver](../../packages/host/webserver) ist der Browser-HTTP-Carrier des GUI-Host: ein einzelnes `node:http`-Plugin, das `ctx.webServer` bereitstellt — eine Named-Route-Registry, optionale gzip-Response-Kompression, index.html-Transform-Callbacks und einen Fallback-Handler, den ein Plugin beanspruchen kann. Er ist nicht Teil des agent loop und kein capability seam; er kennt keine Harness-Konzepte, und jedes Feature-Route — einschließlich der `/api`-Bridge, der Plugin-Bundles und des HMR-Event-Streams — registriert ein anderes Plugin ([Layering-Notiz](../../.agents/notes/implemented/architecture/2026-07-24-web-config-tree-boot-and-transport-layering.md)). Er bedient nur Browser: Electron lädt die gebauten Dateien über `file://` und schickt fetch-Requests über eine IPC-Bridge statt über diesen Server.
+
+[dsh-host-webserver](../../packages/host/webserver) ist der Browser-HTTP-Carrier des GUI-Host: ein einzelnes `node:http`-Plugin, das `ctx.webServer` bereitstellt — eine Named-Route-Registry, optionale gzip-Response-Kompression, index.html-Transform-Callbacks und einen Fallback-Handler, den ein Plugin beanspruchen kann. Er ist nicht Teil des agent loop und kein capability seam; er kennt keine Harness-Konzepte, und jedes Feature-Route — einschließlich der `/api`-Bridge, der Plugin-Bundles und des HMR-Event-Streams — registriert ein anderes Plugin ([Layering-Notiz](../../.agents/notes/implemented/architecture/2026-07-24-web-config-tree-boot-and-transport-layering.de.md)). Er bedient nur Browser: Electron lädt die gebauten Dateien über `file://` und schickt fetch-Requests über eine IPC-Bridge statt über diesen Server.
 
 Quelle: [`packages/host/webserver/src/index.ts`](../../packages/host/webserver/src/index.ts)
 

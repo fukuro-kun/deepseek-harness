@@ -1,8 +1,8 @@
 # Agent Note: Sidebar-Standardseiten
+[English](2026-09-08-sidebar-default-pages.md) | [中文](2026-09-08-sidebar-default-pages.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-sidebar-default-pages.md) | [中文](2026-09-08-sidebar-default-pages.zh.md) | Deutsch
 
 ## Problem
 

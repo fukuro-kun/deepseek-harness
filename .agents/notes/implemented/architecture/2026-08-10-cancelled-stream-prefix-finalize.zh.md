@@ -1,8 +1,8 @@
 # Agent Note: 被取消的流定稿其已送达前缀
+[English](2026-08-10-cancelled-stream-prefix-finalize.md) | 中文 | [Deutsch](2026-08-10-cancelled-stream-prefix-finalize.de.md)
 
 Status: implemented
 
-[English](2026-08-10-cancelled-stream-prefix-finalize.md) | 中文 | [Deutsch](2026-08-10-cancelled-stream-prefix-finalize.de.md)
 
 ## Problem
 

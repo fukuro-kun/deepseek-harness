@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-07-27-request-error-retry-action.md
-2026-07-27-request-error-retry-action.md: 426eed6588e83c5e96c8bd877c390ffcf7cf7ecc
-2026-07-27-request-error-retry-action.zh.md: e0c4749b7ed6bddcbc44f3ab512df542f33831bd
-2026-07-27-request-error-retry-action.de.md: c34a01ece881ac4d635e731e5d2d9360be91e558
+2026-07-27-request-error-retry-action.md: f05b1eb0ded1024309b3c17f13ac26fd3f554243
+2026-07-27-request-error-retry-action.zh.md: 13ad5682055e2bc511ced9f2042e096a9e8fd758
+2026-07-27-request-error-retry-action.de.md: 004339b7ebd069bcad9edc8b02a6d95fc5b32ac0

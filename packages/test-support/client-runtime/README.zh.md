@@ -4,15 +4,14 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-client-test-runtime
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-client-test-runtime` 让浏览器功能测试在 jsdom 中检验生产 slot、store、渲染、更新与销毁行为，而无需重实现 UI 运行时。测试作者可以发布带类型的 Session、Workspace、projection 与 Conversation fixture，查询 slot 局部 DOM 根，并脚本化 Remote 应答或失败。缺失服务、未打桩的会话行为与意外文件上传都会在调用点失败，销毁则保持幂等。仅限仓内、面向浏览器的 Vitest 套件通过 `devDependencies` 使用本包；它不是产品插件或通用 Node 测试框架。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

@@ -1,8 +1,8 @@
 # Agent Note: 包的模型体验约定
+[English](2026-07-12-package-model-experience-contract.md) | 中文 | [Deutsch](2026-07-12-package-model-experience-contract.de.md)
 
 Status: implemented
 
-[English](2026-07-12-package-model-experience-contract.md) | 中文
 
 ## 问题
 

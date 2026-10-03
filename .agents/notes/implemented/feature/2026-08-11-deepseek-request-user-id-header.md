@@ -1,9 +1,8 @@
 # Agent Note: DeepSeek request user and session identity headers
-English | [中文](.agents/notes/implemented/feature/2026-08-11-deepseek-request-user-id-header.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-11-deepseek-request-user-id-header.de.md)
+English | [中文](2026-08-11-deepseek-request-user-id-header.zh.md) | [Deutsch](2026-08-11-deepseek-request-user-id-header.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-11-deepseek-request-user-id-header.zh.md)
 
 ## Problem
 

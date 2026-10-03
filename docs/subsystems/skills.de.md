@@ -1,6 +1,6 @@
 # Skills
-
 [English](skills.md) | [中文](skills.zh.md) | Deutsch
+
 
 Die [Skill-Capability-Familie](../../packages/skill) umfasst die Service Definition ([dsh-skill](../../packages/skill/skill), `ctx.skills`), den lokalen Service Provider ([dsh-skill-filesystem](../../packages/skill/skill-filesystem)), den optionalen paketierten Badge-Provider ([dsh-skill-badge](../../packages/skill/skill-badge)) und den Consumer ([dsh-tool-skill](../../packages/skill/tool-skill)). Die Registry mergt Provider-Kataloge über ihre Host- und Per-Scope-Ebenen hinweg; Provider liefern lokale oder paketierte Skills; der Consumer besitzt die initialen und Ersatzkataloge sowie das modellseitige `skill`-Tool. Skills sind optionale Anweisungen, keine Session-Events, daher lebt ihr Vokabular hier und nicht in [core.md](core.de.md).
 

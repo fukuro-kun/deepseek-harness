@@ -1,8 +1,8 @@
 # Agent Note: Lokale Medienpfade in Session-Prosa werden über eine Same-Origin-Dateiroute angezeigt
+[English](2026-09-07-session-prose-local-media-display.md) | [中文](2026-09-07-session-prose-local-media-display.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-session-prose-local-media-display.md) | [中文](2026-09-07-session-prose-local-media-display.zh.md) | Deutsch
 
 ## Problem
 

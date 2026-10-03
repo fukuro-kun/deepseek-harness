@@ -1,6 +1,6 @@
 # `@deepseek-ai/dsh`
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Der Befehl `dsh` ist der einzige unterstützte Launcher für Node-Anwendungen: Profile sind geordnete Stapel aus Patch-Ebenen von Plugin-Bundles unterhalb der eigenen Overrides des Benutzers. SDK und ACP sind Profile, keine separaten öffentlichen Bins. Das Python-Runtime-Wheel paketiert denselben Befehl; das SDK verwendet standardmäßig `sdk`, das Minimalbeispiel wählt `sdk-minimal`. [`src/args.ts`](src/args.ts) definiert die Befehlsgrammatik, und [`src/bin.ts`](src/bin.ts) lädt nur den ausgewählten Runner. Ungültige Befehle, Optionen aus einem anderen Modus, Konfigurationsfehler und Boot-Fehler enden mit einem Exit-Code ungleich null.
 

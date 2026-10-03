@@ -1,6 +1,6 @@
 # Web Client Slots
+[English](slots.md) | 中文 | [Deutsch](slots.de.md)
 
-[English](slots.md) | 中文
 
 Slots 是 Web Client 的类型化 React 组合系统。[`dsh-client-ui-slots`](../../packages/client/ui-slots/README.zh.md)定义不依赖 React 的注册表与类型代数；[`dsh-client-ui-renderer`](../../packages/client/ui-renderer/README.zh.md)把可观测源绑定成钩子、渲染整棵树，并在内部拥有 React context。功能插件通过 `ctx.slots.register()` 贡献 UI，绝不导入其他功能插件的组件。
 
@@ -12,7 +12,6 @@ Slots 是 Web Client 的类型化 React 组合系统。[`dsh-client-ui-slots`](.
 
 声明一个 child 会同时产生三种效果：令该 child key 生效、授权 parent entry 调用 `renderSlot` 或 `renderSlotChain`，以及记录运行时 dispatch 规格。每个声明只能有一个存活 owner。向未声明 slot 注册，或重复声明其他 entry 已拥有的 child，都会在插件激活时失败。
 
-[English](slots.md) | 中文 | [Deutsch](slots.de.md)
 
 `root` 是唯一内建声明，也是唯一由 Cordis service 自身渲染的 key。`ui-renderer` 调用 `ctx.slots.renderSlot('root', {})`；其余每个后代都通过声明它的 entry 所收到的 `renderSlot` 或 `renderSlotChain` prop 渲染。
 

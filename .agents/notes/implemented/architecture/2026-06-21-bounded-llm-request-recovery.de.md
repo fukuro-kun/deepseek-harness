@@ -1,8 +1,8 @@
 # Agent Note: Begrenzte Wiederherstellung vorübergehender LLM-Anfragefehler
+[English](2026-06-21-bounded-llm-request-recovery.md) | [中文](2026-06-21-bounded-llm-request-recovery.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-21-bounded-llm-request-recovery.md) | [中文](2026-06-21-bounded-llm-request-recovery.zh.md) | Deutsch
 
 Die [pro-provider-Anfrage-Retry-Policy](../../archived/feature/2026-07-24-provider-retry-policies.md) erweitert dieses Fundament um exakte provider-Konfiguration und einen expliziten unbegrenzten mode. Diese note behält die ownership strukturierter failure-facts, der failed-attempt-recovery-Grenze, der transient-defaults des normal mode, sichtbarer einzelner attempts und des durable retry status. [Terminal LLM stream failures](2026-07-29-terminal-llm-stream-failures.de.md) ersetzt seine thrown-error-identity und den stream-sidecar-Mechanismus.
 

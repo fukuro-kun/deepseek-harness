@@ -1,8 +1,8 @@
 # Agent Note: 右侧 Sidebar 的 tab 类型与导航
+[English](2026-09-05-sidebar-tab-types-and-navigation.md) | 中文 | [Deutsch](2026-09-05-sidebar-tab-types-and-navigation.de.md)
 
 Status: implemented
 
-[English](2026-09-05-sidebar-tab-types-and-navigation.md) | 中文 | [Deutsch](2026-09-05-sidebar-tab-types-and-navigation.de.md)
 
 ## Problem
 

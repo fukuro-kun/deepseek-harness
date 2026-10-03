@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/host/directory-picker-browse/README.md
 README.md: 655dfcc932377b9805187348e82f9537908a1cc9
-README.zh.md: ac346880a7f6f9b7122549c2b43c8d42cff60ab2
-README.de.md: 0538fca9b4cb21115765f73ce171e6ac341f25d4
+README.zh.md: 7fb75e5d96dc72bae8e3362fa376fccbb3293b3b
+README.de.md: 5d6bac35d5bbae78ee4d42d1686caeed9ace7dba

@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-storage-domain
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用本包声明经过 schema 校验的键值领域，并通过 `ctx.storageDomain` 在已配置的存储后端上打开它们。读取同步返回经过校验的内存状态；每次写入在 resolve 前都已持久，并按顺序发出 `domain/changed`。产品包使用领域句柄，而不直接访问存储后端。这些宿主侧状态不会添加工具、提示词或会话事件，因此模型与 agent loop（智能体循环）无法看到它们。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

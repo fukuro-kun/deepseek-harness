@@ -1,8 +1,8 @@
 # Agent Note: Windows-native durable JSONL-Publikation
+[English](2026-07-05-windows-jsonl-durable-publish.md) | [中文](2026-07-05-windows-jsonl-durable-publish.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-05-windows-jsonl-durable-publish.md) | [中文](2026-07-05-windows-jsonl-durable-publish.zh.md) | Deutsch
 
 ## Problem
 
@@ -28,7 +28,7 @@ Windows legt fehlende Verzeichnisse über eine durable Staging-Publikation an: e
 
 ## Konsequenzen
 
-Das Backend behält einen externen Contract über Plattformen hinweg: Der erste Append publiziert entweder ein vollständiges Log unter dem finalen Namen oder schlägt fehl, ohne ein vorhandenes Log zu überschreiben. Der Plattform-Split ist ein Implementierungsdetail; `SessionPersistence`-APIs und das logische JSONL-Record-Format ändern sich nicht. Die spätere [Zstandard-Encoding-Entscheidung](2026-07-19-zstandard-jsonl-session-logs.md) greift, bevor eine der Plattformen die opaken Bytes publiziert.
+Das Backend behält einen externen Contract über Plattformen hinweg: Der erste Append publiziert entweder ein vollständiges Log unter dem finalen Namen oder schlägt fehl, ohne ein vorhandenes Log zu überschreiben. Der Plattform-Split ist ein Implementierungsdetail; `SessionPersistence`-APIs und das logische JSONL-Record-Format ändern sich nicht. Die spätere [Zstandard-Encoding-Entscheidung](2026-07-19-zstandard-jsonl-session-logs.de.md) greift, bevor eine der Plattformen die opaken Bytes publiziert.
 
 Windows-Tests prüfen den echten Win32-Publish-Pfad auf nativem Windows. Power-Loss-Verhalten bleibt eine API-Contract-Eigenschaft statt etwas, das Unit-Tests beweisen können; die testbaren Invarianten sind, dass beim Windows-materialize kein Directory-fsync aufgerufen wird, Final-Path-Kollisionen fehlschlagen, Zielkomponenten maximaler Länge materialisierbar bleiben, Temp-Logs vor der Publikation gefsync-t werden und das resultierende Log normal lädt.
 

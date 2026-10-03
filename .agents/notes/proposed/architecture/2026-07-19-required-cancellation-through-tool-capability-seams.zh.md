@@ -1,8 +1,8 @@
 # Agent Note: 工具可达能力 seam 中的必填取消
+[English](2026-07-19-required-cancellation-through-tool-capability-seams.md) | 中文 | [Deutsch](2026-07-19-required-cancellation-through-tool-capability-seams.de.md)
 
 Status: proposed
 
-[English](2026-07-19-required-cancellation-through-tool-capability-seams.md) | 中文 | [Deutsch](2026-07-19-required-cancellation-through-tool-capability-seams.de.md)
 
 ## 问题
 

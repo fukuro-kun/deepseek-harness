@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/process/2026-06-11-api-extractor-reports.md
-2026-06-11-api-extractor-reports.md: 534dd865bfcc2bb7bc41bd92df57f2c8b1e11273
-2026-06-11-api-extractor-reports.zh.md: 48c14526717d0a8ce54f5ad380e2235d49658e6b
-2026-06-11-api-extractor-reports.de.md: 3fb30246f74a4ba8d6dd41e6ceab66cda03a5904
+2026-06-11-api-extractor-reports.md: 4359a798409db69182c3c7dd374b4acf89d58ed8
+2026-06-11-api-extractor-reports.zh.md: e86eba80755480e7229e03740378998ba6853bc9
+2026-06-11-api-extractor-reports.de.md: dec1409663f36a65a2b4e0e880403422b6b0555c

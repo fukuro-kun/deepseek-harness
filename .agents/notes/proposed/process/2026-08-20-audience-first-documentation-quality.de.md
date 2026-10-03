@@ -1,8 +1,8 @@
 # Agent Note: Audience-first-Dokumentations-Qualitätskriterien
+[English](2026-08-20-audience-first-documentation-quality.md) | [中文](2026-08-20-audience-first-documentation-quality.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-08-20-audience-first-documentation-quality.md) | [中文](2026-08-20-audience-first-documentation-quality.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: 工作区文件服务
+[English](2026-09-05-workspace-files-service.md) | 中文 | [Deutsch](2026-09-05-workspace-files-service.de.md)
 
 Status: implemented
 
-[English](2026-09-05-workspace-files-service.md) | 中文 | [Deutsch](2026-09-05-workspace-files-service.de.md)
 
 ## Problem
 

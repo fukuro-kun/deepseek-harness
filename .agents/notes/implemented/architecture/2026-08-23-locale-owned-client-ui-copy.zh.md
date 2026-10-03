@@ -1,8 +1,8 @@
 # Agent Note: locale 归属的 client UI 文案
+[English](2026-08-23-locale-owned-client-ui-copy.md) | 中文 | [Deutsch](2026-08-23-locale-owned-client-ui-copy.de.md)
 
 Status: implemented
 
-[English](2026-08-23-locale-owned-client-ui-copy.md) | 中文 | [Deutsch](2026-08-23-locale-owned-client-ui-copy.de.md)
 
 ## Problem
 

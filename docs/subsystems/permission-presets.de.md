@@ -1,6 +1,6 @@
 # Permission Presets
-
 [English](permission-presets.md) | [中文](permission-presets.zh.md) | Deutsch
+
 
 Die Permission-Preset-Schicht von [dsh-permission-presets](../../packages/interaction/permission-presets) (`ctx.permissionPresets`, `PermissionPresetService`) bündelt die zwei unabhängigen Enforcement-Regler — [Sandbox-Modus](sandbox.de.md) (`sandbox/mode`) und [Approval-Policy](approval.de.md) (`approval/policy`) — zu benannten Presets, die ein Client als einen einzigen Permissions-Selektor anbietet. Es ist eine optionale Capability, kein Teil des Agent-Loop-Spines, und besitzt kein eigenes Enforcement: Ausführung, Prompt-Narration und Replay lesen weiterhin die gefalteten Werte ihrer Regler; ein Preset-Wechsel zeichnet nur die Absicht auf und schreibt über den kanonischen Setter jedes Reglers. Das [Package-README](../../packages/interaction/permission-presets/README.de.md) trägt den Kompositionsstatus und die Einschränkungen; das [Sandbox-Switching-Design](../../.agents/notes/implemented/feature/2026-07-06-sandbox.de.md) trägt die Begründung.
 

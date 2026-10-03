@@ -1,8 +1,8 @@
 # Agent Note: Continuable subagent 当前轮次中断
+[English](2026-08-06-continuable-subagent-interrupt.md) | 中文 | [Deutsch](2026-08-06-continuable-subagent-interrupt.de.md)
 
 Status: implemented
 
-[English](2026-08-06-continuable-subagent-interrupt.md) | 中文
 
 ## 问题
 

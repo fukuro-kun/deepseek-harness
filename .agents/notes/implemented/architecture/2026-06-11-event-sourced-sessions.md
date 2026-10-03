@@ -1,10 +1,9 @@
 # Agent Note: Event-sourced sessions with derived message history
+English | [中文](2026-06-11-event-sourced-sessions.zh.md) | [Deutsch](2026-06-11-event-sourced-sessions.de.md)
 
-English | [中文](.agents/notes/implemented/architecture/2026-06-11-event-sourced-sessions.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-event-sourced-sessions.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-11-event-sourced-sessions.zh.md)
 
 ## Problem
 

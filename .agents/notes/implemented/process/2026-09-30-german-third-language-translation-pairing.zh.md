@@ -1,8 +1,8 @@
 # Agent Note: 将德语确立为一等的翻译配对语言
+[English](2026-09-30-german-third-language-translation-pairing.md) | 中文 | [Deutsch](2026-09-30-german-third-language-translation-pairing.de.md)
 
 Status: implemented
 
-[English](2026-09-30-german-third-language-translation-pairing.md) | 中文 | [Deutsch](2026-09-30-german-third-language-translation-pairing.de.md)
 
 ## Problem
 

@@ -1,6 +1,6 @@
 # Conversation 组装
+[English](conversation.md) | 中文 | [Deutsch](conversation.de.md)
 
-[English](conversation.md) | 中文
 
 Conversation 是 Client `SessionEventLikeEntry` window 与浏览器 view 之间的 target-neutral assembly 层。[`ui-conversation`](../../packages/client/ui-conversation/README.zh.md)拥有 event 与 view registry、每个 `SessionBinding` 对应的 identity-stable binding、Turn/Step Location、增量 Context assembly、target source、共享 shell 与输入编排。[`ui-chat`](../../packages/client/ui-chat/README.zh.md)和 [`ui-trajectory`](../../packages/client/ui-trajectory/README.zh.md)等 target 包拥有各自的 Definition、最终 snapshot 与渲染。
 
@@ -12,7 +12,6 @@ Session Controller 拥有连续的已加载逻辑 event window。每个 `Session
 
 | 概念 | Owner 与用途 |
 
-[English](conversation.md) | 中文 | [Deutsch](conversation.de.md)
 |---|---|
 | Event Definition | 业务包一次匹配一个持久 event 或 Client-only 瞬态 event，以稳定 `(kind, id)` 关联输入、折叠确定性 State，并可选择 materialize 一个 target node。 |
 | Context | Engine 为一个 `(kind, id)` 拥有的有序 Match 与当前 State。一个瞬态 event 只占一个 update Match；只有 update 的证据可以保持 pending，直到分页补齐其唯一持久 start。 |

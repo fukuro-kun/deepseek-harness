@@ -1,8 +1,8 @@
 # Agent Note: Eingebettete Assistant-Stream-Consumers lesen kompakte Records
+[English](2026-09-06-embedded-stream-record-readers.md) | [中文](2026-09-06-embedded-stream-record-readers.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-embedded-stream-record-readers.md) | [中文](2026-09-06-embedded-stream-record-readers.zh.md) | Deutsch
 
 ## Problem
 

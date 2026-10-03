@@ -1,8 +1,8 @@
 # Agent Note: Session surface — eine geordnete Projektion über das Event-Log
+[English](2026-06-18-session-surface.md) | [中文](2026-06-18-session-surface.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-18-session-surface.md) | [中文](2026-06-18-session-surface.zh.md) | Deutsch
 
 ## Problem
 

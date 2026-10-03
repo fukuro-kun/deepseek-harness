@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-05-client-resource-model.md
-2026-09-05-client-resource-model.md: 89f2a7c841463ecbe31925896600b5211bebce52
-2026-09-05-client-resource-model.zh.md: 819ec00ce7adb553ecd242f3dc6fb66a72cc33cb
-2026-09-05-client-resource-model.de.md: 7f6e51534328663ee78124b4e5f12ba4ea214866
+2026-09-05-client-resource-model.md: 59ef66f410558271db2019653f12ad8a185a0217
+2026-09-05-client-resource-model.zh.md: fcf3f3ae2f966898583e0c0c94e5b041d5dd06c5
+2026-09-05-client-resource-model.de.md: 0638b293d200b14c8a7fc3b16f7109511d764b30

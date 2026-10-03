@@ -1,8 +1,8 @@
 # Agent Note: Client-Session-, Conversation- und UI-Ownership-Schichten
+[English](2026-08-20-client-session-conversation-ownership.md) | [中文](2026-08-20-client-session-conversation-ownership.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-20-client-session-conversation-ownership.md) | [中文](2026-08-20-client-session-conversation-ownership.zh.md) | Deutsch
 
 ## Problem
 

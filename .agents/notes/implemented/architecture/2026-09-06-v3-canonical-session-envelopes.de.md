@@ -1,8 +1,8 @@
 # Agent Note: Kanonische V3-Session-Event-Envelopes
+[English](2026-09-06-v3-canonical-session-envelopes.md) | [中文](2026-09-06-v3-canonical-session-envelopes.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-v3-canonical-session-envelopes.md) | [中文](2026-09-06-v3-canonical-session-envelopes.zh.md) | Deutsch
 
 ## Problem
 
@@ -24,7 +24,7 @@ Der generische Gateway-Client gibt rohe Outputs ohne Validierung zurück. Der be
 
 ### Released-V2-zu-V3-Konversion
 
-Die [V2-zu-V3-Spezifikation](../../../../packages/session/session-format-v2-to-v3/README.md#v2-to-v3-specification) besitzt die vollständige historische Konversion, ihre [Kanonisierungsregeln](../../../../packages/session/session-format-v2-to-v3/README.md#canonical-envelopes) und [native Zulassung und Wiederherstellung](../../../../packages/session/session-format-v2-to-v3/README.md#native-v3-admission). Diese Regeln zusammenzuhalten verhindert, dass ein kardinalitätserhaltender Kanonisierungsschritt mit einer Identitätsmigration verwechselt wird. Eingefrorene Beziehungsvalidierung nutzt private Views statt Laufzeit-Aliase; das ursprüngliche V3-Artefakt bleibt maßgeblich.
+Die [V2-zu-V3-Spezifikation](../../../../packages/session/session-format-v2-to-v3/README.de.md#v2-to-v3-specification) besitzt die vollständige historische Konversion, ihre [Kanonisierungsregeln](../../../../packages/session/session-format-v2-to-v3/README.de.md#canonical-envelopes) und [native Zulassung und Wiederherstellung](../../../../packages/session/session-format-v2-to-v3/README.de.md#native-v3-admission). Diese Regeln zusammenzuhalten verhindert, dass ein kardinalitätserhaltender Kanonisierungsschritt mit einer Identitätsmigration verwechselt wird. Eingefrorene Beziehungsvalidierung nutzt private Views statt Laufzeit-Aliase; das ursprüngliche V3-Artefakt bleibt maßgeblich.
 
 ## Erwogene Alternativen
 

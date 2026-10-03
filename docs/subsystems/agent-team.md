@@ -1,12 +1,11 @@
 # Agent Teams
+English | [中文](agent-team.zh.md) | [Deutsch](agent-team.de.md)
 
-English | [中文](agent-team.zh.md)
 
 Types shared by the experimental implicit-root Team domain, model tools, and host adapters. The [Agent Teams Agent Note](../../.agents/notes/implemented/feature/2026-08-05-agent-teams.md) owns identity, mailbox, task, and shared-checkout decisions; this page records the literal durable forms from [`packages/experimental/agent-team/src/types.ts`](../../packages/experimental/agent-team/src/types.ts).
 
 ## Identity and roster
 
-English | [中文](agent-team.zh.md) | [Deutsch](agent-team.de.md)
 
 `TeamId` is the root `SessionId` under a distinct [brand](core.md#branded-ids). `TeamTaskId` is Team-local and monotonically allocated as `task-<n>`; `TeamMessageId` is globally random. A teammate's Session id remains its persistent identity, while `name` is an immutable model/UI label.
 

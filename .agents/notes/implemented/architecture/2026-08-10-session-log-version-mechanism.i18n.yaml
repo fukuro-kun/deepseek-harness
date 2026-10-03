@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-10-session-log-version-mechanism.md
-2026-08-10-session-log-version-mechanism.md: 0ef1c674f98af9b0b1e05457bed19bf9258deb04
-2026-08-10-session-log-version-mechanism.zh.md: 9ed621a64492c64d83cdabe971e5e947bb392509
-2026-08-10-session-log-version-mechanism.de.md: b538788833d3fa1b1f25ee33899140803151d948
+2026-08-10-session-log-version-mechanism.md: 85700f00c4a8243d21fd50c81a1dc6421423e5cd
+2026-08-10-session-log-version-mechanism.zh.md: 5768ce037cf601049ae440e5c40148b00a8f4fed
+2026-08-10-session-log-version-mechanism.de.md: e56d48e0de601c93e9b2e80848a37d4152827a8c

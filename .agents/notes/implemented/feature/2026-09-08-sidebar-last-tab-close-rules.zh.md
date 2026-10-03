@@ -1,8 +1,8 @@
 # Agent Note：Sidebar 停靠面最后一个 tab 的关闭规则
+[English](2026-09-08-sidebar-last-tab-close-rules.md) | 中文 | [Deutsch](2026-09-08-sidebar-last-tab-close-rules.de.md)
 
 Status: implemented
 
-[English](2026-09-08-sidebar-last-tab-close-rules.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Mutationstesting als Gegengewicht zur Abdeckung
+[English](2026-06-11-mutation-testing.md) | [中文](2026-06-11-mutation-testing.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-06-11-mutation-testing.md) | [中文](2026-06-11-mutation-testing.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Task Surface für strukturierte Session-Interaktion
+[English](2026-08-04-task-surface.md) | [中文](2026-08-04-task-surface.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-08-04-task-surface.md) | [中文](2026-08-04-task-surface.zh.md) | Deutsch
 
 ## Problem
 
@@ -86,11 +86,17 @@ Die Tool-Definition lässt `isConcurrencySafe` aus. Unter dem bestehenden Tool-R
 Das browser-sichere Domänen-Paket importiert die typ-nur-`Branded`-Primitiva aus `@deepseek-ai/dsh-brand` und besitzt alle drei Task-Surface-IDs. Der kanonische Wert ist unter dem [kanonischen Tool-Output-Contract](../../implemented/architecture/2026-07-20-canonical-tool-output-contract.de.md) ausführung-lokal. Replay nutzt daher `output.presentationMeta(args, value)`, um diese getaggte Payload mit `tool/result.meta` zu persistieren:
 
 ```ts
-presentationMeta(args: ShowTaskSurfaceArgs, value: ShowTaskSurfaceOutput) {
-  return {
-    kind: 'task-surface',
-    model: value.model
-  }
+import type { Branded } from '@deepseek-ai/dsh-brand'
+
+type TaskSurfaceId = Branded<'TaskSurfaceId'>
+type TaskSurfaceSubmissionId = Branded<'TaskSurfaceSubmissionId'>
+type TaskSurfaceDismissalId = Branded<'TaskSurfaceDismissalId'>
+
+interface TaskSurfacePresentationMeta {
+  kind: 'dsh/task-surface'
+  version: 1
+  surfaceId: TaskSurfaceId
+  model: TaskSurfaceModelV1
 }
 ```
 
@@ -107,27 +113,68 @@ Das Modell wählt keinen Conversations-Tab, keine Dock-Reihenfolge, keine Detail
 Die Task-Surface-Domäne exponiert drei Operationen über den Host-Transport. `submit` ist die einzige, die eine Nutzer-Nachricht zulässt:
 
 ```ts ignore-check
-taskSurface.submit({
-  sessionId,
-  surfaceId,
-  submissionId,
-  values,
+type TaskSurfaceSubmissionPhase = 'queued' | 'claiming'
+
+interface TaskSurfacePendingSubmission {
+  submissionId: TaskSurfaceSubmissionId
+  messageId: MessageId
+  phase: TaskSurfaceSubmissionPhase
+}
+
+interface TaskSurfaceService {
+  getActive(input: { sessionId: SessionId; surfaceId: TaskSurfaceId }): Promise<GetActiveTaskSurfaceResult>
+  submit(input: SubmitTaskSurfaceRequest): Promise<SubmitTaskSurfaceResult>
+  dismiss(input: DismissTaskSurfaceRequest): Promise<DismissTaskSurfaceResult>
+}
+
+interface SubmitTaskSurfaceRequest {
+  sessionId: SessionId
+  surfaceId: TaskSurfaceId
+  submissionId: TaskSurfaceSubmissionId
+  values: Record<string, JsonValue>
   note?: string
-}): Promise<{ messageId: string; phase: 'queued' }>
+}
+
+type SubmitTaskSurfaceResult =
+  | { accepted: true; messageId: MessageId; phase: 'queued' }
+  | { accepted: false; reason: 'not-open' | 'stale' | 'invalid-submission' | 'submission-pending' }
+
+type GetActiveTaskSurfaceResult =
+  | {
+      active: true
+      callId: ToolCallId
+      surfaceId: TaskSurfaceId
+      model: TaskSurfaceModelV1
+      pending: TaskSurfacePendingSubmission | null
+    }
+  | { active: false; reason: 'not-open' }
+
+interface DismissTaskSurfaceRequest {
+  sessionId: SessionId
+  surfaceId: TaskSurfaceId
+  dismissalId: TaskSurfaceDismissalId
+}
+
+type DismissTaskSurfaceResult =
+  | { dismissed: true; eventSeq: number }
+  | { dismissed: false; reason: 'not-open' | 'stale' | 'submission-pending' }
 ```
 
 Der Host löst das exakte erfolgreiche `show_task_surface`-Vorkommnis auf, revalidiert die gesendeten Werte gegen sein persistiertes Modell und lässt die Antwort durch die normale Session-Warteschlange zu. Die Antwort wird zu einer user-role-Nachricht mit einer merge-erweiterbaren source:
 
 ```ts ignore-check
-{
-  kind: 'user',
-  source: {
-    kind: 'task-surface',
-    surfaceId,
-    callId,
-    submissionId,
-    values
-  }
+interface TaskSurfaceCorrelation {
+  version: 1
+  submissionId: TaskSurfaceSubmissionId
+  callId: ToolCallId
+  surfaceId: TaskSurfaceId
+  values: Record<string, JsonValue>
+}
+
+interface TaskSurfaceUserMessageSource {
+  kind: 'user'
+  rpcId: RpcId
+  taskSurface: TaskSurfaceCorrelation
 }
 ```
 
@@ -135,8 +182,13 @@ Das `session/queue`-Wire-Item trägt bereits die komplette `Message`. Die Client
 
 ```ts ignore-check
 interface QueuedMessage {
-  // existing fields
-  source?: MessageSource
+  id: InboxItemId
+  messageId: MessageId
+  placement: 'queued' | 'steering'
+  source: MessageSource
+  content: readonly ContentBlock[]
+  preview: string
+  text: string | null
 }
 ```
 

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-07-model-switch-notice.md
-2026-09-07-model-switch-notice.md: ebf6bf8c56ecf634b9896545c44858a18c982bd7
-2026-09-07-model-switch-notice.zh.md: b6dd8da02732e4b6c6b2102aef6074b8f136d37d
-2026-09-07-model-switch-notice.de.md: 46827efd746be9bf33f2eb471529886681e16713
+2026-09-07-model-switch-notice.md: 6880ec1e717f3491f0d4083b58ad4519683eaf2a
+2026-09-07-model-switch-notice.zh.md: bcb0e8844083b67a27a2d9a5db53f333339bd77e
+2026-09-07-model-switch-notice.de.md: 5b66a616914ff358355cf8b9d293e1d4aa942cd7

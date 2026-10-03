@@ -1,8 +1,8 @@
 # Agent Note: Veröffentlichte Session-Formate migrieren über zustandsbehaftete Streaming-Stages
+[English](2026-08-31-released-session-format-migrations.md) | [中文](2026-08-31-released-session-format-migrations.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-31-released-session-format-migrations.md) | [中文](2026-08-31-released-session-format-migrations.zh.md) | Deutsch
 
 ## Problem
 
@@ -68,7 +68,7 @@ Die Kette enthält kein `flatMap`, keine Spread-Expansion, kein intermediäres E
 
 Die [V2-zu-V3-Delivery-Guards](../../../../packages/session/session-format-v2-to-v3/README.de.md#delivery-guards) verhindern, dass ein in der Quellgeneration ignorierter Marker allein durch die Header-Änderung zu einer aktiven Upload-Wassermarke wird. Python-Release-Smoke-Tests prüfen generierte Logs unabhängig vom generationsneutralen Golden-Vergleich gegen das Quell-`SESSION_FORMAT_VERSION`, sodass kohärente Dateinamen und Header keinen veralteten Writer verschleiern können.
 
-Das [V2-zu-V3-README](../../../../packages/session/session-format-v2-to-v3/README.de.md#v2-to-v3-specification) ist die einzige Spezifikation für Transformationen, Bewahrung und Verweigerung dieser Kante; ihr separater [Native-Admission-Abschnitt](../../../../packages/session/session-format-v2-to-v3/README.de.md#native-v3-admission) verhindert, dass Nur-Current-Fähigkeiten mit historischen Transformationen verwechselt werden. Der ausgelieferte V2-Codec bleibt im Besitz von V1→V2 und wird wiederverwendet, nicht kopiert. Die [System-Prompt-](2026-09-02-system-prompt-as-surface-node.md), [PTC-](../feature/2026-06-15-ptc.de.md) und [Canonical-Envelope](2026-09-06-v3-canonical-session-envelopes.md)-Notizen behalten ihre unabhängige Begründung, statt Konvertierungsspezifikationen zu duplizieren. Das [Format-Versions-Cookbook](../../../../docs/cookbook/adding-a-session-format-version.de.md) besitzt Package-Verdrahtung, aktuelle Consumer, Snapshot-Nachfolger und Validierungskommandos.
+Das [V2-zu-V3-README](../../../../packages/session/session-format-v2-to-v3/README.de.md#v2-to-v3-specification) ist die einzige Spezifikation für Transformationen, Bewahrung und Verweigerung dieser Kante; ihr separater [Native-Admission-Abschnitt](../../../../packages/session/session-format-v2-to-v3/README.de.md#native-v3-admission) verhindert, dass Nur-Current-Fähigkeiten mit historischen Transformationen verwechselt werden. Der ausgelieferte V2-Codec bleibt im Besitz von V1→V2 und wird wiederverwendet, nicht kopiert. Die [System-Prompt-](2026-09-02-system-prompt-as-surface-node.de.md), [PTC-](../feature/2026-06-15-ptc.de.md) und [Canonical-Envelope](2026-09-06-v3-canonical-session-envelopes.de.md)-Notizen behalten ihre unabhängige Begründung, statt Konvertierungsspezifikationen zu duplizieren. Das [Format-Versions-Cookbook](../../../../docs/cookbook/adding-a-session-format-version.de.md) besitzt Package-Verdrahtung, aktuelle Consumer, Snapshot-Nachfolger und Validierungskommandos.
 
 Die Admission historischen Inhalts gehört zur eingehenden Kante, nicht zur nativen V3-Erweiterungsvalidierung. Einen unbekannten Block zu bewahren, ohne seine Felder zu verstehen, kann nicht begründen, dass die Migration seine Bedeutung erhält. Das [Quell-Audit](../../../../packages/session/session-format-v2-to-v3/README.de.md#source-audit) verwendet daher eine historische Kind-Menge über seine explizit besessenen Content-Positionen hinweg, einschließlich partieller Streams. Es inspiziert zugelassenen Inhalt, ohne ihn umzuschreiben, und lässt Owner-opakes JSON uninterpretiert. Native Akzeptanz einzuengen oder eingefrorene Vorgänger-Validatoren zu bearbeiten würde unabhängige Zusagen ändern, statt sichere Konvertierung zu begründen.
 
@@ -98,7 +98,7 @@ Das ausgelieferte `lib/worker.cjs` bündelt seine JavaScript-Workspace-Dependenc
 
 Die Vorbereitung leitet Cancellation durch Quell-Reads weiter und beobachtet sie an der bestehenden Decode-Yield-Grenze von etwa 500 ms. Sobald `publish()` startet, erhalten Encode, Worker-Verifikation und Publikation keine Aufrufer-Cancellation mehr und laufen bis zur Erledigung; Write-Open prüft danach das Aufrufer-Signal erneut. Eine publizierte Generation wird nie zurückgerollt.
 
-Die Stage-Pipeline endet bei einem vorbereiteten aktuellen Artefakt. [Vorbereitung historischer Session-Reads](2026-09-05-read-only-session-migration-preparation.md) definiert, wie Read-Open dieses Artefakt sofort konsumiert, während Write-Open Encode, Verifikation und Publikation ausführt, bevor es Append-Zugriff zurückgibt.
+Die Stage-Pipeline endet bei einem vorbereiteten aktuellen Artefakt. [Vorbereitung historischer Session-Reads](2026-09-05-read-only-session-migration-preparation.de.md) definiert, wie Read-Open dieses Artefakt sofort konsumiert, während Write-Open Encode, Verifikation und Publikation ausführt, bevor es Append-Zugriff zurückgibt.
 
 ### Dauerhafte Format- und Publikationsregeln
 
@@ -164,7 +164,7 @@ Der Current-v2-Fast-Path bleibt performanzäquivalent. Die Architekturänderung 
 
 ### Aufschlüsselung der seriellen Streaming-Migration
 
-Diese Tabelle zeichnet den für diese Stage-Entscheidung gemessenen seriellen Open-Fluss auf. Das aktuelle Preparation-first-Scheduling und seine Messungen gehören zu [Vorbereitung historischer Session-Reads](2026-09-05-read-only-session-migration-preparation.md).
+Diese Tabelle zeichnet den für diese Stage-Entscheidung gemessenen seriellen Open-Fluss auf. Das aktuelle Preparation-first-Scheduling und seine Messungen gehören zu [Vorbereitung historischer Session-Reads](2026-09-05-read-only-session-migration-preparation.de.md).
 
 | Phase | Median |
 |---|---:|

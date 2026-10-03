@@ -4,9 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-bash-persistent
-English | [中文](packages/shell/tool-bash-persistent/README.zh.md) | [Deutsch](packages/shell/tool-bash-persistent/README.de.md)
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

@@ -1,9 +1,8 @@
 # Agent Note: Standard ACP v1 automation controls
-English | [中文](.agents/notes/implemented/feature/2026-08-22-standard-acp-automation-controls.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-22-standard-acp-automation-controls.de.md)
+English | [中文](2026-08-22-standard-acp-automation-controls.zh.md) | [Deutsch](2026-08-22-standard-acp-automation-controls.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-22-standard-acp-automation-controls.zh.md)
 
 > This note supersedes only the prompt-only protocol inventory in [ACP as an automation-only protocol](../simplification/2026-07-23-acp-automation-only-protocol.md). That decision's prohibition on ACP becoming a second product UI remains authoritative.
 

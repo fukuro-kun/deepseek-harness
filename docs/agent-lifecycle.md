@@ -2,10 +2,10 @@
      Run `pnpm run gen-doc-graphs` to regenerate. -->
 
 # Agent Turn And Step Lifecycle
+English | [中文](agent-lifecycle.zh.md) | [Deutsch](agent-lifecycle.de.md)
 
 This sequence is the visual companion to [architecture.md](architecture.md#turn-flow). It keeps durable replay facts on `session/event` and live control/status on `agent/*`.
 
-English | [中文](agent-lifecycle.zh.md) | [Deutsch](agent-lifecycle.de.md)
 
 ```mermaid
 sequenceDiagram

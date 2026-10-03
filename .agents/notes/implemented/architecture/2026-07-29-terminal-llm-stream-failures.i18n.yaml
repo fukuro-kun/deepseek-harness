@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-29-terminal-llm-stream-failures.md
-2026-07-29-terminal-llm-stream-failures.md: c9d86005fe0d670c64e6a8efcc8148054e066e4b
-2026-07-29-terminal-llm-stream-failures.zh.md: 363aac277d64de21d2de33a9311b248b7ff55c03
-2026-07-29-terminal-llm-stream-failures.de.md: fb50e09ff580126fb58422b0501b032b9e4c4937
+2026-07-29-terminal-llm-stream-failures.md: c8bfd0c491eca7f345999e78988da80a3abd0e34
+2026-07-29-terminal-llm-stream-failures.zh.md: 5678a78a4611ce69f6109e8544f4a1d08966c7aa
+2026-07-29-terminal-llm-stream-failures.de.md: 25c7f4fd01ac3b1c4f5eb1836d1db26de8c09c1c

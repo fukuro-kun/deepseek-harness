@@ -1,8 +1,8 @@
 # Agent Note: Zielbasierte Ausführung auf Harness-Ebene
+[English](2026-07-16-harness-level-loop.md) | [中文](2026-07-16-harness-level-loop.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-16-harness-level-loop.md) | [中文](2026-07-16-harness-level-loop.zh.md) | Deutsch
 
 ## Problem
 
@@ -42,7 +42,7 @@ Zeitbasierte `/loop`- oder geplante Ausführung ist eine dritte Policy und wird 
 | `@deepseek-ai/dsh-command-goal` | `packages/goal/command-goal/`, Produzent menschlicher Kommandos | Registriert `/goal`-Status, -Erstellung, -Bearbeitung, -Pause, -Fortsetzung und -Löschung über die Ziel-Domain für die TUI. |
 | `@deepseek-ai/dsh-tool-ralph` | `packages/workflow/tool-ralph/`, Consumer eines festen Workflows | Registriert `ralph({ objective, maxRounds? })`, validiert den frischen strukturierten Provider und den begrenzten `RalphRoundReport` und gibt `complete`, `blocked` oder `budget-limited` zurück. |
 
-Die detaillierten Verträge stehen in den Agent Notes [Ziel-Domain](2026-07-19-persisted-same-session-goal-domain.md), [zieleigene Events](../architecture/2026-07-31-goal-owned-durable-events.md), [modellseitige Goal-Tools](2026-07-19-model-facing-goal-tools.md), [Goal-Round-Treiber](../../archived/feature/2026-07-19-same-session-goal-round-driver.md), [Kommando-Registry](2026-07-19-plugin-command-registration.md), [menschliches Ziel-Kommando](../../archived/feature/2026-07-19-human-goal-command.md) und [Ralph-Workflow-Tool](../../archived/feature/2026-07-19-fresh-agent-ralph-workflow-tool.md).
+Die detaillierten Verträge stehen in den Agent Notes [Ziel-Domain](2026-07-19-persisted-same-session-goal-domain.de.md), [zieleigene Events](../architecture/2026-07-31-goal-owned-durable-events.de.md), [modellseitige Goal-Tools](2026-07-19-model-facing-goal-tools.de.md), [Goal-Round-Treiber](../../archived/feature/2026-07-19-same-session-goal-round-driver.md), [Kommando-Registry](2026-07-19-plugin-command-registration.de.md), [menschliches Ziel-Kommando](../../archived/feature/2026-07-19-human-goal-command.md) und [Ralph-Workflow-Tool](../../archived/feature/2026-07-19-fresh-agent-ralph-workflow-tool.md).
 
 ### Dauerhafter Zielzustand und Live-Autorität
 

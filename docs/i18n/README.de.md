@@ -1,6 +1,6 @@
 # Trilinguale Dokumentation
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Die Dokumentation dieses Repositories wird von Menschen und Agenten innerhalb und außerhalb des Unternehmens gelesen, daher wird jedes Dokument im Scope auf Englisch, Vereinfachtem Chinesisch und Deutsch gepflegt. Diese Seite definiert den Pairing-Vertrag, die Prüfungen, den Scope und die Ausschlüsse; [translation-rules.md](translation-rules.de.md) definiert, wie übersetzt wird; [terminology.md](terminology.md) ist die Terminologie-Quellwahrheit. Die agentliche Routinearbeit folgt dem Lightweight-Pfad aus [docs/AGENTS.md](../AGENTS.md); der erweiterte Workflow [.agents/skills/dsh-translate-docs](../../.agents/skills/dsh-translate-docs/SKILL.md) ist nur über einen expliziten Benutzeraufruf verfügbar.
 

@@ -1,8 +1,8 @@
 # Agent Note: 可回溯压缩：索引检查点、状态检查点与会话内历史回溯
+[English](2026-07-06-recallable-compaction.md) | 中文 | [Deutsch](2026-07-06-recallable-compaction.de.md)
 
 Status: proposed
 
-[English](2026-07-06-recallable-compaction.md) | 中文 | [Deutsch](2026-07-06-recallable-compaction.de.md)
 
 ## 问题
 

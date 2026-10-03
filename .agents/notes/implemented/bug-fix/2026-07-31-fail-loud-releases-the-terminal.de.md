@@ -1,8 +1,8 @@
 # Agent Note: fail-loud releases the terminal before exiting
+[English](2026-07-31-fail-loud-releases-the-terminal.md) | [中文](2026-07-31-fail-loud-releases-the-terminal.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-31-fail-loud-releases-the-terminal.md) | [中文](2026-07-31-fail-loud-releases-the-terminal.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Unterbrochene finale Turns beim Laden abschneiden
+[English](2026-06-20-truncate-interrupted-turns.md) | [中文](2026-06-20-truncate-interrupted-turns.zh.md) | Deutsch
 
 Status: rejected — ein einzelner Turn kann substanzielle echte Arbeit enthalten, einschließlich vieler Steps und großer Tool-Ausgaben. Unterbrochene Turns zu bewahren ist dem stillen Verwerfen dieses Tails beim Laden vorzuziehen.
 
-[English](2026-06-20-truncate-interrupted-turns.md) | [中文](2026-06-20-truncate-interrupted-turns.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,9 +1,8 @@
 # Agent Note: Installed-wheel Python runtime pull-request validation
-English | [中文](.agents/notes/implemented/testing/2026-08-23-installed-python-wheel-black-box-ci.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-08-23-installed-python-wheel-black-box-ci.de.md)
+English | [中文](2026-08-23-installed-python-wheel-black-box-ci.zh.md) | [Deutsch](2026-08-23-installed-python-wheel-black-box-ci.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-23-installed-python-wheel-black-box-ci.zh.md)
 
 ## Problem
 

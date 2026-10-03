@@ -1,8 +1,8 @@
 # Agent Note: Mechanische Quality Gates statt Prosaleitlinien
+[English](2026-06-11-quality-gates.md) | [中文](2026-06-11-quality-gates.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-11-quality-gates.md) | [中文](2026-06-11-quality-gates.zh.md) | Deutsch
 
 Die Hook/CI-Symmetrie in diesem Eintrag wird durch [schnelle lokale Git-Hooks](../../archived/process/2026-07-22-fast-local-git-hooks.md) ersetzt; CI bleibt der erschöpfende Durchsetzungspfad.
 

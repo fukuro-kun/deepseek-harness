@@ -1,8 +1,8 @@
 # Agent Note: Session-Observations und projektionsgeführtem Client-State
+[English](2026-08-25-session-observations-and-projection-owned-client-state.md) | [中文](2026-08-25-session-observations-and-projection-owned-client-state.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-25-session-observations-and-projection-owned-client-state.md) | [中文](2026-08-25-session-observations-and-projection-owned-client-state.zh.md) | Deutsch
 
 ## Problem
 
@@ -183,3 +183,9 @@ Client-Tests pinnen higher-sequence-wins-Projektionsspeicherung, Titel-Updates, 
 **Für jeden exakten Lesevorgang einen Agent aktivieren.** Abgelehnt, weil list, history, attachment, search und subagent-Inspektion Lese-Operationen sind. Aktivierung lädt plugins und ändert Prozesszustand, und sie hat keinen natürlichen Rückzugspunkt für Paginierungs- oder Katalog-Lesevorgänge.
 
 **Nur angeforderte Projektions-keys vorbereiten.** Abgelehnt, weil eine teilweise projizierte Session einen weiteren lifecycle-Zustand erzeugt, den jeder cache-, restore-, plugin-Registrierungs- und caller-Pfad verfolgen muss. Projektionseinheiten sind rein und wenige; alle registrierten Einheiten für eine exakte Observation zu berechnen ist einfacher als `O(E*k)`-Teilzustand statt `O(E*P)`-Gesamtzustand zu pflegen.
+
+## Konsequenzen
+
+Session-Verbraucher teilen sich ein live-präferiertes Read-Modell und ein vorbereitetes kaltes Objekt. Header, Events, Cursor und Projektionen gehören zur selben Observation, und das gewöhnliche Öffnen einer Seite kann dieses Objekt für spätere Promotion wiederverwenden. Neue Point-Read-Verbraucher verwenden SessionQuery, statt Persistence- und Registry-Aufrufe selbst zu komponieren.
+
+Session-abgeleiteter Client-Zustand hat einen Erweiterungspfad: das dauerhafte Eingabe dokumentieren oder identifizieren, eine reine Projektionseinheit registrieren und ihren fertigen Wert über den generischen Store verbrauchen. Domänenspezifische Kataloge können separat bleiben, wenn sie nicht Session-abgeleitet sind, aber sie können keinen Default für eine unbekannte Session-Projektion ersetzen.

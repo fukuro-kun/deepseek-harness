@@ -1,8 +1,8 @@
 # Agent Note: 持久、仅限 Session 内的提醒
+[English](2026-08-05-durable-web-schedule.md) | 中文 | [Deutsch](2026-08-05-durable-web-schedule.de.md)
 
 Status: implemented
 
-[English](2026-08-05-durable-web-schedule.md) | 中文
 
 ## 问题
 

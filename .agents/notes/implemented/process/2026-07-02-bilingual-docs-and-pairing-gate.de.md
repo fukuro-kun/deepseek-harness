@@ -1,8 +1,8 @@
 # Agent Note: Zweisprachige Dokumentation über gepaarte Geschwisterdateien und ein Paarungs-Gate
+[English](2026-07-02-bilingual-docs-and-pairing-gate.md) | [中文](2026-07-02-bilingual-docs-and-pairing-gate.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-02-bilingual-docs-and-pairing-gate.md) | [中文](2026-07-02-bilingual-docs-and-pairing-gate.zh.md) | Deutsch
 
 ## Problem
 

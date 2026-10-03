@@ -1,8 +1,8 @@
 # Agent Note: 产品 subagent 使用 Profile 选择的非交互权限
+[English](2026-08-15-product-subagent-noninteractive-permissions.md) | 中文 | [Deutsch](2026-08-15-product-subagent-noninteractive-permissions.de.md)
 
 Status: implemented
 
-[English](2026-08-15-product-subagent-noninteractive-permissions.md) | 中文
 
 ## Problem
 

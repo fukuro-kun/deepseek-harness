@@ -1,6 +1,6 @@
 # Prozess-Sandbox
-
 [English](sandbox.md) | [中文](sandbox.zh.md) | Deutsch
+
 
 Der Prozess-Sandbox-seam von [dsh-sandbox](../../packages/sandbox/sandbox) verpackt das argv eines Subprozesses, der Dateisystem und Kernel mit dem Host teilt, in eine Dateieffekt-Richtlinie, ohne Konsumenten an einen plattformspezifischen Runner zu koppeln. [dsh-sandbox-local](../../packages/sandbox/sandbox-local) liefert Linux bwrap/Landlock, macOS Seatbelt und das Windows-ACL-Backend mit restricted token; [dsh-bash-sandbox](../../packages/shell/bash-sandbox) und [dsh-pwsh-sandbox](../../packages/shell/pwsh-sandbox) konsumieren ihn. Container, MicroVMs und Remote-Ausführung sind gleichrangige Implementierungen ganzer Capability-seams, keine Provider von `ctx.sandbox`.
 

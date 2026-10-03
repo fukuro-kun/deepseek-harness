@@ -1,8 +1,8 @@
 # Agent Note: Client Conversation 业务节点组装与 Chat keyed snapshot
+[English](2026-08-09-client-conversation-node-assembly.md) | 中文 | [Deutsch](2026-08-09-client-conversation-node-assembly.de.md)
 
 Status: implemented
 
-[English](2026-08-09-client-conversation-node-assembly.md) | 中文 | [Deutsch](2026-08-09-client-conversation-node-assembly.de.md)
 
 ## 问题
 

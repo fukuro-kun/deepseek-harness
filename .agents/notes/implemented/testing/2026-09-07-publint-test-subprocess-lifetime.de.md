@@ -1,8 +1,8 @@
 # Agent Note: Publint-Test-Subprozesse erben die Deadline der Ausführungs-Lane
+[English](2026-09-07-publint-test-subprocess-lifetime.md) | [中文](2026-09-07-publint-test-subprocess-lifetime.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-publint-test-subprocess-lifetime.md) | [中文](2026-09-07-publint-test-subprocess-lifetime.zh.md) | Deutsch
 
 ## Problem
 

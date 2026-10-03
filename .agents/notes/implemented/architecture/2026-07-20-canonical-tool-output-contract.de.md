@@ -1,8 +1,8 @@
 # Agent Note: Kanonischer Tool-Output-Contract
+[English](2026-07-20-canonical-tool-output-contract.md) | [中文](2026-07-20-canonical-tool-output-contract.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-20-canonical-tool-output-contract.md) | [中文](2026-07-20-canonical-tool-output-contract.zh.md) | Deutsch
 
 ## Problem
 

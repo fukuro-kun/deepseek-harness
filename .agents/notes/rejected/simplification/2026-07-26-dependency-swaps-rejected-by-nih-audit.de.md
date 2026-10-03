@@ -1,8 +1,8 @@
 # Agent Note: Vom NIH-Audit 2026-07 abgelehnte Dependency-Tausche
+[English](2026-07-26-dependency-swaps-rejected-by-nih-audit.md) | [中文](2026-07-26-dependency-swaps-rejected-by-nih-audit.zh.md) | Deutsch
 
 Status: rejected — jeder Tausch unten scheitert belegt an der Netto-Vereinfachungs-Schwelle; festgehalten, damit die Bestandsaufnahme nicht von Neuem beginnt
 
-[English](2026-07-26-dependency-swaps-rejected-by-nih-audit.md) | [中文](2026-07-26-dependency-swaps-rejected-by-nih-audit.zh.md) | Deutsch
 
 ## Problem
 

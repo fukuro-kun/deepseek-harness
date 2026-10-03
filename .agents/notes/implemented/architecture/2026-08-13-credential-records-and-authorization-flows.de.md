@@ -1,8 +1,8 @@
 # Agent Note: Credential records und Autorisierungsflows
+[English](2026-08-13-credential-records-and-authorization-flows.md) | [中文](2026-08-13-credential-records-and-authorization-flows.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-13-credential-records-and-authorization-flows.md) | [中文](2026-08-13-credential-records-and-authorization-flows.zh.md) | Deutsch
 
 ## Problem
 

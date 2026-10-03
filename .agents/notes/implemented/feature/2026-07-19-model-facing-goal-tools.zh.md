@@ -1,8 +1,8 @@
 # Agent Note: 面向模型的同会话目标工具
+[English](2026-07-19-model-facing-goal-tools.md) | 中文 | [Deutsch](2026-07-19-model-facing-goal-tools.de.md)
 
 Status: implemented
 
-[English](2026-07-19-model-facing-goal-tools.md) | 中文
 
 ## 问题
 

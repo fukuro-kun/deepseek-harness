@@ -1,9 +1,8 @@
 # Agent Note: Reuse only loop-proven message freezes
-English | [中文](.agents/notes/implemented/simplification/2026-09-06-agent-request-freeze-provenance.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-09-06-agent-request-freeze-provenance.de.md)
+English | [中文](2026-09-06-agent-request-freeze-provenance.zh.md) | [Deutsch](2026-09-06-agent-request-freeze-provenance.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-06-agent-request-freeze-provenance.zh.md)
 
 ## Problem
 

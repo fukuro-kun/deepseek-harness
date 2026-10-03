@@ -1,8 +1,8 @@
 # Agent Note: 会话 surface：事件日志上的有序投影
+[English](2026-06-18-session-surface.md) | 中文 | [Deutsch](2026-06-18-session-surface.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-18-session-surface.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-18-session-surface.de.md)
 
 ## 问题
 

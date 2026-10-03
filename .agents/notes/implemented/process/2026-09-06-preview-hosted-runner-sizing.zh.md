@@ -1,8 +1,8 @@
 # Agent Note: 基于测量的 GitHub 托管 PR 预览规格
+[English](2026-09-06-preview-hosted-runner-sizing.md) | 中文 | [Deutsch](2026-09-06-preview-hosted-runner-sizing.de.md)
 
 Status: implemented
 
-[English](2026-09-06-preview-hosted-runner-sizing.md) | 中文
 
 ## 问题
 

@@ -3,9 +3,8 @@ description: "Prebuilt Landlock launcher and POSIX flock addons for Linux x64."
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system-linux-x64
-English | [中文](native/system/packages/linux-x64/README.zh.md) | [Deutsch](native/system/packages/linux-x64/README.de.md)
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 This platform package contains the static musl executable `bin/landlock-run` and Node-API v8 addons `bin/glibc/system.node` and `bin/musl/system.node`. The entry chooses the addon matching the running Node process's libc; the Landlock executable serves both libc systems.
 

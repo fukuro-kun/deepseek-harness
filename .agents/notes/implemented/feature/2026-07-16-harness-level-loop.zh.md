@@ -1,8 +1,8 @@
 # Agent Note: Harness 层目标式执行
+[English](2026-07-16-harness-level-loop.md) | 中文 | [Deutsch](2026-07-16-harness-level-loop.de.md)
 
 Status: implemented
 
-[English](2026-07-16-harness-level-loop.md) | 中文
 
 ## 问题
 

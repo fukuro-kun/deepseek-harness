@@ -3,7 +3,6 @@ English | [中文](2026-08-18-session-history-and-event-transport.zh.md) | [Deut
 
 Status: implemented
 
-English | [中文](2026-08-18-session-history-and-event-transport.zh.md)
 
 ## Problem
 

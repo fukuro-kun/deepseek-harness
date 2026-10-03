@@ -1,8 +1,8 @@
 # Agent Note: 繁忙态 Send 按钮跟随 Enter 设置
+[English](2026-09-04-busy-send-button-follows-enter-setting.md) | 中文 | [Deutsch](2026-09-04-busy-send-button-follows-enter-setting.de.md)
 
 Status: implemented
 
-[English](2026-09-04-busy-send-button-follows-enter-setting.md) | 中文
 
 ## 问题
 

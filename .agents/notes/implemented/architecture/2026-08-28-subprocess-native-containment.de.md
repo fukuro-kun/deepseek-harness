@@ -1,8 +1,8 @@
 # Agent Note: Native Owner enthalten entkommene subprocess-Nachkommen
+[English](2026-08-28-subprocess-native-containment.md) | [中文](2026-08-28-subprocess-native-containment.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-28-subprocess-native-containment.md) | [中文](2026-08-28-subprocess-native-containment.zh.md) | Deutsch
 
 ## Problem
 

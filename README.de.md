@@ -1,6 +1,6 @@
 # DeepSeek Harness
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 DeepSeek Harness (`dsh`) ist ein quelloffener Agent-Harness, entwickelt von [DeepSeek AI](https://deepseek.com).
 

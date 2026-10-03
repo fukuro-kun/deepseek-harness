@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-authorization
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-authorization` 让配置 UI 或其他调用方通过人引导的登录、输入码或回答问题来获取凭据。每次尝试只把 notice 与 prompt 发送到发起它的界面。只有新凭据已存储时，它才报告 `authorized`；拒绝或撤销会报告 `cancelled`，而故障仍作为错误。当凭据无法通过配置提供时选择它。它需要凭据存储和一个定义可用授权方法的集成；本包自身不提供特定 provider 的授权方法。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

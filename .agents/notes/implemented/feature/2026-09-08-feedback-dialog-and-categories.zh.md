@@ -1,8 +1,8 @@
 # Agent Note: 反馈弹窗、分类与确认 toast
+[English](2026-09-08-feedback-dialog-and-categories.md) | 中文 | [Deutsch](2026-09-08-feedback-dialog-and-categories.de.md)
 
 Status: implemented
 
-[English](2026-09-08-feedback-dialog-and-categories.md) | 中文
 
 ## 问题
 

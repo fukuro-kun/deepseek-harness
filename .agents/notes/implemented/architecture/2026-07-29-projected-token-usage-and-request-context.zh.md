@@ -1,8 +1,8 @@
 # Agent Note: token 用量投影与上下文占用率
+[English](2026-07-29-projected-token-usage-and-request-context.md) | 中文 | [Deutsch](2026-07-29-projected-token-usage-and-request-context.de.md)
 
 Status: implemented
 
-[English](2026-07-29-projected-token-usage-and-request-context.md) | 中文 | [Deutsch](2026-07-29-projected-token-usage-and-request-context.de.md)
 
 ## 问题
 

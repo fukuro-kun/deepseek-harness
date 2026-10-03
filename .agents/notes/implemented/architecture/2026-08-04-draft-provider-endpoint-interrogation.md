@@ -3,7 +3,6 @@ English | [中文](2026-08-04-draft-provider-endpoint-interrogation.zh.md) | [De
 
 Status: implemented
 
-English | [中文](2026-08-04-draft-provider-endpoint-interrogation.zh.md)
 
 ## Problem
 

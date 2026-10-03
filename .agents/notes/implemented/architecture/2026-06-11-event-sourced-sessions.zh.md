@@ -1,8 +1,8 @@
 # Agent Note: 事件溯源的会话与派生消息历史
+[English](2026-06-11-event-sourced-sessions.md) | 中文 | [Deutsch](2026-06-11-event-sourced-sessions.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-11-event-sourced-sessions.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-event-sourced-sessions.de.md)
 
 ## 问题
 

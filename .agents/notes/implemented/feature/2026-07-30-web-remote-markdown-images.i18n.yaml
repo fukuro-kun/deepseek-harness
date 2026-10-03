@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-30-web-remote-markdown-images.md
-2026-07-30-web-remote-markdown-images.md: 6387c5a4244295e14056337933cd166cf97ef0cb
-2026-07-30-web-remote-markdown-images.zh.md: 54db9b25e9f558d77c84bb67c05fadea2c9086ac
-2026-07-30-web-remote-markdown-images.de.md: aeff4ac6ee20d0a0c38b5363e58da41058afd6d9
+2026-07-30-web-remote-markdown-images.md: d6e6df3974fc113966875806d382819adc34417c
+2026-07-30-web-remote-markdown-images.zh.md: 81e075b23b11aa7cf04e61464727fa25f3ca38cd
+2026-07-30-web-remote-markdown-images.de.md: 9aefd1492f9d19729b06345da3c1a27fe2dca851

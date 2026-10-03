@@ -1,8 +1,8 @@
 # Agent Note: 把 tool-owned render 移植到当前 DSH API
+[English](2026-08-27-port-tool-owned-render.md) | 中文 | [Deutsch](2026-08-27-port-tool-owned-render.de.md)
 
 Status: proposed
 
-[English](.agents/notes/proposed/process/2026-08-27-port-tool-owned-render.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-08-27-port-tool-owned-render.de.md)
 
 ## 问题
 

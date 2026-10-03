@@ -1,6 +1,6 @@
 # Workspaces
-
 [English](workspace.md) | [中文](workspace.zh.md) | Deutsch
+
 
 Ein Workspace ist die persistente Aufzeichnung eines Verzeichnisses, in dem der Nutzer arbeitet: eine stabile id über einem kanonischen Pfad, ein Anzeigetitel und die geordnete Aufstellung der Sessions, die zu ihm gehören. Das Subsystem ist ein Package ([dsh-workspace](../../packages/workspace/workspace), `ctx.workspaceRegistry`) — eine optionale Host-seitige Fähigkeit, kein Teil des agent-loop-Rückgrats, und für Modelle unsichtbar (keine Tools, kein Prompt-Text, keine Session-Events). Es speichert seine Aufzeichnungen über die [Storage-Domänenform](storage.de.md) und validiert die Session-Mitgliedschaft gegen [`SessionHeader.cwd`](persistence.de.md#sessionheader--metadata-beside-the-log), daher sind `storageDomain` und `sessionPersistence` verpflichtende Start-Abhängigkeiten: ist das Persistenz-Peer nicht verfügbar, bleibt das Plugin pending, statt dass die Lücke für eine leere Historie gehalten wird. Design-Aufzeichnung: [domain KV storage Agent Note](../../.agents/notes/proposed/architecture/2026-07-24-domain-kv-storage-and-workspace.de.md); Bootstrap- und GUI-Reihenfolge: [Workspace UI product-flow Agent Note](../../.agents/notes/archived/feature/2026-07-25-workspace-ui-product-flow.md).
 

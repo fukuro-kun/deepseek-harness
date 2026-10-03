@@ -1,8 +1,8 @@
 # Agent Note: 以证据驱动的性能优化工作流
+[English](2026-09-06-evidence-driven-performance-skill.md) | 中文 | [Deutsch](2026-09-06-evidence-driven-performance-skill.de.md)
 
 Status: implemented
 
-[English](2026-09-06-evidence-driven-performance-skill.md) | 中文
 
 ## 问题
 

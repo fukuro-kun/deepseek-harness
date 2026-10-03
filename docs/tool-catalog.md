@@ -2,7 +2,7 @@
      Run `pnpm run gen-tool-catalog` to regenerate. -->
 
 # Tool Schema Catalog
-English | [中文](docs/tool-catalog.zh.md) | [Deutsch](docs/tool-catalog.de.md)
+English | [中文](tool-catalog.zh.md) | [Deutsch](tool-catalog.de.md)
 
 Every model-facing tool a shipped plugin contributes to `ctx.tools`: the `name`, `description`, and JSON-Schema `parameters` the model receives via the system-prompt assembly. It complements the [subsystem pages](subsystems/core.md) (the types plus each page's generated Cordis API region) — this page is the *tools* the agent is offered.
 

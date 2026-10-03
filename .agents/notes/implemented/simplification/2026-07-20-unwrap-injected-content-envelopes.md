@@ -1,9 +1,8 @@
 # Agent Note: Project injected content verbatim, dropping the XML envelopes
-English | [中文](.agents/notes/implemented/simplification/2026-07-20-unwrap-injected-content-envelopes.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-20-unwrap-injected-content-envelopes.de.md)
+English | [中文](2026-07-20-unwrap-injected-content-envelopes.zh.md) | [Deutsch](2026-07-20-unwrap-injected-content-envelopes.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-20-unwrap-injected-content-envelopes.zh.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Authentifizierte Dateianzeige nutzt Dateisystem-Byte-Reads wieder
+[English](2026-09-08-file-display-through-filesystem.md) | [中文](2026-09-08-file-display-through-filesystem.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-file-display-through-filesystem.md) | [中文](2026-09-08-file-display-through-filesystem.zh.md) | Deutsch
 
 ## Problem
 

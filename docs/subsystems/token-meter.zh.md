@@ -1,6 +1,6 @@
 # Token 计量
+[English](token-meter.md) | 中文 | [Deutsch](token-meter.de.md)
 
-[English](token-meter.md) | 中文
 
 `@deepseek-ai/dsh-token-meter` 公开一个独立的回放快照，用于表示请求压力与按位置计算的表层定价。`logRevision` 表示生成该计量中每个字段时所消费的持久事件数量。
 
@@ -11,8 +11,6 @@
 ```ts type-equiv
 /** Detached immutable request-pressure and surface snapshot at one consumed log revision. */
 interface TokenMeasurement {
-
-[English](token-meter.md) | 中文 | [Deutsch](token-meter.de.md)
   /** Number of durable events consumed; equal to the next unread event seq. */
   readonly logRevision: SessionLogOffset
   /** Provider or heuristic anchor used for this measurement. */

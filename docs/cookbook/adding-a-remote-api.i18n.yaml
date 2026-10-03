@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/adding-a-remote-api.md
-adding-a-remote-api.md: 4a4575b59c8ea2e2185205ee9d413048626f98db
-adding-a-remote-api.zh.md: 16682bf95570fd37dc40f386d9b8b7fb5fa5f47f
-adding-a-remote-api.de.md: 0bd93866a870bd9f3f2ffd106dd00c5a798daa64
+adding-a-remote-api.md: 71535629ab7152884edcac54e46969f068e50f2d
+adding-a-remote-api.zh.md: 3c5e010fb0aa32859fc961ad192a8ae71b668a8f
+adding-a-remote-api.de.md: dadfdc1d944dba9ef9759d8b0f35ee7654900e4e

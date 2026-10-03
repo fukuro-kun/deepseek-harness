@@ -1,6 +1,6 @@
 # Cookbook: Hinzufügen einer Einstellungskarte
-
 [English](adding-a-settings-card.md) | [中文](adding-a-settings-card.zh.md) | Deutsch
+
 
 Wie ein Plugin seine eigene Konfiguration auf der Web-Einstellungsseite platziert. Kein Schritt auf diesem Pfad erfordert eine Änderung in diesem Repository: der Host bedient jeden registrierten Settings-Namespace, und die **Plugins**-Sektion schlüsselt ihre Karten nach dem Namespace, den sie bearbeiten — ein Plugin, das beide Hälften registriert, wird automatisch gepaart.
 

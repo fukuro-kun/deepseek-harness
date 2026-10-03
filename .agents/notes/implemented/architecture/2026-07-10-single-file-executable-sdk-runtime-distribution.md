@@ -3,7 +3,6 @@ English | [中文](2026-07-10-single-file-executable-sdk-runtime-distribution.zh
 
 Status: implemented
 
-English | [中文](2026-07-10-single-file-executable-sdk-runtime-distribution.zh.md)
 
 ## Problem
 

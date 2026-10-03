@@ -4,12 +4,12 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-session-persistence
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
-Dieses Paket lässt Anwendungen Session-Event-Logs über eine backend-unabhängige API persistieren und resumen. Reader können gespeicherte Sessions erstellen, öffnen, inspizieren, auflisten, an sie anhängen, sie lesen, flushen und schließen, während eine zusammenhängende append-only-Historie bewahrt bleibt. Ein abgeschlossener Flush ist die Durability-Barriere; Reader erhalten nie gerissene Enden oder ungültige Datensätze, und pro Session ist innerhalb einer Backend-Instanz nur ein Writer erlaubt. Verwenden Sie das ausgelieferte [JSONL-Backend](../session-persistence-jsonl/README.md) für ein komprimiertes Log pro Session, oder implementieren Sie ein anderes Backend mit denselben beobachtbaren Garantien.
+Dieses Paket lässt Anwendungen Session-Event-Logs über eine backend-unabhängige API persistieren und resumen. Reader können gespeicherte Sessions erstellen, öffnen, inspizieren, auflisten, an sie anhängen, sie lesen, flushen und schließen, während eine zusammenhängende append-only-Historie bewahrt bleibt. Ein abgeschlossener Flush ist die Durability-Barriere; Reader erhalten nie gerissene Enden oder ungültige Datensätze, und pro Session ist innerhalb einer Backend-Instanz nur ein Writer erlaubt. Verwenden Sie das ausgelieferte [JSONL-Backend](../session-persistence-jsonl/README.de.md) für ein komprimiertes Log pro Session, oder implementieren Sie ein anderes Backend mit denselben beobachtbaren Garantien.
 
 ## Inhaltsverzeichnis
 
@@ -29,7 +29,7 @@ Mounten Sie ein Persistence-Backend, um Sessions durable zu machen. Das Backend 
 
 ### Ein Backend wählen
 
-Die Seam liefert das [JSONL](../session-persistence-jsonl/README.md)-Backend: ein append-only `.jsonl.zstd`-Log pro Session. Ein Drittanbieter-Backend kann den Service direkt implementieren; der unten stehende [Backend-Vertrag](#understand-the-implementation) ist das, was es einhalten muss.
+Die Seam liefert das [JSONL](../session-persistence-jsonl/README.de.md)-Backend: ein append-only `.jsonl.zstd`-Log pro Session. Ein Drittanbieter-Backend kann den Service direkt implementieren; der unten stehende [Backend-Vertrag](#understand-the-implementation) ist das, was es einhalten muss.
 
 ### Was der Service bietet
 
@@ -104,7 +104,7 @@ Jedes `session/event` für die Session des Writers kopiert in den internen Buffe
 
 ### Stored-Record-Validierung
 
-Die geteilten Helfer der Seam validieren aktuelle logische Datensätze, die durch `SESSION_FORMAT_VERSION` identifiziert werden, und Appends schreiben nur das aktuelle Format ([Begründung](../../../.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.md)). Historische Dekodierung und unveränderliche Nachfolger-Veröffentlichung gehören in jeden Provider, bevor er einen Handle zurückgibt. Jedes Backend führt `storage-contract`-Validierung bei Handle-Reads und Write-Open-Priming aus, verweigert einen unbekannten Event-Typ als `SessionFormatUnsupportedError` und einen fehlerhaften aktuellen Datensatz als `SessionPersistenceCorruptionError`, mit dem Raw-Log-`SessionLocation` angehängt, wenn das Backend ein Artefakt pro Session hält.
+Die geteilten Helfer der Seam validieren aktuelle logische Datensätze, die durch `SESSION_FORMAT_VERSION` identifiziert werden, und Appends schreiben nur das aktuelle Format ([Begründung](../../../.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.de.md)). Historische Dekodierung und unveränderliche Nachfolger-Veröffentlichung gehören in jeden Provider, bevor er einen Handle zurückgibt. Jedes Backend führt `storage-contract`-Validierung bei Handle-Reads und Write-Open-Priming aus, verweigert einen unbekannten Event-Typ als `SessionFormatUnsupportedError` und einen fehlerhaften aktuellen Datensatz als `SessionPersistenceCorruptionError`, mit dem Raw-Log-`SessionLocation` angehängt, wenn das Backend ein Artefakt pro Session hält.
 
 </details>
 -----
@@ -115,10 +115,10 @@ Die geteilten Helfer der Seam validieren aktuelle logische Datensätze, die durc
 Lesen Sie diese Seiten, wenn der Paketvertrag nicht ausreicht. Sie führen vom geteilten Durability-Modell zu den ausgelieferten Backends und der Entscheidungsdokumentation.
 
 - [Session-Persistence-Subsystem](../../../docs/subsystems/persistence.de.md) — der vollständige Service-Vertrag, Handle-Semantik, Flush-Checkpoint, Crash Recovery und generierte Cordis-API.
-- [Handle-basierte Persistence-Agent-Note](../../../.agents/notes/implemented/architecture/2026-08-27-handle-based-session-persistence.md) — das Seam-Design und sein Ownership-Modell.
-- [JSONL-Persistence-Backend](../session-persistence-jsonl/README.md) — das ausgelieferte Pro-Session-Datei-Backend.
-- [Session-Checkpoint-Policy](../session-checkpoint-policy/README.md) — das Plugin, das an semantischen Grenzen über `session/flush` flusht.
-- [Session-Paketkarte](../README.md) — benachbarte Persistence-, Projection-, Title- und Telemetry-Pakete.
+- [Handle-basierte Persistence-Agent-Note](../../../.agents/notes/implemented/architecture/2026-08-27-handle-based-session-persistence.de.md) — das Seam-Design und sein Ownership-Modell.
+- [JSONL-Persistence-Backend](../session-persistence-jsonl/README.de.md) — das ausgelieferte Pro-Session-Datei-Backend.
+- [Session-Checkpoint-Policy](../session-checkpoint-policy/README.de.md) — das Plugin, das an semantischen Grenzen über `session/flush` flusht.
+- [Session-Paketkarte](../README.de.md) — benachbarte Persistence-, Projection-, Title- und Telemetry-Pakete.
 
 -----
 

@@ -1,9 +1,8 @@
 # Agent Note: persistent PTY sessions
-English | [中文](.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.de.md)
+English | [中文](2026-07-16-persistent-pty-sessions.zh.md) | [Deutsch](2026-07-16-persistent-pty-sessions.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-16-persistent-pty-sessions.zh.md)
 
 ## Problem
 

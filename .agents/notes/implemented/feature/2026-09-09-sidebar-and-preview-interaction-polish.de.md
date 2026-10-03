@@ -1,8 +1,8 @@
 # Agent Note: Sidebar- und Preview-Interaktionspolitur
+[English](2026-09-09-sidebar-and-preview-interaction-polish.md) | [中文](2026-09-09-sidebar-and-preview-interaction-polish.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-09-sidebar-and-preview-interaction-polish.md) | [中文](2026-09-09-sidebar-and-preview-interaction-polish.zh.md) | Deutsch
 
 ## Problem
 

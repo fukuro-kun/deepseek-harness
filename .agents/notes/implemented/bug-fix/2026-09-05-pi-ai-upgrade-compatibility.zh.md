@@ -1,8 +1,8 @@
 # Agent Note: pi-ai 升级兼容性
+[English](2026-09-05-pi-ai-upgrade-compatibility.md) | 中文 | [Deutsch](2026-09-05-pi-ai-upgrade-compatibility.de.md)
 
 Status: implemented
 
-[English](2026-09-05-pi-ai-upgrade-compatibility.md) | 中文
 
 ## Problem
 

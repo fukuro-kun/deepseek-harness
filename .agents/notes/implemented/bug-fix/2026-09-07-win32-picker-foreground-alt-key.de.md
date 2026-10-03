@@ -1,8 +1,8 @@
 # Agent Note: Vordergrundaktivierung des Win32-Pickers per synthetisiertem Alt-Druck
+[English](2026-09-07-win32-picker-foreground-alt-key.md) | [中文](2026-09-07-win32-picker-foreground-alt-key.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-win32-picker-foreground-alt-key.md) | [中文](2026-09-07-win32-picker-foreground-alt-key.zh.md) | Deutsch
 
 ## Problem
 

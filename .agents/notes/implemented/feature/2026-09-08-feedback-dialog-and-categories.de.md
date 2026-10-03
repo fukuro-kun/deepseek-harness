@@ -1,8 +1,8 @@
 # Agent Note: Feedback-Dialog, Kategorien und der Bestätigungs-Toast
+[English](2026-09-08-feedback-dialog-and-categories.md) | [中文](2026-09-08-feedback-dialog-and-categories.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-feedback-dialog-and-categories.md) | [中文](2026-09-08-feedback-dialog-and-categories.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: 文件内容扫描不为每个数组创建回调
+[English](2026-09-07-file-content-scan.md) | 中文 | [Deutsch](2026-09-07-file-content-scan.de.md)
 
 Status: implemented
 
-[English](2026-09-07-file-content-scan.md) | 中文
 
 ## Problem
 

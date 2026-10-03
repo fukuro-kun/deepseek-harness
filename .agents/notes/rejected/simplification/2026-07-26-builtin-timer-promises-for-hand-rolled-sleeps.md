@@ -1,9 +1,8 @@
 # Agent Note: Use node:timers/promises for hand-rolled cancellable sleeps
-English | [中文](.agents/notes/rejected/simplification/2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.de.md)
+English | [中文](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.zh.md) | [Deutsch](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.de.md)
 
 Status: rejected — implementation (PR #679) falsified the parity premise: vitest's fake clock does not intercept `node:timers/promises`, so the swap costs deterministic fast tests for ~10 deleted lines
 
-English | [中文](2026-07-26-builtin-timer-promises-for-hand-rolled-sleeps.zh.md)
 
 ## Problem
 

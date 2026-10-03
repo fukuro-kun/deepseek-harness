@@ -1,8 +1,8 @@
 # Agent Note: Runtime-Schemas für das Event-Vokabular (Zod gegen das Merge-Extensible-Map-Muster)
+[English](2026-06-16-typed-event-schemas.md) | [中文](2026-06-16-typed-event-schemas.zh.md) | Deutsch
 
 Status: rejected — runtime event-schema registry declined; event maps stay compile-time, Zod validates projection state, migrations validate durable payloads
 
-[English](2026-06-16-typed-event-schemas.md) | [中文](2026-06-16-typed-event-schemas.zh.md) | Deutsch
 
 ## Problem
 

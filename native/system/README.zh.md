@@ -3,8 +3,8 @@ description: "为 Linux 进程隔离与 POSIX Session 写锁提供预编译系�
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## Summary
 

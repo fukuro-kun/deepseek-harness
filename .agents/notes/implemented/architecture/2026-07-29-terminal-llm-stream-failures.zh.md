@@ -1,8 +1,8 @@
 # Agent Note: LLM 流的终止失败
+[English](2026-07-29-terminal-llm-stream-failures.md) | 中文 | [Deutsch](2026-07-29-terminal-llm-stream-failures.de.md)
 
 Status: implemented
 
-[English](2026-07-29-terminal-llm-stream-failures.md) | 中文 | [Deutsch](2026-07-29-terminal-llm-stream-failures.de.md)
 
 本说明仅取代[有界 LLM（大语言模型）请求恢复](2026-06-21-bounded-llm-request-recovery.zh.md)与[调用后上下文溢出恢复](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.zh.md)中关于抛出错误身份和调用局部 sidecar 的机制。上述说明继续规定结构化失败事实、重试策略、持久尝试与压缩（compaction）恢复。
 

@@ -1,8 +1,8 @@
 # Agent Note: Keep the room reading independent of hidden split controls
+[English](2026-09-08-stable-room-reading-under-hidden-split-controls.md) | 中文 | [Deutsch](2026-09-08-stable-room-reading-under-hidden-split-controls.de.md)
 
 Status: implemented
 
-[English](2026-09-08-stable-room-reading-under-hidden-split-controls.md) | 中文
 
 ## Problem
 

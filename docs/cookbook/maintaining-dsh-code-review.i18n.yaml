@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/maintaining-dsh-code-review.md
-maintaining-dsh-code-review.md: b21b83990f0d8e56aaa95f91c829b14e127c133e
-maintaining-dsh-code-review.zh.md: 13ed07c5663b453618fe56f56bb15da2122fc82b
-maintaining-dsh-code-review.de.md: c5c270a9afd2931136e5b600c922bb4c9f9f5a36
+maintaining-dsh-code-review.md: d73197b463c1f6365b2004a5f39f701c09e09e67
+maintaining-dsh-code-review.zh.md: b2156bbc56f9292ea932dd3631c17d3a35d22f0c
+maintaining-dsh-code-review.de.md: e434eae1db846f07b2a71a8d0daa2bfdf7d90e53

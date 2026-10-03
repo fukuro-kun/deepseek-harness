@@ -1,9 +1,8 @@
 # Agent Note: Plan-specific collaboration state
-English | [中文](.agents/notes/implemented/simplification/2026-07-22-plan-specific-collaboration-state.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-22-plan-specific-collaboration-state.de.md)
+English | [中文](2026-07-22-plan-specific-collaboration-state.zh.md) | [Deutsch](2026-07-22-plan-specific-collaboration-state.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-22-plan-specific-collaboration-state.zh.md)
 
 ## Problem
 

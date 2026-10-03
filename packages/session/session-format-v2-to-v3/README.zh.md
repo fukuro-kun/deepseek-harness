@@ -4,15 +4,14 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-session-format-v2-to-v3
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 将受支持的已发布 V2 Session 恢复为 V3，同时保留历史请求含义。本页是这条相邻迁移边的单一规范真源：先说明转换、保留与拒绝的内容，再单独说明原生 V3 准入。本库将系统提示词提升为消息，重映射本地事件引用，转换 PTC 与预设名称，并规范化信封。持久化通过静态目录使用本库；本库不读取或发布文件。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

@@ -1,8 +1,8 @@
 # Agent Note: Inbox-input vor einer einzigen pre-step-Entscheidung claimen
+[English](2026-07-31-claimed-pre-step-inbox-lifecycle.md) | [中文](2026-07-31-claimed-pre-step-inbox-lifecycle.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-31-claimed-pre-step-inbox-lifecycle.md) | [中文](2026-07-31-claimed-pre-step-inbox-lifecycle.zh.md) | Deutsch
 
 ## Problem
 

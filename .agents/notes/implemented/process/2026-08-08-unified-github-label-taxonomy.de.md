@@ -1,8 +1,8 @@
 # Agent Note: Einheitliche GitHub-Label-Taxonomie
+[English](2026-08-08-unified-github-label-taxonomy.md) | [中文](2026-08-08-unified-github-label-taxonomy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-08-unified-github-label-taxonomy.md) | [中文](2026-08-08-unified-github-label-taxonomy.zh.md) | Deutsch
 
 ## Problem
 

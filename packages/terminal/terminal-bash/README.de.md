@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-terminal-bash
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -57,7 +57,7 @@ Mounten Sie den Terminal-Service, einen Subprocess-Provider, die Sandbox- und Po
 | `timeoutMs` | `30000` | Absolute Grenze für eine Send-Wartezeit |
 | `disposeGraceMs` | `3000` | Grace-Zeit, bevor der Teardown zu `SIGKILL` eskaliert |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-terminal-bash) ist die erschöpfende Quelle für jedes Feld, einschließlich der Readiness-Timings (`pollIntervalMs`, `exactProbeAfterMs`, `idleSilenceMs`, `handoffGraceMs`), der Terminal-Größe (`rows`, `cols`) und der Scrollback-Grenzen (`scrollbackLines`, `scrollbackMaxBytes`).
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-terminal-bash) ist die erschöpfende Quelle für jedes Feld, einschließlich der Readiness-Timings (`pollIntervalMs`, `exactProbeAfterMs`, `idleSilenceMs`, `handoffGraceMs`), der Terminal-Größe (`rows`, `cols`) und der Scrollback-Grenzen (`scrollbackLines`, `scrollbackMaxBytes`).
 
 ### Shell-Dialekte und Readiness
 
@@ -116,10 +116,10 @@ Ein Write, der den effektiven Sandbox-Modus ändern würde, wird abgelehnt, bevo
 Lesen Sie diese Seiten, wenn der Paket-Contract nicht ausreicht. Sie führen vom geteilten Terminal-Modell zum Service, den Tools und dem Execution-World-Substrat.
 
 - [Terminal-Subsystem-Referenz](../../../docs/subsystems/terminal.de.md) — der Service-Contract, den dieses Backend implementiert, und die generierte `ctx.terminals`-Fläche.
-- [Terminal-Service](../terminal/README.md) — Backend-Registrierung, Owner-Fencing und Cleanup-Semantik.
+- [Terminal-Service](../terminal/README.de.md) — Backend-Registrierung, Owner-Fencing und Cleanup-Semantik.
 - [tool-terminal-Tools](../tool-terminal/README.de.md) — die modellseitigen Tools, die Sessions bedienen.
 - [Subprocess-Seam](../../../docs/subsystems/subprocess.de.md) — das Terminal-Primitiv, das PTY-Allokation und Prozessbaum-Cleanup besitzt.
-- [Persistent-PTY Agent Note](../../../.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.md) — das Capability-Design und die zurückgestellten Grenzen.
+- [Persistent-PTY Agent Note](../../../.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.de.md) — das Capability-Design und die zurückgestellten Grenzen.
 - [Persistent-pwsh Agent Note](../../../.agents/notes/archived/architecture/2026-08-11-pwsh-persistent-pty.md) — das Windows-Substrat und der pwsh-Dialekt.
 
 -----

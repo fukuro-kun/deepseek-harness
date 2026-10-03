@@ -1,8 +1,8 @@
 # Agent Note: Globale Main-Panels ohne Default-UI-Ergänzungen
+[English](2026-09-08-global-main-panels.md) | [中文](2026-09-08-global-main-panels.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-global-main-panels.md) | [中文](2026-09-08-global-main-panels.zh.md) | Deutsch
 
 ## Problem
 

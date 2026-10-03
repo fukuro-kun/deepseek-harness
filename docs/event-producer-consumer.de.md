@@ -5,8 +5,8 @@
      docs/event-producer-consumer.md` neu aufzeichnen. -->
 
 # Ereignis-Produzenten- und -Konsumenten-Matrix
-
 [English](event-producer-consumer.md) | [中文](event-producer-consumer.zh.md) | Deutsch
+
 
 Diese Matrix zeigt, welche Pakete jedes harness-eigene Ereignis auslösen und welche Pakete darauf hören. Ereignisse sind viele-zu-viele, daher werden die dichten Relationsdaten als Tabelle statt als ein großer Graph dargestellt. Die Typen für Empfänger und Ereignisnamen decken auch Dispatch-Stellen ab, die `ctx.emit` bewusst umgehen, etwa die Subagent-Lebenszyklus-Kapselung.
 

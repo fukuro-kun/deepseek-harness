@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-06-17-ts-build-config.md
-2026-06-17-ts-build-config.md: 327fc8b8bb7c40bc9a18f473111e6a83a3b30dd7
-2026-06-17-ts-build-config.zh.md: d42d9b7abe6368b3ed8e0f32605e866e214f1e7c
-2026-06-17-ts-build-config.de.md: 157c3a432754239d0888e42ac0c26205dccd3bbf
+2026-06-17-ts-build-config.md: 0ab882c60eae0d216662f26cdab65f4ea6224647
+2026-06-17-ts-build-config.zh.md: 00d29435128d3b3297c40fedf8be44343db5ec7a
+2026-06-17-ts-build-config.de.md: a6aaab96ac9d037ce82846f2ebf6d584cd3e1d17

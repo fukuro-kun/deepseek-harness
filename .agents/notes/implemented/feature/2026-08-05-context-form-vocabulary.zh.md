@@ -1,8 +1,8 @@
 # Agent Note: 由生产方声明的上下文形态
+[English](2026-08-05-context-form-vocabulary.md) | 中文 | [Deutsch](2026-08-05-context-form-vocabulary.de.md)
 
 Status: implemented
 
-[English](2026-08-05-context-form-vocabulary.md) | 中文
 
 ## 问题
 

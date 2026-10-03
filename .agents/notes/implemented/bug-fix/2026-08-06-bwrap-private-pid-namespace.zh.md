@@ -1,8 +1,8 @@
 # Agent Note: 将 bwrap 与宿主 PID 命名空间隔离
+[English](2026-08-06-bwrap-private-pid-namespace.md) | 中文 | [Deutsch](2026-08-06-bwrap-private-pid-namespace.de.md)
 
 Status: implemented
 
-[English](2026-08-06-bwrap-private-pid-namespace.md) | 中文
 
 ## 问题
 

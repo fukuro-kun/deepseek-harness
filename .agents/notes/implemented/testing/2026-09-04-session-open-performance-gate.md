@@ -1,9 +1,8 @@
 # Agent Note: Required CI performance gate for opening large Sessions
-English | [中文](.agents/notes/implemented/testing/2026-09-04-session-open-performance-gate.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-04-session-open-performance-gate.de.md)
+English | [中文](2026-09-04-session-open-performance-gate.zh.md) | [Deutsch](2026-09-04-session-open-performance-gate.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-04-session-open-performance-gate.zh.md)
 
 ## Problem
 

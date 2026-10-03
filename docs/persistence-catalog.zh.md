@@ -2,8 +2,8 @@
      更新时先运行 `pnpm run gen-persistence-catalog` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/persistence-catalog.md` 重新记录配对。 -->
 
 # 会话持久化事件目录
+[English](persistence-catalog.md) | 中文 | [Deutsch](persistence-catalog.de.md)
 
-[English](persistence-catalog.md) | 中文 | [Deutsch](docs/persistence-catalog.de.md)
 
 会话持久事件日志中可能出现的所有事件类型：完整持久化的 `SessionEvent` 信封，以及可通过合并扩展的 `SessionEventMap` 中的每个成员，包括 `@deepseek-ai/dsh-session` 所属的词汇和本仓库中每个插件对 `@deepseek-ai/dsh-session/types` 的声明合并，并附有源 JSDoc、完整 payload 声明、surface 标记和声明位置。本文档是 [session.md](subsystems/session.zh.md)（surface 排序与 `deriveMessages()` 投影）、[persistence.md](subsystems/persistence.zh.md)（如何让日志持久化）和 [session.md](subsystems/session.zh.md#cordis-surface) 中生成区域（实时总线接线；日志事件**不是** cordis 事件，它通过唯一的 `session/event` emit 到达监听器）的补充。
 

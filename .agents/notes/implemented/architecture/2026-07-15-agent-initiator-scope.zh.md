@@ -1,8 +1,8 @@
 # Agent Note: 基于 AsyncLocalStorage 的发起 Agent 作用域
+[English](2026-07-15-agent-initiator-scope.md) | 中文 | [Deutsch](2026-07-15-agent-initiator-scope.de.md)
 
 Status: implemented
 
-[English](2026-07-15-agent-initiator-scope.md) | 中文 | [Deutsch](2026-07-15-agent-initiator-scope.de.md)
 
 ## 问题
 

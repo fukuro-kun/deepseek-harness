@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/util/deque/README.md
 README.md: f4f952daf123d9291b87a0e79690b0e1c2c222b3
-README.zh.md: ebd0451a2845d67c39f607ea37dfd1bf53f8e2e1
-README.de.md: 4fca4f92b51d53f3219dd531afe6d5bfd7d99d9d
+README.zh.md: d025f9aee6166b2ce7e6d8dda1276d600e35fef3
+README.de.md: 9f2fa59056e7b0a0cbb1ef8768c88bb715748700

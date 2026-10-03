@@ -1,8 +1,8 @@
 # Agent Note: Gepinnte Scroll-Deliveries vor Layoutänderungen abrechnen
+[English](2026-09-07-pinned-scroll-delivery-before-layout.md) | [中文](2026-09-07-pinned-scroll-delivery-before-layout.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-pinned-scroll-delivery-before-layout.md) | [中文](2026-09-07-pinned-scroll-delivery-before-layout.zh.md) | Deutsch
 
 ## Problem
 

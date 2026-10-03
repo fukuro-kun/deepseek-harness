@@ -1,6 +1,6 @@
 # Workflow
-
 [English](workflow.md) | [中文](workflow.zh.md) | Deutsch
+
 
 Das Workflow-Seam erlaubt einem Agent, ein vom Modell geschriebenes Orchestrierungs-SKRIPT auszuführen, das Subagents startet. Wie [subagent](subagent.de.md) ist es **eine optionale Capability**, nicht Teil des Agent-Loops, daher leben seine Typen und Operationen hier und nicht in [core.md](core.de.md). Wie bash erlaubt es EINE Engine-Implementierung pro Kontext, die `ctx.workflowEngine` bereitstellt; es gibt keine Named-Provider-Registry (eine zweite Engine ersetzt die erste über die Plugin-Konfiguration, statt neben ihr zu laufen).
 

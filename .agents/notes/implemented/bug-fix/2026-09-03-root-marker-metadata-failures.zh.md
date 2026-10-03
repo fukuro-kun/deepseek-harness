@@ -1,8 +1,8 @@
 # Agent Note: 根标记元数据故障
+[English](2026-09-03-root-marker-metadata-failures.md) | 中文 | [Deutsch](2026-09-03-root-marker-metadata-failures.de.md)
 
 Status: implemented
 
-[English](2026-09-03-root-marker-metadata-failures.md) | 中文
 
 ## 问题
 

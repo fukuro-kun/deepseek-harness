@@ -3,7 +3,6 @@ English | [中文](2026-08-09-client-conversation-node-assembly.zh.md) | [Deutsc
 
 Status: implemented
 
-English | [中文](2026-08-09-client-conversation-node-assembly.zh.md)
 
 ## Problem
 

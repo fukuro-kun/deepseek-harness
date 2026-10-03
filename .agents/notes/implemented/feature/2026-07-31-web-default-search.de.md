@@ -1,8 +1,8 @@
 # Agent Note: Standard-Websuche in ausgelieferten Kompositionen
+[English](2026-07-31-web-default-search.md) | [中文](2026-07-31-web-default-search.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-31-web-default-search.md) | [中文](2026-07-31-web-default-search.zh.md) | Deutsch
 
 Der [Shared-Base-Web-Fetch-Default](../../archived/feature/2026-09-01-shared-base-web-fetch-default.md) ersetzt die Fetch-Opt-in-Entscheidung dieses Notes. Dieses Note bleibt maßgeblich für den Standard-Search-Provider, die Credential-Auflösung, den Endpoint, den Timeout und die Trennung zwischen Provider-Verfügbarkeit und Modell-Tool-Registrierung.
 

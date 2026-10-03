@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-05-uniform-agent-note-format.md
-2026-07-05-uniform-agent-note-format.md: a067d3ed49513b428624ee9a140a293993177566
-2026-07-05-uniform-agent-note-format.zh.md: 13991632e70cfab1c65170ba5f2350f47ad1acd0
-2026-07-05-uniform-agent-note-format.de.md: ba0146840e27f7872cd511f8be53c98cef7f533c
+2026-07-05-uniform-agent-note-format.md: 3cf7bdb78c5262e1d00ca7f0492395d41c9a463d
+2026-07-05-uniform-agent-note-format.zh.md: 6d7f88fa58daae1fad280893145f73f76b8a8da3
+2026-07-05-uniform-agent-note-format.de.md: 1bb70f91a8821dfab7e4d83206bebf3c5df22df2

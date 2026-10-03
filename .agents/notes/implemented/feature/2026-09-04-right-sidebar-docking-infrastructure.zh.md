@@ -1,8 +1,8 @@
 # Agent Note: 右侧 Sidebar 停靠基础设施
+[English](2026-09-04-right-sidebar-docking-infrastructure.md) | 中文 | [Deutsch](2026-09-04-right-sidebar-docking-infrastructure.de.md)
 
 Status: implemented
 
-[English](2026-09-04-right-sidebar-docking-infrastructure.md) | 中文
 
 ## Problem
 

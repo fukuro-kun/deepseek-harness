@@ -1,8 +1,8 @@
 # Agent Note: 用户授权的 subagent 模型路由
+[English](2026-08-24-user-authorized-subagent-model-routes.md) | 中文 | [Deutsch](2026-08-24-user-authorized-subagent-model-routes.de.md)
 
 Status: implemented
 
-[English](2026-08-24-user-authorized-subagent-model-routes.md) | 中文
 
 ## Problem
 

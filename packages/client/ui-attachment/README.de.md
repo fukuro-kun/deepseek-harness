@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-attachment
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -68,7 +68,7 @@ Das Plugin wartet über `ctx.slots.inject` auf `conversation.input.attachments`,
 Lies diese Seiten, wenn die Attachment-Oberfläche nicht genügt. Sie führen von den Slots, die dieses Paket füllt, zur Conversation-Shell, die den Input-Flow besitzt.
 
 - [ui-conversation](../ui-conversation/README.de.md) — deklariert die Attachment-Slots und besitzt Composer und Image-Intake.
-- [Web-Client-Architektur](../../../.agents/notes/implemented/architecture/2026-07-19-gui-web-client-architecture.md) — wie Browser-Plugin-Rows laden und Slots registrieren.
+- [Web-Client-Architektur](../../../.agents/notes/implemented/architecture/2026-07-19-gui-web-client-architecture.de.md) — wie Browser-Plugin-Rows laden und Slots registrieren.
 - [Client-Paket-Karte](../README.de.md) — benachbarte Browser-UI-Pakete.
 
 -----

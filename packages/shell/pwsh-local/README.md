@@ -4,9 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-pwsh-local
-English | [中文](packages/shell/pwsh-local/README.zh.md) | [Deutsch](packages/shell/pwsh-local/README.de.md)
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

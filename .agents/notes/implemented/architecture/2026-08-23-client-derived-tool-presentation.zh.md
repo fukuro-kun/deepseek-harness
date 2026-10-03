@@ -1,8 +1,8 @@
 # Agent Note: Client 从原始 Session 工具事件派生展示
+[English](2026-08-23-client-derived-tool-presentation.md) | 中文 | [Deutsch](2026-08-23-client-derived-tool-presentation.de.md)
 
 Status: implemented
 
-[English](2026-08-23-client-derived-tool-presentation.md) | 中文 | [Deutsch](2026-08-23-client-derived-tool-presentation.de.md)
 
 ## Problem
 

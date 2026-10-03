@@ -1,8 +1,8 @@
 # Agent Note: Child Agent 消息先于其结算通知
+[English](2026-08-17-subagent-message-settlement-ordering.md) | 中文 | [Deutsch](2026-08-17-subagent-message-settlement-ordering.de.md)
 
 Status: implemented
 
-[English](2026-08-17-subagent-message-settlement-ordering.md) | 中文
 
 ## 问题
 

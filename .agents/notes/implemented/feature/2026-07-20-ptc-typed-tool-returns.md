@@ -1,9 +1,8 @@
 # Agent Note: Typed tool returns in PTC mode
-English | [中文](.agents/notes/implemented/feature/2026-07-20-ptc-typed-tool-returns.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-20-ptc-typed-tool-returns.de.md)
+English | [中文](2026-07-20-ptc-typed-tool-returns.zh.md) | [Deutsch](2026-07-20-ptc-typed-tool-returns.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-20-ptc-typed-tool-returns.zh.md)
 
 ## Problem
 

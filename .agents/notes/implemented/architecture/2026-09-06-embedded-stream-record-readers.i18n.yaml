@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-06-embedded-stream-record-readers.md
-2026-09-06-embedded-stream-record-readers.md: 5a4afb82ee646dbdc21852850d520df06d5def75
-2026-09-06-embedded-stream-record-readers.zh.md: e63fdcebbac498973bbdbab3d77c951fc385c9e9
-2026-09-06-embedded-stream-record-readers.de.md: c545293797f3841731de0010581a00cb82cac72a
+2026-09-06-embedded-stream-record-readers.md: d0a4048bc0de5e8f1d716cf4b59c67d8c350b7a1
+2026-09-06-embedded-stream-record-readers.zh.md: ee9dd1e711ba4fddcedee3d035cfe456266f652e
+2026-09-06-embedded-stream-record-readers.de.md: 4aaf18580695eea7d6f0800d6c0ed66ecc26422f

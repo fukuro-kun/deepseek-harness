@@ -1,8 +1,8 @@
 # Agent Note: 相邻 Agent 共享一个 Steer send_message 操作
+[English](2026-08-27-adjacent-agent-steer-messaging.md) | 中文 | [Deutsch](2026-08-27-adjacent-agent-steer-messaging.de.md)
 
 Status: implemented
 
-[English](2026-08-27-adjacent-agent-steer-messaging.md) | 中文 | [Deutsch](2026-08-27-adjacent-agent-steer-messaging.de.md)
 
 ## 问题
 

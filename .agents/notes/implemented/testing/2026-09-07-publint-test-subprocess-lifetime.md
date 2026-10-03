@@ -1,9 +1,8 @@
 # Agent Note: Publint test subprocesses inherit the execution lane deadline
-English | [中文](.agents/notes/implemented/testing/2026-09-07-publint-test-subprocess-lifetime.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-07-publint-test-subprocess-lifetime.de.md)
+English | [中文](2026-09-07-publint-test-subprocess-lifetime.zh.md) | [Deutsch](2026-09-07-publint-test-subprocess-lifetime.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-07-publint-test-subprocess-lifetime.zh.md)
 
 ## Problem
 

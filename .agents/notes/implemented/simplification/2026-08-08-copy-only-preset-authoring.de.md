@@ -1,8 +1,8 @@
 # Agent Note: Preset-Authoring nur per Kopie und der Weg zu den Dateien eines Presets
+[English](2026-08-08-copy-only-preset-authoring.md) | [中文](2026-08-08-copy-only-preset-authoring.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-08-copy-only-preset-authoring.md) | [中文](2026-08-08-copy-only-preset-authoring.zh.md) | Deutsch
 
 ## Problem
 

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-22-single-dsh-application-launcher.md
-2026-08-22-single-dsh-application-launcher.md: f532afd4813c8e200b4c292f9d7937ae97a2cfa1
-2026-08-22-single-dsh-application-launcher.zh.md: 58433dde1abd8668ed3b751a41159558dfae9f34
-2026-08-22-single-dsh-application-launcher.de.md: 718fdc5f0b5215e0526285b12d57a2a5eca88436
+2026-08-22-single-dsh-application-launcher.md: 8defb32ba03b483f9d332f8fe864bdf43af9d352
+2026-08-22-single-dsh-application-launcher.zh.md: 2aa8f1f1e6938492b6d485b4250d7d44b12327e4
+2026-08-22-single-dsh-application-launcher.de.md: d27a95b4f8892eb1917abb4baa291946775b2980

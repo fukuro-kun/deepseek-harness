@@ -1,8 +1,8 @@
 # Agent Note: 统一 agent id 与会话 id
+[English](2026-06-20-unify-agent-and-session-id.md) | 中文 | [Deutsch](2026-06-20-unify-agent-and-session-id.de.md)
 
 Status: implemented
 
-[English](2026-06-20-unify-agent-and-session-id.md) | 中文
 
 ## 问题
 

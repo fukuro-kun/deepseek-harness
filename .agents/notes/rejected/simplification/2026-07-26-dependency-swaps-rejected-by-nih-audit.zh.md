@@ -1,8 +1,8 @@
 # Agent Note: 2026-07 NIH 审计否决的依赖替换
+[English](2026-07-26-dependency-swaps-rejected-by-nih-audit.md) | 中文 | [Deutsch](2026-07-26-dependency-swaps-rejected-by-nih-audit.de.md)
 
 Status: rejected — 下列每一项替换在证据上都未达到净简化门槛；记录在案，以免这轮普查日后从零重来
 
-[English](2026-07-26-dependency-swaps-rejected-by-nih-audit.md) | 中文
 
 ## 问题
 

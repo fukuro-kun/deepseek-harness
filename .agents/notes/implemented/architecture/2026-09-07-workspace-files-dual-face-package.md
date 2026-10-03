@@ -3,7 +3,6 @@ English | [中文](2026-09-07-workspace-files-dual-face-package.zh.md) | [Deutsc
 
 Status: implemented
 
-English | [中文](2026-09-07-workspace-files-dual-face-package.zh.md)
 
 ## Problem
 

@@ -1,6 +1,6 @@
 # Bash 执行器
+[English](shell.md) | 中文 | [Deutsch](shell.de.md)
 
-[English](shell.md) | 中文
 
 bash 执行 seam 分为 Service Definition（[dsh-shell](../../packages/shell/shell)，`ctx.shell`）、Service Provider（[dsh-bash-local](../../packages/shell/bash-local) 与 [dsh-bash-sandbox](../../packages/shell/bash-sandbox)）和 Consumer（[dsh-tool-bash](../../packages/shell/tool-bash)，即 `bash` schema）。通用后台任务的 job id、所有权与控制位于 [jobs.md](jobs.zh.md)；本 seam 返回一个不含任务概念的进程句柄。managed-range 机制封装在[子进程 seam](subprocess.zh.md)之后。
 
@@ -12,7 +12,6 @@ bash 执行 seam 分为 Service Definition（[dsh-shell](../../packages/shell/sh
 
 ## 请求与规格：`resolve()` 拆分
 
-[English](shell.md) | 中文 | [Deutsch](shell.de.md)
 
 该 seam 将**面向模型/插件的请求**（`workdir`/`timeoutMs`/`stdoutMaxBytes` 可选，由配置或请求策略补全）与执行器实际使用的**完全解析后的 spec**（这些字段均为必填）分开。工具层在二者之间调用 `ctx.shell.resolve(request)`（仓库的「包边界处显式优于隐式」规则）；`ShellExecSpec` 携带的是已解析的值。
 

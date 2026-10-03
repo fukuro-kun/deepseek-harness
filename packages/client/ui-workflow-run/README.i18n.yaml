@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-workflow-run/README.md
 README.md: c614647c4dbf69c4ca4e6e548339f10696611157
-README.zh.md: dea04172d46735b1840482504c7a9db74e2fe21f
-README.de.md: e79fc1678830d4d93e9fb3b9fc13d50eba265535
+README.zh.md: 549c38ec03380eb603898762f72f9aaf07da505d
+README.de.md: 68cbc197965cf0e1bc0dd89bfb1027dd5d4ad7c3

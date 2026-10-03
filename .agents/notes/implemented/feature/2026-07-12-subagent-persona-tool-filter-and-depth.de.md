@@ -1,8 +1,8 @@
 # Agent Note: Subagent-Persona, Tool-Sichtbarkeit und Tiefe konfigurieren
+[English](2026-07-12-subagent-persona-tool-filter-and-depth.md) | [中文](2026-07-12-subagent-persona-tool-filter-and-depth.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-12-subagent-persona-tool-filter-and-depth.md) | [中文](2026-07-12-subagent-persona-tool-filter-and-depth.zh.md) | Deutsch
 
 ## Problem
 

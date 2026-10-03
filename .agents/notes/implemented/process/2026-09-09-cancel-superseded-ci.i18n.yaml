@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-09-09-cancel-superseded-ci.md
-2026-09-09-cancel-superseded-ci.md: 390dd493e7790a1e5a111d3b266705672f9b181e
-2026-09-09-cancel-superseded-ci.zh.md: 3ae6ec6ad58b0dfc94e803a33ba92ded4e239485
-2026-09-09-cancel-superseded-ci.de.md: da4fc3f107525dbe014a7051be6f2fb66ec9414b
+2026-09-09-cancel-superseded-ci.md: 907a219ccea44cca73220f581323de85f6e5f162
+2026-09-09-cancel-superseded-ci.zh.md: 0097e16706c2b6f4b1a59c66ac29c3d104ea41a1
+2026-09-09-cancel-superseded-ci.de.md: f40f5eb768a0d0c7567b085d9af54f49928d0401

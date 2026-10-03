@@ -1,6 +1,6 @@
 # Session Query
+English | [中文](session-query.zh.md) | [Deutsch](session-query.de.md)
 
-English | [中文](session-query.zh.md)
 
 Query vocabulary over the live-preferred logical session corpus. The [Service Definition package](../../packages/session-query/session-query) owns exact reads, source precedence, relationship tracing, semantic extraction, and provider-independent filters, while the [SQLite provider](../../packages/session-query/session-query-sqlite) owns the concrete full-text index lifecycle.
 
@@ -8,7 +8,6 @@ Source: [`packages/session-query/session-query/src/types.ts`](../../packages/ses
 
 ## Logical records
 
-English | [中文](session-query.zh.md) | [Deutsch](session-query.de.md)
 
 `SessionRecord` is returned by the cross-corpus list. It exposes source availability independently from the cloned live-preferred header. `SessionEventRecord` is a lightweight raw-log projection; classification uses the same `foldSurface()` transitions as model-history derivation.
 

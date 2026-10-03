@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-06-backend-continuation-performance.md
-2026-09-06-backend-continuation-performance.md: c26568223b15d7ba5e2b7bd704f54293e5a6a584
-2026-09-06-backend-continuation-performance.zh.md: 92556ad8e3434a3219ea585503bec9b17bbf576a
-2026-09-06-backend-continuation-performance.de.md: c7edda577f1fbc424a7e7cde728d188cdc0d8a47
+2026-09-06-backend-continuation-performance.md: 4f39d94e4b0a7581829bfb6ccd1e50b4f9802617
+2026-09-06-backend-continuation-performance.zh.md: 6ad9d7c389deb18267b581b781d3e81abc6b0987
+2026-09-06-backend-continuation-performance.de.md: 3c4f776797affa7aa637016cb65a13e8f5b9f34a

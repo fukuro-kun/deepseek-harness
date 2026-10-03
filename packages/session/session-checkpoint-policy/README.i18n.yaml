@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/session/session-checkpoint-policy/README.md
 README.md: 27cb4dec4378b17c239361bc18de6a5c65536a3f
-README.zh.md: 868486a47b877da3e54c4060df44a5031f8522de
-README.de.md: 611af438e021dd9adb30943c288db93c681ed03a
+README.zh.md: 870225fb64ff7342d030d5f71dc42ab4a7023fee
+README.de.md: 09033de73c353652abc48d0ec08d770a976ec8e0

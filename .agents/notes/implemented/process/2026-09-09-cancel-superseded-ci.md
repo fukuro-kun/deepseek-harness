@@ -1,9 +1,8 @@
 # Agent Note: Cancel superseded CI validation
-English | [中文](.agents/notes/implemented/process/2026-09-09-cancel-superseded-ci.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-09-cancel-superseded-ci.de.md)
+English | [中文](2026-09-09-cancel-superseded-ci.zh.md) | [Deutsch](2026-09-09-cancel-superseded-ci.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-09-cancel-superseded-ci.zh.md)
 
 ## Problem
 

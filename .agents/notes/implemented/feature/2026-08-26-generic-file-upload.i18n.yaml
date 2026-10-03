@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-26-generic-file-upload.md
-2026-08-26-generic-file-upload.md: 983db77ed4800467491cf85e90df9c305af635b6
-2026-08-26-generic-file-upload.zh.md: 2d78811c24ba1a801d43f21f4e63db5646b0431b
-2026-08-26-generic-file-upload.de.md: 195a33d8fe9af9ddfad4fa9c77c60e389d8a7614
+2026-08-26-generic-file-upload.md: 4a8be98ddc30cf53ed6e485939d23537dfe1cb88
+2026-08-26-generic-file-upload.zh.md: ba73186e0c0989b0ada4ee411551c80dc7b7de71
+2026-08-26-generic-file-upload.de.md: daa5b0b9182db6015863ef5add1f20a8a7c4482f

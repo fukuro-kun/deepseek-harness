@@ -1,10 +1,9 @@
 # Agent Note: Capability seams — Service Definition / Service Provider / Consumer roles
+English | [中文](2026-06-13-capability-seams.zh.md) | [Deutsch](2026-06-13-capability-seams.de.md)
 
-English | [中文](.agents/notes/implemented/architecture/2026-06-13-capability-seams.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-13-capability-seams.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-13-capability-seams.zh.md)
 
 ## Problem
 

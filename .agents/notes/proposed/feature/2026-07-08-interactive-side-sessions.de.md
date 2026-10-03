@@ -1,8 +1,8 @@
 # Agent Note: Interactive side sessions and merge-back
+[English](2026-07-08-interactive-side-sessions.md) | [中文](2026-07-08-interactive-side-sessions.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-08-interactive-side-sessions.md) | [中文](2026-07-08-interactive-side-sessions.zh.md) | Deutsch
 
 ## Problem
 

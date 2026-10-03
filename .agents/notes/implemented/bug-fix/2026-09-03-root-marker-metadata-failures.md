@@ -1,9 +1,8 @@
 # Agent Note: Root marker metadata failures
-English | [中文](.agents/notes/implemented/bug-fix/2026-09-03-root-marker-metadata-failures.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-03-root-marker-metadata-failures.de.md)
+English | [中文](2026-09-03-root-marker-metadata-failures.zh.md) | [Deutsch](2026-09-03-root-marker-metadata-failures.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-03-root-marker-metadata-failures.zh.md)
 
 ## Problem
 

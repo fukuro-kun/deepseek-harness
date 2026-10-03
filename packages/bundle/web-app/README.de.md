@@ -4,8 +4,8 @@ kind: "package-bundle"
 ---
 
 # @deepseek-ai/dsh-web-app
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -47,7 +47,7 @@ Die meisten Nutzer setzen diese nie; die Kommandozeilen-Flags speisen die vier E
 | `surfaceContext` | `true` | Gibt dem agent GUI-Orientierungskontext und legt `DSH_WEB_URL` für seine Shell-Kommandos offen |
 | `trustedHosts` | `[]` | Zusätzliche Hosts, die die GUI aus dem Netzwerk erreichen dürfen |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-web-app) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-web-app) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### LAN-Zugriff und vertrauenswürdige Hosts
 
@@ -113,7 +113,7 @@ Lies diese Seiten, wenn du tiefer in den gemeinsamen Kern, die Browser-Reload-Pi
 - [dsh-base](../base/README.de.md) — der gemeinsame Kern, auf dem die GUI läuft.
 - [dsh-client-hmr](../../client/hmr/README.de.md) — wie Client-Plugin-Änderungen während der Entwicklung reloaden.
 - [frontend-static](../../host/frontend-static/README.de.md) — wie das gebaute Frontend ausgeliefert wird.
-- [Generierter Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-web-app) — jedes akzeptierte Config-Feld und seine Quelldeklaration.
+- [Generierter Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-web-app) — jedes akzeptierte Config-Feld und seine Quelldeklaration.
 
 -----
 

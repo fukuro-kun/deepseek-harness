@@ -1,8 +1,8 @@
 # Agent Note: 客户端资源模型
+[English](2026-09-05-client-resource-model.md) | 中文 | [Deutsch](2026-09-05-client-resource-model.de.md)
 
 Status: implemented
 
-[English](2026-09-05-client-resource-model.md) | 中文 | [Deutsch](2026-09-05-client-resource-model.de.md)
 
 ## Problem
 

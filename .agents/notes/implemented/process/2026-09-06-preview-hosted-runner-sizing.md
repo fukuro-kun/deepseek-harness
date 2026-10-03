@@ -1,9 +1,8 @@
 # Agent Note: Measured GitHub-hosted PR preview sizing
-English | [中文](.agents/notes/implemented/process/2026-09-06-preview-hosted-runner-sizing.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-06-preview-hosted-runner-sizing.de.md)
+English | [中文](2026-09-06-preview-hosted-runner-sizing.zh.md) | [Deutsch](2026-09-06-preview-hosted-runner-sizing.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-06-preview-hosted-runner-sizing.zh.md)
 
 ## Problem
 

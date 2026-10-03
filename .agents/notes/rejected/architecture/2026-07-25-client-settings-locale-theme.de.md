@@ -1,8 +1,8 @@
 # Agent Note: Client-Settings-, Locale- und Theme-Schichtung
+[English](2026-07-25-client-settings-locale-theme.md) | [中文](2026-07-25-client-settings-locale-theme.zh.md) | Deutsch
 
 Status: rejected — closed as a proposal: the shipped ui-settings, locale, and ui-theme packages and their READMEs own the design
 
-[English](2026-07-25-client-settings-locale-theme.md) | [中文](2026-07-25-client-settings-locale-theme.zh.md) | Deutsch
 
 ## Problem
 

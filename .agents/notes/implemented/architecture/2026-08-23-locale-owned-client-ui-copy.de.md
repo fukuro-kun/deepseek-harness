@@ -1,8 +1,8 @@
 # Agent Note: Locale-eigene Client-UI-Texte
+[English](2026-08-23-locale-owned-client-ui-copy.md) | [中文](2026-08-23-locale-owned-client-ui-copy.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-23-locale-owned-client-ui-copy.md) | [中文](2026-08-23-locale-owned-client-ui-copy.zh.md) | Deutsch
 
 ## Problem
 

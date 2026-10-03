@@ -1,6 +1,6 @@
 # Drei-Rollen-Capability-Design
-
 [English](index.md) | [中文](index.zh.md) | Deutsch
+
 
 Diese Seite hat zwei Teile: eine Konzeptreferenz für das Drei-Rollen-Capability-Muster, gefolgt von einem fortgeschrittenen Tutorial, das eine Capability aufbaut. Schließe zuerst den [grundlegenden Plugin-Pfad](../basic/index.de.md) und das [Services-Tutorial](../framework/service.de.md) ab.
 

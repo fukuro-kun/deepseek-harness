@@ -1,8 +1,8 @@
 # Agent Note: Publint 测试子进程继承执行通道期限
+[English](2026-09-07-publint-test-subprocess-lifetime.md) | 中文 | [Deutsch](2026-09-07-publint-test-subprocess-lifetime.de.md)
 
 Status: implemented
 
-[English](2026-09-07-publint-test-subprocess-lifetime.md) | 中文
 
 ## 问题
 

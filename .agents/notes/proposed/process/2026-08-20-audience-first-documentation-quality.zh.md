@@ -1,8 +1,8 @@
 # Agent Note: 以受众为先的文档质量标准
+[English](2026-08-20-audience-first-documentation-quality.md) | 中文 | [Deutsch](2026-08-20-audience-first-documentation-quality.de.md)
 
 Status: proposed
 
-[English](.agents/notes/proposed/process/2026-08-20-audience-first-documentation-quality.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-08-20-audience-first-documentation-quality.de.md)
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Projekt-gruppierte Session-Verzeichnisse
+[English](2026-07-24-project-session-directories.md) | [中文](2026-07-24-project-session-directories.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-24-project-session-directories.md) | [中文](2026-07-24-project-session-directories.zh.md) | Deutsch
 
 ## Problem
 

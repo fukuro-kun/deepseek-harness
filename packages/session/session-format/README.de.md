@@ -4,8 +4,8 @@ kind: "package-library"
 ---
 
 # @deepseek-ai/dsh-session-format
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -71,8 +71,8 @@ Die Kette validiert bei der Konstruktion eine eindeutige, lückenlose Reihenfolg
 <a id="further-exploration"></a>
 ## Weiterführende Lektüre
 
-- [Veröffentlichte v0-zu-v1-Kante](../session-format-v0-to-v1/README.md) — eingefrorene historische Dekodierung und Identitätskonvertierung.
-- [Statischer Katalog](../session-format-catalog/README.md) — First-Party-Codec- und Migrations-Assembly.
+- [Veröffentlichte v0-zu-v1-Kante](../session-format-v0-to-v1/README.de.md) — eingefrorene historische Dekodierung und Identitätskonvertierung.
+- [Statischer Katalog](../session-format-catalog/README.de.md) — First-Party-Codec- und Migrations-Assembly.
 - [JSONL-Persistenz](../session-persistence-jsonl/README.de.md) — durable Framing und Generation-Publikation.
 
 -----

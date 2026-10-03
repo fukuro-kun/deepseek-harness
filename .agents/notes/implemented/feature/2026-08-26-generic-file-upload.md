@@ -1,9 +1,8 @@
 # Agent Note: Generic file upload
-English | [中文](.agents/notes/implemented/feature/2026-08-26-generic-file-upload.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-26-generic-file-upload.de.md)
+English | [中文](2026-08-26-generic-file-upload.zh.md) | [Deutsch](2026-08-26-generic-file-upload.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-26-generic-file-upload.zh.md)
 
 ## Problem
 

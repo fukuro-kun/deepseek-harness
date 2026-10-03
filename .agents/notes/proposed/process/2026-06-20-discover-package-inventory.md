@@ -1,10 +1,9 @@
 # Agent Note: Discover package inventories instead of maintaining static lists
+English | [中文](2026-06-20-discover-package-inventory.zh.md) | [Deutsch](2026-06-20-discover-package-inventory.de.md)
 
-English | [中文](.agents/notes/proposed/process/2026-06-20-discover-package-inventory.zh.md) | [Deutsch](.agents/notes/proposed/process/2026-06-20-discover-package-inventory.de.md)
 
 Status: proposed
 
-English | [中文](2026-06-20-discover-package-inventory.zh.md)
 
 ## Problem
 

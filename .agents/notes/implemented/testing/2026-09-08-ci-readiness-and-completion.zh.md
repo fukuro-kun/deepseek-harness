@@ -1,8 +1,8 @@
 # Agent Note: CI 断言等待所属操作完成
+[English](2026-09-08-ci-readiness-and-completion.md) | 中文 | [Deutsch](2026-09-08-ci-readiness-and-completion.de.md)
 
 Status: implemented
 
-[English](2026-09-08-ci-readiness-and-completion.md) | 中文
 
 ## 问题
 

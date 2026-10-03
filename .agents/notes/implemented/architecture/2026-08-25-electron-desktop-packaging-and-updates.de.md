@@ -1,8 +1,8 @@
 # Agent Note: Electron-Desktop-Anwendung paketieren und aktualisieren
+[English](2026-08-25-electron-desktop-packaging-and-updates.md) | [中文](2026-08-25-electron-desktop-packaging-and-updates.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-25-electron-desktop-packaging-and-updates.md) | [中文](2026-08-25-electron-desktop-packaging-and-updates.zh.md) | Deutsch
 
 ## Problem
 

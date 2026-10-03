@@ -1,6 +1,6 @@
 # Code Runtime
-
 [English](code-runtime.md) | [中文](code-runtime.zh.md) | Deutsch
+
 
 Der Code-Ausführungs-Seam — ein [Capability Seam](../../.agents/notes/implemented/architecture/2026-06-13-capability-seams.de.md), dessen Service Definition ([dsh-code-runtime](../../packages/code-runtime/code-runtime), `ctx.codeRuntime`) ein vom Modell geschriebenes Programm gegen host-seitige asynchrone Bindings ausführt und berichtet, was es ausgegeben und zurückgegeben hat. Code-Ausführung ist **eine optionale Capability**, nicht Teil der Agent-Loop-Spine — deshalb lebt ihr Vokabular hier und nicht in [core.md](core.de.md). Backends unterscheiden sich in Ausführungssubstrat und Quellsprache, beides Readonly-Deskriptoren auf dem Service; der Worker-Thread-Service-Provider und der Tool-Registry-Consumer sind in der [PTC-Mode-Grundlage](../../.agents/notes/implemented/feature/2026-06-15-ptc.de.md) und dem [Typed-Return-Vertrag](../../.agents/notes/implemented/feature/2026-07-20-ptc-typed-tool-returns.de.md) spezifiziert.
 

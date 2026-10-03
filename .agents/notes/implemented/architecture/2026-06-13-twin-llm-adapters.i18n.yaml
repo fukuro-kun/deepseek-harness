@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.md
-2026-06-13-twin-llm-adapters.md: 87cc91af38fc4661ac9e741df75f52a98f1b454a
-2026-06-13-twin-llm-adapters.zh.md: 6bccf09cf04a910fe9add945a2ebf684e927d458
-2026-06-13-twin-llm-adapters.de.md: 74e77f3f25812a3ca3f02e5117e5eae9da62703e
+2026-06-13-twin-llm-adapters.md: aacd3651d444cac99f355a8b4e614ffbc67cabd2
+2026-06-13-twin-llm-adapters.zh.md: 26154370d3358892934e9902e39d2b3050cc300a
+2026-06-13-twin-llm-adapters.de.md: bc02f295be76fd10bdca2588292f08bae67f1097

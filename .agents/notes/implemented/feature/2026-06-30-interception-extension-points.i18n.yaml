@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-06-30-interception-extension-points.md
-2026-06-30-interception-extension-points.md: 5a4f4433b3540434f0d2ac18eaafc37ec6ddf5aa
-2026-06-30-interception-extension-points.zh.md: 689d7f6ee6d5a552c2eaf950ce5930be559eb5bb
-2026-06-30-interception-extension-points.de.md: c5e53f1984f55f9e92f5a7b2b6eefe831ec30dae
+2026-06-30-interception-extension-points.md: 939085f584723b1cd948ecfed3857da05a94d25d
+2026-06-30-interception-extension-points.zh.md: ff3e90d95dbb14d828b8e6aac9ba9b2283329ab5
+2026-06-30-interception-extension-points.de.md: 309de8a79458a5aec764ab8c44351048134e562f

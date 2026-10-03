@@ -1,6 +1,6 @@
 # Dateisystem
-
 [English](filesystem.md) | [中文](filesystem.zh.md) | Deutsch
+
 
 Die optionale Filesystem-Capability hat vier Teile: [dsh-fs](../../packages/fs/fs) besitzt `ctx.fs` und atomare Textoperationen mit optionalen Guards, [dsh-fs-local](../../packages/fs/fs-local) implementiert die lokale Platte, [dsh-fs-observation-policy](../../packages/fs/fs-observation-policy) zeichnet beobachtetes Vorhandensein oder Fehlen auf und fügt Freshness-Regeln über Events statt über einen Service hinzu, und [dsh-tool-fs](../../packages/fs/tool-fs) führt modellseitige read/write/edit-Calls direkt aus und rendert Fenster. Sie liegt außerhalb des Agent-Loop-Rückgrats; alternative Backends ändern weder Policy noch Tool-Schemas.
 

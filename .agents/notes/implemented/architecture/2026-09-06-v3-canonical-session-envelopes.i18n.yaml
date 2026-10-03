@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-06-v3-canonical-session-envelopes.md
-2026-09-06-v3-canonical-session-envelopes.md: d279c7c55121fdbf7b01d28aad8e9b37ea2c85a6
-2026-09-06-v3-canonical-session-envelopes.zh.md: 8133e983a6facf154c2fa60b82df5a8d78002fe8
-2026-09-06-v3-canonical-session-envelopes.de.md: 1aa43b797d312afdf857e91896dd360589a7bad2
+2026-09-06-v3-canonical-session-envelopes.md: c015f41375be10f9a90a49c4d918d7868f24831d
+2026-09-06-v3-canonical-session-envelopes.zh.md: c383b9b6712cdd01d44c41f565aafc6220c1596a
+2026-09-06-v3-canonical-session-envelopes.de.md: 03a786e696ad7b317da760f2efc469003f02422e

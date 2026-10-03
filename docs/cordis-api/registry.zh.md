@@ -2,10 +2,9 @@
      更新时先运行 `pnpm run gen-cordis-catalog` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/cordis-api/registry.md` 重新记录配对。 -->
 
 # 注册表
-
-[English](registry.md) | 中文
-
 [English](registry.md) | 中文 | [Deutsch](registry.de.md)
+
+
 
 插件加载与依赖注入。
 

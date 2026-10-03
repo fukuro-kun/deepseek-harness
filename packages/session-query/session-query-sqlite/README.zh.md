@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-session-query-sqlite
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用本包可为会话历史增加带排序的 SQLite FTS5 搜索，既能跨会话搜索，也能在单个会话内搜索，并支持游标分页。它把实时与持久化历史索引到独立的派生数据库，因此搜索反映当前状态，同时不会修改会话持久化存储。精确读取、过滤与追踪仍通过同一查询 API 提供。已发布组合中的搜索是可选能力；配置 `openAt` 可让索引在启动时、首次搜索时打开，或永不打开。结果匹配 token 与短语，而非任意子字符串；每个索引路径只能由一个进程持有。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)
@@ -36,10 +35,15 @@ kind: "package-reference"
 ### 最小配置
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-session'
+
 - name: '@deepseek-ai/dsh-session-query-sqlite'
+
   config:
+
     path: /absolute/path/to/session-search.db
+
 ```
 
 | 字段 | 默认值 | 含义 |

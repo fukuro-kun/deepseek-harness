@@ -2,8 +2,8 @@
      Zum Aktualisieren zuerst `pnpm run gen-cordis-catalog` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/cordis-api/registry.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
 # Registry
-
 [English](registry.md) | [中文](registry.zh.md) | Deutsch
+
 
 Plugin-Laden und Dependency Injection.
 

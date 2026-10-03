@@ -1,6 +1,6 @@
 # 三语文档
-
 [English](README.md) | 中文 | [Deutsch](README.de.md)
+
 
 本仓库的文档会被公司内外的人和 agent（智能体）阅读，因此范围内的每篇文档都以英文、简体中文和德文维护。本页定义配对约定、检查、范围与排除规则；[translation-rules.md](translation-rules.zh.md) 定义如何翻译；[terminology.md](terminology.md) 是术语真源。agent 的日常工作遵循 [docs/AGENTS.md](../AGENTS.md) 中的轻量路径；扩展版 [.agents/skills/dsh-translate-docs](../../.agents/skills/dsh-translate-docs/SKILL.md) 工作流仅在用户显式调用时可用。
 

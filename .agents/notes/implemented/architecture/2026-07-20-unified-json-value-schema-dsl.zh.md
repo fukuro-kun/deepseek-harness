@@ -1,8 +1,8 @@
 # Agent Note: 统一 JSON 值 schema DSL
+[English](2026-07-20-unified-json-value-schema-dsl.md) | 中文 | [Deutsch](2026-07-20-unified-json-value-schema-dsl.de.md)
 
 Status: implemented
 
-[English](2026-07-20-unified-json-value-schema-dsl.md) | 中文 | [Deutsch](2026-07-20-unified-json-value-schema-dsl.de.md)
 
 ## 问题
 

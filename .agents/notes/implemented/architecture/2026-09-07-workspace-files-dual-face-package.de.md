@@ -1,8 +1,8 @@
 # Agent Note: Workspace-Dateien als ein Dual-Face-API-Paket
+[English](2026-09-07-workspace-files-dual-face-package.md) | [中文](2026-09-07-workspace-files-dual-face-package.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-07-workspace-files-dual-face-package.md) | [中文](2026-09-07-workspace-files-dual-face-package.zh.md) | Deutsch
 
 ## Problem
 
@@ -10,7 +10,7 @@ Der Workspace-Datei-Service und sein Browser-Resource-Provider entwickeln sich g
 
 ## Entscheidung
 
-`packages/api/workspace-files` besitzt beide Implementierungen. Seine Host- und Client-Leaf-Konfigurationen bleiben direkte Referenzen ihrer jeweiligen Root-Aggregate; der Solution-Root referenziert beide Leaves. Der Host exportiert den Datei-Service, `./client` exportiert das eigentliche Resource-Provider-Plugin, und `dsh.client` deklariert das Browser-Plugin. Eine Web-App-Zeile lädt beide Faces. Dies ersetzt nur die Paket-Aufteilungs-Entscheidung in der [Workspace-Datei-Service-Note](2026-09-05-workspace-files-service.md), deren Autorisierungs-, Paging- und Stream-Semantik unverändert bleibt.
+`packages/api/workspace-files` besitzt beide Implementierungen. Seine Host- und Client-Leaf-Konfigurationen bleiben direkte Referenzen ihrer jeweiligen Root-Aggregate; der Solution-Root referenziert beide Leaves. Der Host exportiert den Datei-Service, `./client` exportiert das eigentliche Resource-Provider-Plugin, und `dsh.client` deklariert das Browser-Plugin. Eine Web-App-Zeile lädt beide Faces. Dies ersetzt nur die Paket-Aufteilungs-Entscheidung in der [Workspace-Datei-Service-Note](2026-09-05-workspace-files-service.de.md), deren Autorisierungs-, Paging- und Stream-Semantik unverändert bleibt.
 
 Zwei Abhängigkeitsrichtungen halten den Compiler-Graph azyklisch:
 

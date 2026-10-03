@@ -1,8 +1,8 @@
 # Agent Note: 跨进程会话写租约
+[English](2026-08-31-cross-process-session-write-lease.md) | 中文 | [Deutsch](2026-08-31-cross-process-session-write-lease.de.md)
 
 Status: implemented
 
-[English](2026-08-31-cross-process-session-write-lease.md) | 中文
 
 ## Problem
 

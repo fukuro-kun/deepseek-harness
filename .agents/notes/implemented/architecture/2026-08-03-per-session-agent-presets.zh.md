@@ -1,8 +1,8 @@
 # Agent Note: 会话的 agent 由一份 preset cordis.yml 组装而成
+[English](2026-08-03-per-session-agent-presets.md) | 中文 | [Deutsch](2026-08-03-per-session-agent-presets.de.md)
 
 Status: implemented
 
-[English](2026-08-03-per-session-agent-presets.md) | 中文 | [Deutsch](2026-08-03-per-session-agent-presets.de.md)
 
 ## 问题
 

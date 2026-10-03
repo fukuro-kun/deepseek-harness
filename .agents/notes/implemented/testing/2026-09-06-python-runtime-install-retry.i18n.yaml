@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-06-python-runtime-install-retry.md
-2026-09-06-python-runtime-install-retry.md: 16c4046ba9b0ba0c11748220f9e42d46b885b6d6
-2026-09-06-python-runtime-install-retry.zh.md: 7a7943f43fcec536542c5aef0e608e177f64907f
-2026-09-06-python-runtime-install-retry.de.md: 4946726edcb4f4c6d498734724f7951ffbdae532
+2026-09-06-python-runtime-install-retry.md: f6cd91aa42417137e2a9f41971ce16a68cc4b887
+2026-09-06-python-runtime-install-retry.zh.md: 9f16e06de0fb85cc4f3f9ffbc740dc7c0e502b7a
+2026-09-06-python-runtime-install-retry.de.md: 72a49a4ccd25041248341ff16c14a6f4a6814087

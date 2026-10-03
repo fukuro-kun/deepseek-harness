@@ -1,8 +1,8 @@
 # Agent Note: Paket-verankerte Subsystem-Seiten und schlanke Gruppen-READMEs
+[English](2026-08-03-package-anchored-subsystem-pages.md) | [中文](2026-08-03-package-anchored-subsystem-pages.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-03-package-anchored-subsystem-pages.md) | [中文](2026-08-03-package-anchored-subsystem-pages.zh.md) | Deutsch
 
 ## Problem
 

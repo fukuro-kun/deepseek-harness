@@ -1,8 +1,8 @@
 # Agent Note: plan 专用协作状态
+[English](2026-07-22-plan-specific-collaboration-state.md) | 中文 | [Deutsch](2026-07-22-plan-specific-collaboration-state.de.md)
 
 Status: implemented
 
-[English](2026-07-22-plan-specific-collaboration-state.md) | 中文
 
 ## 问题
 

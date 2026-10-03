@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-session-query
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-session-query` 让应用代码可以列出、过滤、读取和搜索会话历史，检查带边界的事件上下文，并追踪会话或事件关系。读取优先使用实时会话而非持久化副本，并返回来自同一次一致观察的脱离存储克隆。精确读取、过滤与追踪可用于任何受支持的存储设置；排序全文搜索需要 `dsh-session-query-sqlite` 等后端。当应用代码需要以编程方式访问呈现给模型的历史时，请使用本包。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

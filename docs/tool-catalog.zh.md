@@ -2,8 +2,8 @@
      更新时先运行 `pnpm run gen-tool-catalog` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/tool-catalog.md` 重新记录配对。 -->
 
 # 工具 Schema 目录
+[English](tool-catalog.md) | 中文 | [Deutsch](tool-catalog.de.md)
 
-[English](tool-catalog.md) | 中文 | [Deutsch](docs/tool-catalog.de.md)
 
 已发布插件向 `ctx.tools` 提供的所有面向模型的工具：模型通过系统提示词组装获得的 `name`、`description` 和 JSON Schema `parameters`。本目录是[子系统页面](subsystems/core.zh.md)（类型及每页生成的 `cordis-surface` 接线区域）的补充；本页列出的是向 agent（智能体）提供的*工具*。
 

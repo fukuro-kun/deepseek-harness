@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-workflow-worker-thread
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用 `dsh-workflow-worker-thread` 可让模型编写的工作流脚本在宿主事件循环之外运行。每次运行使用独立的 worker thread，因此同步循环不会阻塞 harness，忽略取消的脚本也可以被终止。本引擎支持已发布组合中的 `workflow` 与 `ralph` 工具，也可与 `dsh-tool-workflow` 配合，在其他组合中公开 `workflow`。这种隔离可以限制可用性故障，但不是安全边界；真正不可信的脚本需要独立进程或容器。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

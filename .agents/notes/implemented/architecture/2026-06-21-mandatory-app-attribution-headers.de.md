@@ -1,8 +1,8 @@
 # Agent Note: Pflicht-`User-Agent`-Attribuierung für provider-Anfragen
+[English](2026-06-21-mandatory-app-attribution-headers.md) | [中文](2026-06-21-mandatory-app-attribution-headers.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-21-mandatory-app-attribution-headers.md) | [中文](2026-06-21-mandatory-app-attribution-headers.zh.md) | Deutsch
 
 ## Problem
 

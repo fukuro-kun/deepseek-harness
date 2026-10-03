@@ -1,8 +1,8 @@
 # Agent Note: 发布依赖门面与有限 peer 中继
+[English](2026-08-26-published-dependency-faces.md) | 中文 | [Deutsch](2026-08-26-published-dependency-faces.de.md)
 
 Status: implemented
 
-[English](2026-08-26-published-dependency-faces.md) | 中文
 
 ## 问题
 

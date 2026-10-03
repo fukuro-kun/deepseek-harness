@@ -1,8 +1,8 @@
 # Agent Note: 取消被取代的 CI 验证
+[English](2026-09-09-cancel-superseded-ci.md) | 中文 | [Deutsch](2026-09-09-cancel-superseded-ci.de.md)
 
 Status: implemented
 
-[English](2026-09-09-cancel-superseded-ci.md) | 中文
 
 ## 问题
 

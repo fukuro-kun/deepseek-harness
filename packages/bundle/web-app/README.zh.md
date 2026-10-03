@@ -4,8 +4,8 @@ kind: "package-bundle"
 ---
 
 # @deepseek-ai/dsh-web-app
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文 | [Deutsch](packages/bundle/web-app/README.de.md)
 
 ## 概述
 

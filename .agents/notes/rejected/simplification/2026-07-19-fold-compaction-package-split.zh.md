@@ -1,8 +1,8 @@
 # Agent Note: 将唯一的压缩后端并入服务包
+[English](2026-07-19-fold-compaction-package-split.md) | 中文 | [Deutsch](2026-07-19-fold-compaction-package-split.de.md)
 
 Status: rejected — 计划增加更多压缩后端，因此 Service Definition 包与 basic 提供方包继续分离。
 
-[English](2026-07-19-fold-compaction-package-split.md) | 中文
 
 ## 问题
 

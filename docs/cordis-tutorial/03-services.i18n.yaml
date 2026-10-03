@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cordis-tutorial/03-services.md
-03-services.md: 94d3d87c585179ca292d810cc0964f3107211918
-03-services.zh.md: 9c0780875785f1f6bc84068d27cdd54e6b24a859
-03-services.de.md: a6c635feb937e0f9fac8d471fc3189349e7aea24
+03-services.md: 3562356d9a39c17083c3bf140600e75f6adb954e
+03-services.zh.md: 68220483c504154059960c958ae3e87cf83d70db
+03-services.de.md: 67305971fa39e13cbc4f592e0bb3f25f0f62bfb6

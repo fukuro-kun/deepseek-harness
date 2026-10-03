@@ -1,8 +1,8 @@
 # Agent Note: 有意义的包不变量约定
+[English](2026-07-19-package-invariant-runtime-contracts.md) | 中文 | [Deutsch](2026-07-19-package-invariant-runtime-contracts.de.md)
 
 Status: implemented
 
-[English](2026-07-19-package-invariant-runtime-contracts.md) | 中文 | [Deutsch](2026-07-19-package-invariant-runtime-contracts.de.md)
 
 ## 问题
 

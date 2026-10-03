@@ -1,9 +1,8 @@
 # Agent Note: Subagent capability seam
-English | [中文](.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.de.md)
+English | [中文](2026-06-21-subagent-capability-seam.zh.md) | [Deutsch](2026-06-21-subagent-capability-seam.de.md)
 
 Status: implemented
 
-English | [中文](2026-06-21-subagent-capability-seam.zh.md)
 
 > The full seam is shipped: the `dsh-subagent` interface and `dsh-tool-subagent` consumer; the two in-process backends (`dsh-subagent-spawn-in-process`, `dsh-subagent-fork-in-process`); the nested-agent snapshot infrastructure ([per-session snapshot replay](../../archived/testing/2026-06-22-subagent-snapshot-replay.md)); and the out-of-process ACP, Codex, and Claude Code backends ([ACP Agent Note](../../archived/feature/2026-06-22-acp-subagent-backend.md), [product-provider Agent Note](2026-08-04-claude-code-and-codex-subagent-backends.md)).
 

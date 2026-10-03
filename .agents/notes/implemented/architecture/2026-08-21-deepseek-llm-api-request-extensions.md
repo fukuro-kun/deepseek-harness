@@ -3,7 +3,6 @@ English | [中文](2026-08-21-deepseek-llm-api-request-extensions.zh.md) | [Deut
 
 Status: implemented
 
-English | [中文](2026-08-21-deepseek-llm-api-request-extensions.zh.md)
 
 ## Problem
 

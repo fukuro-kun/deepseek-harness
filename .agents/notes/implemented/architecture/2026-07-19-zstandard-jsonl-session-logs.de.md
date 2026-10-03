@@ -1,8 +1,8 @@
 # Agent Note: Zstandard-JSONL-Session-Logs
+[English](2026-07-19-zstandard-jsonl-session-logs.md) | [中文](2026-07-19-zstandard-jsonl-session-logs.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-19-zstandard-jsonl-session-logs.md) | [中文](2026-07-19-zstandard-jsonl-session-logs.zh.md) | Deutsch
 
 ## Problem
 

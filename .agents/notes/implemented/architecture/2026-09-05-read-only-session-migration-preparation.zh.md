@@ -1,8 +1,8 @@
 # Agent Note: 历史 Session 在写入发布前提供只读迁移结果
+[English](2026-09-05-read-only-session-migration-preparation.md) | 中文 | [Deutsch](2026-09-05-read-only-session-migration-preparation.de.md)
 
 Status: implemented
 
-[English](2026-09-05-read-only-session-migration-preparation.md) | 中文 | [Deutsch](2026-09-05-read-only-session-migration-preparation.de.md)
 
 ## 问题
 

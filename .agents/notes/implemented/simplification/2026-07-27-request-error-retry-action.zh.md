@@ -1,8 +1,8 @@
 # Agent Note: 请求错误重试动作
+[English](2026-07-27-request-error-retry-action.md) | 中文 | [Deutsch](2026-07-27-request-error-retry-action.de.md)
 
 Status: implemented
 
-[English](2026-07-27-request-error-retry-action.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Ausgeglichene ausgelieferte Tool-Roster
+[English](2026-07-31-even-out-shipped-tool-rosters.md) | [中文](2026-07-31-even-out-shipped-tool-rosters.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-31-even-out-shipped-tool-rosters.md) | [中文](2026-07-31-even-out-shipped-tool-rosters.zh.md) | Deutsch
 
 ## Problem
 

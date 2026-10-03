@@ -1,8 +1,8 @@
 # Agent Note: Ungenutzte Skill-Registry-API beschneiden
+[English](2026-07-12-prune-unused-skill-registry-api.md) | [中文](2026-07-12-prune-unused-skill-registry-api.zh.md) | Deutsch
 
 Status: rejected — direkte Runtime-Skill-Registrierung ist ein bewusster Erweiterungspfad für Drittanbieter-Plugins.
 
-[English](2026-07-12-prune-unused-skill-registry-api.md) | [中文](2026-07-12-prune-unused-skill-registry-api.zh.md) | Deutsch
 
 ## Problem
 

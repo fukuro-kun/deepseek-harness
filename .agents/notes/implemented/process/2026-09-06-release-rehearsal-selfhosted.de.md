@@ -1,8 +1,8 @@
 # Agent Note: Vertrauenswürdige Release-Proben auf persistenten Linux-Runnern
+[English](2026-09-06-release-rehearsal-selfhosted.md) | [中文](2026-09-06-release-rehearsal-selfhosted.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-release-rehearsal-selfhosted.md) | [中文](2026-09-06-release-rehearsal-selfhosted.zh.md) | Deutsch
 
 ## Problem
 

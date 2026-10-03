@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-web
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-tool-web` 让模型使用 `web_search` 搜索 web，并使用 `web_fetch` 取回页面。当 agent 需要当前信息或完整来源文本时选择它，并通过包配置独立启用任一工具。结果会把提供方控制的文本标记为外部不可信数据，而抓取到的 HTML 会排除活动与隐藏内容。如果配置的提供方缺失或不可用，工具仍保持可见，并返回模型可据此采取行动的结构化错误。超时与结果大小上限属于部署设置，而非模型参数。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

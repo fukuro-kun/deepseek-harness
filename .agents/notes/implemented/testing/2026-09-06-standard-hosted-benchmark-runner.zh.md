@@ -1,8 +1,8 @@
 # Agent Note: 必需 benchmark 使用标准托管运行器
+[English](2026-09-06-standard-hosted-benchmark-runner.md) | 中文 | [Deutsch](2026-09-06-standard-hosted-benchmark-runner.de.md)
 
 Status: implemented
 
-[English](2026-09-06-standard-hosted-benchmark-runner.md) | 中文
 
 ## 问题
 

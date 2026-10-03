@@ -1,8 +1,8 @@
 # Agent Note: 不用固定长度的非托管视图读取 Win32 选择器路径
+[English](2026-08-31-win32-picker-path-string-read.md) | 中文 | [Deutsch](2026-08-31-win32-picker-path-string-read.de.md)
 
 Status: implemented
 
-[English](2026-08-31-win32-picker-path-string-read.md) | 中文
 
 ## Problem
 

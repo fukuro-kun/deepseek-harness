@@ -1,8 +1,8 @@
 # Agent Note: Agent Notes ohne generierten Index auffindbar halten
+[English](2026-07-19-remove-generated-agent-note-index.md) | [中文](2026-07-19-remove-generated-agent-note-index.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-19-remove-generated-agent-note-index.md) | [中文](2026-07-19-remove-generated-agent-note-index.zh.md) | Deutsch
 
 ## Problem
 

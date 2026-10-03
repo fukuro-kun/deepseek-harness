@@ -2,8 +2,8 @@
      Aktualisieren Sie zuerst die englische Datei mit `pnpm run gen-doc-graphs`, dann diese Datei und `pnpm run verify-translation-pairing --write docs/tool-execution-pipeline.md`, um die Paarung neu aufzuzeichnen. -->
 
 # Tool-Execution-Pipeline
-
 [English](tool-execution-pipeline.md) | [中文](tool-execution-pipeline.zh.md) | Deutsch
+
 
 Dieser Graph zeigt, wo Policy, Hooks, Sandbox-Isolierung, Filesystem-Guards, Result-Rewriting, Beobachtung des finalen Outcomes und UI-Rendering laufen, ohne den Loop zu verändern. Das `tools/pre-execute`-Waterfall läuft zuerst, danach die monotonen Guards, und die `tools/execute`- und `tools/post-execute`-Waterfälle folgen; die drei Waterfälle können einen Call transformieren. Das Definition-eigene `finalizeContent` und `tools/result` laufen anschließend.
 

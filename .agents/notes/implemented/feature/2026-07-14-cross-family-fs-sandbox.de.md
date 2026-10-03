@@ -1,8 +1,8 @@
 # Agent Note: Familienübergreifende Datei-Sandbox — ein Policy-Zuhause, ein sandboxed-fs-Provider und fs-Eskalationsparität
+[English](2026-07-14-cross-family-fs-sandbox.md) | [中文](2026-07-14-cross-family-fs-sandbox.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-14-cross-family-fs-sandbox.md) | [中文](2026-07-14-cross-family-fs-sandbox.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: 在布局变化前处理贴底滚动事件
+[English](2026-09-07-pinned-scroll-delivery-before-layout.md) | 中文 | [Deutsch](2026-09-07-pinned-scroll-delivery-before-layout.de.md)
 
 Status: implemented
 
-[English](2026-09-07-pinned-scroll-delivery-before-layout.md) | 中文
 
 ## Problem
 

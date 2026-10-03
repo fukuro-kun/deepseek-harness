@@ -1,8 +1,8 @@
 # Agent Note: Automatically compose translation pairing records
+English | [中文](2026-08-08-automatic-translation-pairing-merges.zh.md) | [Deutsch](2026-08-08-automatic-translation-pairing-merges.de.md)
 
 Status: implemented
 
-English | [中文](2026-08-08-automatic-translation-pairing-merges.zh.md) | [Deutsch](2026-08-08-automatic-translation-pairing-merges.de.md)
 
 ## Problem
 

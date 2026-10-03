@@ -1,8 +1,8 @@
 # Agent Note: Initiierender-Agent-Scope über AsyncLocalStorage
+[English](2026-07-15-agent-initiator-scope.md) | [中文](2026-07-15-agent-initiator-scope.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-15-agent-initiator-scope.md) | [中文](2026-07-15-agent-initiator-scope.zh.md) | Deutsch
 
 ## Problem
 
@@ -28,7 +28,7 @@ Initiator-Scope besitzt keine detached Arbeit: Registry-Drain tracked nur das Pr
 
 Ein Host-aware Transport darf einen Deployment-eigenen Header wie `X-Harness-Session-Id` aus `ctx.agents.requireInitiator().session.id` ableiten; der Header fehlt in modell-sichtbarem Schema und Argumenten. Kein Produktions-MCP- oder -Web-Transport übernimmt in dieser Entscheidung einen solchen Header. Ein Test-Double-Transport beweist die vertrauenswürdige Grenze, ohne einem bestehenden provider-neutralen Seam Host-Routing-Policy zuzuweisen.
 
-Diese Entscheidung erweitert den [Agent-Registrierungs-Scope-Contract](2026-07-08-agent-scope-contexts.de.md) und sein [Runtime-Design](2026-07-12-agent-scope-runtime-design.de.md); sie ändert deren statische `agent.ctx`-Bedeutung nicht. Die [Explizite-Runtime-Identity-Entscheidung](2026-08-31-explicit-agent-runtime-identity.md) begrenzt Initiator-Scope weiterhin auf private asynchrone Chains, während Lifecycle-, Ownership-, Event- und Wire-Interfaces ihre Subjects direkt tragen.
+Diese Entscheidung erweitert den [Agent-Registrierungs-Scope-Contract](2026-07-08-agent-scope-contexts.de.md) und sein [Runtime-Design](2026-07-12-agent-scope-runtime-design.de.md); sie ändert deren statische `agent.ctx`-Bedeutung nicht. Die [Explizite-Runtime-Identity-Entscheidung](2026-08-31-explicit-agent-runtime-identity.de.md) begrenzt Initiator-Scope weiterhin auf private asynchrone Chains, während Lifecycle-, Ownership-, Event- und Wire-Interfaces ihre Subjects direkt tragen.
 
 ## Verifikation
 

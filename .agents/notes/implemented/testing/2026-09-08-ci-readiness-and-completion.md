@@ -1,9 +1,8 @@
 # Agent Note: CI assertions wait for owned completion
-English | [中文](.agents/notes/implemented/testing/2026-09-08-ci-readiness-and-completion.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-08-ci-readiness-and-completion.de.md)
+English | [中文](2026-09-08-ci-readiness-and-completion.zh.md) | [Deutsch](2026-09-08-ci-readiness-and-completion.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-08-ci-readiness-and-completion.zh.md)
 
 ## Problem
 

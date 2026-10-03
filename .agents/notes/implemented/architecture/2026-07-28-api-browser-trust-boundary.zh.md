@@ -1,8 +1,8 @@
 # Agent Note: 所有 /api 路由共用一道载体级浏览器信任边界
+[English](2026-07-28-api-browser-trust-boundary.md) | 中文 | [Deutsch](2026-07-28-api-browser-trust-boundary.de.md)
 
 Status: implemented
 
-[English](2026-07-28-api-browser-trust-boundary.md) | 中文 | [Deutsch](2026-07-28-api-browser-trust-boundary.de.md)
 
 ## 问题
 

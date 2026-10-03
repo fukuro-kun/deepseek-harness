@@ -1,8 +1,8 @@
 # Agent Note: Warten auf die Windows-Python-Konsolenlaufzeit
+[English](2026-09-06-windows-python-console-spawn-wait.md) | [中文](2026-09-06-windows-python-console-spawn-wait.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-windows-python-console-spawn-wait.md) | [中文](2026-09-06-windows-python-console-spawn-wait.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Web-Client-Agent-Scope-Parity-Modell und der Provisioning-Channel (agents/scope / Blank-Reuse / provide)
+[English](2026-07-25-web-client-session-scope-and-provide-channel.md) | [中文](2026-07-25-web-client-session-scope-and-provide-channel.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-25-web-client-session-scope-and-provide-channel.md) | [中文](2026-07-25-web-client-session-scope-and-provide-channel.zh.md) | Deutsch
 
 > Arbeitsteilung: der Client-Agent-Scope (actx) und gezielte Events, das Client/Host-Materialisierungs-Parity-Modell, das Blank-Session-Bit und Reuse (`connectWorkspace`), der Per-Session-Provisioning-Channel (`sessions.provide`) und die Host-Wire-Kleinteile, die diese Capabilities tragen (die Summary-`blank`-Spalte, das `host/session-added`-Frame-Feld und der `host/commands-changed`-Frame). Die Input-State-Machine und die Slash-Pipeline leben in der [Input-Machine-Note](../../archived/architecture/2026-07-25-web-input-machine-and-slash-pipeline.md); die Command-Business-Flächen leben in der [Command-Surfaces-Note](../../archived/architecture/2026-07-25-web-command-surfaces-and-assembly.md).
 
@@ -106,7 +106,7 @@ Slot-Scope ist die geschlossene Menge `root | session-maybe | session`:
 ### Host-Wire-Kleinteile
 
 - Die Summary-`blank`-Spalte und das `blank`-Feld des `host/session-added`-Frames (siehe das Blank-Bit oben).
-- Der SSE-Frame `host/commands-changed` (ein reines Invalidation-Signal); der Client routet ihn in die typisierten Events `commands/changed` und `connection/reset` (broadcast nachdem jede Connection-Generation etabliert ist; Wire-derived-Caches behandeln früheren State uniform als stale). Der Commands-Frame und sein typisiertes Client-Event wurden später durch verbatim-Forwarding von `commands/change` über `ctx.remote.$on` ersetzt ([Forwarded-Remote-Events](2026-08-10-remote-event-delivery.md)); `connection/reset` ist unverändert, und der Invalidation-not-Diffing-Contract, den dieser Bullet benennt, gilt weiterhin.
+- Der SSE-Frame `host/commands-changed` (ein reines Invalidation-Signal); der Client routet ihn in die typisierten Events `commands/changed` und `connection/reset` (broadcast nachdem jede Connection-Generation etabliert ist; Wire-derived-Caches behandeln früheren State uniform als stale). Der Commands-Frame und sein typisiertes Client-Event wurden später durch verbatim-Forwarding von `commands/change` über `ctx.remote.$on` ersetzt ([Forwarded-Remote-Events](2026-08-10-remote-event-delivery.de.md)); `connection/reset` ist unverändert, und der Invalidation-not-Diffing-Contract, den dieser Bullet benennt, gilt weiterhin.
 - `command.list/execute` und `skills/list` sind uniform per `sessionId` single-adressiert (eine Session hat immer einen Agent; `agentFor`s Resume-Semantik kommt fertig mit); das Command-Surface-Narrativ lebt in der [Command-Surfaces-Note](../../archived/architecture/2026-07-25-web-command-surfaces-and-assembly.md).
 - Die `session.create`-Request-Form: workspaceId/cwd als Entweder-oder, plus eine optionale Caller-vorallokierte SessionId (ein Same-Id-Same-cwd-Retry ist idempotent; ein anderer cwd reportet `session-conflict`).
 

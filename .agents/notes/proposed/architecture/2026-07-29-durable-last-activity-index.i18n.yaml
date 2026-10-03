@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-07-29-durable-last-activity-index.md
-2026-07-29-durable-last-activity-index.md: 884708940a8ec345b611a22611d13593524b92cc
-2026-07-29-durable-last-activity-index.zh.md: 759202c4a8b5e51800c76805d800013594303250
-2026-07-29-durable-last-activity-index.de.md: dfb7286438073edfa231e4962dd7aa90714d3f46
+2026-07-29-durable-last-activity-index.md: c55760703bc56b14e5d820daae73a641c30bbc6f
+2026-07-29-durable-last-activity-index.zh.md: 294e7790ab16943f3d561fadd0b86d52eed7bdbc
+2026-07-29-durable-last-activity-index.de.md: 6a42bd569c5b05de3f936d577ad110695927fbb6

@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/util/http-proxy/README.md
 README.md: 37665d3142da3f62cb6b84b97eacf47cb6cc7441
-README.zh.md: 516cd6dc8f6173a8658dfc991d6017f85d954633
-README.de.md: 8381c18c79619cae6905b8aa0163bea21158a245
+README.zh.md: ace660a9fc62cfd39c6177ce7e39db6874c1f23e
+README.de.md: 052ca4b14e6c8b56d4a04d827ea52ded560677a1

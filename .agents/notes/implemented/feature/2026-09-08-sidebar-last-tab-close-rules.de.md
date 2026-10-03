@@ -1,8 +1,8 @@
 # Agent Note: Schließregeln für den letzten Tab auf der angedockten Sidebar-Fläche
+[English](2026-09-08-sidebar-last-tab-close-rules.md) | [中文](2026-09-08-sidebar-last-tab-close-rules.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-sidebar-last-tab-close-rules.md) | [中文](2026-09-08-sidebar-last-tab-close-rules.zh.md) | Deutsch
 
 ## Problem
 

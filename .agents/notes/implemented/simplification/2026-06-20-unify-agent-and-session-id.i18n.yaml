@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-06-20-unify-agent-and-session-id.md
-2026-06-20-unify-agent-and-session-id.md: 0f633d2f58d56f3ba36abe05fe58111ab5b44a36
-2026-06-20-unify-agent-and-session-id.zh.md: 3adba379f12a46e6f151e6777e0a63f4b16e9cd6
-2026-06-20-unify-agent-and-session-id.de.md: a1797e334f519b1e5577712104269eea83263096
+2026-06-20-unify-agent-and-session-id.md: 5fe08f911b38de7f9b357f7a3617373b8d8d765e
+2026-06-20-unify-agent-and-session-id.zh.md: b14510cadb73751c175e2c4b6b9338331cd56cd6
+2026-06-20-unify-agent-and-session-id.de.md: 8327a1d0200fd33930ccdfff7378a78fdfdcde42

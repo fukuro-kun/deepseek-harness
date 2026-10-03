@@ -3,7 +3,6 @@ English | [中文](2026-07-05-windows-jsonl-durable-publish.zh.md) | [Deutsch](2
 
 Status: implemented
 
-English | [中文](2026-07-05-windows-jsonl-durable-publish.zh.md)
 
 ## Problem
 

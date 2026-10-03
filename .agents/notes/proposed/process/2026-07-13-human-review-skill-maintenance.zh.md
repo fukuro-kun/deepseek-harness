@@ -1,8 +1,8 @@
 # Agent Note: dsh-code-review 的定期人工评审维护
+[English](2026-07-13-human-review-skill-maintenance.md) | 中文 | [Deutsch](2026-07-13-human-review-skill-maintenance.de.md)
 
 Status: proposed
 
-[English](.agents/notes/proposed/process/2026-07-13-human-review-skill-maintenance.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-07-13-human-review-skill-maintenance.de.md)
 
 ## 问题
 

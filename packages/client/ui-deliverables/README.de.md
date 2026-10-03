@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-deliverables
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -30,7 +30,7 @@ Mounte dieses Plugin neben `ui-conversation`; ein abgeschlossener Turn endet dan
 <a id="explicit-deliveries"></a>
 ### Explizite Auslieferungen
 
-Die Web-presets `standard`, `ptc` und `cordis` stellen `present` für finale Dateien bereit, die über das Session-Dateisystem erreichbar sind, einschließlich über Bash erstellter Dateien. Nach dem Erstellen der Dateien mit `files: [{ path, description? }]` aufrufen. Das [present-Tool](../../fs/tool-present/README.md) besitzt Dateianzahl-Limits und Session-Deklarationen. Der abschließende Turn zeigt eine Auslieferung als Karte in voller Breite und mehrere Auslieferungen in einem Grid mit höchstens zwei Karten pro Zeile. Eine Liste mit mehr als vier Dateien startet eingeklappt und stellt ein Control bereit, das die vollständige Liste ein- oder ausblendet. Jede Karte nutzt das geteilte `FileTypeIcon` und zeigt Basename und Beschreibung oder — ohne Beschreibung — den Dateityp; ein abschließendes geklammertes Suffix in der Beschreibung wird weggelassen, und beim Hovern ersetzt die Sidebar-Vorschau-Aktion diese Zeile. Ein Klick auf die Karte oder die linke Seite ihres geteilten Open-Controls zeigt die Datei in der rechten Sidebar an. Der Chevron öffnet das Standardmenü für die Standardanwendung des Hosts sowie „Im Finder anzeigen" auf macOS, „Im Datei-Explorer anzeigen" auf Windows und WSL oder „Enthaltenen Ordner öffnen" über den Standard-Dateimanager unter Linux. Passende Inline-Code-Referenzen öffnen dieselben Quelldateien, ohne einen Browser-Download zu starten. Eine wiederholte Deklaration eines Pfads wählt dessen neueste Beschreibung vor der Abschlussantwort.
+Die Web-presets `standard`, `ptc` und `cordis` stellen `present` für finale Dateien bereit, die über das Session-Dateisystem erreichbar sind, einschließlich über Bash erstellter Dateien. Nach dem Erstellen der Dateien mit `files: [{ path, description? }]` aufrufen. Das [present-Tool](../../fs/tool-present/README.de.md) besitzt Dateianzahl-Limits und Session-Deklarationen. Der abschließende Turn zeigt eine Auslieferung als Karte in voller Breite und mehrere Auslieferungen in einem Grid mit höchstens zwei Karten pro Zeile. Eine Liste mit mehr als vier Dateien startet eingeklappt und stellt ein Control bereit, das die vollständige Liste ein- oder ausblendet. Jede Karte nutzt das geteilte `FileTypeIcon` und zeigt Basename und Beschreibung oder — ohne Beschreibung — den Dateityp; ein abschließendes geklammertes Suffix in der Beschreibung wird weggelassen, und beim Hovern ersetzt die Sidebar-Vorschau-Aktion diese Zeile. Ein Klick auf die Karte oder die linke Seite ihres geteilten Open-Controls zeigt die Datei in der rechten Sidebar an. Der Chevron öffnet das Standardmenü für die Standardanwendung des Hosts sowie „Im Finder anzeigen" auf macOS, „Im Datei-Explorer anzeigen" auf Windows und WSL oder „Enthaltenen Ordner öffnen" über den Standard-Dateimanager unter Linux. Passende Inline-Code-Referenzen öffnen dieselben Quelldateien, ohne einen Browser-Download zu starten. Eine wiederholte Deklaration eines Pfads wählt dessen neueste Beschreibung vor der Abschlussantwort.
 
 Die `present`-Tool-Zeile zeigt den Status laufend, ausgeliefert, fehlgeschlagen oder unterbrochen; das Aufklappen einer abgeschlossenen Zeile zeigt ihr aufgezeichnetes Ergebnis. Das einklappbare Karten-Grid behält jede ausgelieferte Datei. Beide Menüaktionen teilen den Pending-Zustand und zeigen Fortschritt, eine Bestätigung oder einen aktionsspezifischen wiederholbaren Fehler. Desktop-Informationen werden gelesen, wenn Auslieferungskarten erscheinen, und bei einem Verbindungswechsel invalidiert; Antworten einer ersetzten Verbindung können keine Metadaten veröffentlichen. Die Auswahl einer nativen Menüaktion gibt den Tastaturfokus an die verfügbare Open-Schaltfläche der Sidebar zurück. Ausstehende Aktionen schließen das Menü, bis eine weitere explizite Geste erfolgt. Ein fehlender Desktop deaktiviert das Open-Menü; ein fehlgeschlagener Lesevorgang der Desktop-Informationen bietet „Wiederholen". Voraussetzung sind ein Desktop und eine geeignete Standardanwendung auf dem ausliefernden Host; ein Remote-Browser öffnet keine Anwendungen auf seinem eigenen Gerät.
 
@@ -64,7 +64,7 @@ Natives Öffnen nutzt ein authentifiziertes POST, das über die betrachtete Sess
 Lies diese Seiten, wenn die Deliverables-Oberfläche nicht ausreicht. Sie führen von der Zeile zum turn-tail-hole und den Entscheidungen hinter dem Vokabular.
 
 - [ui-conversation](../ui-conversation/README.de.md) — deklariert das `conversation.chat.turnTail`-hole und rendert den Abschlusstext.
-- [Workspace-Dateilinks](../../../.agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.md) — die Entscheidung hinter der Zeile erzeugter Dateien; ihr Host-Open-Pfad wurde von der [rechten Sidebar](../../../.agents/notes/implemented/feature/2026-09-04-right-sidebar-docking-infrastructure.md) abgelöst.
+- [Workspace-Dateilinks](../../../.agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.de.md) — die Entscheidung hinter der Zeile erzeugter Dateien; ihr Host-Open-Pfad wurde von der [rechten Sidebar](../../../.agents/notes/implemented/feature/2026-09-04-right-sidebar-docking-infrastructure.de.md) abgelöst.
 - [Inline-Dateierwähnungen](../../../.agents/notes/archived/feature/2026-08-07-web-inline-file-mentions.md) — die Entscheidung hinter klickbaren Erwähnungen im Abschlusstext.
 - [Client-Paketkarte](../README.de.md) — benachbarte Browser-UI-Pakete.
 
@@ -81,7 +81,7 @@ Ein fester Absatz weist das Modell an, primäre Dateien aus erfolgreichen Erstel
 
 #### Token-Auswirkung
 
-Ein fester Prompt-Absatz, wann immer dieses Paket geladen ist. Das [present-Tool](../../fs/tool-present/README.md#model-experience) besitzt das Auslieferungs-schema und den Ergebnistext.
+Ein fester Prompt-Absatz, wann immer dieses Paket geladen ist. Das [present-Tool](../../fs/tool-present/README.de.md#model-experience) besitzt das Auslieferungs-schema und den Ergebnistext.
 
 #### KV-Cache-Auswirkung
 

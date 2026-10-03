@@ -3,7 +3,6 @@ English | [中文](2026-09-05-client-resource-model.zh.md) | [Deutsch](2026-09-0
 
 Status: implemented
 
-English | [中文](2026-09-05-client-resource-model.zh.md)
 
 ## Problem
 

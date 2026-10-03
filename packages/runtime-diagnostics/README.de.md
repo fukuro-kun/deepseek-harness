@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # packages/runtime-diagnostics
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -32,7 +32,7 @@ Die runtime-diagnostics-Gruppe stellt Runtime-Selbstprüfung für DeepSeek-Harne
 ## Verwandte Dokumentation
 
 - [Runtime-Invarianten-Subsystem](../../docs/subsystems/invariants.de.md) — die generierte Service-Referenz: Auswahl, Installer und Companion-Vertrag.
-- [Invarianten-Runtime-Verträge Agent Note](../../.agents/notes/implemented/architecture/2026-07-19-package-invariant-runtime-contracts.md) — was eine Runtime-Invariante behaupten darf und das mechanische Gate, das die Companion-Verdrahtung erzwingt.
+- [Invarianten-Runtime-Verträge Agent Note](../../.agents/notes/implemented/architecture/2026-07-19-package-invariant-runtime-contracts.de.md) — was eine Runtime-Invariante behaupten darf und das mechanische Gate, das die Companion-Verdrahtung erzwingt.
 - [Paketkonventionen](../AGENTS.md) — die `./invariant`-Companion-Regel, der jedes Paket folgt.
 
 -----

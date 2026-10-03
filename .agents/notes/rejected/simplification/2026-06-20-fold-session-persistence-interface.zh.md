@@ -1,8 +1,8 @@
 # Agent Note: 将持久化接口合并进 dsh-session
+[English](2026-06-20-fold-session-persistence-interface.md) | 中文 | [Deutsch](2026-06-20-fold-session-persistence-interface.de.md)
 
 Status: rejected — 独立的持久化 Service Definition 包是持久化能力 seam 预期的模块化角色拆分。将其折叠进 `dsh-session` 虽能减少包数量，却会牺牲更清晰的后端边界。
 
-[English](2026-06-20-fold-session-persistence-interface.md) | 中文
 
 ## 问题
 

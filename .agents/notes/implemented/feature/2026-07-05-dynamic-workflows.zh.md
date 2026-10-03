@@ -1,8 +1,8 @@
 # Agent Note: 动态工作流——脚本驱动的多 agent 编排 seam
+[English](2026-07-05-dynamic-workflows.md) | 中文 | [Deutsch](2026-07-05-dynamic-workflows.de.md)
 
 Status: implemented
 
-[English](2026-07-05-dynamic-workflows.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Alpha Session 迁移拒绝所有未知历史事件
+[English](2026-08-31-alpha-historical-unknown-event-refusal.md) | 中文 | [Deutsch](2026-08-31-alpha-historical-unknown-event-refusal.de.md)
 
 Status: implemented
 
-[English](2026-08-31-alpha-historical-unknown-event-refusal.md) | 中文 | [Deutsch](2026-08-31-alpha-historical-unknown-event-refusal.de.md)
 
 ## 问题
 

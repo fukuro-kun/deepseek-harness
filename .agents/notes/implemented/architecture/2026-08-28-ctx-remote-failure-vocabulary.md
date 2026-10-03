@@ -3,7 +3,6 @@ English | [中文](2026-08-28-ctx-remote-failure-vocabulary.zh.md) | [Deutsch](2
 
 Status: implemented
 
-English | [中文](2026-08-28-ctx-remote-failure-vocabulary.zh.md)
 
 ## Problem
 

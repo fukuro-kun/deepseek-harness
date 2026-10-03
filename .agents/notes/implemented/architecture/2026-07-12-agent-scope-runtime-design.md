@@ -3,7 +3,6 @@ English | [中文](2026-07-12-agent-scope-runtime-design.zh.md) | [Deutsch](2026
 
 Status: implemented
 
-English | [中文](2026-07-12-agent-scope-runtime-design.zh.md)
 
 ## Problem
 

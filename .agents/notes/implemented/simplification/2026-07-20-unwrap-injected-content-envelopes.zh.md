@@ -1,8 +1,8 @@
 # Agent Note: 注入内容逐字投影，去除 XML 封套
+[English](2026-07-20-unwrap-injected-content-envelopes.md) | 中文 | [Deutsch](2026-07-20-unwrap-injected-content-envelopes.de.md)
 
 Status: implemented
 
-[English](2026-07-20-unwrap-injected-content-envelopes.md) | 中文
 
 ## 问题
 

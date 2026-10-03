@@ -1,8 +1,8 @@
 # Agent Note: PTC mode 塌缩执行器而非仅通告面
+[English](2026-08-07-ptc-executor-collapse.md) | 中文 | [Deutsch](2026-08-07-ptc-executor-collapse.de.md)
 
 Status: implemented
 
-[English](2026-08-07-ptc-executor-collapse.md) | 中文
 
 ## 问题
 

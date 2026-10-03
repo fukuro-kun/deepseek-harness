@@ -1,6 +1,6 @@
 # 3. Services
-
 [English](03-services.md) | [中文](03-services.zh.md) | Deutsch
+
 
 Ein **Service** ist eine benannte Capability, die ein Plugin bereitstellt und andere Plugins über `ctx` konsumieren. Im Harness sind `ctx.tools`, `ctx.llm` und `ctx.agents` Services. Ein Consumer benennt die Capability, etwa `'tools'`, anstatt seinen Provider zu importieren, sodass die Config einen Provider wählen kann, ohne den Consumer zu ändern.
 

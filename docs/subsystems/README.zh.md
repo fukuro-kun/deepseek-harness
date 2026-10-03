@@ -1,6 +1,6 @@
 # 子系统
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 每个子系统一页，覆盖 DeepSeek Harness 的全部子系统：它是什么、它操作哪些数据结构，以及——当它由某个 `ctx` 服务或事件作用域支撑时——一段生成的 **Cordis API** 小节，承载其服务与事件参考。本目录与 [architecture.md](../architecture.zh.md) 互补：后者描述跨子系统的*行为*（服务映射、会话/轮次/步骤生命周期、事件分类体系）；这里的每一页是单个子系统词汇与接线的参考。
 
@@ -12,7 +12,6 @@
 | [scope.md](scope.zh.md) | 作用域注册标识、dispatch 载体，以及拥有的 `Scope` 上下文 |
 | [typert.md](typert.zh.md) | 远程调用描述符、lookup/Context 声明、Typert 注册表，以及 Host Gateway/Client API 边界 |
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 | [goal.md](goal.zh.md) | 持久 goal 标识、生命周期快照、激活、变更记录与 Round 归属 |
 | [schedule.md](schedule.zh.md) | 仅限 Session 内的提醒记录、持久转换、活动视图与普通对话交付 |
 | [todo.md](todo.zh.md) | todo 包的整列表条目类型、持久事件所有权、投影和开放轮次不变量 |

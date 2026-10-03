@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/postmortem/0004-landlock-partial-notice-misclassified-child-failures.md
-0004-landlock-partial-notice-misclassified-child-failures.md: 624690bc0b1b414782524306290338e649941ef0
-0004-landlock-partial-notice-misclassified-child-failures.zh.md: bd349da6e5ee7e0cb915b9f8b8fa7a4d161b7752
-0004-landlock-partial-notice-misclassified-child-failures.de.md: b0de74e400c10054a6aafec332937971ada1c957
+0004-landlock-partial-notice-misclassified-child-failures.md: 9f080b41e665fe1e2078ebdde236293d045903f6
+0004-landlock-partial-notice-misclassified-child-failures.zh.md: 074372a02ccf858e9797b9663803ff3e633c3d34
+0004-landlock-partial-notice-misclassified-child-failures.de.md: 4576088810911183957a4d951c687d923aaed73b

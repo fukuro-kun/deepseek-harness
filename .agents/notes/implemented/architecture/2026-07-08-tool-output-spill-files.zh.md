@@ -1,8 +1,8 @@
 # Agent Note: 工具输出 spill 策略
+[English](2026-07-08-tool-output-spill-files.md) | 中文 | [Deutsch](2026-07-08-tool-output-spill-files.de.md)
 
 Status: implemented
 
-[English](2026-07-08-tool-output-spill-files.md) | 中文 | [Deutsch](2026-07-08-tool-output-spill-files.de.md)
 
 ## 问题
 

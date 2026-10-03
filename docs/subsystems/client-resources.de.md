@@ -1,6 +1,6 @@
 # Client-Ressourcen
-
 [English](client-resources.md) | [中文](client-resources.zh.md) | Deutsch
+
 
 Das Client-Ressourcenmodell verwandelt eine Adresse in Live-Daten für jede Web-Client-Komponente. [`dsh-client-resources`](../../packages/client/resources/README.de.md) stellt den `ctx.resources`-Service und den globalen Standard-Hook `useResource` bereit; ein Paket, das eine Inhaltsart besitzt, registriert einen **Provider** für sein **Protokoll**, und eine Komponente liest den aktuellen Zustand des Inhalts über die **Adresse**, ohne die Laufzeit des Owners zu importieren. Die Tabs der rechten Sidebar sind der erste Consumer des Modells ([rechte Sidebar](sidebar-right.de.md)); der Entscheidungsrekord ist der [Agent Note zum Client-Ressourcenmodell](../../.agents/notes/implemented/architecture/2026-09-05-client-resource-model.de.md).
 

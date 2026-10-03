@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/interaction/user-questions/README.md
 README.md: 9a46be8c1c45722550e3ecc30e4e8222f0dc30d5
-README.zh.md: 08691d4bf77606266d06dddc6c91ff9e399d7f35
-README.de.md: db741df42d4e0ba599dfb2018a5b7b33eaab83a0
+README.zh.md: a17a128935b71ee8c8960cde66025cfef01f85d6
+README.de.md: e69ae681101e55298728853becd53267a3b8bd9a

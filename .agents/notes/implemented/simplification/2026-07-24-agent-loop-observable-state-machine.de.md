@@ -1,8 +1,8 @@
 # Agent Note: Agent-Loop-Events um die beobachtbare State-Machine kollabieren
+[English](2026-07-24-agent-loop-observable-state-machine.md) | [中文](2026-07-24-agent-loop-observable-state-machine.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-24-agent-loop-observable-state-machine.md) | [中文](2026-07-24-agent-loop-observable-state-machine.zh.md) | Deutsch
 
 ## Problem
 
@@ -25,7 +25,7 @@ Der Loop behält vier Machine-Extension-Events. `agent/pre-step` entscheidet Rej
 
 Continuation und Termination sind Daten statt zurückgegebener Control-Enums. Tool-Calls und akzeptiertes Steering erfordern einen weiteren Step. Ein Tool-Result mit `concludesTurn` beendet den Tool-Loop an seinem Step. Der Loop exponiert keinen generischen `ContinuationDecision`- oder Terminal-Stop-Return-Channel.
 
-Ein Model-Request-Fehler schließt seinen Step und betritt dann `agent/request-error` mit dem exakten Error, normalisiertem `LlmFailure` und dem live Turn-Signal. Ein Listener, der die Recovery besitzt, repariert den State, gibt `{ kind: 'retry' }` zurück und stoppt das Delegieren. Der Loop schließt den fehlgeschlagenen Turn und öffnet einen Retry-Turn über diesem State ohne dazwischenliegende Idle-Notification; Retry ist kein weiterer Step innerhalb des fehlgeschlagenen Turns. `agent/settled` meldet das terminale Outcome, und `agent/error` bleibt die Live-Error-Notification für Consumer, die Fehler unabhängig vom Turn-Settlement berichten. Die [Retry-Action-Entscheidung](2026-07-27-request-error-retry-action.md) supersedet den Command-förmigen Teil dieses Designs.
+Ein Model-Request-Fehler schließt seinen Step und betritt dann `agent/request-error` mit dem exakten Error, normalisiertem `LlmFailure` und dem live Turn-Signal. Ein Listener, der die Recovery besitzt, repariert den State, gibt `{ kind: 'retry' }` zurück und stoppt das Delegieren. Der Loop schließt den fehlgeschlagenen Turn und öffnet einen Retry-Turn über diesem State ohne dazwischenliegende Idle-Notification; Retry ist kein weiterer Step innerhalb des fehlgeschlagenen Turns. `agent/settled` meldet das terminale Outcome, und `agent/error` bleibt die Live-Error-Notification für Consumer, die Fehler unabhängig vom Turn-Settlement berichten. Die [Retry-Action-Entscheidung](2026-07-27-request-error-retry-action.de.md) supersedet den Command-förmigen Teil dieses Designs.
 
 Die Event-Taxonomie entfernt die Legacy-Prompt-Preparation/Submission- und Serial-Step-Hooks zusammen mit `agent/post-step`, `agent/session-prefix`, `agent/step-result`, `agent/turn-continuation` und `agent/turn-stop`. Der einzelne `agent/pre-step`-Waterfall besitzt den Claimed-Message-Entry. Durable Turn- und Step-Grenzen bleiben Session-Events. Modellzugewandte Ergänzungen nutzen geloggte Message-Channels, Request-Konfiguration nutzt `agent/request`, Response-Content wird assembliert aufgezeichnet, Failed-Request-Recovery nutzt die `agent/request-error`-Return-Action, und End-of-Turn-Continuation nutzt `agent/turn-stopping` plus Steering.
 
@@ -35,7 +35,7 @@ Die Event-Taxonomie entfernt die Legacy-Prompt-Preparation/Submission- und Seria
 
 **Disposal als dritten `AgentStatus` darstellen.** Dies gibt gehaltenen Handles einen terminalen Status-Wert, dupliziert aber den Registry-Lifecycle, den `agent/disposed` bereits ausdrückt. Die Entscheidung hält `AgentStatus` bei Live-Aktivität und macht Registration-Lifetime zu einer separaten Dimension.
 
-**Eine Retry-Entscheidung aus `agent/request-error` zurückgeben.** Diese Alternative wird von der [Retry-Action-Entscheidung](2026-07-27-request-error-retry-action.md) superseded, die das doppelte Command entfernt und die Entscheidung lokal beim Waterfall-Ergebnis hält.
+**Eine Retry-Entscheidung aus `agent/request-error` zurückgeben.** Diese Alternative wird von der [Retry-Action-Entscheidung](2026-07-27-request-error-retry-action.de.md) superseded, die das doppelte Command entfernt und die Entscheidung lokal beim Waterfall-Ergebnis hält.
 
 **Durable Turn- und Step-Grenzen als Agent-Events spiegeln.** Dies gibt Live-Consumern einen zweiten Event-Stream für dieselben Fakten. Die Entscheidung hält das Session-Log als Source of Truth und exponiert nur Extension-Checkpoints oder Live-only-Fakten, die der durable Stream nicht tragen kann.
 
@@ -53,6 +53,6 @@ Der Inbox-Lifecycle ergänzt das durable Session-Log statt es zu ersetzen. `Mess
 
 - [Unify agent delivery routing and coalesce injected context into user/message](../../archived/architecture/2026-07-22-unified-send-and-coalesced-user-messages.md)
 - [Remove implicit batching from ordinary sends](2026-07-17-one-send-one-turn.de.md)
-- [Microkernel event taxonomy](../architecture/2026-06-11-microkernel-event-taxonomy.md)
-- [Bounded LLM request recovery](../architecture/2026-06-21-bounded-llm-request-recovery.md)
-- [Reconstructable requests](../architecture/2026-07-05-reconstructable-requests.md)
+- [Microkernel event taxonomy](../architecture/2026-06-11-microkernel-event-taxonomy.de.md)
+- [Bounded LLM request recovery](../architecture/2026-06-21-bounded-llm-request-recovery.de.md)
+- [Reconstructable requests](../architecture/2026-07-05-reconstructable-requests.de.md)

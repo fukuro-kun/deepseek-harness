@@ -1,6 +1,6 @@
 # Cookbook: Extension-Plugin-Formen
-
 [English](extension-cookbook.md) | [中文](extension-cookbook.zh.md) | Deutsch
+
 
 Referenzmuster für harness-Erweiterungen. Die Snippets lassen Imports und Hilfsimplementierungen weg und sind nicht kopierfertig. Für konkrete Autorierungspfade siehe die [Package-Checkliste](adding-a-package.de.md), das [Erstes-Tool-Tutorial](../user/develop/basic/tool.de.md), die [Tool-Referenz](adding-a-tool.de.md), den [LLM-Adapter-Leitfaden](adding-an-llm-adapter.de.md) und das [Session-Format-Version-Tutorial](adding-a-session-format-version.de.md); die [Architektur](../architecture.de.md) besitzt die System- und Extension-Point-Map.
 

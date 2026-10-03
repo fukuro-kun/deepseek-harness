@@ -1,6 +1,6 @@
 # Services und Abhängigkeiten
-
 [English](service.md) | [中文](service.zh.md) | Deutsch
+
 
 Ein service ist eine capability, die ein plugin anderen plugins zur Verfügung stellt. `inject` deklariert die services, die ein plugin benötigt.
 

@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-agent-instructions
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -35,7 +35,7 @@ Die erste Anfrage enthält eine durable Baseline-Nachricht mit dem benutzergloba
 
 Die Defaults passen zu einem typischen Checkout: `.git` markiert das Projektroot, `AGENTS.md` und `CLAUDE.md` sind die Basiskandidaten, und `AGENTS.local.md` sowie `CLAUDE.local.md` sind additive lokale Overlays. Nur `maxBytes` ist erforderlich — es begrenzt die vollständig gerenderte Baseline, sodass jedes Deployment sein Prompt-Budget explizit wählt.
 
-Die Root-Erkennung steigt nur auf, wenn ein Marker-Probe bestätigt, dass der Marker fehlt. Ein Berechtigungs- oder I/O-Fehler stoppt die Erkennung und gibt den Host- oder Dateisystem-Provider-Fehler weiter, statt ein Vorfahren-Projekt zu wählen. Die [Root-Marker-Metadaten-Entscheidung](../../../.agents/notes/implemented/bug-fix/2026-09-03-root-marker-metadata-failures.md) dokumentiert, warum die Erkennung fehlschlägt, statt ein anderes Root zu substituieren.
+Die Root-Erkennung steigt nur auf, wenn ein Marker-Probe bestätigt, dass der Marker fehlt. Ein Berechtigungs- oder I/O-Fehler stoppt die Erkennung und gibt den Host- oder Dateisystem-Provider-Fehler weiter, statt ein Vorfahren-Projekt zu wählen. Die [Root-Marker-Metadaten-Entscheidung](../../../.agents/notes/implemented/bug-fix/2026-09-03-root-marker-metadata-failures.de.md) dokumentiert, warum die Erkennung fehlschlägt, statt ein anderes Root zu substituieren.
 
 ```yaml
 - name: '@deepseek-ai/dsh-agent-instructions'
@@ -65,7 +65,7 @@ export interface Config {
 | `localInstructionFileCandidates` | `['AGENTS.local.md', 'CLAUDE.local.md']` | Lokale Overlay-Dateinamen, die nach den Basisdateien geladen werden |
 | `dshHome` | `$DSH_HOME` oder `~/.dsh` | Verzeichnis mit dem benutzerglobalen `AGENTS.md` |
 
-Der generierte [Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-agent-instructions) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
+Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-agent-instructions) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
 
 ### Das Budget beobachten
 
@@ -116,8 +116,8 @@ Lesen Sie diese Seiten, wenn der Paketvertrag nicht ausreicht. Sie führen vom A
 
 - [Dokumentationsstandard](../../../docs/AGENTS.md) — was `AGENTS.md`-Anweisungsdateien enthalten und wie sie gepflegt werden.
 - [Workspace-Kontext-Entscheidungsdokument](../../../.agents/notes/archived/feature/2026-06-24-workspace-context.md) — Begründung für Isolation und Lifecycle pro agent/Session.
-- [Context-Gruppenkarte](../README.md) — benachbarte Request-Kontext-Pakete.
-- [Generierter Konfigurationskatalog](../../../docs/config-catalog.md#deepseek-aidsh-agent-instructions) — jedes akzeptierte Config-Feld und seine Quelldeklaration.
+- [Context-Gruppenkarte](../README.de.md) — benachbarte Request-Kontext-Pakete.
+- [Generierter Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-agent-instructions) — jedes akzeptierte Config-Feld und seine Quelldeklaration.
 
 -----
 

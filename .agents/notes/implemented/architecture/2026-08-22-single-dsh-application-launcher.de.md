@@ -1,8 +1,8 @@
 # Agent Note: Ein dsh-Launcher für Anwendungsprofile
+[English](2026-08-22-single-dsh-application-launcher.md) | [中文](2026-08-22-single-dsh-application-launcher.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-22-single-dsh-application-launcher.md) | [中文](2026-08-22-single-dsh-application-launcher.zh.md) | Deutsch
 
 ## Problem
 
@@ -46,7 +46,7 @@ Die direkte SDK-Nutzung folgt der normalen Harness-Home-Auflösung: explizites `
 
 ### Python-Laufzeit
 
-Das Python-Runtime-wheel stellt [`python/sdk-runtime/runtime-bootstrap.mjs`](../../../../python/sdk-runtime/runtime-bootstrap.mjs) als `dsh-python-runtime-closure`-Einstieg bereit. Sein gewöhnlicher Zweig ruft den öffentlichen CLI-Export auf; ein provider-privater Selektor dispatcht vor dem CLI-Parsing zum internen subprocess-runner und ist kein Anwendungseinstiegspunkt. Die [Native-Containment-Entscheidung](2026-08-28-subprocess-native-containment.md) besitzt diesen privaten Dispatch. Der Python-Client wählt standardmäßig `dsh --profile sdk`, geordnete Patch-Dateien und ein explizites Harness-Home; das ausführbare Beispiel unter `python/sdk/examples` wählt `sdk-minimal`. Der installierte `dsh`-Konsolenbefehl stellt dieselbe Profilgrammatik und die separat gepackte `web`-Anwendung bereit.
+Das Python-Runtime-wheel stellt [`python/sdk-runtime/runtime-bootstrap.mjs`](../../../../python/sdk-runtime/runtime-bootstrap.mjs) als `dsh-python-runtime-closure`-Einstieg bereit. Sein gewöhnlicher Zweig ruft den öffentlichen CLI-Export auf; ein provider-privater Selektor dispatcht vor dem CLI-Parsing zum internen subprocess-runner und ist kein Anwendungseinstiegspunkt. Die [Native-Containment-Entscheidung](2026-08-28-subprocess-native-containment.de.md) besitzt diesen privaten Dispatch. Der Python-Client wählt standardmäßig `dsh --profile sdk`, geordnete Patch-Dateien und ein explizites Harness-Home; das ausführbare Beispiel unter `python/sdk/examples` wählt `sdk-minimal`. Der installierte `dsh`-Konsolenbefehl stellt dieselbe Profilgrammatik und die separat gepackte `web`-Anwendung bereit.
 
 Die Executable-Familie ist `deepseek-harness-sdk-runtime-<platform>-<arch>`. Das SDK-Protokoll, wheel- und Import-Distributionsnamen, Sidecar-Namen und die Protokollidentität `deepseek-harness-sdk-runtime` bleiben stabil. Die SDK-Paketfamilie ist `@deepseek-ai/dsh-sdk-client`, `@deepseek-ai/dsh-sdk-protocol` und `@deepseek-ai/dsh-sdk-jsonrpc-server`; `@deepseek-ai/dsh-acp` bleibt das ACP-Protokoll-Plugin. Es gibt keine Python-spezifische Node-Anwendung, keine eingecheckte vollständige Konfiguration, kein Kompatibilitätspaket, keine Forwarding-Executable, keinen Fallback-Parser und keinen SDK/ACP-Launcher-Alias. [docs/architecture.md](../../../../docs/architecture.de.md) besitzt diesen Launch, und das [`python/sdk-runtime`-README](../../../../python/sdk-runtime/README.de.md) besitzt den Windows-Träger.
 

@@ -1,8 +1,8 @@
 # Agent Note: 移除纯日志事件的合成轮次
+[English](2026-07-28-remove-synthetic-log-only-turns.md) | 中文 | [Deutsch](2026-07-28-remove-synthetic-log-only-turns.de.md)
 
 Status: implemented
 
-[English](2026-07-28-remove-synthetic-log-only-turns.md) | 中文
 
 ## 问题
 

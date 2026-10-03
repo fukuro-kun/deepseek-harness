@@ -2,10 +2,10 @@
      Run `pnpm run gen-cordis-catalog` to regenerate. -->
 
 # Service
+English | [中文](service.zh.md) | [Deutsch](service.de.md)
 
 The base class for context services. A subclass loaded as a plugin registers itself as `ctx.<name>`.
 
-English | [中文](service.zh.md) | [Deutsch](service.de.md)
 
 Base class for services that expose a named API on `ctx`.
 

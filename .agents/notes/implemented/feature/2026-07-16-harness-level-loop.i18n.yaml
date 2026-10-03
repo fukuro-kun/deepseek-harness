@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-16-harness-level-loop.md
-2026-07-16-harness-level-loop.md: cf85353924f535a391d4ace7deddac8a18dc44ea
-2026-07-16-harness-level-loop.zh.md: 40af80d95127974bcbed4f7114dec048e0dbdc57
-2026-07-16-harness-level-loop.de.md: 25097b968f6fedc896cc408659b36319d3e72e42
+2026-07-16-harness-level-loop.md: 855b20f8b927368238ad971ba4159c6f2b701ca6
+2026-07-16-harness-level-loop.zh.md: 67e0c2f9a1f984fb21289cd61b2c87342e455d16
+2026-07-16-harness-level-loop.de.md: 719f1a9ed5cbed366553621e33febf2689a4e9cd

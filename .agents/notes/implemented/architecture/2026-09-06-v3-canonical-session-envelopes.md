@@ -3,7 +3,6 @@ English | [中文](2026-09-06-v3-canonical-session-envelopes.zh.md) | [Deutsch](
 
 Status: implemented
 
-English | [中文](2026-09-06-v3-canonical-session-envelopes.zh.md)
 
 ## Problem
 

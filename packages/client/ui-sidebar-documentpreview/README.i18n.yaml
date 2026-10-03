@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-sidebar-documentpreview/README.md
 README.md: 319d966f97832e08c27ef74a07e9c496f1468aef
-README.zh.md: 380e8d3ab46e82705dfba1ab07650498cb03c972
-README.de.md: afa045d3419c3c0197ddfb6b9cc7f6513a879281
+README.zh.md: d33a89b1dbe2649cc9b4e6686dcf287abb632afd
+README.de.md: eb77c9f370b255b3bd7be5430a9eea9ce94f85c4

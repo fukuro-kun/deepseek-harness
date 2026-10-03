@@ -1,8 +1,8 @@
 # Agent Note: 运行时边界显式携带 Agent 身份
+[English](2026-08-31-explicit-agent-runtime-identity.md) | 中文 | [Deutsch](2026-08-31-explicit-agent-runtime-identity.de.md)
 
 Status: implemented
 
-[English](2026-08-31-explicit-agent-runtime-identity.md) | 中文 | [Deutsch](2026-08-31-explicit-agent-runtime-identity.de.md)
 
 ## 问题
 

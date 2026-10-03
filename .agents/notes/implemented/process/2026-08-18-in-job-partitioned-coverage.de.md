@@ -1,8 +1,8 @@
 # Agent Note: In-Job-partitionierte Coverage
+[English](2026-08-18-in-job-partitioned-coverage.md) | [中文](2026-08-18-in-job-partitioned-coverage.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-18-in-job-partitioned-coverage.md) | [中文](2026-08-18-in-job-partitioned-coverage.zh.md) | Deutsch
 
 ## Problem
 

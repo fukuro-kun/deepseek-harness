@@ -1,8 +1,8 @@
 # Agent Note: Leerheitsregel des Composer-Placeholders
+[English](2026-09-09-composer-placeholder-whitespace.md) | [中文](2026-09-09-composer-placeholder-whitespace.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-09-composer-placeholder-whitespace.md) | [中文](2026-09-09-composer-placeholder-whitespace.zh.md) | Deutsch
 
 ## Problem
 

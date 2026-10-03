@@ -1,8 +1,8 @@
 # Agent Note: Ein gemeinsames Timeout-/Deadline-Primitiv, Hard-Kill bleibt bei der jeweiligen Fähigkeit
+[English](2026-07-06-timeout-deadline-library.md) | [中文](2026-07-06-timeout-deadline-library.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-06-timeout-deadline-library.md) | [中文](2026-07-06-timeout-deadline-library.zh.md) | Deutsch
 
 ## Problem
 
@@ -12,7 +12,7 @@ Die Timeout-Behandlung driftete über die tool-tragenden Fähigkeiten hinweg aus
 - **web_fetch** ([packages/web/web-fetch-http/src/provider.ts](../../../../packages/web/web-fetch-http/src/provider.ts)) hatte ein korrektes, aber *handgeschriebenes* Timeout: Es konstruierte einen `AbortController`, verdrahtete `setTimeout(() => controller.abort(new WebError(…, 'WEB_FETCH_TIMEOUT')))`, fügte den Upstream-Signal-Listener manuell hinzu und entfernte ihn, räumte den Timer in einem `finally` auf und gewann den Timeout-Grund über einen `translateAbortOrNetwork`-Helper aus `signal.reason` zurück, weil der Reader ein nacktes `AbortError` an die Oberfläche gibt.
 - **web_search** ([packages/web/tool-web/src/search.ts](../../../../packages/web/tool-web/src/search.ts)) hatte **überhaupt kein Timeout**: `WebSearchRequest` ([packages/web/web/src/types.ts](../../../../packages/web/web/src/types.ts)) trägt kein `timeoutMs`-Feld, und das `search()` jedes Providers reicht nur `exec.signal` weiter. (web_search bleibt hier ohne Timeout — siehe Konsequenzen.)
 
-Jedes neue Externer-Prozess- oder Netzwerk-Tool leitete dieselben vier Dinge erneut her — den angefragten Wert klemmen, einen Timer starten, das Timeout mit Upstream-Abbruch fusionieren und „timed out" von „cancelled" auf dem Rückweg unterscheiden — und die Fusion sowie die Grund-Rückgewinnung sind genau die Teile, die man leicht subtil falsch macht (web_fetchs `signal.reason`-Tanz ist der Beleg). Gleichzeitig ist die *Terminierung*, die jede Fähigkeit ausführt, unvermeidbar verschieden: bash bittet seinen Subprocess-Provider, einen OS-eigenen Bereich zu terminieren, während web einen prozessinternen `fetch` abbricht und undici den Socket abbauen lässt. Die [Native-Containment-Entscheidung](2026-08-28-subprocess-native-containment.md) besitzt die lokalen Scope-, Job- und Fallback-Mechanismen; es gibt keinen einzelnen Mechanismus, der die Arbeit jeder Fähigkeit stoppen kann.
+Jedes neue Externer-Prozess- oder Netzwerk-Tool leitete dieselben vier Dinge erneut her — den angefragten Wert klemmen, einen Timer starten, das Timeout mit Upstream-Abbruch fusionieren und „timed out" von „cancelled" auf dem Rückweg unterscheiden — und die Fusion sowie die Grund-Rückgewinnung sind genau die Teile, die man leicht subtil falsch macht (web_fetchs `signal.reason`-Tanz ist der Beleg). Gleichzeitig ist die *Terminierung*, die jede Fähigkeit ausführt, unvermeidbar verschieden: bash bittet seinen Subprocess-Provider, einen OS-eigenen Bereich zu terminieren, während web einen prozessinternen `fetch` abbricht und undici den Socket abbauen lässt. Die [Native-Containment-Entscheidung](2026-08-28-subprocess-native-containment.de.md) besitzt die lokalen Scope-, Job- und Fallback-Mechanismen; es gibt keinen einzelnen Mechanismus, der die Arbeit jeder Fähigkeit stoppen kann.
 
 ## Entscheidung
 

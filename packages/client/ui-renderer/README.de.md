@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-renderer
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -66,11 +66,11 @@ React, React DOM, Cordis, ui-slots und ui-primitives behalten eine Browser-Ident
 
 Diese Seiten behandeln die umliegende Maschinerie und das Kompositionsmodell.
 
-- [ui-slots](../ui-slots/README.md) — der Slot-Registry-Pure-Core, den dieser Renderer an React bindet.
+- [ui-slots](../ui-slots/README.de.md) — der Slot-Registry-Pure-Core, den dieser Renderer an React bindet.
 - [web](../web/README.de.md) — die Shell, die das Roster lädt und `mount` aufruft.
-- [ui-session](../ui-session/README.md) — der Adapter, der die Standard-Session-Sources und -Hooks liefert, die dieser Renderer bindet.
-- [Web-Client-Architektur](../../../.agents/notes/implemented/architecture/2026-07-19-gui-web-client-architecture.md) — die Loading-Chain, Object Layer und Layering-Redlines.
-- [Slot-System-Standard](../../../.agents/notes/implemented/architecture/2026-07-22-slot-type-chain-implementation.md) — das definitive Kompositionsmodell.
+- [ui-session](../ui-session/README.de.md) — der Adapter, der die Standard-Session-Sources und -Hooks liefert, die dieser Renderer bindet.
+- [Web-Client-Architektur](../../../.agents/notes/implemented/architecture/2026-07-19-gui-web-client-architecture.de.md) — die Loading-Chain, Object Layer und Layering-Redlines.
+- [Slot-System-Standard](../../../.agents/notes/implemented/architecture/2026-07-22-slot-type-chain-implementation.de.md) — das definitive Kompositionsmodell.
 
 -----
 

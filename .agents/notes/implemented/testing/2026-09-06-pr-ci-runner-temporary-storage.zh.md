@@ -1,8 +1,8 @@
 # Agent Note: PR CI 使用 runner 管理的临时存储
+[English](2026-09-06-pr-ci-runner-temporary-storage.md) | 中文 | [Deutsch](2026-09-06-pr-ci-runner-temporary-storage.de.md)
 
 Status: implemented
 
-[English](2026-09-06-pr-ci-runner-temporary-storage.md) | 中文
 
 ## 问题
 

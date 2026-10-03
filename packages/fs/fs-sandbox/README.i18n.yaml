@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/fs/fs-sandbox/README.md
 README.md: 8a4f6287bf7287b20a242b9a7696b9ba359b778f
-README.zh.md: 6b5c7df23645252e8877ff841c87dd242f4e2be7
-README.de.md: dd3be8d83e20291644ca78ce604e8948c0096c52
+README.zh.md: 9450585328a0084fddac4743bf69c92b590e4e7d
+README.de.md: f5f5c138e0d213ddb83f4acbff5ef4506ce8ecb4

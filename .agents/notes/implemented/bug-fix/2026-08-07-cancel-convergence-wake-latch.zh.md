@@ -1,8 +1,8 @@
 # Agent Note: 锁存取消收敛窗口内到达的唤醒请求
+[English](2026-08-07-cancel-convergence-wake-latch.md) | 中文 | [Deutsch](2026-08-07-cancel-convergence-wake-latch.de.md)
 
 Status: implemented
 
-[English](2026-08-07-cancel-convergence-wake-latch.md) | 中文
 
 ## 问题
 

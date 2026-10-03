@@ -3,7 +3,6 @@ English | [中文](2026-07-14-provider-routed-llm-adapters.zh.md) | [Deutsch](20
 
 Status: implemented
 
-English | [中文](2026-07-14-provider-routed-llm-adapters.zh.md)
 
 ## Problem
 

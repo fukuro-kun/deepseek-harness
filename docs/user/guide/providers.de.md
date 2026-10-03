@@ -1,6 +1,6 @@
 # Modelle konfigurieren
-
 [English](providers.md) | [中文](providers.zh.md) | Deutsch
+
 
 Dieser Leitfaden setzt voraus, dass du die Web UI über das [Root-README](../../../README.de.md#run) gestartet hast. Modelländerungen wirken bei der nächsten Anfrage, ohne den Server neu zu starten.
 

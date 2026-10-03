@@ -1,8 +1,8 @@
 # Agent Note: Das Persistence-Interface in dsh-session falten
+[English](2026-06-20-fold-session-persistence-interface.md) | [中文](2026-06-20-fold-session-persistence-interface.zh.md) | Deutsch
 
 Status: rejected — das separate Persistence-Service-Definition-Paket ist der intendierte modulare Rollensplit für die Durable-Persistence-Capability-Seam. Es in `dsh-session` zu falten würde die Paketanzahl auf Kosten einer saubereren Backend-Grenze reduzieren.
 
-[English](2026-06-20-fold-session-persistence-interface.md) | [中文](2026-06-20-fold-session-persistence-interface.zh.md) | Deutsch
 
 ## Problem
 

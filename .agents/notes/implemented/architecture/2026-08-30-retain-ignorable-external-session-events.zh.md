@@ -1,8 +1,8 @@
 # Agent Note: 为外部插件保留可忽略会话事件
+[English](2026-08-30-retain-ignorable-external-session-events.md) | 中文 | [Deutsch](2026-08-30-retain-ignorable-external-session-events.de.md)
 
 Status: implemented
 
-[English](2026-08-30-retain-ignorable-external-session-events.md) | 中文 | [Deutsch](2026-08-30-retain-ignorable-external-session-events.de.md)
 
 ## 问题
 

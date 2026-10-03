@@ -1,8 +1,8 @@
 # Agent Note: Ownership der Package-Manifest-Deklarationen
+[English](2026-09-05-package-manifest-types.md) | [中文](2026-09-05-package-manifest-types.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-package-manifest-types.md) | [中文](2026-09-05-package-manifest-types.zh.md) | Deutsch
 
 ## Problem
 

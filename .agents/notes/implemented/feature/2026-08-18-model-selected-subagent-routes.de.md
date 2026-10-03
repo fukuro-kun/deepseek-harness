@@ -1,8 +1,8 @@
 # Agent Note: Modellgewählte Subagent-Routen
+[English](2026-08-18-model-selected-subagent-routes.md) | [中文](2026-08-18-model-selected-subagent-routes.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-18-model-selected-subagent-routes.md) | [中文](2026-08-18-model-selected-subagent-routes.zh.md) | Deutsch
 
 ## Problem
 

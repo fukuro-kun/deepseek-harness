@@ -1,8 +1,8 @@
 # Agent Note: Der approval seam — einmalige Berechtigungsentscheidungen über einen waterfall von Antwortgebern
+[English](2026-07-06-approval-seam.md) | [中文](2026-07-06-approval-seam.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-06-approval-seam.md) | [中文](2026-07-06-approval-seam.zh.md) | Deutsch
 
 ## Problem
 
@@ -25,7 +25,7 @@ Ein einziger `cordis.yml`-Eintrag mountet den seam. Ihn nicht zu laden ist der f
   #   policy: never   # deployment default for sessions without an override; 'ask' when omitted
 ```
 
-Der Eintrag allein stellt Mechanismus bereit, keinen Channel: Ohne komponierten Antwortgeber löst jede Anfrage zu `unavailable` auf und der anfragende tool call verweigert — fail-closed braucht keine Konfiguration. Die Komposition der [ACP-Profile-App](../../../../packages/bundle/acp-app/README.de.md) schließt den Kreis: Ihre [automation-only Bridge](../simplification/2026-07-23-acp-automation-only-protocol.md) registriert einen Antwortgeber, der `session/request_permission` mit der exakten tool-call id und einmaligen allow/reject-Optionen an den besitzenden Client sendet. `policy: never` ist die unbeaufsichtigte Haltung — jede Anfrage wird deterministisch automatisch abgelehnt, und der aktuelle Wert geht in den Runtime-Context-Snapshot ein. `policy` wird beim Laden des Plugins gegen die geschlossene Liste validiert; alles andere wirft.
+Der Eintrag allein stellt Mechanismus bereit, keinen Channel: Ohne komponierten Antwortgeber löst jede Anfrage zu `unavailable` auf und der anfragende tool call verweigert — fail-closed braucht keine Konfiguration. Die Komposition der [ACP-Profile-App](../../../../packages/bundle/acp-app/README.de.md) schließt den Kreis: Ihre [automation-only Bridge](../simplification/2026-07-23-acp-automation-only-protocol.de.md) registriert einen Antwortgeber, der `session/request_permission` mit der exakten tool-call id und einmaligen allow/reject-Optionen an den besitzenden Client sendet. `policy: never` ist die unbeaufsichtigte Haltung — jede Anfrage wird deterministisch automatisch abgelehnt, und der aktuelle Wert geht in den Runtime-Context-Snapshot ein. `policy` wird beim Laden des Plugins gegen die geschlossene Liste validiert; alles andere wirft.
 
 Was ein komponiertes Deployment beobachtet: `allowed-once` lässt genau diesen Aufruf weiterlaufen; Ablehnung, Abbruch und fehlender Channel verweigern mit drei unterscheidbaren Gründen, die das Modell auseinanderhalten kann; eine erfolgreiche In-Turn-Anfrage hinterlegt ein dauerhaftes `approval/asked`/`approval/decided`-Paar im Session-Log des anfragenden agent; an einer Genehmigung bleibt nichts über den anfragenden Aufruf hinaus bestehen. Eine Anfrage im Leerlauf oder ein fehlschlagender Audit-Append verweigert, statt eine nicht auditierte Entscheidung zurückzugeben.
 
@@ -69,7 +69,7 @@ Der seam besitzt außerdem die session-scoped `'ask' | 'never'`-Policy, die die 
 
 Die ACP-Bridge antwortet nur für ein exaktes agent-Objekt, das ihre Session-Map besitzt. Sie sendet `session/request_permission` mit der vorhandenen `callId`, deklariert einmalige allow/reject-Optionen, bildet Abbruch separat ab und genehmigt niemals eine unbekannte Option. Fremde oder aufruflose Anfragen delegieren; ein fehlschlagender Client-RPC wird zu `unavailable`. Hooks und `tools/pre-execute` entscheiden, ob ein Aufruf überhaupt fragt. Dieser Channel ist Maschinen-Policy zwischen einem automatisierten Client und seinem agent, keine ACP-Präsentation.
 
-Der Antwortgeber routet über die Exakt-agent-Ownership-Prüfung der Bridge, die die [automation-only ACP Agent Note](../simplification/2026-07-23-acp-automation-only-protocol.md) beschreibt, und wahrt die pro-Session-Berechtigungs-Ownership, die die [Multi-Session-Agent-Note](../../archived/feature/2026-06-14-acp-multi-session.md) verlangt.
+Der Antwortgeber routet über die Exakt-agent-Ownership-Prüfung der Bridge, die die [automation-only ACP Agent Note](../simplification/2026-07-23-acp-automation-only-protocol.de.md) beschreibt, und wahrt die pro-Session-Berechtigungs-Ownership, die die [Multi-Session-Agent-Note](../../archived/feature/2026-06-14-acp-multi-session.md) verlangt.
 
 #### Audit, und was das Modell sieht
 
@@ -123,7 +123,7 @@ Kosten und akzeptierte Grenzen:
 - **Wer entscheidet, ob ein Aufruf überhaupt fragt?** Policy-Produzenten: ein hook, der `permissionDecision: ask` zurückgibt, ein beliebiger `tools/pre-execute`-Listener oder das Sandbox-Eskalations-Gate. Der seam und die Bridge routen und antworten nur; keiner injiziert eine eigene Einschätzung, was einen Prompt verdient.
 - **Was passiert, wenn der Nutzer den Prompt schließt oder der Turn mitten in der Anfrage abbricht?** Schließen wird zu `cancelled` mit eigenem Verweigerungstext. Ein bereits abgebrochenes Signal endet mit `cancelled`, ohne zu dispatchen; ein Abbruch während der Anfrage verwirft die verspätete Antwort. Committen beide Audit-Appends, zeichnet jeder Pfad genau ein Paar auf, nie zwei.
 - **Was, wenn der Client mit einer Option antwortet, die der harness nie angeboten hat?** Jede Auswahl außer dem angebotenen `allow_once` wird zu `rejected` — eine unbekannte optionId eines nicht-konformen Clients kann niemals genehmigen.
-- **Wie routen approvals von subagents?** Gar nicht: Delegation pinnt jedes in-process-Child auf `'never'` ([approvals-pinned-Entscheidung](2026-08-10-subagent-approval-pinned-never.md)), sodass jede Child-Anfrage vor jedem Antwortgeber zu `rejected` auflöst und das Child von vornherein über seinen Runtime Context Bescheid weiß. Die child-seitige Auto-Antwort von `subagent-acp` ist separat; das Routing der Anfragen eines Child an den Parent-Controller ist vertagt (§ Vertagt).
+- **Wie routen approvals von subagents?** Gar nicht: Delegation pinnt jedes in-process-Child auf `'never'` ([approvals-pinned-Entscheidung](2026-08-10-subagent-approval-pinned-never.de.md)), sodass jede Child-Anfrage vor jedem Antwortgeber zu `rejected` auflöst und das Child von vornherein über seinen Runtime Context Bescheid weiß. Die child-seitige Auto-Antwort von `subagent-acp` ist separat; das Routing der Anfragen eines Child an den Parent-Controller ist vertagt (§ Vertagt).
 - **Was ändert `policy: 'never'` zur Laufzeit konkret?** Der Service löst jede Anfrage dieser Session zu `rejected` auf, bevor irgendein Antwortgeber dispatcht (in-service, sodass keine Registrierungsreihenfolge ihn umgehen kann); der nächste atomare Runtime-Context-Snapshot nennt die Policy; jede erfolgreiche Auto-Ablehnung zeichnet das Audit-Paar auf.
 - **Was passiert bei einem Hot Reload oder wenn ein Antwortgeber mitten in der Session entlädt?** Antwortgeber disposen mit ihrer besitzenden fiber, sodass die nächste Anfrage zu `unavailable` degradiert statt an einem toten Channel zu hängen; ein Remount registriert den Antwortgeber neu, ohne aufzuholenden Zustand.
 - **Woher bekommt ein Client approval-Kontext?** Die Anfrage trägt die exakte `callId` und den menschenlesbaren `reason` des Anfragenden; Channel-Adapter können reicheren tool-call-Zustand korrelieren, ohne Argumente im approval seam zu duplizieren.
@@ -134,6 +134,6 @@ Repo-interne Präzedenzfälle, die dieses Design kopiert oder kontrastiert:
 
 - Das `fs/write-intent`-Gate (`packages/fs/fs/`) — die dokumentierten Single-Occupancy-Decision-Slot-waterfall-Semantiken (erste Antwort gewinnt, Delegation via `next()`), die der Antwortgeber-Contract wiederverwendet.
 - `hook/invoked`/`hook/result` — das Log-only-Audit-Paar-Präzedens, dem `approval/asked`/`approval/decided` folgt; die [hook-Bridges-Agent-Note](../../archived/feature/2026-06-30-hook-bridges.md) liefert `permissionDecision: ask`, den ersten Produzenten.
-- [Die interception-extension-points-Agent-Note](2026-06-30-interception-extension-points.md) — das `allow`/`deny`/`ask`-Vokabular von `tools/pre-execute`, dessen `ask` dieser seam bedient.
-- [Die automation-only-ACP-Agent-Note](../simplification/2026-07-23-acp-automation-only-protocol.md) — die Exakt-agent-Ownership-Prüfung gegen die Session-Map, über die der Antwortgeber routet; [die Multi-Session-Agent-Note](../../archived/feature/2026-06-14-acp-multi-session.md) — der Pro-Session-Berechtigungs-Ownership-Blocker, den dies implementiert.
+- [Die interception-extension-points-Agent-Note](2026-06-30-interception-extension-points.de.md) — das `allow`/`deny`/`ask`-Vokabular von `tools/pre-execute`, dessen `ask` dieser seam bedient.
+- [Die automation-only-ACP-Agent-Note](../simplification/2026-07-23-acp-automation-only-protocol.de.md) — die Exakt-agent-Ownership-Prüfung gegen die Session-Map, über die der Antwortgeber routet; [die Multi-Session-Agent-Note](../../archived/feature/2026-06-14-acp-multi-session.md) — der Pro-Session-Berechtigungs-Ownership-Blocker, den dies implementiert.
 - Das opportunistische `ctx.get()`-Konsummuster (die owner-token-Suche von `tool-bash`, die Persistenz-Probe des loop) — wie `dsh-tools` den seam konsumiert, ohne seine fiber daran zu blockieren.

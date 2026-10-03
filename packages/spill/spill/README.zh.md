@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-spill
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `dsh-spill` 让插件和工具通过公开的 `ctx.spillStore` API 保存超大文本，并取得不透明定位信息、精确字节数与取回指引。当完整结果必须保持可取回、同时又不能填满模型上下文时选择它。配置 `dsh-spill-local` 可获得本地持久化；当超大工具结果应变为有界预览时，再添加 `dsh-spill-policy`。该 API 不提供保留、替换、取回或搜索操作。存储故障会使保存操作拒绝，由调用方决定保留内联内容还是让操作失败。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

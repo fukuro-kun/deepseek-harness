@@ -1,8 +1,8 @@
 # Agent Note: 原生 owner 收容逃逸的 subprocess 后代
+[English](2026-08-28-subprocess-native-containment.md) | 中文 | [Deutsch](2026-08-28-subprocess-native-containment.de.md)
 
 Status: implemented
 
-[English](2026-08-28-subprocess-native-containment.md) | 中文 | [Deutsch](2026-08-28-subprocess-native-containment.de.md)
 
 ## Problem
 

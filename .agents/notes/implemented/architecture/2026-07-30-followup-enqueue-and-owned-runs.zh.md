@@ -1,8 +1,8 @@
 # Agent Note: follow-up 入队与自有运行边界
+[English](2026-07-30-followup-enqueue-and-owned-runs.md) | 中文 | [Deutsch](2026-07-30-followup-enqueue-and-owned-runs.de.md)
 
 Status: implemented
 
-[English](2026-07-30-followup-enqueue-and-owned-runs.md) | 中文 | [Deutsch](2026-07-30-followup-enqueue-and-owned-runs.de.md)
 
 ## 问题
 

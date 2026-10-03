@@ -1,6 +1,6 @@
 # PR 预览运行器规格
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 摘要
 

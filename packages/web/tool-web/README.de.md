@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-web
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -249,7 +249,7 @@ Append-only; neu sichtbarer Inhalt folgt dem wiederverwendbaren Request-Präfix 
 Diese Grenzen definieren, wann die Tools unvollständig sind oder Deployment-Mitwirkung brauchen. Sie sind aktuelle Paket-Constraints.
 
 - **Es gibt keinen batchweiten Native-Search-Zähler** — `searchMaxQueries` begrenzt `ctx.web.search`-Aufrufe, aber ein Provider kann innerhalb jedes Aufrufs mehrere native Suchen ausführen; ein modellgestützter Provider mit konfiguriertem `maxUses` kann etwa bis zu `searchMaxQueries × maxUses` native Suchen erlauben, und `searchMaxResults` begrenzt nur die kombinierten Quellen, die an den Aufrufer zurückgehen. Deployments steuern die Kosten über diese unabhängigen Consumer- und Provider-Einstellungen, weil der Service providerinterne Sucheinheiten nicht kennt.
-- **Die HTML→Markdown-Konvertierung lässt Eingaben aus, die sie nicht sicher darstellen kann** — [turndown](https://github.com/mixmark-io/turndown) konvertiert höchstens `fetchMaxOutputChars` Quellzeichen über ein echtes DOM. Eine 512-stufige Verschachtelungsbegrenzung und Konvertierungsausnahmen erzeugen eine feste Auslassungsmarkierung statt rohem HTML; Tabellen-`colspan` bleibt nicht unterstützt, weil GFM keine Spanzellen-Darstellung hat ([archivierte Dependency-Entscheidung](../../../.agents/notes/archived/simplification/2026-07-26-turndown-for-tool-web-html-markdown.de.md)).
+- **Die HTML→Markdown-Konvertierung lässt Eingaben aus, die sie nicht sicher darstellen kann** — [turndown](https://github.com/mixmark-io/turndown) konvertiert höchstens `fetchMaxOutputChars` Quellzeichen über ein echtes DOM. Eine 512-stufige Verschachtelungsbegrenzung und Konvertierungsausnahmen erzeugen eine feste Auslassungsmarkierung statt rohem HTML; Tabellen-`colspan` bleibt nicht unterstützt, weil GFM keine Spanzellen-Darstellung hat ([archivierte Dependency-Entscheidung](../../../.agents/notes/archived/simplification/2026-07-26-turndown-for-tool-web-html-markdown.md)).
 - **Die modellseitige API ist bewusst minimal, Erweiterungen sind zurückgestellt** — `max_results` bleibt eine Config-Obergrenze (kein Modellargument), und `web_fetch` nimmt nur `url` (kein `format`/`prompt`/LLM-Zusammenfassungsmodus); beide sind in [der Seam-Agent-Note](../../../.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.de.md) als spätere Schritte benannt.
 - **Öffentliche Fetches fragen keine Genehmigung an** — die ausgelieferten `cordis`-, `code`- und `standard`-Presets exponieren `web_fetch` in jedem Sandbox- und Genehmigungsmodus. Der HTTP-Provider blockiert nicht-öffentliche Ziele, aber ein Modell kann Daten an eine öffentliche URL senden. Deployments, die eine Bestätigung pro Aufruf brauchen, müssen eine `tools/pre-execute`-Policy hinzufügen oder Fetch deaktivieren.
 

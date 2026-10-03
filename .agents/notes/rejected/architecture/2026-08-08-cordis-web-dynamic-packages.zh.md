@@ -1,8 +1,8 @@
 # Agent Note: Cordis Host/Client 动态插件运行体系
+[English](2026-08-08-cordis-web-dynamic-packages.md) | 中文 | [Deutsch](2026-08-08-cordis-web-dynamic-packages.de.md)
 
 Status: rejected — closed as a proposal: the shipped packages/extensions runtime and its READMEs own the design
 
-[English](2026-08-08-cordis-web-dynamic-packages.md) | 中文
 
 ## Problem
 

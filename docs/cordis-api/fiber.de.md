@@ -2,8 +2,8 @@
      Zum Aktualisieren zuerst `pnpm run gen-cordis-catalog` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/cordis-api/fiber.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
 # Fiber
-
 [English](fiber.md) | [中文](fiber.zh.md) | Deutsch
+
 
 Ein Fiber ist eine geladene Plugin-Instanz: ihr Lifecycle-Zustand, ihre validierte Config und ihre registrierten Effects. `ctx.fiber` ist der aktuelle Fiber, und `ctx.effect()` delegiert an ihn.
 

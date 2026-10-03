@@ -1,8 +1,7 @@
 # 连接第三方记忆 MCP 服务
-
-[English](mcp-memory.md) | 中文
-
 [English](mcp-memory.md) | 中文 | [Deutsch](mcp-memory.de.md)
+
+
 
 这三份**默认关闭的参考配置**通过 [`@deepseek-ai/dsh-mcp-client`](../../../packages/mcp/mcp-client/README.zh.md) 将一个记忆系统连接到 DSH。请选择其中一份，或复制相同的通用 MCP 配置项来连接其他服务器。
 

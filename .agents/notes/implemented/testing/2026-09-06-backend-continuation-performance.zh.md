@@ -1,8 +1,8 @@
 # Agent Note: 工具密集后端续聊的性能基线
+[English](2026-09-06-backend-continuation-performance.md) | 中文 | [Deutsch](2026-09-06-backend-continuation-performance.de.md)
 
 Status: implemented
 
-[English](2026-09-06-backend-continuation-performance.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: 事件域语义——会话是事实日志，agent 是实时事件通道
+[English](2026-06-30-event-domain-semantics.md) | 中文 | [Deutsch](2026-06-30-event-domain-semantics.de.md)
 
 Status: implemented
 
-[English](2026-06-30-event-domain-semantics.md) | 中文 | [Deutsch](2026-06-30-event-domain-semantics.de.md)
 
 ## 问题
 

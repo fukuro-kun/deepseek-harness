@@ -1,8 +1,8 @@
 # Agent Note: 已发布 Session 格式通过有状态流式 Stage 迁移
+[English](2026-08-31-released-session-format-migrations.md) | 中文 | [Deutsch](2026-08-31-released-session-format-migrations.de.md)
 
 Status: implemented
 
-[English](2026-08-31-released-session-format-migrations.md) | 中文 | [Deutsch](2026-08-31-released-session-format-migrations.de.md)
 
 ## 问题
 

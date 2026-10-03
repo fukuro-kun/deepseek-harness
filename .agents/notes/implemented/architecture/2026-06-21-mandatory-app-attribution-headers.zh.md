@@ -1,8 +1,8 @@
 # Agent Note: 对提供方请求强制携带 `User-Agent` 归属标识
+[English](2026-06-21-mandatory-app-attribution-headers.md) | 中文 | [Deutsch](2026-06-21-mandatory-app-attribution-headers.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-21-mandatory-app-attribution-headers.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-21-mandatory-app-attribution-headers.de.md)
 
 ## 问题
 

@@ -3,7 +3,6 @@ English | [中文](2026-07-27-compiler-independent-typert-model.zh.md) | [Deutsc
 
 Status: implemented
 
-English | [中文](2026-07-27-compiler-independent-typert-model.zh.md)
 
 ## Problem
 

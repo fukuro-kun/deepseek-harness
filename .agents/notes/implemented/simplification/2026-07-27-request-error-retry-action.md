@@ -1,9 +1,8 @@
 # Agent Note: Request-error retry action
-English | [中文](.agents/notes/implemented/simplification/2026-07-27-request-error-retry-action.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-27-request-error-retry-action.de.md)
+English | [中文](2026-07-27-request-error-retry-action.zh.md) | [Deutsch](2026-07-27-request-error-retry-action.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-27-request-error-retry-action.zh.md)
 
 ## Problem
 

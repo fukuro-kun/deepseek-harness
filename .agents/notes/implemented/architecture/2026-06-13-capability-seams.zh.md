@@ -1,8 +1,8 @@
 # Agent Note: 能力 seam——Service Definition / Service Provider / Consumer 角色
+[English](2026-06-13-capability-seams.md) | 中文 | [Deutsch](2026-06-13-capability-seams.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-13-capability-seams.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-13-capability-seams.de.md)
 
 ## 问题
 

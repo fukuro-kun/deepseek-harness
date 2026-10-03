@@ -1,8 +1,8 @@
 # Agent Note: Workspace-Registrierung löschen
+[English](2026-07-27-workspace-registration-deletion.md) | [中文](2026-07-27-workspace-registration-deletion.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-27-workspace-registration-deletion.md) | [中文](2026-07-27-workspace-registration-deletion.zh.md) | Deutsch
 
 ## Problem
 

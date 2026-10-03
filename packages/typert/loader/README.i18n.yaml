@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/typert/loader/README.md
 README.md: a2e066c4ab3c5979f778ab69aeb65e77caa64d16
-README.zh.md: 46de5b68bf4984621c15eec7571d50a601718a61
-README.de.md: 65e944530b1ea5a82a320a30e9c683140c432e28
+README.zh.md: 6bb3615f9417d5274f1be6b2bad06288a6fede21
+README.de.md: 856879444f18ca31cf9b589ebd5c3dc84354d45e

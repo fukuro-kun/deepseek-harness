@@ -1,8 +1,8 @@
 # Agent Note: Subagent-Capability-Seam
+[English](2026-06-21-subagent-capability-seam.md) | [中文](2026-06-21-subagent-capability-seam.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-21-subagent-capability-seam.md) | [中文](2026-06-21-subagent-capability-seam.zh.md) | Deutsch
 
 > Der vollständige Seam ist ausgeliefert: das `dsh-subagent`-Interface und der `dsh-tool-subagent`-Consumer; die beiden In-Process-Backends (`dsh-subagent-spawn-in-process`, `dsh-subagent-fork-in-process`); die Nested-Agent-Snapshot-Infrastruktur ([Per-Session-Snapshot-Replay](../../archived/testing/2026-06-22-subagent-snapshot-replay.md)); und die Out-of-Process-ACP-, Codex- und Claude-Code-Backends ([ACP-Agent-Note](../../archived/feature/2026-06-22-acp-subagent-backend.md), [Produkt-Provider-Agent-Note](2026-08-04-claude-code-and-codex-subagent-backends.de.md)).
 
@@ -21,7 +21,7 @@ Das harness hat einen lange verschobenen Seam für **Subagents** — einen Agent
 
 ### Warum nicht die Bash-Seam-Form
 
-Der Bash-Seam ([Capability-Seams](../architecture/2026-06-13-capability-seams.md)) registriert genau einen `ShellExecutor` pro Context; ein zweiter wirft beim Laden. Das ist für Bash korrekt (eine Maschine, ein Weg, ein Kommando auszuführen), aber hier falsch: Koexistenz ist die Anforderung. Daher ist der Subagent-Service eine **Named-Provider-Registry** — jede Implementierung registriert unter einem eindeutigen Namen und ein Caller wählt einen per Name — im Spiegel der **LLM-Adapter-Registry** (`LlmRuntime.registerAdapter`), nicht des Single-Service-Bash-Executors. Der Seam bleibt dreiteilig (Service Definition / Service Provider / Consumer); nur die Achse „eine vs. viele Implementierungen" unterscheidet sich.
+Der Bash-Seam ([Capability-Seams](../architecture/2026-06-13-capability-seams.de.md)) registriert genau einen `ShellExecutor` pro Context; ein zweiter wirft beim Laden. Das ist für Bash korrekt (eine Maschine, ein Weg, ein Kommando auszuführen), aber hier falsch: Koexistenz ist die Anforderung. Daher ist der Subagent-Service eine **Named-Provider-Registry** — jede Implementierung registriert unter einem eindeutigen Namen und ein Caller wählt einen per Name — im Spiegel der **LLM-Adapter-Registry** (`LlmRuntime.registerAdapter`), nicht des Single-Service-Bash-Executors. Der Seam bleibt dreiteilig (Service Definition / Service Provider / Consumer); nur die Achse „eine vs. viele Implementierungen" unterscheidet sich.
 
 ## Entscheidung
 
@@ -62,7 +62,7 @@ Jeder In-Process-Subagent läuft in seiner **eigenen `Session`** (eigene ID, `pa
 
 ### Transport-Provider-Auswahl ist Config, nicht modellzugewandt
 
-`dsh-tool-subagent` bindet an genau einen Subagent-Transport-Provider-Namen (`Config.provider`). Um mehr als einen Transport zu exponieren, lädt man das Tool-Plugin mehrfach, jeweils an einen anderen Provider und einen eigenen `toolName` gebunden (die Tool-Registry lehnt doppelte Namen ab). Der *Service* hält die Multi-Provider-Registry; das *Tool* wählt einen — sein Schema trägt keinen Subagent-Transport-/Type-Parameter. Ein späteres Opt-in fügt Child-LLM-Provider/Model-Felder hinzu, ohne diese Transport-Entscheidung zu ändern; siehe [model-selected subagent routes](2026-08-18-model-selected-subagent-routes.md).
+`dsh-tool-subagent` bindet an genau einen Subagent-Transport-Provider-Namen (`Config.provider`). Um mehr als einen Transport zu exponieren, lädt man das Tool-Plugin mehrfach, jeweils an einen anderen Provider und einen eigenen `toolName` gebunden (die Tool-Registry lehnt doppelte Namen ab). Der *Service* hält die Multi-Provider-Registry; das *Tool* wählt einen — sein Schema trägt keinen Subagent-Transport-/Type-Parameter. Ein späteres Opt-in fügt Child-LLM-Provider/Model-Felder hinzu, ohne diese Transport-Entscheidung zu ändern; siehe [model-selected subagent routes](2026-08-18-model-selected-subagent-routes.de.md).
 
 ## Testing
 

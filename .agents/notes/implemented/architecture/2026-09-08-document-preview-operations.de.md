@@ -1,8 +1,8 @@
 # Agent Note: Dokumentenvorschau und Dateiadressen
+[English](2026-09-08-document-preview-operations.md) | [中文](2026-09-08-document-preview-operations.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-08-document-preview-operations.md) | [中文](2026-09-08-document-preview-operations.zh.md) | Deutsch
 
 ## Problem
 

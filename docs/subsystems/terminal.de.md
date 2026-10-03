@@ -1,6 +1,6 @@
 # Persistente PTY-Sessions
-
 [English](terminal.md) | [中文](terminal.zh.md) | Deutsch
+
 
 Typen, die PTY-Backends, `ctx.terminals` und der modellseitige Consumer gemeinsam nutzen. Die [Persistent-PTY-Agent-Note](../../.agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.de.md) trägt die Begründung; diese Seite hält das paketübergreifende Vokabular aus [`packages/terminal/terminal/src/types.ts`](../../packages/terminal/terminal/src/types.ts) fest.
 

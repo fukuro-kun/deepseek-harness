@@ -1,8 +1,8 @@
 # Agent Note: 并发 continuable Subagent 的广度上限
+[English](2026-10-01-subagent-concurrency-cap.md) | 中文 | [Deutsch](2026-10-01-subagent-concurrency-cap.de.md)
 
 Status: proposed
 
-[English](2026-10-01-subagent-concurrency-cap.md) | 中文 | [Deutsch](.agents/notes/proposed/feature/2026-10-01-subagent-concurrency-cap.de.md)
 
 ## Problem
 

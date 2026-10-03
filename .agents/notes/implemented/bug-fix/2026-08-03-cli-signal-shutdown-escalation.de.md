@@ -1,8 +1,8 @@
 # Agent Note: Bounded, escalating signal shutdown for Web and headless
+[English](2026-08-03-cli-signal-shutdown-escalation.md) | [中文](2026-08-03-cli-signal-shutdown-escalation.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-03-cli-signal-shutdown-escalation.md) | [中文](2026-08-03-cli-signal-shutdown-escalation.zh.md) | Deutsch
 
 ## Problem
 

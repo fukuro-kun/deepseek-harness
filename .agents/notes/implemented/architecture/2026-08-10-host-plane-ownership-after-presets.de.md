@@ -1,8 +1,8 @@
 # Agent Note: Was auf der Host-Ebene bleibt, sobald Presets die Agent-Ebene besitzen
+[English](2026-08-10-host-plane-ownership-after-presets.md) | [中文](2026-08-10-host-plane-ownership-after-presets.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-host-plane-ownership-after-presets.md) | [中文](2026-08-10-host-plane-ownership-after-presets.zh.md) | Deutsch
 
 ## Problem
 

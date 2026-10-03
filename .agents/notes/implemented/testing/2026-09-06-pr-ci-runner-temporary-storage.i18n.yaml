@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-06-pr-ci-runner-temporary-storage.md
-2026-09-06-pr-ci-runner-temporary-storage.md: 5529fc043fa72397b39e98ecfb6a9359bc442a5b
-2026-09-06-pr-ci-runner-temporary-storage.zh.md: f6765212af2424f2080063946f9104125993b9d5
-2026-09-06-pr-ci-runner-temporary-storage.de.md: 66e9771d701c9a9f15ffa38e028eb8695561a4e7
+2026-09-06-pr-ci-runner-temporary-storage.md: 0c282b151a78bee3dd0f68d3c0d91ca6f57cba08
+2026-09-06-pr-ci-runner-temporary-storage.zh.md: 9d0e30ef7ca46a6c2b86f88901a8b73c0764662b
+2026-09-06-pr-ci-runner-temporary-storage.de.md: 03967bbf23951d0cf31941cb62ec93d484248ffe

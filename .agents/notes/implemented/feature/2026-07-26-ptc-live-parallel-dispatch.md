@@ -1,9 +1,8 @@
 # Agent Note: PTC mode live dispatch lifecycle and native-contract parallelism
-English | [中文](.agents/notes/implemented/feature/2026-07-26-ptc-live-parallel-dispatch.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-26-ptc-live-parallel-dispatch.de.md)
+English | [中文](2026-07-26-ptc-live-parallel-dispatch.zh.md) | [Deutsch](2026-07-26-ptc-live-parallel-dispatch.de.md)
 
 Status: implemented
 
-English | [中文](2026-07-26-ptc-live-parallel-dispatch.zh.md)
 
 > Scope: the `tool/ptc-dispatch-start` event, per-sub-call running state in the web chat, and the bridge's scheduler reusing the native concurrency contract. Builds on the [host foundation](../../archived/feature/2026-07-26-ptc-dispatch-ui-foundation.md) and [chat sub-call rows](../../archived/feature/2026-07-26-ptc-chat-subcall-rows.md); the native contract itself is owned by the [parallel tool-call note](2026-07-10-parallel-tool-call-execution.md).
 

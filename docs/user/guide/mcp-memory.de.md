@@ -1,6 +1,6 @@
 # Einen Drittanbieter-Memory-MCP-Server verbinden
-
 [English](mcp-memory.md) | [中文](mcp-memory.zh.md) | Deutsch
+
 
 Diese drei **standardmäßig deaktivierten Referenzkonfigurationen** verbinden ein Speichersystem über [`@deepseek-ai/dsh-mcp-client`](../../../packages/mcp/mcp-client/README.de.md) mit DSH. Wählen Sie eine aus oder kopieren Sie die gleiche generische MCP-Zeile für einen anderen Server.
 

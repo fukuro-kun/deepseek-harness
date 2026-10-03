@@ -1,8 +1,8 @@
 # Agent Note: Synthetische Turns für log-only Events entfernt
+[English](2026-07-28-remove-synthetic-log-only-turns.md) | [中文](2026-07-28-remove-synthetic-log-only-turns.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-28-remove-synthetic-log-only-turns.md) | [中文](2026-07-28-remove-synthetic-log-only-turns.zh.md) | Deutsch
 
 ## Problem
 

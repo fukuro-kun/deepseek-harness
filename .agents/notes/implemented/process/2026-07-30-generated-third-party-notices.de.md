@@ -1,8 +1,8 @@
 # Agent Note: Generierte Third-Party-Notices
+[English](2026-07-30-generated-third-party-notices.md) | [中文](2026-07-30-generated-third-party-notices.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-30-generated-third-party-notices.md) | [中文](2026-07-30-generated-third-party-notices.zh.md) | Deutsch
 
 ## Problem
 

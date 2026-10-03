@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-tool-ralph
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 `ralph` 针对一个不可变目标运行由多个全新子 agent（智能体）组成的前台序列，每个 Round 只接收上一份有界报告与共享工作区状态。它会在 worker 报告完成或具体阻塞，或达到配置的 Round 上限时返回；这些报告不会得到独立验证。父级对话与先前子 agent 会话绝不会复制到新的 Round。仅当直接用户明确要求 Ralph 式全新 agent 迭代时使用它；普通的长期工作请使用 goal 工具，有界委派请使用 subagent 或工作流。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

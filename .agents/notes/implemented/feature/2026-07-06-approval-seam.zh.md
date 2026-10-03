@@ -1,8 +1,8 @@
 # Agent Note: 审批 seam——基于 waterfall（瀑布式事件）应答者的一次性权限决策
+[English](2026-07-06-approval-seam.md) | 中文 | [Deutsch](2026-07-06-approval-seam.de.md)
 
 Status: implemented
 
-[English](2026-07-06-approval-seam.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: 事件词汇的运行时 schema（Zod 与 merge-extensible-map 模式之辩）
+[English](2026-06-16-typed-event-schemas.md) | 中文 | [Deutsch](2026-06-16-typed-event-schemas.de.md)
 
 Status: rejected — runtime event-schema registry declined; event maps stay compile-time, Zod validates projection state, migrations validate durable payloads
 
-[English](2026-06-16-typed-event-schemas.md) | 中文
 
 ## 问题
 

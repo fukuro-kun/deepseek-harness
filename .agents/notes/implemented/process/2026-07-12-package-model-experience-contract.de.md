@@ -1,8 +1,8 @@
 # Agent Note: Der Model-Experience-Vertrag für Pakete
+[English](2026-07-12-package-model-experience-contract.md) | [中文](2026-07-12-package-model-experience-contract.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-12-package-model-experience-contract.md) | [中文](2026-07-12-package-model-experience-contract.zh.md) | Deutsch
 
 ## Problem
 

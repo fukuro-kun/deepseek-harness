@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-05-session-reference-spill-reuse.md
-2026-09-05-session-reference-spill-reuse.md: 2c64aa619868b161fb8028bda3fc2bda43a174cf
-2026-09-05-session-reference-spill-reuse.zh.md: 346ed1a39ee65a560cf9e74e519ae45c2ce133e1
-2026-09-05-session-reference-spill-reuse.de.md: f030e67973b2c1dc10719279e1ee3bf358cfcbdf
+2026-09-05-session-reference-spill-reuse.md: 02b210c3bce8a5996587587d5a70be1f22b017fd
+2026-09-05-session-reference-spill-reuse.zh.md: d5573a7b96f37e684dfc8b7725269b0fbd8fb100
+2026-09-05-session-reference-spill-reuse.de.md: 804e9ac772025311a187f12a1e0bcc38857bdc36

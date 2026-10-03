@@ -1,6 +1,6 @@
 # Web-Client-Architektur
-
 [English](web-client.md) | [中文](web-client.zh.md) | Deutsch
+
 
 Der Web Client ist eine browserseitige Cordis-Anwendung, die aus unabhängig geladenen Plugins zusammengesetzt wird. Ihre Architektur hat vier wiederverwendbare Grundlagen: [Client Modules](client-modules.de.md) lädt den Plugin-Graphen, das [API Gateway](../api-gateway.de.md) stellt typisierte Host-Kommunikation bereit, [Slots](slots.de.md) komponiert die React-UI, und [Conversation](conversation.de.md) verwandelt ein Session-Verlaufsfenster in target-eigene Ansichten. Diese Seite verbindet diese Systeme und legt fest, wo Client-Modelle und Feature-Pakete hingehören.
 

@@ -1,6 +1,6 @@
 # Compaction
-
 [English](compaction.md) | [中文](compaction.zh.md) | Deutsch
+
 
 Der Compaction-Seam — ein [Capability-Seam](../../.agents/notes/implemented/architecture/2026-06-13-capability-seams.de.md), aufgeteilt wie bash: Service Definition ([dsh-compaction](../../packages/compaction/compaction), `ctx.compaction`), Service Provider (ein Backend wie [dsh-compaction-basic](../../packages/compaction/compaction-basic)) und menschlicher Consumer ([dsh-command-compact](../../packages/compaction/command-compact)). Compaction ist **eine optionale Capability**, nicht Teil der Agent-Loop-Spine — deshalb lebt ihr Vokabular hier, nicht in [core.md](core.de.md). Ein tokenizer- oder templatebasiertes Backend ist ein Sibling-Package, das dasselbe Interface implementiert. Anders als bash hängt das Interface notwendigerweise von `dsh-session` und `dsh-llm` ab: seine Verben agieren auf einer agent-eigenen `Session`, und sein durable Summary-Event verwendet das `ContentBlock`-Vokabular (siehe die [Compaction-Capability-Seam Agent Note](../../.agents/notes/implemented/feature/2026-06-18-compaction-capability-seam.de.md)).
 
@@ -123,7 +123,7 @@ interface PruneResult {
 
 ## Cordis API
 
-Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.de.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxcompaction--compactionengine-abstract-seam"></a>
 

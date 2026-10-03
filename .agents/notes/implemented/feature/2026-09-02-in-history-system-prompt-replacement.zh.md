@@ -1,8 +1,8 @@
 # Agent Note: 历史内系统提示词替换，实现缓存稳定的提示词变更
+[English](2026-09-02-in-history-system-prompt-replacement.md) | 中文 | [Deutsch](2026-09-02-in-history-system-prompt-replacement.de.md)
 
 Status: implemented
 
-[English](2026-09-02-in-history-system-prompt-replacement.md) | 中文
 
 ## Problem
 

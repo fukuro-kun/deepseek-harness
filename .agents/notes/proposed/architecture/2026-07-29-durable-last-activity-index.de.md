@@ -1,14 +1,14 @@
 # Agent Note: Letzte Aktivität im Session-Index aufzeichnen
+[English](2026-07-29-durable-last-activity-index.md) | [中文](2026-07-29-durable-last-activity-index.zh.md) | Deutsch
 
 Status: proposed
 
-[English](2026-07-29-durable-last-activity-index.md) | [中文](2026-07-29-durable-last-activity-index.zh.md) | Deutsch
 
 ## Problem
 
 Eine kalte (persistierte, nicht attachte) Session hat keine maßgebliche gespeicherte Antwort auf „wann hat der User hier zuletzt gepromptet". `dsh-host-apiproxy` bedient `updatedAt` aus dem `lastPromptAt` des optionalen Projektions-Caches, mit Fallback auf `createdAt`, und der Web-Client sortiert seinen Session-Baum nach diesem Wert. Der Cache ist fail-soft und wird asynchron gecheckpointet, also lässt eine fehlende oder verspätete Zeile eine kürzlich gepromptete Session zu alt sortieren.
 
-Das Gateway nutzte früher die JSONL-Artefakt-mtime, wo verfügbar. mtime beantwortet eine andere Frage: wann das Artefakt zuletzt geschrieben wurde. Jeder durable Schreibvorgang frischt es auf, einschließlich eines Truncate-Repair eines zerrissenen Tails, synthetischer Closer, die einen unterbrochenen Turn ausgleichen, und der [`session/end-seed`-Grenze](../../implemented/architecture/2026-07-30-session-end-seed-log-boundary.md), die während des Pickups angehängt wird. Diese Approximation beförderte eine Session schon dadurch, dass sie geöffnet wurde. Die [Bounded-Cold-Blank-Verifikation](../../archived/bug-fix/2026-08-13-bounded-cold-blank-verification.md) entfernte die mtime-Ordnung und akzeptierte die konservative „zu alt"-Fehlerrichtung des Caches als Zwischenlösung.
+Das Gateway nutzte früher die JSONL-Artefakt-mtime, wo verfügbar. mtime beantwortet eine andere Frage: wann das Artefakt zuletzt geschrieben wurde. Jeder durable Schreibvorgang frischt es auf, einschließlich eines Truncate-Repair eines zerrissenen Tails, synthetischer Closer, die einen unterbrochenen Turn ausgleichen, und der [`session/end-seed`-Grenze](../../implemented/architecture/2026-07-30-session-end-seed-log-boundary.de.md), die während des Pickups angehängt wird. Diese Approximation beförderte eine Session schon dadurch, dass sie geöffnet wurde. Die [Bounded-Cold-Blank-Verifikation](../../archived/bug-fix/2026-08-13-bounded-cold-blank-verification.md) entfernte die mtime-Ordnung und akzeptierte die konservative „zu alt"-Fehlerrichtung des Caches als Zwischenlösung.
 
 Eine attachte Zusammenfassung kann das live Event-Log folden und die neueste menschenverfasste `user/message` auswählen, aber der kalte Pfad liest bewusst keine Logs: kalte Zusammenfassungen kommen allein aus dem Projektions-Cache, kalte Recency ist also nur so frisch wie der Cache.
 
@@ -34,7 +34,7 @@ Drei Fragen müssen vor der Implementierung beantwortet werden, und keine wird h
 
 **mtime behalten und Grenzschreibvorgänge daraus ausschließen.** Als unmöglich abgelehnt, nicht als unerwünscht: mtime gehört dem Dateisystem, nicht dem Backend. Nichts kurz vor dem Wiederherstellen des Timestamps nach jedem Grenzschreibvorgang würde es bewahren, und das racet jeden konkurrierenden Reader und lügt über das Artefakt.
 
-**Die Grenze nur schreiben, wenn ein Repair stattfand.** Würde die Frequenz reduzieren, und die [Grenz-Note](../../implemented/architecture/2026-07-30-session-end-seed-log-boundary.md) hat es bereits abgelehnt: das Prädikat muss auch für einen ordentlichen Restart gelten. Eine Korrektheitsinvariante gegen Timestamp-Genauigkeit zu tauschen ist die falsche Richtung.
+**Die Grenze nur schreiben, wenn ein Repair stattfand.** Würde die Frequenz reduzieren, und die [Grenz-Note](../../implemented/architecture/2026-07-30-session-end-seed-log-boundary.de.md) hat es bereits abgelehnt: das Prädikat muss auch für einen ordentlichen Restart gelten. Eine Korrektheitsinvariante gegen Timestamp-Genauigkeit zu tauschen ist die falsche Richtung.
 
 **Aktivität aus einem Projektions-Cache ableiten.** Das ist die aktuelle Zwischenimplementierung. `session-projection-cache` foldet Tails hinter einem Watermark, ohne das Persistenzformat zu ändern, ist aber optional und fail-soft. Seine Abwesenheit oder Checkpoint-Verzögerung macht die Ordnung von Cache-Verfügbarkeit und -Frische abhängig, es kann also nicht den hier vorgeschlagenen maßgeblichen Wert liefern.
 
@@ -59,6 +59,6 @@ Drei Fragen müssen vor der Implementierung beantwortet werden, und keine wird h
 ## Verwandtes
 
 - [Bounded cold blank verification](../../archived/bug-fix/2026-08-13-bounded-cold-blank-verification.md) — entfernt die mtime-Ordnung und definiert die Cache-only-Kalt-Zusammenfassung der Zwischenlösung, die dieser Vorschlag exakt machen würde.
-- [Die End-Seed-Log-Grenze](../../implemented/architecture/2026-07-30-session-end-seed-log-boundary.md) — einer der Nicht-Prompt-Schreibvorgänge, die mtime untauglich machten.
+- [Die End-Seed-Log-Grenze](../../implemented/architecture/2026-07-30-session-end-seed-log-boundary.de.md) — einer der Nicht-Prompt-Schreibvorgänge, die mtime untauglich machten.
 - [Session persistence](../../implemented/architecture/2026-06-14-session-persistence.de.md) — die append-only- und Never-Rewrite-Invarianten, die ein mutierbares JSONL-Header-Feld ausschließen.
-- [Handle-based session persistence](../../implemented/architecture/2026-08-27-handle-based-session-persistence.md) — der Write-Handle-Append-Pfad, an den ein gespeichertes Feld andocken würde.
+- [Handle-based session persistence](../../implemented/architecture/2026-08-27-handle-based-session-persistence.de.md) — der Write-Handle-Append-Pfad, an den ein gespeichertes Feld andocken würde.

@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-05-reconstructable-requests.md
-2026-07-05-reconstructable-requests.md: 509ca86a1f69f60a00698b6429166f66df38bdfe
-2026-07-05-reconstructable-requests.zh.md: 0019f423439ab56813c7f56e399bb1714b53ef7f
-2026-07-05-reconstructable-requests.de.md: b75d545088c41c5d6cb80633b45cc40a2297075c
+2026-07-05-reconstructable-requests.md: bc968423272f7b0902779bc3e5c48d73a9fecf91
+2026-07-05-reconstructable-requests.zh.md: dfc12292fa31971fc76ee1f362f77f78797a2b3d
+2026-07-05-reconstructable-requests.de.md: 9ae6443fae36e12c7c7b7b6f7cd447e0bcb2778e

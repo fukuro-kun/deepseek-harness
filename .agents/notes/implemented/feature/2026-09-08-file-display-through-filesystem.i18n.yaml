@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-08-file-display-through-filesystem.md
-2026-09-08-file-display-through-filesystem.md: 6bbda4470f1db304045233a18797918d21930f96
-2026-09-08-file-display-through-filesystem.zh.md: faa3fdb757c9a3fc60cae37692a559158e02ceee
-2026-09-08-file-display-through-filesystem.de.md: 4beaf8e01915bd728fa7dddf227cb70f3881e70c
+2026-09-08-file-display-through-filesystem.md: d0fa264b194a319463dea3e84f66e385e3a0b1d5
+2026-09-08-file-display-through-filesystem.zh.md: ae15e215fd9b64a04eec16218bfa9734e2c98606
+2026-09-08-file-display-through-filesystem.de.md: da088694a34f5d5f49ff81b94b6faa01e300a2b4

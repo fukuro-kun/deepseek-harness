@@ -1,8 +1,8 @@
 # Agent Note: Dateisystem-Seam aufgeteilt — Provider-Textmutationen plus das `dsh-fs-observation-policy`-Plugin
+[English](2026-06-26-fsspec-style-fs-seam.md) | [中文](2026-06-26-fsspec-style-fs-seam.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-06-26-fsspec-style-fs-seam.md) | [中文](2026-06-26-fsspec-style-fs-seam.zh.md) | Deutsch
 
 ## Problem
 
@@ -30,7 +30,7 @@ provider      dsh-fs-local      local implementation of ctx.fs
 
 `dsh-tool-fs` behält dieselben modellzugewandten `read`/`write`/`edit`-Schemas. Es ist der Executor: Es injiziert `fs` (keinen Policy-Service), greift direkt auf `ctx.fs` zu, besitzt das Read-Windowing und dispatcht die `fs/*`-Events, damit `dsh-fs-observation-policy` gaten und aufzeichnen kann.
 
-Diese Agent Note hat den Vier-Schichten-Split, den Provider-Contract und die Freshness-Policy entschieden. Die Tool↔Policy-Kopplung wurde anschließend durch [die Event-Gate-Agent-Note](../architecture/2026-06-26-file-context-as-event-gate.md) verfeinert: `dsh-fs-observation-policy` ist ein Gate-PLUGIN, das über die `fs/*`-Events teilnimmt, statt ein `ctx.fileContext`-Methoden-Service, sodass das Tool nicht auf Methodenebene daran gekoppelt ist und Read-Windowing plus die fs-I/O in `dsh-tool-fs` liegen. Dieses Dokument beschreibt die gelandete Event-Gate-Form; der Versions-Guard des Providers ist optional (Weglassen = unbedingter Bare-Provider).
+Diese Agent Note hat den Vier-Schichten-Split, den Provider-Contract und die Freshness-Policy entschieden. Die Tool↔Policy-Kopplung wurde anschließend durch [die Event-Gate-Agent-Note](../architecture/2026-06-26-file-context-as-event-gate.de.md) verfeinert: `dsh-fs-observation-policy` ist ein Gate-PLUGIN, das über die `fs/*`-Events teilnimmt, statt ein `ctx.fileContext`-Methoden-Service, sodass das Tool nicht auf Methodenebene daran gekoppelt ist und Read-Windowing plus die fs-I/O in `dsh-tool-fs` liegen. Dieses Dokument beschreibt die gelandete Event-Gate-Form; der Versions-Guard des Providers ist optional (Weglassen = unbedingter Bare-Provider).
 
 ## Provider-Contract
 
@@ -118,7 +118,7 @@ Der Seam wurde später um direktes Directory-Listing erweitert durch [Add direct
 ## Erwogene Alternativen
 
 - **Byte-Level-fsspec (`cat`/`open` geben rohe Bytes zurück)** — abgelehnt: Der Seam ist bewusst Text-Storage, ein halbes Level höher, sodass UTF-8-Dekodierung, Binary/NUL-Ablehnung und abgesicherte Textmutationen einmal im Provider leben und die Policy-Schicht nie rohe Bytes berührt oder Stale-Checks von der Mutations-Kritiksektion trennt.
-- **Ein konkreter `ctx.fileContext`-Methoden-Service** — die ursprüngliche Policy-Form dieser Agent Note; von [der Event-Gate-Agent-Note](../architecture/2026-06-26-file-context-as-event-gate.md) zum Gate-Plugin umgearbeitet, sodass das Tool nie auf Methodenebene an die Policy gekoppelt ist.
+- **Ein konkreter `ctx.fileContext`-Methoden-Service** — die ursprüngliche Policy-Form dieser Agent Note; von [der Event-Gate-Agent-Note](../architecture/2026-06-26-file-context-as-event-gate.de.md) zum Gate-Plugin umgearbeitet, sodass das Tool nie auf Methodenebene an die Policy gekoppelt ist.
 - **`readPage` und `full`/`partial`-View-Autorisierung im Provider behalten** — die Form vor dem Umbau, die der Supersedes-Abschnitt umkehrt: View-Vollständigkeit ist nicht das, was Edit-Sicherheit braucht, Versions-Freshness ist es, und die View-Regel machte große Dateien jenseits des Read-Limits uneditierbar.
 
 ## Konsequenzen

@@ -3,7 +3,6 @@ English | [中文](2026-08-19-session-projection-mandatory-seam.zh.md) | [Deutsc
 
 Status: implemented
 
-English | [中文](2026-08-19-session-projection-mandatory-seam.zh.md)
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: LLM 暂时性请求失败的有界恢复
+[English](2026-06-21-bounded-llm-request-recovery.md) | 中文 | [Deutsch](2026-06-21-bounded-llm-request-recovery.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-21-bounded-llm-request-recovery.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-21-bounded-llm-request-recovery.de.md)
 
 [按提供方配置的请求重试策略](../../archived/feature/2026-07-24-provider-retry-policies.md)在此基础上增加了确切提供方配置与显式无界 mode。本说明继续负责结构化失败事实、失败尝试的恢复边界、normal mode 的暂时性默认值、可见的单次尝试和持久重试状态。[LLM（大语言模型）流的终止失败](2026-07-29-terminal-llm-stream-failures.zh.md)取代了其中关于抛出错误身份和流 sidecar 的机制。
 

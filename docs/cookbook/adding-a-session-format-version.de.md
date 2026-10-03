@@ -1,6 +1,6 @@
 # Cookbook: Hinzufügen einer Session-Log-Formatversion
-
 [English](adding-a-session-format-version.md) | [中文](adding-a-session-format-version.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 

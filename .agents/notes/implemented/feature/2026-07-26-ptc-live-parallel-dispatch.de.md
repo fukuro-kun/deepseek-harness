@@ -1,8 +1,8 @@
 # Agent Note: PTC-Modus Live-Dispatch-Lifecycle und Parallelität auf nativem Vertrag
+[English](2026-07-26-ptc-live-parallel-dispatch.md) | [中文](2026-07-26-ptc-live-parallel-dispatch.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-26-ptc-live-parallel-dispatch.md) | [中文](2026-07-26-ptc-live-parallel-dispatch.zh.md) | Deutsch
 
 > Scope: das `tool/ptc-dispatch-start`-Event, Running-State pro Sub-Call im Web-Chat und die Wiederverwendung des nativen Concurrency-Vertrags durch den Bridge-Scheduler. Baut auf der [Host-Grundlage](../../archived/feature/2026-07-26-ptc-dispatch-ui-foundation.md) und den [Chat-Sub-Call-Zeilen](../../archived/feature/2026-07-26-ptc-chat-subcall-rows.md) auf; der native Vertrag selbst gehört der [Parallel-Tool-Call-Notiz](2026-07-10-parallel-tool-call-execution.de.md).
 

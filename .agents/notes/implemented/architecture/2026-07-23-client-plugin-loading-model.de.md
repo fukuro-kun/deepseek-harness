@@ -1,10 +1,10 @@
 # Agent Note: Client-Plugin-Loading — Lazy-Factories, Cordis-Lifecycle und Hot-Reload
+[English](2026-07-23-client-plugin-loading-model.md) | [中文](2026-07-23-client-plugin-loading-model.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-23-client-plugin-loading-model.md) | [中文](2026-07-23-client-plugin-loading-model.zh.md) | Deutsch
 
-> Arbeitsteilung: die Browser-seitige Plugin-Lademachinerie — wie Code ankommt, wie Cordis ihn governed und wie Hot-Reload auf diesem Modell reitet. Diese Note besitzt die Ladekette; die [Client-Shell-Layering-Note](2026-08-15-client-shells-and-dynamic-packages.md) besitzt Package-Kategorien, Build-Faces, Shared-Module-Requests und npm-Dependency-Deklarationen, während die [Web-Client-Architektur-Note](2026-07-19-gui-web-client-architecture.de.md) Slots und die Objektschicht besitzt.
+> Arbeitsteilung: die Browser-seitige Plugin-Lademachinerie — wie Code ankommt, wie Cordis ihn governed und wie Hot-Reload auf diesem Modell reitet. Diese Note besitzt die Ladekette; die [Client-Shell-Layering-Note](2026-08-15-client-shells-and-dynamic-packages.de.md) besitzt Package-Kategorien, Build-Faces, Shared-Module-Requests und npm-Dependency-Deklarationen, während die [Web-Client-Architektur-Note](2026-07-19-gui-web-client-architecture.de.md) Slots und die Objektschicht besitzt.
 
 ## Problem
 
@@ -26,7 +26,7 @@ Der Client-Loader der ersten Generation (`createClientLoader`) hand-schrieb beid
 
 ### Package-Membership und Module-Requests
 
-Die [Client-Shell-Layering-Note](2026-08-15-client-shells-and-dynamic-packages.md) definiert die aktuellen statischen und dynamischen Package-Sets und die Import-Regeln zwischen ihnen. Die Lademachinerie behandelt jedes `dsh.client`-Package als Host-Graph-Zeile mit einem gewöhnlichen `lib/client.js`-Factory-Bundle. Seine Deklaration trägt Cordis-`inject`-Edges, synchrone Module-Table-`external`-Requests und das optionale `immediately`-Prefetch-Mark; die komponierende App besitzt nur das gemountete Roster.
+Die [Client-Shell-Layering-Note](2026-08-15-client-shells-and-dynamic-packages.de.md) definiert die aktuellen statischen und dynamischen Package-Sets und die Import-Regeln zwischen ihnen. Die Lademachinerie behandelt jedes `dsh.client`-Package als Host-Graph-Zeile mit einem gewöhnlichen `lib/client.js`-Factory-Bundle. Seine Deklaration trägt Cordis-`inject`-Edges, synchrone Module-Table-`external`-Requests und das optionale `immediately`-Prefetch-Mark; die komponierende App besitzt nur das gemountete Roster.
 
 Der Web-Kernel bleibt Framework-frei und importiert keinen dynamischen Package-Value. Modules ist selbst eine dynamische Zeile, aber der Host-Parser liefert seine Factory vor dem Vite-Main-Module. Die HTML-installierte `__ModuleLoader__`-Fassade nutzt jene Factory, um das Modulsystem zu konstruieren, wenn der Kernel `create()` ruft. Jede andere dynamische Zeile gehört zu einem Application-Combo-Script; statische React-, Cordis- und UI-Library-Identitäten kommen aus dem Shell-Seed.
 
@@ -90,7 +90,7 @@ Die Support-Boundary, ehrlich benannt. Reload ist by Design grob: frischer Fiber
 
 ## Package-Ownership
 
-Das aktuelle Package-Inventar und die Build-Formen leben in der [Client-Shell-Layering-Note](2026-08-15-client-shells-and-dynamic-packages.md). Diese Note behält nur die Loading-Properties, die für jede dynamische Row gelten: Lazy-Factory-Registrierung, Cordis-Entry-Governance, External-Script-Arrival, Source-Maps und HMR.
+Das aktuelle Package-Inventar und die Build-Formen leben in der [Client-Shell-Layering-Note](2026-08-15-client-shells-and-dynamic-packages.de.md). Diese Note behält nur die Loading-Properties, die für jede dynamische Row gelten: Lazy-Factory-Registrierung, Cordis-Entry-Governance, External-Script-Arrival, Source-Maps und HMR.
 
 ## Konsequenzen
 

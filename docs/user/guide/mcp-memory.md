@@ -1,8 +1,7 @@
 # Connect a third-party memory MCP server
-
-English | [中文](mcp-memory.zh.md)
-
 English | [中文](mcp-memory.zh.md) | [Deutsch](mcp-memory.de.md)
+
+
 
 These three **default-off reference configurations** connect one memory system to DSH through [`@deepseek-ai/dsh-mcp-client`](../../../packages/mcp/mcp-client/README.md). Pick one, or copy the same generic MCP row for another server.
 

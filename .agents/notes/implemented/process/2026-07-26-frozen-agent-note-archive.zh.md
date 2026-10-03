@@ -1,8 +1,8 @@
 # Agent Note: 将未来指导价值较低的 Agent Note 冻结在活跃记录集合之外
+[English](2026-07-26-frozen-agent-note-archive.md) | 中文 | [Deutsch](2026-07-26-frozen-agent-note-archive.de.md)
 
 Status: implemented
 
-[English](2026-07-26-frozen-agent-note-archive.md) | 中文
 
 ## 问题
 

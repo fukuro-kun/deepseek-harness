@@ -1,8 +1,8 @@
 # Agent Note: Geforkte Kinder bewahren das Request-Präfix des Elternteils
+[English](2026-08-10-fork-children-stay-one-shot.md) | [中文](2026-08-10-fork-children-stay-one-shot.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-fork-children-stay-one-shot.md) | [中文](2026-08-10-fork-children-stay-one-shot.zh.md) | Deutsch
 
 ## Problem
 

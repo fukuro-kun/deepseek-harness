@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-07-cancel-convergence-wake-latch.md
-2026-08-07-cancel-convergence-wake-latch.md: 52f41d17aba1fc5aac45d26a8122f2a82313ab3e
-2026-08-07-cancel-convergence-wake-latch.zh.md: 2c4f368feaaca91386cac0a5a833ecd8e9f2e1e1
-2026-08-07-cancel-convergence-wake-latch.de.md: abbae55aae5ed9b4565419a7017babe4f7c31daa
+2026-08-07-cancel-convergence-wake-latch.md: 09abaacae6e0b49070667b97efaf29744e7a7d35
+2026-08-07-cancel-convergence-wake-latch.zh.md: 0407c082ab29cea35ea0034d06e42c3465a94829
+2026-08-07-cancel-convergence-wake-latch.de.md: 9160a8e70dc7d886296323e1dd8e6d142eb34b13

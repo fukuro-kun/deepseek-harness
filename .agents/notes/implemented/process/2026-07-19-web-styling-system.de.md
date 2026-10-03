@@ -1,10 +1,10 @@
 # Agent Note: Web-Styling-System — das Token-Framework und die Engineering-Constraints
+[English](2026-07-19-web-styling-system.md) | [中文](2026-07-19-web-styling-system.zh.md) | Deutsch
 
 Status: implemented
 
 > Token-System-Update (2026-07-22): Die Framework-Festlegungen hier (CSS Modules + clsx, keine Component Library, kein Tailwind, nur Token-Farben) gelten weiterhin, aber die zweischichtige `--bg-*`/`--text-*`-Token-Tabelle und ihr Zuhause `web-ui/src/style/global.css` wurden durch die `--dsw-*` static+alias Sheets in `packages/client/ui-theme/src/styles/` ersetzt (dark = `body[data-ds-dark-theme]`-Override) — die Sheets selbst sind die Token-Autorität.
 
-[English](2026-07-19-web-styling-system.md) | [中文](2026-07-19-web-styling-system.zh.md) | Deutsch
 
 > Arbeitsteilung: Dieses RFC legt Framework und Constraints fest (ändert sich selten); [docs/web-styling.md](../../../../docs/web-styling.de.md) ist die lebende Spec (maßgebliche Token-Werte, die Coding-Rule-Checkliste, der Abweichungs-Record — sie entwickelt sich mit der Implementierung). Token-Änderungen und neue Regeln gehören dorthin; nur Änderungen am Framework selbst kommen hierher zurück (sein Umstoßen erfordert ein neues RFC).
 

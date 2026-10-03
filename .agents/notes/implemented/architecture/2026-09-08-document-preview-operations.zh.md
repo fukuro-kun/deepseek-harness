@@ -1,8 +1,8 @@
 # Agent Note: 文档预览与文件地址
+[English](2026-09-08-document-preview-operations.md) | 中文 | [Deutsch](2026-09-08-document-preview-operations.de.md)
 
 Status: implemented
 
-[English](2026-09-08-document-preview-operations.md) | 中文 | [Deutsch](2026-09-08-document-preview-operations.de.md)
 
 ## 问题
 

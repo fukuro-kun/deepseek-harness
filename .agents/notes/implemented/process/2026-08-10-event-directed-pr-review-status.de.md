@@ -1,8 +1,8 @@
 # Agent Note: Ereignisgesteuerte PR-Review-Statuskommandos
+[English](2026-08-10-event-directed-pr-review-status.md) | [中文](2026-08-10-event-directed-pr-review-status.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-10-event-directed-pr-review-status.md) | [中文](2026-08-10-event-directed-pr-review-status.zh.md) | Deutsch
 
 ## Problem
 

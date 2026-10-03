@@ -1,8 +1,8 @@
 # Agent Note: 极简 profile 只提供持久 shell
+[English](2026-09-03-minimal-profiles-persistent-shell-only.md) | 中文 | [Deutsch](2026-09-03-minimal-profiles-persistent-shell-only.de.md)
 
 Status: implemented
 
-[English](2026-09-03-minimal-profiles-persistent-shell-only.md) | 中文
 
 ## 问题
 

@@ -1,8 +1,8 @@
 # Agent Note: Invariant-Companions ohne unabhängige Beobachtungen weglassen
+[English](2026-08-28-omit-unneeded-invariant-companions.md) | [中文](2026-08-28-omit-unneeded-invariant-companions.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-28-omit-unneeded-invariant-companions.md) | [中文](2026-08-28-omit-unneeded-invariant-companions.zh.md) | Deutsch
 
 ## Problem
 
@@ -45,4 +45,4 @@ Bestehende Package-Behavior-Tests bleiben für weggelassene Beziehungen verantwo
 - Packages ohne Checks haben keine Invariant-Source, keinen Public-Subpath, kein Build-Artefakt und keine Invariant-only-Dependency-Last, und ihre READMEs bewahren den Grund.
 - Das Hinzufügen einer mutablen Beziehung oder eines konsumierten Event-Protokolls erfordert, das Weglassen erneut zu prüfen, das README zu aktualisieren und einen fokussierten Companion mit einem negativen Test hinzuzufügen.
 - Die Invariant-Service-Konfiguration, Ownership-Uniqueness, Child-Fiber-Lifecycle, Filtering-, Rollback-, Disposal- und HMR-Contracts bleiben unverändert.
-- Die frühere [Meaningful-Runtime-Contract-Entscheidung](../architecture/2026-07-19-package-invariant-runtime-contracts.md) bleibt maßgeblich für semantische Check-Qualität; diese Entscheidung supersedet ihre erschöpfende Publication und die erklärt-leere Form.
+- Die frühere [Meaningful-Runtime-Contract-Entscheidung](../architecture/2026-07-19-package-invariant-runtime-contracts.de.md) bleibt maßgeblich für semantische Check-Qualität; diese Entscheidung supersedet ihre erschöpfende Publication und die erklärt-leere Form.

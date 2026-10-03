@@ -1,8 +1,8 @@
 # Agent Note: pwsh-Tool auf Bash-Parität
+[English](2026-08-02-pwsh-tool-bash-parity.md) | [中文](2026-08-02-pwsh-tool-bash-parity.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-02-pwsh-tool-bash-parity.md) | [中文](2026-08-02-pwsh-tool-bash-parity.zh.md) | Deutsch
 
 ## Problem
 

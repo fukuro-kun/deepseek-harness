@@ -1,8 +1,8 @@
 # Agent Note: Plugin-owned Human-Command-Registrierung
+[English](2026-07-19-plugin-command-registration.md) | [中文](2026-07-19-plugin-command-registration.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-19-plugin-command-registration.md) | [中文](2026-07-19-plugin-command-registration.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,9 +1,8 @@
 # Agent Note: CI fixture completion and isolation
-English | [中文](.agents/notes/implemented/testing/2026-09-08-ci-completion-observations.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-08-ci-completion-observations.de.md)
+English | [中文](2026-09-08-ci-completion-observations.zh.md) | [Deutsch](2026-09-08-ci-completion-observations.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-08-ci-completion-observations.zh.md)
 
 ## Problem
 

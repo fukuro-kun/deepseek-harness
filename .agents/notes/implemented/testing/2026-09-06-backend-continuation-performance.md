@@ -1,9 +1,8 @@
 # Agent Note: Performance baselines for tool-heavy backend continuation
-English | [中文](.agents/notes/implemented/testing/2026-09-06-backend-continuation-performance.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-06-backend-continuation-performance.de.md)
+English | [中文](2026-09-06-backend-continuation-performance.zh.md) | [Deutsch](2026-09-06-backend-continuation-performance.de.md)
 
 Status: implemented
 
-English | [中文](2026-09-06-backend-continuation-performance.zh.md)
 
 ## Problem
 

@@ -3,7 +3,6 @@ English | [中文](2026-08-10-remote-event-delivery.zh.md) | [Deutsch](2026-08-1
 
 Status: implemented
 
-English | [中文](2026-08-10-remote-event-delivery.zh.md)
 
 ## Problem
 

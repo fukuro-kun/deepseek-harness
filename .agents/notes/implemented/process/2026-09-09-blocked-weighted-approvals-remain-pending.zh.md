@@ -1,8 +1,8 @@
 # Agent Note: 阻塞中的加权批准保持 pending
+[English](2026-09-09-blocked-weighted-approvals-remain-pending.md) | 中文 | [Deutsch](2026-09-09-blocked-weighted-approvals-remain-pending.de.md)
 
 Status: implemented
 
-[English](2026-09-09-blocked-weighted-approvals-remain-pending.md) | 中文
 
 ## 问题
 

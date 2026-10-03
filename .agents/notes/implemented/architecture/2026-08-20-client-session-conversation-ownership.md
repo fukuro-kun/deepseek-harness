@@ -3,7 +3,6 @@ English | [中文](2026-08-20-client-session-conversation-ownership.zh.md) | [De
 
 Status: implemented
 
-English | [中文](2026-08-20-client-session-conversation-ownership.zh.md)
 
 ## Problem
 

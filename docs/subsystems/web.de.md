@@ -1,6 +1,6 @@
 # Web-Zugriff
-
 [English](web.md) | [中文](web.zh.md) | Deutsch
+
 
 Der Web-Zugriffs-seam — ein [capability seam](../../.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.de.md), der **zwei Operationen** (search und fetch) auf einem `ctx.web`-Service überspannt und über Packages aufgeteilt ist: Service Definition ([dsh-web](../../packages/web/web), `ctx.web` + die Provider-Registries), Service Providers ([dsh-web-search-exa](../../packages/web/web-search-exa), [dsh-web-search-perplexity](../../packages/web/web-search-perplexity), [dsh-web-search-deepseek](../../packages/web/web-search-deepseek), [dsh-web-fetch-http](../../packages/web/web-fetch-http)) und Consumer ([dsh-tool-web](../../packages/web/tool-web), die `web_search`/`web_fetch`-Tool-Schemas). Web ist **eine optionale Fähigkeit**, nicht Teil der agent-loop-Spine — daher lebt sein Vokabular hier, nicht in [core.md](core.de.md). Ein Wechsel des search-provider ändert nicht, wie das Modell eine Anfrage stellt, und ein Wechsel des fetch-provider ändert nicht, wie das Modell eine URL anfordert.
 

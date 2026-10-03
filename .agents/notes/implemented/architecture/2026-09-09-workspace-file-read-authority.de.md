@@ -1,8 +1,8 @@
 # Agent Note: Workspace-Datei-Read-Authority
+[English](2026-09-09-workspace-file-read-authority.md) | [中文](2026-09-09-workspace-file-read-authority.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-09-workspace-file-read-authority.md) | [中文](2026-09-09-workspace-file-read-authority.zh.md) | Deutsch
 
 ## Problem
 
@@ -16,7 +16,7 @@ Workspace Files dient sowohl Dateiinhalten als auch der Workspace-Navigation. Da
 
 `readRelated` löst einen relativen Pfad vom Verzeichnis der Basisdatei aus. Ein `..`-Pfad kann daher JavaScript oder CSS außerhalb des Workspace lesen, wenn das Session-Backend es erlaubt. Document Preview verpackt begrenzte, statisch deklarierte lokale Scripts und Stylesheets in einen HTML-Blob-iframe mit `sandbox="allow-scripts"`; der opaque Origin blockiert den Parent-Zugriff, aber der Browser behält normalen Netzwerkzugriff. Diese Exposition ist ein bewusster Sicherheits-Kompromiss für das Rendern statisch generierten HTML.
 
-Der [Workspace-Files-Service](2026-09-05-workspace-files-service.md) besitzt Paging, Datei-Prüfungen, Listing und Beobachtung. [Document Preview](2026-09-08-document-preview-operations.de.md) besitzt, welche zugehörigen Dateien verpackt werden, und den iframe-Sandbox.
+Der [Workspace-Files-Service](2026-09-05-workspace-files-service.de.md) besitzt Paging, Datei-Prüfungen, Listing und Beobachtung. [Document Preview](2026-09-08-document-preview-operations.de.md) besitzt, welche zugehörigen Dateien verpackt werden, und den iframe-Sandbox.
 
 ## Betrachtete Alternativen
 

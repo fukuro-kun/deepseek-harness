@@ -1,8 +1,8 @@
 # Agent Note: Web 能力 seam——稳定的工具覆盖多个提供方
+[English](2026-06-24-web-capability-seam.md) | 中文 | [Deutsch](2026-06-24-web-capability-seam.de.md)
 
 Status: implemented
 
-[English](.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.de.md)
 
 ## 问题
 

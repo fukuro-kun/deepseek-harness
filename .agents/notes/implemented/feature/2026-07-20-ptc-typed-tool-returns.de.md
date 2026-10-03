@@ -1,8 +1,8 @@
 # Agent Note: Typisierte Tool-Rückgaben im PTC mode
+[English](2026-07-20-ptc-typed-tool-returns.md) | [中文](2026-07-20-ptc-typed-tool-returns.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-20-ptc-typed-tool-returns.md) | [中文](2026-07-20-ptc-typed-tool-returns.zh.md) | Deutsch
 
 ## Problem
 

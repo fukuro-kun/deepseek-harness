@@ -4,6 +4,7 @@
      Zum Aktualisieren zuerst `pnpm run gen-module-graph` für die englische Seite ausführen, dann diese Datei aktualisieren und `pnpm run verify-translation-pairing --write docs/module-graph.md` zum erneuten Aufzeichnen der Paarung ausführen. -->
 
 # Abhängigkeitsgraph geteilter Instanzen
+[English](module-graph.md) | [中文](module-graph.zh.md) | Deutsch
 
 Peer-Abhängigkeiten zwischen den `@deepseek-ai/dsh-*`-Harness-Paketen. Ein Peer bedeutet, dass der Konsument eine geteilte Instanz benötigt; gewöhnliche Runtime-Abhängigkeiten und reine Entwicklungsbeziehungen werden nicht angezeigt. Der Graph ist nach der `packages/<group>/<pkg>`-Hierarchie gruppiert. Eine Kante `a --> b` bedeutet, dass Paket `a` Paket `b` als Peer hat. Die Namen lassen das Präfix `@deepseek-ai/dsh-` aus.
 

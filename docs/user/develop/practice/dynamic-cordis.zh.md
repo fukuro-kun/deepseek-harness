@@ -1,8 +1,7 @@
 # 用 Cordis 工具扩展运行中的智能体
-
-[English](dynamic-cordis.md) | 中文
-
 [English](dynamic-cordis.md) | 中文 | [Deutsch](dynamic-cordis.de.md)
+
+
 
 本实战指南启用 [`@deepseek-ai/dsh-tool-cordis`](../../../../packages/extensions/tool-cordis/README.zh.md)。智能体可以检查当前 Cordis 进程，并在内存中挂载或卸载模型编写的插件。临时插件会在卸载或进程退出时消失，并可能影响同一进程中的其他会话。
 

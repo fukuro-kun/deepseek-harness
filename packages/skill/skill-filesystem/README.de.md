@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-skill-filesystem
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -58,8 +58,11 @@ Der Projekt-Root ist der nächste Vorfahren, der `.git` enthält; ohne einen sol
 Lade das Plugin zusammen mit der Skill-Registry; es benötigt `ctx.skills`.
 
 ```yaml
+
 - name: '@deepseek-ai/dsh-skill'
+
 - name: '@deepseek-ai/dsh-skill-filesystem'
+
 ```
 
 | Feld | Default | Bedeutung |

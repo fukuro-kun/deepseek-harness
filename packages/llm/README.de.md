@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # llm/ — LLM-Capability-Familie
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Übersicht
 
@@ -39,8 +39,8 @@ Die llm-Gruppe stellt die Modellaufruf-Capability des Harness bereit: einen prov
 
 - [LLM-Streaming-Subsystem](../../docs/subsystems/llm-streaming.de.md) — die Message- und Block-Typen, der assemblierte Modell-Request, das `StreamChunk`-Protokoll und der Adapter Contract.
 - [Token-Meter-Subsystem](../../docs/subsystems/token-meter.de.md) — die Messsemantik hinter `ctx.tokenMeter`.
-- [Zwillings-LLM-Adapter](../../.agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.md) — warum die DeepSeek-Route zwei strukturell verschiedene Adapter ausliefert.
-- [Gerouteter Modellkontext](../../.agents/notes/implemented/architecture/2026-07-20-routed-model-context-and-compaction-policy.md) — wie der Loop Modell-Requests routet und Kontext kompaktiert.
+- [Zwillings-LLM-Adapter](../../.agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.de.md) — warum die DeepSeek-Route zwei strukturell verschiedene Adapter ausliefert.
+- [Gerouteter Modellkontext](../../.agents/notes/implemented/architecture/2026-07-20-routed-model-context-and-compaction-policy.de.md) — wie der Loop Modell-Requests routet und Kontext kompaktiert.
 
 <a id="dev-note"></a>
 ## Entwicklerhinweis

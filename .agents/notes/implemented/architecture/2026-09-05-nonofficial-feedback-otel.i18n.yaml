@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-05-nonofficial-feedback-otel.md
-2026-09-05-nonofficial-feedback-otel.md: ecfe11a70290ca6dba7fd66d08532e7fddb41b6c
-2026-09-05-nonofficial-feedback-otel.zh.md: 6acb7086e13af7e2cacc057b5d008deb70b361ac
-2026-09-05-nonofficial-feedback-otel.de.md: 285d5905ba46eafcfaf9f798074457d99d80876d
+2026-09-05-nonofficial-feedback-otel.md: 03d014558fd5ce6a4d3e27d686248f7bb1d99f72
+2026-09-05-nonofficial-feedback-otel.zh.md: 34c7abc281dffb258aa190a1844e3b784753e6cc
+2026-09-05-nonofficial-feedback-otel.de.md: b9cb23a457e268cf0870001c9ef6c56fa56dbf4e

@@ -1,8 +1,8 @@
 # Agent Note: Parallele Pre-Push-Gates
+[English](2026-07-06-parallel-pre-push-gates.md) | [中文](2026-07-06-parallel-pre-push-gates.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-06-parallel-pre-push-gates.md) | [中文](2026-07-06-parallel-pre-push-gates.zh.md) | Deutsch
 
 Der Local-Hook-Teil dieses Eintrags wurde durch [Fast local Git hooks](../../archived/process/2026-07-22-fast-local-git-hooks.md) ersetzt. Der begrenzte Gate-Scheduler und die `publint`-Parallelität auf Package-Ebene gelten weiterhin für CI, `doc-sync` und explizite lokale Befehle. Die Fail-Fast-Option des Schedulers ist in [Gate-runner fail-fast](../../archived/process/2026-08-27-gate-runner-fail-fast.md) dokumentiert.
 

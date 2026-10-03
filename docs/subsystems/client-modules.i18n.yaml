@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/client-modules.md
-client-modules.md: ff37bd1c809e295e4da26850d10be83f418787d0
-client-modules.zh.md: 1cb5418d84926d1288ca284f2846bf0450edde9a
-client-modules.de.md: eb79c70adc42ba2577036321bd184301df4f8b7d
+client-modules.md: d5daf213073015877826e7af5e0098e527330b3a
+client-modules.zh.md: 729b15e38724fb3aa783cabd5abb5118f0b8930a
+client-modules.de.md: b0c78046b1c32d53dc81a2e48db099fc484325ab

@@ -1,8 +1,8 @@
 # Agent Note: 基于文件系统与进程管理执行世界的可移植消费方
+[English](2026-07-28-portable-execution-world-consumers.md) | 中文 | [Deutsch](2026-07-28-portable-execution-world-consumers.de.md)
 
 Status: implemented
 
-[English](2026-07-28-portable-execution-world-consumers.md) | 中文 | [Deutsch](2026-07-28-portable-execution-world-consumers.de.md)
 
 ## 问题
 

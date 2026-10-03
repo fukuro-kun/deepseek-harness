@@ -1,8 +1,8 @@
 # Agent Note: CI fixture 的完成与隔离
+[English](2026-09-08-ci-completion-observations.md) | 中文 | [Deutsch](2026-09-08-ci-completion-observations.de.md)
 
 Status: implemented
 
-[English](2026-09-08-ci-completion-observations.md) | 中文
 
 ## 问题
 

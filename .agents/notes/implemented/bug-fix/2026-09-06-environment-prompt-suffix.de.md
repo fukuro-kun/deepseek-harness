@@ -1,8 +1,8 @@
 # Agent Note: Environment facts follow reusable prompt instructions
+[English](2026-09-06-environment-prompt-suffix.md) | [中文](2026-09-06-environment-prompt-suffix.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-environment-prompt-suffix.md) | [中文](2026-09-06-environment-prompt-suffix.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Der System-Prompt ist Surface-Node 0
+[English](2026-09-02-system-prompt-as-surface-node.md) | [中文](2026-09-02-system-prompt-as-surface-node.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-02-system-prompt-as-surface-node.md) | [中文](2026-09-02-system-prompt-as-surface-node.zh.md) | Deutsch
 
 ## Problem
 
@@ -60,9 +60,9 @@ In `packages/core/agent-loop/src/agent.ts` rendert `preStep` den Prompt mit `ren
 
 Die [V2-zu-V3-Spezifikation](../../../../packages/session/session-format-v2-to-v3/README.de.md#system-head) besitzt System-Head-Konversion und Message-Identitäten; ihre [Referenz-Regeln](../../../../packages/session/session-format-v2-to-v3/README.de.md#sequence-references) und [Source-Ablehnung](../../../../packages/session/session-format-v2-to-v3/README.de.md#source-audit) definieren Erhaltung und nicht unterstützte Eingaben. Das migrierte Layout ist semantisch äquivalent zu nativen Requests, nicht Byte-identisch zu einer nativen Aufzeichnung. Eine gültige V2-Quelle kann unter der aktuellen Step-Invariante keine ordnungserhaltende Konversion haben; sie abzulehnen ist dem Verschieben von History oder dem Aufweichen von Ownership vorzuziehen. Historische Acceptance-Koordinaten dürfen nicht zu Acknowledgements des transformierten Logs werden.
 
-Die [Released-Format-Policy](2026-08-31-released-session-format-migrations.md) bewahrt die Semantik jeder veröffentlichten Konversion; eine existierende Ziel-Format-Generation läuft ihre eingehende Kante nicht erneut. Projection-Cache-Versionen sind unabhängig von Session-Format-Versionen.
+Die [Released-Format-Policy](2026-08-31-released-session-format-migrations.de.md) bewahrt die Semantik jeder veröffentlichten Konversion; eine existierende Ziel-Format-Generation läuft ihre eingehende Kante nicht erneut. Projection-Cache-Versionen sind unabhängig von Session-Format-Versionen.
 
-Die [Canonical-Envelope-Spezifikation](../../../../packages/session/session-format-v2-to-v3/README.de.md#canonical-envelopes) definiert die Komposition mit der Strukturkonversion; die [Canonical-Envelope-Entscheidung](2026-09-06-v3-canonical-session-envelopes.md) besitzt die Strict-Acceptance-Begründung.
+Die [Canonical-Envelope-Spezifikation](../../../../packages/session/session-format-v2-to-v3/README.de.md#canonical-envelopes) definiert die Komposition mit der Strukturkonversion; die [Canonical-Envelope-Entscheidung](2026-09-06-v3-canonical-session-envelopes.de.md) besitzt die Strict-Acceptance-Begründung.
 
 ## Erwogene Alternativen
 

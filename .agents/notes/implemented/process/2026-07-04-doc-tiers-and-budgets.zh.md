@@ -1,8 +1,8 @@
 # Agent Note: 文档结构、层级与预算
+[English](2026-07-04-doc-tiers-and-budgets.md) | 中文 | [Deutsch](2026-07-04-doc-tiers-and-budgets.de.md)
 
 Status: implemented
 
-[English](2026-07-04-doc-tiers-and-budgets.md) | 中文
 
 ## 问题
 

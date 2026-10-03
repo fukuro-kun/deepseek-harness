@@ -1,8 +1,8 @@
 # Agent Note: Durable Agent Teams over continuable children
+[English](2026-08-05-agent-teams.md) | 中文 | [Deutsch](2026-08-05-agent-teams.de.md)
 
 Status: implemented
 
-[English](2026-08-05-agent-teams.md) | 中文
 
 ## Problem
 

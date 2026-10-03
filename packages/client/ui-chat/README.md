@@ -3,10 +3,9 @@ description: "Browser Chat target that renders Session conversation nodes, histo
 kind: "package-reference"
 ---
 # @deepseek-ai/dsh-client-ui-chat
-
-English | [中文](README.zh.md)
-
 English | [中文](README.zh.md) | [Deutsch](README.de.md)
+
+
 
 ## Summary
 

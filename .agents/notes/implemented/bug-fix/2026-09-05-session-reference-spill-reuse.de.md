@@ -1,8 +1,8 @@
 # Agent Note: Reuse spill storage for truncated session references
+[English](2026-09-05-session-reference-spill-reuse.md) | [中文](2026-09-05-session-reference-spill-reuse.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-05-session-reference-spill-reuse.md) | [中文](2026-09-05-session-reference-spill-reuse.zh.md) | Deutsch
 
 ## Problem
 

@@ -1,8 +1,8 @@
 # Agent Note: Konkrete Prosa benennt Akteure und aufgezeichnete Fakten
+[English](2026-08-09-concrete-prose-names-actors-and-recorded-facts.md) | [中文](2026-08-09-concrete-prose-names-actors-and-recorded-facts.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-08-09-concrete-prose-names-actors-and-recorded-facts.md) | [中文](2026-08-09-concrete-prose-names-actors-and-recorded-facts.zh.md) | Deutsch
 
 ## Problem
 

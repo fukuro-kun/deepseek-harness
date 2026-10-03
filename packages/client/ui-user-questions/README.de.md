@@ -4,8 +4,8 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-client-ui-user-questions
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 ## Zusammenfassung
 
@@ -69,7 +69,7 @@ Diese Seiten behandeln den Composer-Host, den Tool-Seam und den Plan-Mode-Consum
 - [ui-conversation](../ui-conversation/README.de.md) — die Chat-Oberfläche, die die `conversation.composer`-Kette besitzt.
 - [tool-ask-user](../../interaction/tool-ask-user/README.de.md) — das modell-zugewandte Tool, dessen Schema und Antworten diese UI rendert.
 - [ui-plan](../ui-plan/README.de.md) — die Plan-Mode-Oberfläche, die die `plan-review`-Intent setzt.
-- [user-questions](../../interaction/user-questions/README.md) — der Host-seitige Fragen-Seam und sein Answerer-Waterfall.
+- [user-questions](../../interaction/user-questions/README.de.md) — der Host-seitige Fragen-Seam und sein Answerer-Waterfall.
 
 -----
 

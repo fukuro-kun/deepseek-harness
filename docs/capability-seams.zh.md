@@ -2,8 +2,8 @@
      更新时先运行 `pnpm run gen-doc-graphs` 更新英文，再更新本文件并运行 `pnpm run verify-translation-pairing --write docs/capability-seams.md` 重新记录配对。 -->
 
 # 能力 Seams 与核心服务
+[English](capability-seams.md) | 中文 | [Deutsch](capability-seams.de.md)
 
-[English](capability-seams.md) | 中文 | [Deutsch](docs/capability-seams.de.md)
 
 服务可以是核心主干服务、可替换的能力 seam，也可以是组合包／组合点。下图展示了拥有服务声明的包、已知实现包，以及直接消费该服务的包。
 

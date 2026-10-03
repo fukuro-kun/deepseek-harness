@@ -1,6 +1,6 @@
 # Long-Session-Browser-Benchmark
-
 [English](README.md) | [中文](README.zh.md) | Deutsch
+
 
 Der erforderliche Chromium-Workflow in [long-session.bench.ts](long-session.bench.ts) misst das Öffnen einer synthetischen 240-Turn-Session, das Laden jeder älteren Seite, den Besuch von Trajectory und das Tippen eines weiteren Drafts während einer getakteten Antwort. Das ausgelieferte Web-Scaffold besitzt das isolierte Home, die Persistenz, den Replay-Adapter und den Loopback-Listener; Chromium lädt die gebauten Web-Artefakte, keinen Ersatz-Entwicklungsserver.
 

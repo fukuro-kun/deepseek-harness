@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/webhook/README.md
 README.md: d94a9c482608ded4bf1ed546d0c940bc88ecac1a
-README.zh.md: c928b9d30763f4555c05af4f148f184dc6b27760
-README.de.md: 8d4ac14d053fcf0a4abb20c76cad13ee4d864cf3
+README.zh.md: a92e5a776cc6e9f409985518be2da6708077a5ed
+README.de.md: 928ec58f20c3ad87ad68935d60ca765555176c68

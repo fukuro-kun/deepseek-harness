@@ -1,8 +1,8 @@
 # Agent Note: 被委派的 subagent 以钉定为 `'never'` 的审批策略运行
+[English](2026-08-10-subagent-approval-pinned-never.md) | 中文 | [Deutsch](2026-08-10-subagent-approval-pinned-never.de.md)
 
 Status: implemented
 
-[English](2026-08-10-subagent-approval-pinned-never.md) | 中文
 
 ## 问题
 

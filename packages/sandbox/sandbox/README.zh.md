@@ -4,15 +4,14 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-sandbox
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
-[English](README.md) | 中文
 
 ## 概述
 
 使用 `dsh-sandbox`，可以让子进程及其派生的所有进程在逐调用文件访问策略下运行。命令可以禁止写入（`read-only`）、只写入工作区（`workspace-write`），或不受限制地运行（`danger-full-access`）。无法强制执行所请求的模式时，调用以 `SANDBOX_UNAVAILABLE` 失败，绝不会不受限制地运行。调用被拒绝后，模型可以请求一个严格更宽的模式，交由人类批准一次。这是同世界隔离：进程仍与宿主共享内核和文件系统；需要隔离整个环境时，请使用容器、microVM 或远程执行器。
 
 
-[English](README.md) | 中文 | [Deutsch](README.de.md)
 ## 目录
 
 - [使用本包](#use-this-package)

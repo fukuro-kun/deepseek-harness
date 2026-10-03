@@ -1,8 +1,8 @@
 # Agent Note: 仅复用循环已证明的消息冻结
+[English](2026-09-06-agent-request-freeze-provenance.md) | 中文 | [Deutsch](2026-09-06-agent-request-freeze-provenance.de.md)
 
 Status: implemented
 
-[English](2026-09-06-agent-request-freeze-provenance.md) | 中文
 
 ## 问题
 

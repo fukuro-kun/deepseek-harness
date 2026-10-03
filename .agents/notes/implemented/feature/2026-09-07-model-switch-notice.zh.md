@@ -1,8 +1,8 @@
 # Agent Note: 模型可见的路由切换提示
+[English](2026-09-07-model-switch-notice.md) | 中文 | [Deutsch](2026-09-07-model-switch-notice.de.md)
 
 Status: implemented
 
-[English](2026-09-07-model-switch-notice.md) | 中文
 
 ## 问题
 

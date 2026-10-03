@@ -1,8 +1,8 @@
 # Agent Note: Compiler-unabhängiges Typert-Typmodell
+[English](2026-07-27-compiler-independent-typert-model.md) | [中文](2026-07-27-compiler-independent-typert-model.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-07-27-compiler-independent-typert-model.md) | [中文](2026-07-27-compiler-independent-typert-model.zh.md) | Deutsch
 
 ## Problem
 
@@ -22,7 +22,7 @@ PackageModel erkennt Cordis-Services, Events, `@typert object`-Referenzobjekte u
 
 [`dsh-typert-registry`](../../../../packages/typert/registry/README.de.md) stellt `ctx.typert` bereit und übernimmt ausschließlich die Laufzeit-Registrierung: Ein Contribution trägt atomar die Package-Face-Reflection und ein optionales Zod-Schema, und das Cordis-Effect-Disposal widerruft sie. Die Registry analysiert weder TypeScript noch merged sie die beiden Faces. JSON Schema ist eine On-Demand-Projektion registrierter Zod-Schemas.
 
-Die Publikation von Package-Artefakten bleibt ein explizites Opt-in über Package-Exports. Aufgerufen validiert `WorkspaceTypertGenerator`, dass jedes angeforderte Host-Face den nutzerseitigen Subpath `package/typert` aus dem Root-Artefakt `package/lib/typert.host.{js,d.ts}` exponiert bzw. dass jedes angeforderte Client-Face `package/client/typert` aus `package/lib/typert.client.{js,d.ts}` exponiert; diese Exports werden niemals editiert. Das spätere [Typert-Remote-Design](2026-08-02-typert-remote-method-calls.md) ergänzt einen Workspace-weiten Host-Contract-Pass für Root-Build, Typecheck, Lint und Documentation-Typecheck. Für opt-in Host-Packages emittiert dieser Pass sowohl lokale Reflection als auch strikte Host-for-Client-`/remote`-Contracts, bevor Consumer sie auflösen. Generierte lokale Deklarationen halten `TYPERT` als `unknown` typisiert, sodass Business-Packages nicht von der Registry abhängen.
+Die Publikation von Package-Artefakten bleibt ein explizites Opt-in über Package-Exports. Aufgerufen validiert `WorkspaceTypertGenerator`, dass jedes angeforderte Host-Face den nutzerseitigen Subpath `package/typert` aus dem Root-Artefakt `package/lib/typert.host.{js,d.ts}` exponiert bzw. dass jedes angeforderte Client-Face `package/client/typert` aus `package/lib/typert.client.{js,d.ts}` exponiert; diese Exports werden niemals editiert. Das spätere [Typert-Remote-Design](2026-08-02-typert-remote-method-calls.de.md) ergänzt einen Workspace-weiten Host-Contract-Pass für Root-Build, Typecheck, Lint und Documentation-Typecheck. Für opt-in Host-Packages emittiert dieser Pass sowohl lokale Reflection als auch strikte Host-for-Client-`/remote`-Contracts, bevor Consumer sie auflösen. Generierte lokale Deklarationen halten `TYPERT` als `unknown` typisiert, sodass Business-Packages nicht von der Registry abhängen.
 
 Zur Build-Zeit konsumiert `CordisCatalogProjector` das analysierte `FaceModel` und den `TypeGraph` einmalig, um `docs/cordis-catalog/events.md`, `docs/cordis-catalog/services.md` und den statischen `SERVICE_API`-, `EVENT_API`- und `TYPE_API`-Katalog zu generieren, der für `tool-cordis` committed wird. `tool-cordis` liest diesen statischen Katalog und hat keine Runtime-Dependency auf `ctx.typert`. [`dsh-typert-loader`](../../../../packages/typert/loader/README.de.md) und die Registry bleiben ein unabhängiger Runtime-Pfad: Der Loader folgt den Entry-Lifecycle-Events des Cordis Loaders, importiert ein explizit publiziertes `./typert`-Host-Artefakt und registriert es über `ctx.typert`; keine der beiden Komponenten liefert den aktuellen `cordis_inspect`-Katalog.
 

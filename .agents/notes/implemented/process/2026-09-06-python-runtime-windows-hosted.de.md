@@ -1,8 +1,8 @@
 # Agent Note: Windows-Python-Laufzeit-CI bleibt auf GitHub-gehostetem Windows
+[English](2026-09-06-python-runtime-windows-hosted.md) | [中文](2026-09-06-python-runtime-windows-hosted.zh.md) | Deutsch
 
 Status: implemented
 
-[English](2026-09-06-python-runtime-windows-hosted.md) | [中文](2026-09-06-python-runtime-windows-hosted.zh.md) | Deutsch
 
 ## Problem
 

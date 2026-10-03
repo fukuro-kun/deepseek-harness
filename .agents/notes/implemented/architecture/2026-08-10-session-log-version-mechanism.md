@@ -3,7 +3,6 @@ English | [中文](2026-08-10-session-log-version-mechanism.zh.md) | [Deutsch](2
 
 Status: implemented
 
-English | [中文](2026-08-10-session-log-version-mechanism.zh.md)
 
 ## Problem
 
