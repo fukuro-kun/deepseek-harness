@@ -1,4 +1,5 @@
 # Agent Note: After-call compaction pressure and context-overflow recovery
+English | [中文](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.zh.md) | [Deutsch](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.de.md)
 
 Status: implemented
 

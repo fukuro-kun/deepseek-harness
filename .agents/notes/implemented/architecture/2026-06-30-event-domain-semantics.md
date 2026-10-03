@@ -1,4 +1,5 @@
 # Agent Note: Event-domain semantics — session is the fact log, agent is the live event channel
+English | [中文](2026-06-30-event-domain-semantics.zh.md) | [Deutsch](2026-06-30-event-domain-semantics.de.md)
 
 Status: implemented
 

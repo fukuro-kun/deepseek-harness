@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-06-timeout-deadline-library.md) | 中文
+[English](2026-07-06-timeout-deadline-library.md) | 中文 | [Deutsch](2026-07-06-timeout-deadline-library.de.md)
 
 ## 问题
 

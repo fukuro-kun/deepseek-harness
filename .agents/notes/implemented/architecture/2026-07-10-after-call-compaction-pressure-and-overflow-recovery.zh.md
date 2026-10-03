@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.md) | 中文
+[English](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.md) | 中文 | [Deutsch](2026-07-10-after-call-compaction-pressure-and-overflow-recovery.de.md)
 
 ## 问题
 

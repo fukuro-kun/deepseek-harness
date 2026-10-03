@@ -1,4 +1,5 @@
 # Agent Note: Tool output spill policy
+English | [中文](2026-07-08-tool-output-spill-files.zh.md) | [Deutsch](2026-07-08-tool-output-spill-files.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Tagged render-intent union for tool-call presentation
+English | [中文](2026-07-02-tool-render-intent-union.zh.md) | [Deutsch](2026-07-02-tool-render-intent-union.de.md)
 
 Status: implemented
 

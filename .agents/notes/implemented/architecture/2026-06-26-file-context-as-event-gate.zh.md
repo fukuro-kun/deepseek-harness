@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-06-26-file-context-as-event-gate.md) | 中文
+[English](2026-06-26-file-context-as-event-gate.md) | 中文 | [Deutsch](2026-06-26-file-context-as-event-gate.de.md)
 
 ## 问题
 

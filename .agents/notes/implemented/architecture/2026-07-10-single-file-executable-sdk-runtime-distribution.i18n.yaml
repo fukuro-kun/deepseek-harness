@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-10-single-file-executable-sdk-runtime-distribution.md
-2026-07-10-single-file-executable-sdk-runtime-distribution.md: 7792e24a5869be6b7bae7787a6a481f3075ba740
-2026-07-10-single-file-executable-sdk-runtime-distribution.zh.md: 857bfaec80da962fac0403f2239e0a5e71954194
+2026-07-10-single-file-executable-sdk-runtime-distribution.md: 576fa552091b2b1ef29908ae50ae1d97b47f4f7f
+2026-07-10-single-file-executable-sdk-runtime-distribution.zh.md: fc637619c4067b52926fec3f16828086d5595f68
+2026-07-10-single-file-executable-sdk-runtime-distribution.de.md: cb25e34d4987c55939ba40cb5997846aff06cfb1

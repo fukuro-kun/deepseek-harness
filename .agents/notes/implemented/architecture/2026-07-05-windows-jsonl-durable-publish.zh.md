@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-05-windows-jsonl-durable-publish.md) | 中文
+[English](2026-07-05-windows-jsonl-durable-publish.md) | 中文 | [Deutsch](2026-07-05-windows-jsonl-durable-publish.de.md)
 
 ## 问题
 

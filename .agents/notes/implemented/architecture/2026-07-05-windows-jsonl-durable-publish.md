@@ -1,4 +1,5 @@
 # Agent Note: Windows-native durable JSONL publication
+English | [中文](2026-07-05-windows-jsonl-durable-publish.zh.md) | [Deutsch](2026-07-05-windows-jsonl-durable-publish.de.md)
 
 Status: implemented
 

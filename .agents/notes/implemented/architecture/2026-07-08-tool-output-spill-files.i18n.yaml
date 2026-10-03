@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-08-tool-output-spill-files.md
-2026-07-08-tool-output-spill-files.md: a80b6cdcb0e731a687d511d38ea288a68a298173
-2026-07-08-tool-output-spill-files.zh.md: a995eafc7878b342a2164c5116da1f43ada791a5
+2026-07-08-tool-output-spill-files.md: e0a043b73d24384052f1d0a5f2154c6200ffe05d
+2026-07-08-tool-output-spill-files.zh.md: 16377836a25740cb366f8d0f96a68d09ba7b5601
+2026-07-08-tool-output-spill-files.de.md: 22cba7c8e14716b4903a5926b06b606eff141a64
