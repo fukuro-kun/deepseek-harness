@@ -1,4 +1,5 @@
 # Agent Note: Continuable subagents
+English | [中文](.agents/notes/implemented/feature/2026-07-28-continuable-subagent-conversations.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-28-continuable-subagent-conversations.de.md)
 
 Status: implemented
 
