@@ -3,6 +3,7 @@ description: "Prebuilt system.node for macOS arm64 POSIX locks."
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system-darwin-arm64
+English | [中文](native/system/packages/darwin-arm64/README.zh.md) | [Deutsch](native/system/packages/darwin-arm64/README.de.md)
 
 English | [中文](README.zh.md)
 

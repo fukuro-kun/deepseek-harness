@@ -3,6 +3,7 @@ description: "Prebuilt Landlock launcher and POSIX flock addons for Linux x64."
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system-linux-x64
+English | [中文](native/system/packages/linux-x64/README.zh.md) | [Deutsch](native/system/packages/linux-x64/README.de.md)
 
 English | [中文](README.zh.md)
 
