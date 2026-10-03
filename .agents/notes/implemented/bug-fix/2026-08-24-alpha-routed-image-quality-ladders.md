@@ -1,4 +1,5 @@
 # Agent Note: Alpha-routed image quality ladders replace colour-count codec routing
+English | [中文](.agents/notes/implemented/bug-fix/2026-08-24-alpha-routed-image-quality-ladders.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-08-24-alpha-routed-image-quality-ladders.de.md)
 
 Status: implemented
 

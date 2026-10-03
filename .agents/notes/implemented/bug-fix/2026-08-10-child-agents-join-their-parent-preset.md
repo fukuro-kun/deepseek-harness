@@ -1,4 +1,5 @@
 # Agent Note: Child agents join their parent's preset composition
+English | [中文](.agents/notes/implemented/bug-fix/2026-08-10-child-agents-join-their-parent-preset.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-08-10-child-agents-join-their-parent-preset.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Child Agent messages precede their settlement notices
+English | [中文](.agents/notes/implemented/bug-fix/2026-08-17-subagent-message-settlement-ordering.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-08-17-subagent-message-settlement-ordering.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Repairable pi-ai settings after catalog changes
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-07-pi-ai-settings-catalog-recovery.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-07-pi-ai-settings-catalog-recovery.de.md)
 
 Status: implemented
 

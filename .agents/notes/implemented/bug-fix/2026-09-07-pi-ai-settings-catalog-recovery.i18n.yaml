@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-07-pi-ai-settings-catalog-recovery.md
-2026-09-07-pi-ai-settings-catalog-recovery.md: 21fe532a491775ff875f6b9bcb000d917a95e13c
+2026-09-07-pi-ai-settings-catalog-recovery.md: e742b4d8fa1a14dcd1d7fb3e505db0cd89f1a7ee
 2026-09-07-pi-ai-settings-catalog-recovery.zh.md: 80bd0758e13b767671f4cec52ee3832c9250651f
+2026-09-07-pi-ai-settings-catalog-recovery.de.md: 092986f382b055002ef5ef3448bf2f744294544e
