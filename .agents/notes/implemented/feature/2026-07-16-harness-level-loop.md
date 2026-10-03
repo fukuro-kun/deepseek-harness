@@ -1,4 +1,5 @@
 # Agent Note: Harness-level goal-based execution
+English | [中文](.agents/notes/implemented/feature/2026-07-16-harness-level-loop.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-16-harness-level-loop.de.md)
 
 Status: implemented
 

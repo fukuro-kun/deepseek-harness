@@ -1,4 +1,5 @@
 # Agent Note: The approval seam — one-shot permission decisions over a waterfall of answerers
+English | [中文](.agents/notes/implemented/feature/2026-07-06-approval-seam.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-06-approval-seam.de.md)
 
 Status: implemented
 

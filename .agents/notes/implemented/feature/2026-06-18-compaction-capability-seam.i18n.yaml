@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-06-18-compaction-capability-seam.md
-2026-06-18-compaction-capability-seam.md: 7d8b4f5011385f306aec4c6374d3402427fb3cc4
+2026-06-18-compaction-capability-seam.md: da5b9427264ec12a4cfc7f03819fb4259c3ffd2e
 2026-06-18-compaction-capability-seam.zh.md: 6a255bb05e0b3c90077af051bd24744305f3833e
+2026-06-18-compaction-capability-seam.de.md: 416b92f2f9581177e39143c082be5e15e469db1a

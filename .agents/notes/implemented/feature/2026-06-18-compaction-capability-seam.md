@@ -1,4 +1,5 @@
 # Agent Note: Compaction as a capability seam (abstract contract + basic backend)
+English | [中文](.agents/notes/implemented/feature/2026-06-18-compaction-capability-seam.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-06-18-compaction-capability-seam.de.md)
 
 Status: implemented
 
