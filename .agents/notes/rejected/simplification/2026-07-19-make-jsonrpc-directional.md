@@ -1,4 +1,5 @@
 # Agent Note: Make JSON-RPC completion and transport directional
+English | [中文](.agents/notes/rejected/simplification/2026-07-19-make-jsonrpc-directional.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-07-19-make-jsonrpc-directional.de.md)
 
 Status: rejected — session/prompt became an enqueue receipt without status (2026-07-30-followup-enqueue-and-owned-runs); transport narrowing may be re-proposed alone
 

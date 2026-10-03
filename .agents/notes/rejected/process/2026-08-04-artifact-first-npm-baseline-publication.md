@@ -1,4 +1,5 @@
 # Agent Note: Artifact-first NPM baseline publication
+English | [中文](.agents/notes/rejected/process/2026-08-04-artifact-first-npm-baseline-publication.zh.md) | [Deutsch](.agents/notes/rejected/process/2026-08-04-artifact-first-npm-baseline-publication.de.md)
 
 Status: rejected — superseded by 2026-08-10-npm-release-sequences: numbered versions and pack→protected publish shipped; timestamp versions were not adopted
 

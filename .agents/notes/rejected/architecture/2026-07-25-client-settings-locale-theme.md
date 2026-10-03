@@ -1,4 +1,5 @@
 # Agent Note: Client Settings, Locale, and Theme layering
+English | [中文](.agents/notes/rejected/architecture/2026-07-25-client-settings-locale-theme.zh.md) | [Deutsch](.agents/notes/rejected/architecture/2026-07-25-client-settings-locale-theme.de.md)
 
 Status: rejected — closed as a proposal: the shipped ui-settings, locale, and ui-theme packages and their READMEs own the design
 

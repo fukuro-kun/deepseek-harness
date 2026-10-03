@@ -1,4 +1,5 @@
 # Agent Note: Prune unused skill registry API
+English | [中文](.agents/notes/rejected/simplification/2026-07-12-prune-unused-skill-registry-api.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-07-12-prune-unused-skill-registry-api.de.md)
 
 Status: rejected — Direct runtime skill registration is an intentional extension path for third-party plugins.
 

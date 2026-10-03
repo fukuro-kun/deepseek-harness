@@ -1,4 +1,5 @@
 # Agent Note: Dependency swaps rejected by the 2026-07 NIH audit
+English | [中文](.agents/notes/rejected/simplification/2026-07-26-dependency-swaps-rejected-by-nih-audit.zh.md) | [Deutsch](.agents/notes/rejected/simplification/2026-07-26-dependency-swaps-rejected-by-nih-audit.de.md)
 
 Status: rejected — every swap below fails the net-simplification bar on evidence; recorded so the survey is not re-run from scratch
 
