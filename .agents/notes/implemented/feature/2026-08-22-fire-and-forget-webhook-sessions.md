@@ -1,4 +1,5 @@
 # Agent Note: Fire-and-forget webhook Sessions
+English | [中文](.agents/notes/implemented/feature/2026-08-22-fire-and-forget-webhook-sessions.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-22-fire-and-forget-webhook-sessions.de.md)
 
 Status: implemented
 

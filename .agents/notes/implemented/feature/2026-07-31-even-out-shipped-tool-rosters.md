@@ -1,4 +1,5 @@
 # Agent Note: Even out the shipped tool rosters
+English | [中文](.agents/notes/implemented/feature/2026-07-31-even-out-shipped-tool-rosters.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-31-even-out-shipped-tool-rosters.de.md)
 
 Status: implemented
 

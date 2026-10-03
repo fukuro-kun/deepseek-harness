@@ -1,4 +1,5 @@
 # Agent Note: Persisted same-session goal domain
+English | [中文](.agents/notes/implemented/feature/2026-07-19-persisted-same-session-goal-domain.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-19-persisted-same-session-goal-domain.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Workspace Registration Deletion
+English | [中文](.agents/notes/implemented/feature/2026-07-27-workspace-registration-deletion.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-27-workspace-registration-deletion.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Model-facing same-session goal tools
+English | [中文](.agents/notes/implemented/feature/2026-07-19-model-facing-goal-tools.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-19-model-facing-goal-tools.de.md)
 
 Status: implemented
 

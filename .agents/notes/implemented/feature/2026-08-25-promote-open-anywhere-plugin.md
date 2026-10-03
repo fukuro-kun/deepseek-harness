@@ -1,4 +1,5 @@
 # Agent Note: Promote open-anywhere from community plugin to first-party package
+English | [中文](.agents/notes/implemented/feature/2026-08-25-promote-open-anywhere-plugin.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-25-promote-open-anywhere-plugin.de.md)
 
 Status: implemented
 

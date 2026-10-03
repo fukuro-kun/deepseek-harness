@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-22-fire-and-forget-webhook-sessions.md
-2026-08-22-fire-and-forget-webhook-sessions.md: 976bccd8b460de7cb696ee45ea8963710cc4c738
+2026-08-22-fire-and-forget-webhook-sessions.md: d8b5368bf518acf1809c1267efd5c04dde814616
 2026-08-22-fire-and-forget-webhook-sessions.zh.md: f015d993e61864bbc21d9d55fc331c25118fbde3
+2026-08-22-fire-and-forget-webhook-sessions.de.md: 4b3d971b846f6393ff44b388c09214fad88201fc
