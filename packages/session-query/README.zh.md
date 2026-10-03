@@ -5,7 +5,7 @@ kind: "package-group"
 
 # session-query/：会话检索能力家族
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

@@ -3,8 +3,8 @@ description: "Observable browser state stores with explicit snapshots, subscript
 kind: "package-library"
 ---
 # @deepseek-ai/dsh-client-store
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

@@ -5,7 +5,7 @@ kind: "package-group"
 
 # webhook/ — 从已验证外部事件到 DSH Session
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

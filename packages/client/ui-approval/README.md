@@ -3,8 +3,8 @@ description: "Browser approval UI that answers Host permission requests through 
 kind: "package-reference"
 ---
 # @deepseek-ai/dsh-client-ui-approval
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

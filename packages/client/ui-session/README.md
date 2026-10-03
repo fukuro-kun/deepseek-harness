@@ -3,8 +3,8 @@ description: "React and Slot adapters for Session Controller lists, interaction 
 kind: "package-reference"
 ---
 # @deepseek-ai/dsh-client-ui-session
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 
