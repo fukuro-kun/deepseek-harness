@@ -1,4 +1,5 @@
 # Agent Note: dsh web config-tree boot and the web transport layering
+English | [中文](2026-07-24-web-config-tree-boot-and-transport-layering.zh.md) | [Deutsch](2026-07-24-web-config-tree-boot-and-transport-layering.de.md)
 
 Status: implemented
 

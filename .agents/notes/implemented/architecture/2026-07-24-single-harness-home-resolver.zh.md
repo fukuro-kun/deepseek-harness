@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-24-single-harness-home-resolver.md) | 中文
+[English](2026-07-24-single-harness-home-resolver.md) | 中文 | [Deutsch](2026-07-24-single-harness-home-resolver.de.md)
 
 ## 问题
 

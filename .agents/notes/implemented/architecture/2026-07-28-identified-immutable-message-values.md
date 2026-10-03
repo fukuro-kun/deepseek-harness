@@ -1,4 +1,5 @@
 # Agent Note: Create every message as an identified immutable value
+English | [中文](2026-07-28-identified-immutable-message-values.zh.md) | [Deutsch](2026-07-28-identified-immutable-message-values.de.md)
 
 Status: implemented
 

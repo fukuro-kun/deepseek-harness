@@ -1,4 +1,5 @@
 # Agent Note: dsh source launch through the tsx ESM hook
+English | [中文](2026-07-29-dsh-source-launch-tsx-esm.zh.md) | [Deutsch](2026-07-29-dsh-source-launch-tsx-esm.de.md)
 
 Status: implemented
 

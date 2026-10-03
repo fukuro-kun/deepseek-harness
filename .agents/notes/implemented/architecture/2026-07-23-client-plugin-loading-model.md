@@ -1,4 +1,5 @@
 # Agent Note: Client plugin loading — lazy factories, Cordis lifecycle, and hot reload
+English | [中文](2026-07-23-client-plugin-loading-model.zh.md) | [Deutsch](2026-07-23-client-plugin-loading-model.de.md)
 
 Status: implemented
 

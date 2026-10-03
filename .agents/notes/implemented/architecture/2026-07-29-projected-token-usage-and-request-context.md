@@ -1,4 +1,5 @@
 # Agent Note: Projected token usage and context occupancy
+English | [中文](2026-07-29-projected-token-usage-and-request-context.zh.md) | [Deutsch](2026-07-29-projected-token-usage-and-request-context.de.md)
 
 Status: implemented
 

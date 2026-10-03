@@ -1,4 +1,5 @@
 # Agent Note: Portable consumers over filesystem and subprocess execution worlds
+English | [中文](2026-07-28-portable-execution-world-consumers.zh.md) | [Deutsch](2026-07-28-portable-execution-world-consumers.de.md)
 
 Status: implemented
 

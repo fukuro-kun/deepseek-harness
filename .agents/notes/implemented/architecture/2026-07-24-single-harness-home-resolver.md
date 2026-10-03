@@ -1,4 +1,5 @@
 # Agent Note: One harness home resolver
+English | [中文](2026-07-24-single-harness-home-resolver.zh.md) | [Deutsch](2026-07-24-single-harness-home-resolver.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: One carrier-level browser-trust boundary for all `/api` routes
+English | [中文](2026-07-28-api-browser-trust-boundary.zh.md) | [Deutsch](2026-07-28-api-browser-trust-boundary.de.md)
 
 Status: implemented
 

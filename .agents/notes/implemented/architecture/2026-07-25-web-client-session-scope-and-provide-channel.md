@@ -1,4 +1,5 @@
 # Agent Note: Web client Agent-scope parity model and the provisioning channel (agents/scope / blank reuse / provide)
+English | [中文](2026-07-25-web-client-session-scope-and-provide-channel.zh.md) | [Deutsch](2026-07-25-web-client-session-scope-and-provide-channel.de.md)
 
 Status: implemented
 

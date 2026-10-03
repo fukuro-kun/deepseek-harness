@@ -1,4 +1,5 @@
 # Agent Note: Project-grouped session directories
+English | [中文](2026-07-24-project-session-directories.zh.md) | [Deutsch](2026-07-24-project-session-directories.de.md)
 
 Status: implemented
 

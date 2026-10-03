@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-24-web-config-tree-boot-and-transport-layering.md
-2026-07-24-web-config-tree-boot-and-transport-layering.md: e7c0781e1504bce12a8b0d2197bd47b37d3e873a
-2026-07-24-web-config-tree-boot-and-transport-layering.zh.md: 9a0affa397151a3994c5731bebda4b45a4139b6c
+2026-07-24-web-config-tree-boot-and-transport-layering.md: 741c7918b8263e37d2595c4ed996617e43e3c90c
+2026-07-24-web-config-tree-boot-and-transport-layering.zh.md: 260a6517b9cc8f2510427a7d96d9a7105f7518e1
+2026-07-24-web-config-tree-boot-and-transport-layering.de.md: 32270c59dbaaaf310b5bb95d24c554cab9a8f944

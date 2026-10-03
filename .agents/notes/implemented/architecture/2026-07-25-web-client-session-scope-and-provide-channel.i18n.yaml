@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-25-web-client-session-scope-and-provide-channel.md
-2026-07-25-web-client-session-scope-and-provide-channel.md: 4cdca4c1cb5b512c1696a397bbb6e4d070a6a487
-2026-07-25-web-client-session-scope-and-provide-channel.zh.md: 0258609fd8df90dc2133fcb8bf6e7e50efaab941
+2026-07-25-web-client-session-scope-and-provide-channel.md: 262eca967557ae751bf86ebc758a8327404241a1
+2026-07-25-web-client-session-scope-and-provide-channel.zh.md: 010a48127fd8b5a4d0d36d5e13373748e1a6f639
+2026-07-25-web-client-session-scope-and-provide-channel.de.md: c7387721653f06a3f55635cfe34ee95e15e989e4

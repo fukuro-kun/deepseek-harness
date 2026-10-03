@@ -1,4 +1,5 @@
 # Agent Note: Compiler-independent Typert type model
+English | [中文](2026-07-27-compiler-independent-typert-model.zh.md) | [Deutsch](2026-07-27-compiler-independent-typert-model.de.md)
 
 Status: implemented
 

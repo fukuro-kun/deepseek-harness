@@ -1,4 +1,5 @@
 # Agent Note: Separate context injection from turn execution
+English | [中文](2026-07-24-separate-context-injection-from-turn-execution.zh.md) | [Deutsch](2026-07-24-separate-context-injection-from-turn-execution.de.md)
 
 Status: implemented
 
