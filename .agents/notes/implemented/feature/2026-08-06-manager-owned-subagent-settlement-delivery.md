@@ -1,4 +1,5 @@
 # Agent Note: Settlement delivery belongs to the continuation manager
+English | [中文](.agents/notes/implemented/feature/2026-08-06-manager-owned-subagent-settlement-delivery.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-06-manager-owned-subagent-settlement-delivery.de.md)
 
 Status: implemented
 

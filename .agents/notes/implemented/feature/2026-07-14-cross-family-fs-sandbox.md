@@ -1,4 +1,5 @@
 # Agent Note: Cross-family file sandbox — one policy home, a sandboxed fs provider, and fs escalation parity
+English | [中文](.agents/notes/implemented/feature/2026-07-14-cross-family-fs-sandbox.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-14-cross-family-fs-sandbox.de.md)
 
 Status: implemented
 

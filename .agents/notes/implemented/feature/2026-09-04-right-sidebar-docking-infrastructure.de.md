@@ -1,0 +1,102 @@
+# Agent Note: Right-Sidebar-Docking-Infrastruktur
+
+Status: implemented
+
+[English](2026-09-04-right-sidebar-docking-infrastructure.md) | [中文](2026-09-04-right-sidebar-docking-infrastructure.zh.md) | Deutsch
+
+## Problem
+
+Die rechte Spalte des Web-Clients war ein zweckgebundenes Detail-Panel: `ui-chat` belegte den `details`-slot mit `DetailsPanel`, das den rohen Payload eines ausgewählten Tool-Aufrufs über einen `conversation.details.tool`-Untersitz zeigte. Nichts anderes konnte dort leben. Ein Plugin, das eine dauerhafte Seitenfläche wollte — eine Dateivorschau, eine Aufgabenliste, ein diff — hatte keinen Sitz zum Registrieren, keinen Weg, seinen Inhalt aus der Konversation zu öffnen, und kein geteiltes Layout, um die Spalte zu teilen.
+
+Die vom agent erzeugten Dateien waren der schärfste Fall. Ein produced-file-chip oder der Pfadlink einer `read`-Zeile übergab den Pfad über `session/openWorkspacePath` an das Betriebssystem, sodass ein Browser, der nicht auf der Host-Maschine lief, die Datei überhaupt nicht sehen konnte, und selbst ein lokaler das Produkt dafür verließ. Das Detail-Panel duplizierte unterdessen die Karten der Chat-Zeilen in voller Höhe — eine zweite Präsentationsfläche, mit der jede Karte Schritt halten musste.
+
+## Decision
+
+Die rechte Spalte ist eine pro-Session-Dockingfläche — geteilte Panes, Tabs, schwebende Panels und eine rückgängig machbare Operationssequenz — im Besitz von `ui-sidebar-right` über der `ui-dockkit`-Engine, und ersetzt das Detail-Panel. Dieses Note besitzt die Fläche: die Engine, die rechte Spalte des Frames, die Präsentationen und Steuerungen des Panels sowie den Pro-Session-Zustand. Was in der Fläche lebt, wird anderswo entschieden: Wie Plugins Tab-Typen deklarieren, Inhalte öffnen und ihre props erhalten, steht in [Tab-Typen und Navigation](../architecture/2026-09-05-sidebar-tab-types-and-navigation.de.md); Live-Daten hinter einer Adresse sind das [Client-Ressourcenmodell](../architecture/2026-09-05-client-resource-model.de.md); das Lesen von Workspace-Dateien ist der [Workspace-Datei-Service](../architecture/2026-09-05-workspace-files-service.de.md); und die Anleitung, die Textvorschau und der Dateibaum sind die [ausgelieferten Typen](2026-09-05-sidebar-text-preview-and-file-tree.de.md).
+
+### Package topology
+
+| Package | Kind | Owns |
+|---|---|---|
+| `packages/client/ui-dockkit` | statisch gelinkte Bibliothek, null DSH-Abhängigkeiten | die Layout-Engine und die React-Komponenten, die sie rendern und antreiben; Consumer kompilieren ihre Quellen, und sie behält genau ein Stylesheet, weil ein Consumer injizierte Sheets nach Dateiname dedupliziert |
+| `packages/client/ui-sidebar-right` | dynamisches Plugin | der `rightbar`-Panel-Sitz und der `conversation.session.header.corner`-Expand-Button über einem Store, eine Fläche pro Session, beide Präsentationen, der Float-Host, `ctx.sidebarRight`, `ctx.sidebarRightTabs`, die Tab-Domäne (ein Vorkommen pro Tab-Datensatz), die drei Erweiterungssitze, der Guide-Tab-Typ und der `sidebarRight`-Text-Namensraum |
+
+Das Kit ist der erste Embedder des Produkts und weiß nichts davon: Jeder String kommt über `DockLabels` herein, jeder Tab-Body über einen `TabRenderer`, der auf ein opakes `kind` dispatcht, und jede Geste verlässt über `DockIntents`. Das Integrationspaket liefert, was das Kit nicht wissen will.
+
+### Layout engine
+
+Die Engine ist ein normalisierter rekursiver Split-Baum: `nodes` nach id, `rootId` für die gedockte Wurzel, `floats` von unten nach oben. Die ids sind gebrandmarkt (`PaneId`, `SplitId`, `TabId`; `NodeId` ist die Pane/Split-Union), werden nur von einem `Mint` geprägt, sodass keine id-Art für eine andere oder für einen nackten String steht. Ein schwebendes Panel ist eine Pane, deren `host` `'float'` ist, mit Kapazität eins, ohne Tab-Leiste gezeichnet. `applyOp(state, op)` gibt den nächsten Zustand und die Operationen zurück, die ihn rückgängig machen, erfasst zum Ausführungszeitpunkt, weil der Vor-Operations-Zustand zur Undo-Zeit weg ist. Jede Operation trägt die ids, die sie erzeugt, sodass `replay(initial, ops)` denselben Baum vom selben Start reproduziert; die Engine liest weder Uhr noch Zufallsquelle. Der `Sequencer` führt eine lineare History mit einem Eintrag pro Intent — die Operationen, die eine Geste oder ein Kommando erzeugte, werden gemeinsam rückgängig gemacht und wiederholt — eine Folge aufeinanderfolgender reiner Fokus-Einträge schreitet als einer, und ein neuer Eintrag nach einem Rückschritt verwirft den Vorwärtszweig. Planner sind die reine Intent-Schicht — `(state, mint, args) → LayoutOp[]` — und `DockController` ist eine dünne beobachtbare Hülle darüber. `planSettle` ist der opt-in-Folge-Planner, der jede gedockte Pane wegmerged, die ein Intent leerte, und eine geleerte Root-Pane über die Factory des Embedders neu besät.
+
+Komponenten rendern einen Snapshot und melden abgerechnete Intents, einen pro Geste: Ein Drag previewt in lokalem Zustand, während die Fakten der Geste in ihrer Closure bleiben, und das Loslassen faltet das Nettoergebnis zu einer Operation. Gesten sind Pointer-Events mit Pointer-Capture statt HTML5-Drag-and-Drop. Ein Chip ist eine Kapsel mit einem Steuerelement, seinem Schließen; ein Sekundärdruck öffnet das Kontextmenü (Schließen plus des Embedders `renderTabMenuItems`). Nach den Chips sitzt das Hinzufügen-Steuerelement, das den Embedder über `DockIntents.addTab` bittet, seinen gesäten Tab zu setzen (`planAddTab`). Schweben ist der außerhalb der Fläche losgelassene Drag, und Kopieren hat überhaupt kein Kit-Steuerelement — `DockIntents.duplicateTab` bleibt für Embedder-APIs. Das Glyph des Split-Steuerelements ist ein vertikal halbierter Rahmen, wie der Split es ist. Vier Interaktionsregeln beheben in einem echten Browser gefundene Defekte und werden absichtlich gehalten: den Pointer bei Gestenstart capturen, die Tab-Leiste nie zum Scroll-Container machen, Fokus bei Klick statt bei Druck landen lassen und ein in einen ziehbaren Chip verschachteltes Steuerelement seinen eigenen Druck stoppen lassen. Das Aktionsmenü eines Tabs rendert in einem Portal, gegen sein Steuerelement positioniert, weil der bewusste Überlauf-Clip der Leiste es sonst abschneiden würde. Das Kit liefert kein Undo/Redo-Steuerelement und keinen Header: Flächenweite Steuerungen eines Embedders laufen über `DockSurface`s `chrome`-Prop, den das Kit am fernen Ende der Leiste der rechten-oberen Pane platziert (`topRightPaneId`: das letzte Kind jedes Zeilen-Splits, das erste jedes Spalten-Splits). Das generische Kit erlaubt standardmäßig vier Panes; die Sidebar liefert ihr Zwei-Pane-Produktlimit.
+
+### The frame's right column
+
+[Responsive Sidebar und Tab-Informationen](../architecture/2026-09-07-sidebar-responsive-tab-info.de.md) ersetzen das kompromisslose Layout, die Overlay-Präsentation und das Produkt-Pane-Limit dieses Notes. `ui-layout` besitzt weiterhin Drei-Spalten-Geometrie und Pixelbreiten-Präferenzen; der Sidebar-Bewohner meldet Präsentation über `ctx.layout.openRightbar(track, fullscreen)` und `closeRightbar()`, ohne dass der Frame das Sidebar-Paket injiziert. Exakte Breitenregeln gehören zu [ui-layout](../../../../packages/client/ui-layout/README.de.md).
+
+Die rechte Sidebar nutzt einen gemounteten Inhaltsbaum im Normal- und Vollbildmodus; Ausblenden bewahrt Tab-Zustand, und Vollbild deckt den Viewport ab, während die darunterliegende Spaltenreservierung erhalten bleibt. Floats nutzen weiterhin Viewport-Koordinaten über ein Portal und bleiben offen, wenn die Sidebar schließt. Das Produkt begrenzt Docking auf zwei horizontale Panes und einen 20–80%-Teiler; die generische Engine behält ihre eigenen Defaults.
+
+### State
+
+[Default-Seiten](2026-09-08-sidebar-default-pages.de.md) ersetzen hier die Default-Guide-Neubesäung; [Last-Tab-Schließregeln](2026-09-08-sidebar-last-tab-close-rules.de.md) besitzen explizites Schließen, während das Verschieben von Tabs weiterhin geleerte Panes abrechnet.
+
+`ui-sidebar-right` hält einen `SurfaceState` pro Session-id — das Layout, seine History und den Mint-Zähler — in einem Store, der bei der Sitz-Registrierung deklariert wird. Jede Aktion prägt die ids, die ihr Intent braucht, fragt einen Kit-Planner nach den Operationen, lässt den Settle-Planner über das Ergebnis laufen und zeichnet den ganzen Intent als einen History-Eintrag auf, bevor sie die Fläche der Session zurückweist; keine Aktion editiert ein Layout in-place. Der Settle-Schritt ist die Produktregel: Eine gedockte Pane, deren letzter Tab geschlossen, herausbewegt oder geschwebt wurde, wird weggemerged, und eine expandierte leere Root-Pane erhält die aktuelle Default-Seite. Eine eingeklappte Fläche darf bis zu ihrer nächsten Expansion leer bleiben; es gibt keine separate Pane-Schließ-Geste. Zustand ist nur im Speicher: Ein Reload setzt jede Session auf den eingeklappten Default zurück, und ein Session-Wechsel lässt jede Fläche, wo sie war. Layout ist Präsentationszustand und geht nie in das Session-Log.
+
+### Beyond the surface
+
+Die Fläche rendert Tabs, deren Bodies sie nicht kennt: Jeder Tab trägt ein `kind`, und das Panel fragt die Typ-Registry nach der geltenden Implementierung und dispatcht zu ihrem gekeyten Body-Sitz. Alles, worauf sich ein Body verlassen darf — sein Datensatz, seine Pane, ob er sichtbar ist, wie er erreicht wurde, ein Abort-Signal und die Aktionen, die er ausführen darf — wird über das framework-injizierte `useTabInfo()` gelesen. Die Registry, die Navigationsseite `ctx.sidebarRight`, die Sitze und die Tab-Informationen sind in [Tab-Typen und Navigation](../architecture/2026-09-05-sidebar-tab-types-and-navigation.de.md) spezifiziert; ein Body, der Daten zeigt, liest sie über das [Client-Ressourcenmodell](../architecture/2026-09-05-client-resource-model.de.md).
+
+### Entry points and removals
+
+`ui-chat`s `openFile(path, { line? })` — erreicht durch Tool-Zeilen-Pfadlinks, produced-file-chips und Abschlussnachricht-Erwähnungen — öffnet die Datei nun über die Navigationsseite in die Sidebar (siehe [Tab-Typen und Navigation](../architecture/2026-09-05-sidebar-tab-types-and-navigation.de.md)). Die `Show in folder`-Aktion und ihre `canOpenWorkspacePath`-Probe werden aus `ui-deliverables` entfernt: Die Sidebar hat keine Verzeichnisform, und das Produkt behält keinen Sekundärzugang. `DetailsPanel`, `ToolDetails`, der Tool-Node-Reader, die Selektion des Chat-Stores, `ToolDetailsProps` und `CENTER_MIN` werden entfernt. `session/openWorkspacePath` bleibt auf dem Host ohne Web-Aufrufer.
+
+## Alternatives considered
+
+**Eine Docking-Bibliothek übernehmen.** Sechs Engines wurden gegen die Zustands-Ownership-Anforderung des Produkts bewertet (das Layout ist eine aufgezeichnete, abspielbare Sequenz im Besitz des Produkts). dockview ist unkontrolliert und sein einziger externer Einstieg ist ein destruktives `fromJSON`, mit Undo in einer Bezahlstufe; react-mosaic hat keine Schwebeschicht und ruht auf einer seit Jahren ungewarteten Drag-Basis; rc-dock, golden-layout und Lumino scheiterten an Zustands-Ownership. FlexLayout 0.10.x war der einzige tragfähige Kandidat — externes Model, vetofähiges `onAction`, inhaltsbewahrendes `fromJson` — und wurde als verifizierter Fallback gehalten, dessen Umschaltpunkte der Fünf-Zonen-Dock und die Multi-Float-Tests des Prototyps waren. Beide bestanden selbstgebaut ohne Umschaltsignal, und seine 0.x-Minors tragen Breaking Changes, also wurde es nicht übernommen.
+
+**Geschichtete Wiederverwendung: `react-resizable-panels` für Größen, Pragmatic drag-and-drop für Gesten.** Die geplante Hauptlinie vor dem Prototyp. Abgelehnt, sobald die eigenen Größen- und Gestenschichten des Prototyps in einem echten Browser bestanden: Die Schichten, die der Plan einsparen sollte, waren bereits geschrieben und verifiziert, sodass der verbleibende Wert nur Long-Tail-Randbehandlung war. Sie bleibt eine ersetzbare Schicht, falls Snap- oder Prioritätsgrößen je gebraucht werden.
+
+**Eine Schublade über `shell.overlay` oder eine doppelschichtige Shell (Root-Rail, Session-Inhalt).** Der Prototyp wurde als Schublade geliefert, um den Frame nicht zu berühren. Fürs Produkt abgelehnt: Eine Schublade ist keine Spalte und quetscht die Konversation nie, und die doppelschichtige Shell stieß an die Ein-Handle-ein-Scope-Regel des Slot-Kerns, die das Einklappen un-rückgängig gemacht hätte. Der Frame besitzt eine echte Spalte; Inhalt und Zustand bleiben session-gebunden.
+
+**Eine frame-eigene 32px-Rail als eingeklappter Zustand, das Panel innerhalb der animierten Grid-Spur lebend und das Overlay als separates Portal.** Die erste ausgelieferte Form. Nach Review abgelehnt: Eine massive Rail-Spur drückt die Scrollbar der Konversation nach innen für einen Streifen, der nur eingeklappt existiert; ein Panel in der animierenden Spur wird bei jedem Spur-Übergang gestreckt und neu ausgelegt, sodass die Sidebar selbst sichtbar zog, obwohl sie es nicht sollte; und zwei Codepfade für ein Panel bedeuteten, dass ein Präsentationswechsel es remountete. Das Panel ist nun eine kantenverankerte Box, die gleitet, und die Spur reserviert nur Platz.
+
+**Eine 40px-Rail innerhalb der Konversationsspalte mit eigenem `sidebar.right.rail.item`-Sitz.** Als Nächstes versucht, damit die Rail mit dem Panel verschwinden könnte. Im Review als visuell zu schwer für ihren Inhalt abgelehnt: ein vollhöher Streifen für einen Button und einen Platzhalter. Das Expand-Steuerelement ist nun ein einzelner Header-Button, und der Eingeklappt-Sitz ist aufgeschoben, bis ihn etwas braucht.
+
+**Eine Header-Zeile auf dem Panel.** Die erste Form trug einen Titel und seine Steuerungen in einer 40px-Zeile über der Leiste. Entfernt: Die Leiste ist bereits die Oberkante des Panels, sodass die Steuerungen über den chrome-Sitz des Kits am Leistenende der rechten-oberen Pane sitzen, und der Titel sagte nichts, was die Tabs nicht sagten.
+
+**Der Expand-Button als `conversation.session.header.utilities`-Eintrag.** Nach der Rail versucht. Im Review abgelehnt: Als Listeneintrag saß er innerhalb der Utilities-Zeile, also nicht an der echten Ecke des Headers, und sein Erscheinen und Verschwinden verschob das Session-Log-Steuerelement daneben. Ein dedizierter Ecksitz mit reserviertem Fußabdruck behebt beides.
+
+**Ein "Mehr"-Steuerelement pro Chip mit Kopier- und Schwebeeinträgen.** Die erste Form gab jedem Chip ein `⋯`-Menü mit Schließen, Kopieren und Schweben. Im Review abgelehnt: Der Chip trägt nun nur sein Schließen, das Menü zog zum Sekundärdruck mit nur Schließen (plus Embedder-Einträgen), und Kopieren und Schweben verließen das Panel ganz — Kopieren bleibt eine API (`open` mit `duplicate: true`), Schweben bleibt der Drag. Die `duplicateTab`-/`floatTab`-Intents und -Planner des Kits bleiben unverändert.
+
+**Undo- und Redo-Buttons auf dem Panel-Header.** Zuerst ausgeliefert, dann entfernt: Die Sequenz ist eine architektonische Tatsache, und sie zu schreiten ist noch keine Produktaktion. Die API bleibt als `@internal`-Methoden für Tests und den künftigen Navigations-Controller erreichbar.
+
+**Leere Panes als persistenter Zustand.** Der erste Entwurf erlaubte einer Pane, nach dem Weggang ihres letzten Tabs mit einem Platzhalter zu bleiben. Abgelehnt, weil nichts einen Weg bot, eine solche Pane zu schließen; jeder Intent rechnet die Fläche ab, sodass eine geleerte Seiten-Pane weggemerged wird. Eine leere Root erhält die aktuelle Default-Seite nur, solange die Spalte expandiert ist.
+
+**Das Kit über `packages/util` und die `INLINE_SAFE`-Liste inlinen.** Ein Build-Probe zeigte, dass es funktioniert, doch die util-Build-Kette hat keine CSS-Pipeline und das Kit liefert ein Stylesheet; das statisch gelinkte Client-Paket (der `ui-primitives`-Präzedenzfall) wurde gewählt, im Wissen, dass eine Kit-Änderung ein Shell-Rebuild und ein Neuladen erfordert.
+
+## Consequences
+
+- Die Dockingfläche selbst überläuft ihr Panel nicht mehr: `.surface` und `.pane` klemmen an die Spalte (`min-width: 0`, `overflow: hidden`), sodass eine lange umbrochene Zeile innerhalb des Body scrollt und die Leistensteuerungen in jedem Split sichtbar bleiben.
+- Layout ist rückgängig machbar und pro Session und liegt nur im Speicher; ein Reload startet jede Session eingeklappt. Undo ist nur über `@internal`-Service-Methoden erreichbar; das Produkt zeigt keine History-Steuerungen.
+- Eine expandierte Fläche hat keine leeren Panes. Leere Seiten-Panes mergen weg; eine leere Root erhält die aktuelle Default-Seite nur solange expandiert. Neue Sessions und eine eingeklappte Fläche, deren letzter Tab geschlossen wurde, bleiben bis zur Expansion leer.
+- Eine Pane hält höchstens einen Guide-Tab: Ein zweiter kann weder hinzugefügt, geöffnet, dupliziert noch hineinbewegt werden; die Einzigkeit des Guide gilt pro Pane, sodass ein Split seine neue Pane weiterhin mit einem Guide besät.
+- Eine Pane darf sich nur teilen, wenn jede gleiche Hälfte weiterhin fassen kann, was nicht schrumpfen kann: die festen Steuerungen der Leiste (ihre Breite minus Chip-Box und Füllung, sodass der chrome der rechten-oberen Pane auf die Hälfte zählt, die ihn trägt) plus einen Chip auf seinem Minimum, gemessen in der Komponentenschicht nach jedem Commit und bei Resize. Andernfalls bleibt das Split-Steuerelement, deaktiviert mit eigenem Text, die passenden Kanten-Drop-Zonen werden vorenthalten, und vom Nutzer verschmälerte Panes behalten ihre Größe; das Produkt erlaubt höchstens zwei horizontale Panes, unabhängig von Verbreiterung oder Teilerbewegung.
+- Das Sidebar-Panel bewegt sich nie beim Präsentationswechsel, und sein Gleiten ist in beiden Präsentationen gleich; die Konversation ist das Einzige, was bei einem Wechsel animiert. Ein verstecktes Panel hält seine Tabs gemountet, sodass eine Vorschau ein Einklappen überlebt.
+- Eingeklappt ist die Sidebar ein einzelner Header-Ecken-Button: Die Konversation behält ihre volle Breite und ihre Scrollbar an ihrer Kante, der Button verschwindet beim Öffnen des Panels, und sein Fußabdruck bleibt, sodass nichts anderes im Header sich bewegt.
+- Ein Tab wird von seinem Chip geschlossen; Kopieren und Schweben haben kein Panel-Steuerelement (Kopieren ist nur-API, Schweben ist der Drag). Das Kontextmenü ist per Rechtsklick erreichbar und trägt Schließen plus Embedder-Einträge.
+- Das Detail-Panel und seine doppelte Kartenpräsentation sind weg (eine Netto-Entfernung von etwa 1.400 Zeilen); Karten werden in-place gelesen, und `inspect` öffnet die Trajektorienansicht.
+- Der Frame hat kein Mitten-Minimum: Ein Viewport schmaler als die beiden Randspalten quetscht die Konversation gegen null statt eine Spalte zu schließen.
+- Das Kit wird von seinen Consumern kompiliert, sodass eine Kit-Änderung ein Shell-Rebuild und ein Seitenneuladen erfordert; es gibt kein HMR dafür.
+- Das Panel, der Float-Host und das portalierte Tab-Menü nutzen hartkodierte z-index-Werte; der Client hat weiterhin keine z-index-Token-Schicht.
+
+## Testing
+
+`ui-dockkit`-Specs pinnen die Engine-Invarianten — jeder Operations-Inverse rundtrippt, `replay` über jedes History-Präfix gleicht dem aufgezeichneten Zustand, ein zusammengesetzter Intent schreitet als ein Eintrag, Fokus-Läufe koaleszieren symmetrisch, Pane-Obergrenze und Breitenregel verweigern ohne Aufzeichnung — und treiben die Komponenten nur über props, ohne Scaffold. `ui-sidebar-right`-Specs decken den Pro-Session-Store, die Präsentationen und Steuerungen des Sitzes, Pro-Pane-Guide-Einzigkeit und den breitenbewussten Split ab. Die Web-e2e-Suite treibt die ausgelieferte Sidebar in Chromium durch den echten Plugin-Graphen: Expandieren und Einklappen, Split bis zum Limit und das ausgegraute Steuerelement, Floats, Rückdocken und der Guide. Beide Suites sind schlüssellos.
+
+## Deferred
+
+- Eine z-index-Token-Schicht, dann die hartkodierten Werte des Panels, des Float-Hosts und des Menüs.
+- Der assemblierte Session-Wechsel-Fall, blockiert darauf, dass die Fixture-Komposition ihre Einstellungsfläche standardmäßig öffnet.
+- Chinesische Gegenstücke für die READMEs der neuen Pakete und für die englische Dokumentation, die diese Änderung editierte.
+- Snap- oder Prioritäts-Pane-Größen, Touch-Tuning und Tastaturrouten für Split, Move und Float.
+- Persistenz des Layouts, Popout-Fenster und ein Inhalts-Navigationsstack (Einträge nach Pane und Inhalt gekeyt, benachbarte Duplikate ersetzt, ein `navigating`-Guard, geschlossene Tabs im Stack belassen).
+- Ein nicht-schließbarer Tab (ein `closable`-Flag auf `TabRecord`, gezeichnet als fester führender Marker statt einer Kapsel), sobald ein Tab-Typ einen braucht.

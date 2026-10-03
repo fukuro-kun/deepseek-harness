@@ -1,4 +1,5 @@
 # Agent Note: Web subagent catalog and human continuation
+English | [中文](.agents/notes/implemented/feature/2026-07-27-web-subagent-conversations.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-27-web-subagent-conversations.de.md)
 
 Status: implemented
 

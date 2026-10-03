@@ -1,4 +1,5 @@
 # Agent Note: Queued manual compaction with one durable lock
+English | [中文](.agents/notes/implemented/feature/2026-07-30-queued-manual-compaction.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-30-queued-manual-compaction.de.md)
 
 Status: implemented
 

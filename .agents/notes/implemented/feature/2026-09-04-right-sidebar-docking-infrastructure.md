@@ -1,4 +1,5 @@
 # Agent Note: Right Sidebar docking infrastructure
+English | [中文](.agents/notes/implemented/feature/2026-09-04-right-sidebar-docking-infrastructure.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-04-right-sidebar-docking-infrastructure.de.md)
 
 Status: implemented
 
