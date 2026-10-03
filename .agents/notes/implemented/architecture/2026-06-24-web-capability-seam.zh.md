@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-06-24-web-capability-seam.md) | 中文
+[English](.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.de.md)
 
 ## 问题
 

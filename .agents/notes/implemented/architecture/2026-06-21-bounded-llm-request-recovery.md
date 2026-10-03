@@ -1,5 +1,7 @@
 # Agent Note: Bounded recovery for transient LLM request failures
 
+English | [中文](.agents/notes/implemented/architecture/2026-06-21-bounded-llm-request-recovery.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-21-bounded-llm-request-recovery.de.md)
+
 Status: implemented
 
 English | [中文](2026-06-21-bounded-llm-request-recovery.zh.md)

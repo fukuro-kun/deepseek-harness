@@ -1,5 +1,7 @@
 # Agent Note: Session persistence as an abstract service over the existing `SessionEvent`
 
+English | [中文](.agents/notes/implemented/architecture/2026-06-14-session-persistence.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-14-session-persistence.de.md)
+
 Status: implemented
 
 English | [中文](2026-06-14-session-persistence.zh.md)

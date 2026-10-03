@@ -1,5 +1,7 @@
 # Agent Note: Two LLM adapters as a design-verification twin
 
+English | [中文](.agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-13-twin-llm-adapters.de.md)
+
 Status: implemented
 
 English | [中文](2026-06-13-twin-llm-adapters.zh.md)

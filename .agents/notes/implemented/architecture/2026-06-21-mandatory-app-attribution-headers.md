@@ -1,5 +1,7 @@
 # Agent Note: Mandatory `User-Agent` attribution for provider requests
 
+English | [中文](.agents/notes/implemented/architecture/2026-06-21-mandatory-app-attribution-headers.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-21-mandatory-app-attribution-headers.de.md)
+
 Status: implemented
 
 English | [中文](2026-06-21-mandatory-app-attribution-headers.zh.md)

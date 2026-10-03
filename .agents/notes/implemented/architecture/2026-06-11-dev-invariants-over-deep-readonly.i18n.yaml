@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-11-dev-invariants-over-deep-readonly.md
-2026-06-11-dev-invariants-over-deep-readonly.md: 9adb741db1e26e3a9f750fed60524351159cfeaa
-2026-06-11-dev-invariants-over-deep-readonly.zh.md: d352eca985b6594ec5d10c9b73c2ecc18ea458b5
+2026-06-11-dev-invariants-over-deep-readonly.md: 071e7dae7e4f4f4e5051b061a6d9e3c982309b95
+2026-06-11-dev-invariants-over-deep-readonly.zh.md: 8d4c72b74e3b517caae2ad3d60fe08b4192e5717
+2026-06-11-dev-invariants-over-deep-readonly.de.md: c73513e46af5d5bffaf5c1ada65b819f0cdbd337

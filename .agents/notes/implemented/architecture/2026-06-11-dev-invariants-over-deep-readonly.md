@@ -1,5 +1,7 @@
 # Agent Note: Source-owned session immutability and dev-mode invariants
 
+English | [中文](.agents/notes/implemented/architecture/2026-06-11-dev-invariants-over-deep-readonly.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-11-dev-invariants-over-deep-readonly.de.md)
+
 Status: implemented
 
 English | [中文](2026-06-11-dev-invariants-over-deep-readonly.zh.md)

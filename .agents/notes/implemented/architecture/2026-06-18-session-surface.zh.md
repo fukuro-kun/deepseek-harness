@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-06-18-session-surface.md) | 中文
+[English](.agents/notes/implemented/architecture/2026-06-18-session-surface.md) | 中文 | [Deutsch](.agents/notes/implemented/architecture/2026-06-18-session-surface.de.md)
 
 ## 问题
 

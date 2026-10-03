@@ -1,5 +1,7 @@
 # Agent Note: Web capability seam - stable tools over multiple providers
 
+English | [中文](.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.zh.md) | [Deutsch](.agents/notes/implemented/architecture/2026-06-24-web-capability-seam.de.md)
+
 Status: implemented
 
 English | [中文](2026-06-24-web-capability-seam.zh.md)
