@@ -1,4 +1,5 @@
 # Agent Note: A session's agent is composed from a preset cordis.yml
+English | [中文](2026-08-03-per-session-agent-presets.zh.md) | [Deutsch](2026-08-03-per-session-agent-presets.de.md)
 
 Status: implemented
 

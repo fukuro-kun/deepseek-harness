@@ -1,4 +1,5 @@
 # Agent Note: Goal-owned durable events
+English | [中文](2026-07-31-goal-owned-durable-events.zh.md) | [Deutsch](2026-07-31-goal-owned-durable-events.de.md)
 
 Status: implemented
 

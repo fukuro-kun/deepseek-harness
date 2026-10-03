@@ -1,4 +1,5 @@
 # Agent Note: Interrogating a draft provider endpoint
+English | [中文](2026-08-04-draft-provider-endpoint-interrogation.zh.md) | [Deutsch](2026-08-04-draft-provider-endpoint-interrogation.de.md)
 
 Status: implemented
 

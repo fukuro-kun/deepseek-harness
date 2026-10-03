@@ -1,4 +1,5 @@
 # Agent Note: Profile plugin bundles replace the fixed surface overlays
+English | [中文](2026-08-05-profile-plugin-bundles.zh.md) | [Deutsch](2026-08-05-profile-plugin-bundles.de.md)
 
 Status: implemented
 

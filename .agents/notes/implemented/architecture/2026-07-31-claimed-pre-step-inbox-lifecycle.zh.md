@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-31-claimed-pre-step-inbox-lifecycle.md) | 中文
+[English](2026-07-31-claimed-pre-step-inbox-lifecycle.md) | 中文 | [Deutsch](2026-07-31-claimed-pre-step-inbox-lifecycle.de.md)
 
 ## 问题
 

@@ -1,4 +1,5 @@
 # Agent Note: the end-seed log boundary
+English | [中文](2026-07-30-session-end-seed-log-boundary.zh.md) | [Deutsch](2026-07-30-session-end-seed-log-boundary.de.md)
 
 Status: implemented
 

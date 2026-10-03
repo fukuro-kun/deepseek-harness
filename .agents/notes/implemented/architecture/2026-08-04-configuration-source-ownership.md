@@ -1,4 +1,5 @@
 # Agent Note: One ordering for configuration sources, and what a discovered file may not decide
+English | [中文](2026-08-04-configuration-source-ownership.zh.md) | [Deutsch](2026-08-04-configuration-source-ownership.de.md)
 
 Status: implemented
 

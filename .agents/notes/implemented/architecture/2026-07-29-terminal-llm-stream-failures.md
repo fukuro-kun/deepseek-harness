@@ -1,4 +1,5 @@
 # Agent Note: Terminal LLM stream failures
+English | [中文](2026-07-29-terminal-llm-stream-failures.zh.md) | [Deutsch](2026-07-29-terminal-llm-stream-failures.de.md)
 
 Status: implemented
 

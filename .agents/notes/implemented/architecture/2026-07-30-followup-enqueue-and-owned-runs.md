@@ -1,4 +1,5 @@
 # Agent Note: Follow-up enqueue and owned run boundaries
+English | [中文](2026-07-30-followup-enqueue-and-owned-runs.zh.md) | [Deutsch](2026-07-30-followup-enqueue-and-owned-runs.de.md)
 
 Status: implemented
 

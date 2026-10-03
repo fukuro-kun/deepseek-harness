@@ -1,4 +1,5 @@
 # Agent Note: credential boundaries, whole-snapshot requests, and atomic route registration
+English | [中文](2026-07-30-credential-boundaries-and-atomic-registration.zh.md) | [Deutsch](2026-07-30-credential-boundaries-and-atomic-registration.de.md)
 
 Status: implemented
 

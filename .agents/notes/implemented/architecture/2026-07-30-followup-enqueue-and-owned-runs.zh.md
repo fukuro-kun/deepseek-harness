@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-30-followup-enqueue-and-owned-runs.md) | 中文
+[English](2026-07-30-followup-enqueue-and-owned-runs.md) | 中文 | [Deutsch](2026-07-30-followup-enqueue-and-owned-runs.de.md)
 
 ## 问题
 
