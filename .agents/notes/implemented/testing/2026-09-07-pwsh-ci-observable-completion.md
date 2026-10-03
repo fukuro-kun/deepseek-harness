@@ -1,4 +1,5 @@
 # Agent Note: PowerShell CI completion and profile expectations
+English | [中文](.agents/notes/implemented/testing/2026-09-07-pwsh-ci-observable-completion.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-07-pwsh-ci-observable-completion.de.md)
 
 Status: implemented
 

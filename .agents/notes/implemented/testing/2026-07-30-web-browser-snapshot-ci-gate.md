@@ -1,4 +1,5 @@
 # Agent Note: Required CI gate for web browser expected outputs
+English | [中文](.agents/notes/implemented/testing/2026-07-30-web-browser-snapshot-ci-gate.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-07-30-web-browser-snapshot-ci-gate.de.md)
 
 Status: implemented
 

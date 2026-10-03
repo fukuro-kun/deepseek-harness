@@ -1,4 +1,5 @@
 # Agent Note: Subagent teardown tests inherit their execution lane budgets
+English | [中文](.agents/notes/implemented/testing/2026-09-07-subagent-teardown-test-budgets.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-07-subagent-teardown-test-budgets.de.md)
 
 Status: implemented
 
