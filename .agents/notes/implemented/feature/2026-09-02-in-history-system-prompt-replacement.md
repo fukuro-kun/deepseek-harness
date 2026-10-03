@@ -1,4 +1,5 @@
 # Agent Note: In-history system prompt replacement for cache-stable prompt changes
+English | [中文](.agents/notes/implemented/feature/2026-09-02-in-history-system-prompt-replacement.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-02-in-history-system-prompt-replacement.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Interception extension points — the typed-Decision surface a hook programs against
+English | [中文](.agents/notes/implemented/feature/2026-06-30-interception-extension-points.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-06-30-interception-extension-points.de.md)
 
 Status: implemented
 

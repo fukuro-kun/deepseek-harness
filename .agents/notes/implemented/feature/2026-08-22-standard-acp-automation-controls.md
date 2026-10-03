@@ -1,4 +1,5 @@
 # Agent Note: Standard ACP v1 automation controls
+English | [中文](.agents/notes/implemented/feature/2026-08-22-standard-acp-automation-controls.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-22-standard-acp-automation-controls.de.md)
 
 Status: implemented
 

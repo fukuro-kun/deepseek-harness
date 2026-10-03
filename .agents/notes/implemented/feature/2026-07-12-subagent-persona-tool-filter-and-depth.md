@@ -1,4 +1,5 @@
 # Agent Note: Configure subagent persona, tool visibility, and depth
+English | [中文](.agents/notes/implemented/feature/2026-07-12-subagent-persona-tool-filter-and-depth.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-12-subagent-persona-tool-filter-and-depth.de.md)
 
 Status: implemented
 

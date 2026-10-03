@@ -1,4 +1,5 @@
 # Agent Note: Background job completion wakes an idle owner
+English | [中文](.agents/notes/implemented/feature/2026-08-11-background-job-completion-wakes-an-idle-owner.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-11-background-job-completion-wakes-an-idle-owner.de.md)
 
 Status: implemented
 

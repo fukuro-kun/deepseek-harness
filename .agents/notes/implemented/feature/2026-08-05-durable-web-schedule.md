@@ -1,4 +1,5 @@
 # Agent Note: Durable Session-local reminders
+English | [中文](.agents/notes/implemented/feature/2026-08-05-durable-web-schedule.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-05-durable-web-schedule.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Claude Code and Codex subagent backends
+English | [中文](.agents/notes/implemented/feature/2026-08-04-claude-code-and-codex-subagent-backends.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-04-claude-code-and-codex-subagent-backends.de.md)
 
 Status: implemented
 

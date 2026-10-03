@@ -1,4 +1,5 @@
 # Agent Note: Product subagents use Profile-selected non-interactive permissions
+English | [中文](.agents/notes/implemented/feature/2026-08-15-product-subagent-noninteractive-permissions.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-15-product-subagent-noninteractive-permissions.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Dynamic workflows — a script-driven multi-agent orchestration seam
+English | [中文](.agents/notes/implemented/feature/2026-07-05-dynamic-workflows.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-05-dynamic-workflows.de.md)
 
 Status: implemented
 

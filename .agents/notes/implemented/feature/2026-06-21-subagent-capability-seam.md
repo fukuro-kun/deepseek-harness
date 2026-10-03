@@ -1,4 +1,5 @@
 # Agent Note: Subagent capability seam
+English | [中文](.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-06-21-subagent-capability-seam.de.md)
 
 Status: implemented
 
