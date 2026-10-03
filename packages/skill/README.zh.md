@@ -5,7 +5,7 @@ kind: "package-group"
 
 # skill/ — skill（技能）能力家族
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

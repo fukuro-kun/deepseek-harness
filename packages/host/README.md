@@ -4,8 +4,8 @@ kind: "package-group"
 ---
 
 # host/ — web-GUI host half
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

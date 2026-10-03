@@ -5,7 +5,7 @@ kind: "package-group"
 
 # interaction/：人机协作平面
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

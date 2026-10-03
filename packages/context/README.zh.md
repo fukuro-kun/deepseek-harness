@@ -5,7 +5,7 @@ kind: "package-group"
 
 # context/ — 请求上下文插件
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 
