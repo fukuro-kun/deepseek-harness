@@ -1,4 +1,5 @@
 # Agent Note: Browser GIFs preserve one evidence chain
+English | [中文](.agents/notes/implemented/process/2026-08-08-browser-gif-evidence-chain.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-08-browser-gif-evidence-chain.de.md)
 
 Status: implemented
 

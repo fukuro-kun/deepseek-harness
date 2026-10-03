@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-26-dependencies-over-hand-rolling.md
-2026-07-26-dependencies-over-hand-rolling.md: 53336e5a2dc8970422dcf8a161a31eb01f8155e4
+2026-07-26-dependencies-over-hand-rolling.md: 5415acbc0e2a58bbc6ff7e12d63e68f65a10ac03
 2026-07-26-dependencies-over-hand-rolling.zh.md: deec00d87f2c514dbf16cac0e96cdf00ec055958
+2026-07-26-dependencies-over-hand-rolling.de.md: f2972e65dcd857c9f84be4edc5b5c840543edf30

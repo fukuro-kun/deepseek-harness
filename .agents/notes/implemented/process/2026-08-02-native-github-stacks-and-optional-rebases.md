@@ -1,4 +1,5 @@
 # Agent Note: Native GitHub stacks and optional PR rebases
+English | [中文](.agents/notes/implemented/process/2026-08-02-native-github-stacks-and-optional-rebases.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-02-native-github-stacks-and-optional-rebases.de.md)
 
 Status: implemented
 

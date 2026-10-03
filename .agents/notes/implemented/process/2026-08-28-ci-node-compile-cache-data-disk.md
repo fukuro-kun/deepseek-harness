@@ -1,4 +1,5 @@
 # Agent Note: Redirect the Node compile cache to the data-volume runner temp
+English | [中文](.agents/notes/implemented/process/2026-08-28-ci-node-compile-cache-data-disk.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-28-ci-node-compile-cache-data-disk.de.md)
 
 Status: implemented
 

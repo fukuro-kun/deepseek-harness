@@ -1,4 +1,5 @@
 # Agent Note: Parallel pre-push gates
+English | [中文](.agents/notes/implemented/process/2026-07-06-parallel-pre-push-gates.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-06-parallel-pre-push-gates.de.md)
 
 Status: implemented
 

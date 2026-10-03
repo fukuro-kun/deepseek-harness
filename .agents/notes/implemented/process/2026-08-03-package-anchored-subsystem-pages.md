@@ -1,4 +1,5 @@
 # Agent Note: Package-anchored subsystem pages and thin group READMEs
+English | [中文](.agents/notes/implemented/process/2026-08-03-package-anchored-subsystem-pages.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-03-package-anchored-subsystem-pages.de.md)
 
 Status: implemented
 

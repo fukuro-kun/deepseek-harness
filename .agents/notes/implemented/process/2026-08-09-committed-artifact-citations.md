@@ -1,4 +1,5 @@
 # Agent Note: Cite committed artifacts, never design-session ordinals
+English | [中文](.agents/notes/implemented/process/2026-08-09-committed-artifact-citations.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-09-committed-artifact-citations.de.md)
 
 Status: implemented
 

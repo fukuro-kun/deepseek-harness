@@ -1,4 +1,5 @@
 # Agent Note: Serial cross-platform CI reference
+English | [中文](.agents/notes/implemented/process/2026-07-21-serial-cross-platform-ci-reference.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-21-serial-cross-platform-ci-reference.de.md)
 
 Status: implemented
 

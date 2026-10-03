@@ -1,4 +1,5 @@
 # Agent Note: Event-directed PR review status commands
+English | [中文](.agents/notes/implemented/process/2026-08-10-event-directed-pr-review-status.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-10-event-directed-pr-review-status.de.md)
 
 Status: implemented
 

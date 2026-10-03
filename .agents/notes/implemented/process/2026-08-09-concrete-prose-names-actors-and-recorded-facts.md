@@ -1,4 +1,5 @@
 # Agent Note: Concrete prose names actors and recorded facts
+English | [中文](.agents/notes/implemented/process/2026-08-09-concrete-prose-names-actors-and-recorded-facts.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-09-concrete-prose-names-actors-and-recorded-facts.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Prefer maintained dependencies over hand-rolling
+English | [中文](.agents/notes/implemented/process/2026-07-26-dependencies-over-hand-rolling.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-26-dependencies-over-hand-rolling.de.md)
 
 Status: implemented
 
