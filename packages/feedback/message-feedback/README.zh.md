@@ -5,7 +5,7 @@ kind: "package-reference"
 
 # @deepseek-ai/dsh-message-feedback
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 
