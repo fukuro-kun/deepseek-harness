@@ -1,4 +1,5 @@
 # Agent Note: One outbound proxy policy, installed before anything can request
+English | [中文](2026-08-27-outbound-proxy-policy.zh.md) | [Deutsch](2026-08-27-outbound-proxy-policy.de.md)
 
 Status: implemented
 

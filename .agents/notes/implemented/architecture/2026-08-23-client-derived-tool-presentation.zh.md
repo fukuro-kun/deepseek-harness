@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-23-client-derived-tool-presentation.md) | 中文
+[English](2026-08-23-client-derived-tool-presentation.md) | 中文 | [Deutsch](2026-08-23-client-derived-tool-presentation.de.md)
 
 ## Problem
 

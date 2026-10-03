@@ -1,4 +1,5 @@
 # Agent Note: One dsh launcher for application profiles
+English | [中文](2026-08-22-single-dsh-application-launcher.zh.md) | [Deutsch](2026-08-22-single-dsh-application-launcher.de.md)
 
 Status: implemented
 

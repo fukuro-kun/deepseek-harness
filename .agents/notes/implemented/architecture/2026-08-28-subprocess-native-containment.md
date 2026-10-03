@@ -1,4 +1,5 @@
 # Agent Note: Native owners contain escaped subprocess descendants
+English | [中文](2026-08-28-subprocess-native-containment.zh.md) | [Deutsch](2026-08-28-subprocess-native-containment.de.md)
 
 Status: implemented
 

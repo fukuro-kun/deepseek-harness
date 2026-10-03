@@ -1,4 +1,5 @@
 # Agent Note: Locale-owned client UI copy
+English | [中文](2026-08-23-locale-owned-client-ui-copy.zh.md) | [Deutsch](2026-08-23-locale-owned-client-ui-copy.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Adjacent Agents share one Steer send_message operation
+English | [中文](2026-08-27-adjacent-agent-steer-messaging.zh.md) | [Deutsch](2026-08-27-adjacent-agent-steer-messaging.de.md)
 
 Status: implemented
 

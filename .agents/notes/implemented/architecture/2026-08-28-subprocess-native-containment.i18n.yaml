@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-28-subprocess-native-containment.md
-2026-08-28-subprocess-native-containment.md: a5a9f5c415dfa37329bb45ad36aed95b6049cb3a
-2026-08-28-subprocess-native-containment.zh.md: 1b9861ce8aa961d25f7aa1d3be30ece637b75323
+2026-08-28-subprocess-native-containment.md: dfef14d0cfdf5bb22a8653771392325591af6e03
+2026-08-28-subprocess-native-containment.zh.md: 6b2771e235d897061d1483f09b775d82be18b784
+2026-08-28-subprocess-native-containment.de.md: 921701fcba3ec15e608ca74653fe4d9498ff81fe

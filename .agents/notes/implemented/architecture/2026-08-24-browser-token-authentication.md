@@ -1,4 +1,5 @@
 # Agent Note: Browser launch-token authentication
+English | [中文](2026-08-24-browser-token-authentication.zh.md) | [Deutsch](2026-08-24-browser-token-authentication.de.md)
 
 Status: implemented
 

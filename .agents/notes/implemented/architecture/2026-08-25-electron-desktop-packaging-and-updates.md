@@ -1,4 +1,5 @@
 # Agent Note: Package and update the Electron desktop application
+English | [中文](2026-08-25-electron-desktop-packaging-and-updates.zh.md) | [Deutsch](2026-08-25-electron-desktop-packaging-and-updates.de.md)
 
 Status: implemented
 

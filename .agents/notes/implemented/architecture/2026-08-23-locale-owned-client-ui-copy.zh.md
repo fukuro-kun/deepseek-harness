@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-23-locale-owned-client-ui-copy.md) | 中文
+[English](2026-08-23-locale-owned-client-ui-copy.md) | 中文 | [Deutsch](2026-08-23-locale-owned-client-ui-copy.de.md)
 
 ## Problem
 

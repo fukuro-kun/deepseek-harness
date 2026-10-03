@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-25-electron-desktop-packaging-and-updates.md) | 中文
+[English](2026-08-25-electron-desktop-packaging-and-updates.md) | 中文 | [Deutsch](2026-08-25-electron-desktop-packaging-and-updates.de.md)
 
 ## 问题
 

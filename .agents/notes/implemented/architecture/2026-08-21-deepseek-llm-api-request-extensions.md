@@ -1,4 +1,5 @@
 # Agent Note: DeepSeek LLM API request extensions for session logs and plugin packages
+English | [中文](2026-08-21-deepseek-llm-api-request-extensions.zh.md) | [Deutsch](2026-08-21-deepseek-llm-api-request-extensions.de.md)
 
 Status: implemented
 

@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-28-ctx-remote-failure-vocabulary.md
-2026-08-28-ctx-remote-failure-vocabulary.md: 7238ae23b4581ab645b2bc9a780b77dc4a59d574
-2026-08-28-ctx-remote-failure-vocabulary.zh.md: db0b2969bc94c3d9c848b187a0521ce5ec387492
+2026-08-28-ctx-remote-failure-vocabulary.md: aa9f753ab43de81da8c0eccdf9f17f517ad1a5a1
+2026-08-28-ctx-remote-failure-vocabulary.zh.md: 244c14fbb333e6773ae33f82b8ed203cde0345c4
+2026-08-28-ctx-remote-failure-vocabulary.de.md: ea8d7de811b0544b6948db67344b1a65cfe813ac

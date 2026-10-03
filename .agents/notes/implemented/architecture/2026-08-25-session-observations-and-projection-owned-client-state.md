@@ -1,4 +1,5 @@
 # Agent Note: Session observations and projection-owned client state
+English | [中文](2026-08-25-session-observations-and-projection-owned-client-state.zh.md) | [Deutsch](2026-08-25-session-observations-and-projection-owned-client-state.de.md)
 
 Status: implemented
 

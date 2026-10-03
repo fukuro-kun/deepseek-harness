@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-24-browser-token-authentication.md) | 中文
+[English](2026-08-24-browser-token-authentication.md) | 中文 | [Deutsch](2026-08-24-browser-token-authentication.de.md)
 
 ## 问题
 

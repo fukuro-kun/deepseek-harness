@@ -1,4 +1,5 @@
 # Agent Note: Client-Derived Presentation from Raw Session Tool Events
+English | [中文](2026-08-23-client-derived-tool-presentation.zh.md) | [Deutsch](2026-08-23-client-derived-tool-presentation.de.md)
 
 Status: implemented
 
