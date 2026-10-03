@@ -1,0 +1,31 @@
+# Agent Note: Composer-Sitzungsstatistik — zwei Icon-Pills mit Statistikdialogen per Klick
+
+Status: implemented
+
+[English](2026-09-07-composer-session-stats-pills.md) | [中文](2026-09-07-composer-session-stats-pills.zh.md) | Deutsch
+
+## Problem
+
+Die Sitzungsstatistik-Zeile unter dem Composer (`StatsLine`, ui-chat, auf `conversation.composer.dock` montiert) renderte jede Kennzahl als eine residente Textzeile: Turn-/Step-Zähler, LLM- und Tool-Laufzeiten, TTFT-/TPS-Mittelwerte sowie kompakte Token-Summen mit Cache-Trefferanteil. Die Zeile wurde mit jeder Kennzahl enger, exakte Token-Zählungen waren nirgends sichtbar (der per `ResizeObserver` vermessene Hover-Tooltip wiederholte bei Kürzung nur dieselbe kompakte Zeile), und der flache Text bot keine Gruppierung — Zeit- und Abrechnungskennzahlen lasen sich als eine undifferenzierte Reihe. Ein A/B-Vergleich innerhalb der Seite gegen eine Zwei-Pill-Variante legte die Richtung fest: Die Pills gewannen bei der Erfassbarkeit und dabei, jeder Kennzahlfamilie ein Zuhause zu geben.
+
+## Entscheidung
+
+`StatsPills` (packages/client/ui-chat/src/client/chat/StatsPills.tsx) ersetzt `StatsLine` auf demselben `conversation.composer.dock`-Slot; die unterlegene Variante ist gelöscht, ihre gemeinsamen Hilfsfunktionen (`deriveStats`, `formatDuration`, `cacheHitPercent`, `billedInputTokens`) ins neue Modul überführt, und die toten Locale-Keys `stats.llm`, `stats.toolCall`, `stats.ttftAverage`, `stats.tokensPerSecond` und `stats.tokens` entfernt.
+
+- **Zwei Icon-Pills, zwei Dialoge.** Ein Gauge-Pill (neues `IconGaugeOutline16`, Zifferblattmitte optisch auf y=8.75 abgesenkt, weil der nach unten offene Bogen hoch wirkt) zeigt `{turns} 轮 {steps} 步` plus Ausgabe-TPS und öffnet per Klick den Dialog 会话统计 (LLM-Zeit, Tool-Zeit, durchschnittliche TTFT, TPS); bei einem Log ohne Zeitkennzahl wäre der Dialog leer, daher rendert die Pill dann als statischer Messwert statt als Schaltfläche. Eine Datenbank-Pill (`IconDatabaseOutline16`) zeigt die kompakte abgerechnete Summe plus Cache-Trefferanteil und öffnet per Klick den Dialog Token 用量 (Cache-Treffer, nicht gecachte Eingabe, Cache-Lesevorgang, Ausgabe sowie Cache-Schreibvorgang bei ungleich null — exakte Zählungen). Beide Dialoge nutzen das gemeinsame `stat-dialog`-Modul (Portal-Panel, verankerte Platzierung, Schließen bei Klick außerhalb, optional extern gehaltener Öffnungszustand), das genau für diese Zwei-Consumer-Teilung extrahiert wurde; die Pill-Zeile hält einen exklusiven Öffnungs-Slot, sodass das Öffnen eines Dialogs den anderen schließt, und jede Schaltfläche trägt ein explizites `aria-label`, das die Segmente mit ` · ` trennt, die das aria-hidden-Trennzeichen visuell verbindet. [Startseite des Guide und Verfeinerungen der Stat-Pills](2026-09-10-guide-start-page-and-stat-pill-refinements.de.md) regelt das Weglassen der Cache-Schreibzeile bei null.
+- **Die Datenbeschaffung bleibt architektonisch unverändert.** Zählungen und Zeiten bevorzugen die dauerhafte `sessionStats`-Projektion, mit der Fensterfaltung als Fallback für die Montage ohne die Einheit ([Zählungen über die ganze Session](../../archived/bug-fix/2026-08-12-full-session-turn-step-counts.md)); Token-Kennzahlen laufen ausschließlich über `tokenUsage`, sodass eine fehlende Projektion die Nutzungs-Pill weglässt statt fensterabgeleitete Abrechnung zu zeigen. Cache-Schreibvorgänge bleiben in der abgerechneten Summe und im Nenner des Cache-Treffers ([Projektionsentscheidung](../architecture/2026-07-29-projected-token-usage-and-request-context.de.md)). Die Kontextbelegung bleibt auf dem ContextMeter-Ring des Composers, wo sie schon neben `StatsLine` lag — die Zeile trug sie nie.
+- **Render-Disziplin.** Die Zeile faltet nur abgeschlossene Knoten (`chat.legacy.nodes`-Identität), sodass Streaming-Chunk-Frames null Rerenders auslösen — abgesichert durch einen Render-Count-Unit-Test. Eine Session ohne abgeschlossenen Schritt und ohne abgerechnete Tokens rendert nichts.
+- **`data-composer-stats` ist ein paketübergreifender Attribut-Vertrag.** Der Pill-Wurzelknoten trägt ihn; die `:has([data-composer-stats])`-Regel in ui-conversations `InputBar.module.css` strafft den unteren Abstand des Composers auf 4px, sobald die Zeile montiert ist. Die Erzeugerseite pinnt das Attribut in Unit-Tests, nach dem `data-trigger-menu`-Präzedenzfall.
+
+## Erwogene Alternativen
+
+- **Die einzeilige Variante (StatsLine, der A/B-Verlierer).** Alle Kennzahlen resident in einer Textzeile, mit einem Hover-Tooltip, der bei Kürzung die volle Zeile wiederholt. Verlor bei Enge und Erreichbarkeit: Exakte Token-Zählungen waren nirgends sichtbar (Zeile und Tooltip trugen beide nur kompakte Summen), und eine einzige Reihe gab Zeit- und Abrechnungskennzahlen keine visuelle Gruppierung.
+- **Drei residente Gruppen mit einem gemeinsamen Dialog.** Eine Zwischeniteration hielt Zählungen, Zeiten und Tokens als drei Inline-Gruppen. Zwei Pills gewannen, weil die Zeit-/Nutzungs-Teilung eins zu eins den zwei zugrunde liegenden Projektionen entspricht und das Icon jeder Pill ihren Dialog ankündigt.
+- **Extraktion der mit `TurnUsagePanel` geteilten dl-Bucket-Zeilen.** Der Session-Summen-Dialog und das Panel pro Turn rendern dasselbe Erscheinungsbild, aber andere Verträge (Pflichtzeilen für Session-Eingabe, Cache-Lesevorgang und Ausgabe plus einer Cache-Schreibzeile bei ungleich null, gegenüber optionalen Feldern pro Turn und Model-Routen); eine gemeinsame Komponente wären nur Bedingungen um neun Zeilen. Das Spiegelbild ist mit `jscpd:ignore` und der Begründung inline markiert.
+
+## Folgen
+
+- `ChatSnapshotBuilder`s Legacy-Slice bedient nun StatsPills; die [Node-Montage-Note](../architecture/2026-08-09-client-conversation-node-assembly.de.md) verfolgt diese Consumer-Umbenennung.
+- Exakte Token-Zählungen werden überhaupt erreichbar — mit einem Klick — wo `StatsLine` nur kompakte Summen zeigte; die Zeile selbst trägt nur die zwei Kopfzeilen-Messwerte.
+- Web-e2e-Assertionen der Zeile matchen Teilzeichenfolgen innerhalb der Zeit-Pill; die fresh-round-trip-Aria-Goldens pinnen die Zwei-Pill-Struktur, und stats-paged-history pinnt allein den Zähler-Messwert über einem Log ohne abgerechnete Tokens.
+- Der `conversation.composer.dock`-Beleger im generierten Slot-Katalog ist `client-ui-chat StatsPills id 'stats'`.

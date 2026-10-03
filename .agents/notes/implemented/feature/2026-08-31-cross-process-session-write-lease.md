@@ -1,4 +1,5 @@
 # Agent Note: cross-process session write lease
+English | [中文](.agents/notes/implemented/feature/2026-08-31-cross-process-session-write-lease.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-31-cross-process-session-write-lease.de.md)
 
 Status: implemented
 

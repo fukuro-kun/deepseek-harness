@@ -1,4 +1,5 @@
 # Agent Note: Model-visible route-change notices
+English | [中文](.agents/notes/implemented/feature/2026-09-07-model-switch-notice.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-07-model-switch-notice.de.md)
 
 Status: implemented
 

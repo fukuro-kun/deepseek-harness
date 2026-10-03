@@ -1,0 +1,29 @@
+# Agent Note: Prozessübergreifendes Session-Schreibleasing
+
+Status: implemented
+
+[English](2026-08-31-cross-process-session-write-lease.md) | [中文](2026-08-31-cross-process-session-write-lease.zh.md) | Deutsch
+
+## Problem
+
+Der Schreib-Handle-Anspruch des JSONL-Backends schloss einen zweiten Schreiber nur innerhalb einer Backend-Instanz aus. Zwei Prozesse — zwei CLI-Sessions oder ein Host neben einer SDK-Laufzeit — konnten dieselbe Session schreibend öffnen und Appends in eine Logdatei verschränken, was komprimierte Frames und die seq-Kontinuität zerriß. Die Seam brauchte dauerhafte prozessübergreifende Schreibhoheit, deren Schiedsrichter außerhalb jedes Schreiberprozesses lebt, weil kein Schreiber jeden Fehlermodus überlebt.
+
+## Entscheidung
+
+`SessionWriteLease` (packages/session/session-persistence-jsonl/src/lease.ts) hält einen Kernel-Lock auf `session.lock` neben dem Log für die gesamte Lebensdauer eines Schreib-Handles: POSIX nimmt ein nicht-blockierendes `flock(2)` über das vorkompilierte `@deepseek-ai/node-addon-system/flock`-Binding, und Windows hält eine benannte Kernel-Semaphore (Zähler 1), abgeleitet aus dem kanonischen Lock-Pfad (`CreateSemaphoreW` in src/win32.ts neben den bestehenden koffi-Bindings) — ein Kernel-Objekt ohne Dateisystem-Fußabdruck, zerstört mit seinem letzten Handle. Konflikt bildet auf `SessionAlreadyOwnedError` ab; der Kernel gibt den Lock frei, sobald Deskriptor oder Handle des Halters schließt, auch bei jedem Prozesstod, sodass ein abgestürzter Halter nie einen Nachfolger blockiert und keine Ablaufbuchhaltung existiert. Ein lebender, aber festsitzender Halter behält den Lock bis zum Prozessende: Die Enteignung eines hängenden Schreibers wurde abgelehnt, weil seine wiederauflebenden Appends das Log zerreißen würden, und unter POSIX bleibt das Löschen der Lock-Datei der explizite Verzicht für diesen Fall. Da ein POSIX-Lock einen Inode statt eines Pfads benennt, prüft der Erwerb, ob der gesperrte Inode noch die Datei am Lock-Pfad ist, und versucht sonst erneut. Der Lock wird beim Schreib-Öffnen eines bestehenden Artefakts genommen und bei einer neu angelegten Session erst unmittelbar vor dem ersten materialisierenden Schreiben — eine nicht materialisierte Session hinterlässt keinen Dateisystem-Fußabdruck, und ein Handle, das den Lock erworben hat, behält ihn bis zum Schließen, selbst wenn die Materialisierung fehlschlägt; die Freigabe entfernt die Lock-Datei nie und bewahrt damit den stabilen Inode, gegen den spätere Sperrer prüfen. Das Browser-Worker-Deployment stubbt den flock-Einstieg auf sofortigen Erfolg, weil sein in-process-Schreibanspruch jeden Schreiber ausschließt. Sein `node:fs`-Ersatz meldet weiterhin BigInt-Geräte- und Inode-Identität aus `FileHandle.stat({ bigint: true })`, passend zum Pfad-`stat`, solange der Pfad diese Datei benennt, weil das Lease die Inode-Ersetzungsprüfung nach dem gestubbten Erwerb behält.
+
+## Erwogene Alternativen
+
+**TTL-Eintrag mit Erneuerung und Anspruch-per-Rename (zuerst implementiert, im Review ersetzt)** — ein JSON-Eintrag neben dem Log mit Owner-Token und Ablauf, in einem Intervall erneuert, nach Ablauf per atomarem Rename übernommen. Er überlebt jedes Dateisystem, ist aber ein verteilter Algorithmus im Kleinen: Erneuerungstimer, Verlusterkennung, Übernahmeanspruch mit Nachprüfung und Rückgabe — und seine verbleibenden Mehrparteien-Races erlaubten weiterhin begrenzte Doppelschreiber-Überlappung (ein Erneuerungsintervall). Kernel-Schlichtung löscht die ganze Familie samt Maschinerie, zum Preis einer nativen Build-Abhängigkeit und der obigen Festsitz-Halter-Semantik.
+
+**`proper-lockfile`** — die Staleness-plus-Touch-Umsetzung desselben TTL-Modells im npm-Ökosystem. Es behält die Löschen-dann-Neuanlegen-Übernahme-Race, erkennt Kompromittierung per mtime und Inode (schwächer als ein Owner-Token) und hatte seit 2021 kein Release.
+
+**fs-exts eigene Windows-Fassade (`LockFileEx`-Byte-Range-Locks)** — nach CI-Nachweis abgelehnt: Windows-Byte-Range-Locks sind verbindlich, sodass jeder Leser, der die gesperrte Datei berührt, hart fehlschlägt (ripgrep starb mit os error 33 beim Durchlaufen eines Session-Verzeichnisses).
+
+**Windows-Exklusiv-Öffnen im Sharing-Modus (`CreateFileW` mit verweigertem `FILE_SHARE_WRITE`)** — lässt Leser unberührt, pinnt aber Name und Verzeichnis der Lock-Datei, solange sie gehalten wird: CI zeigte Dutzende Suites, deren Temp-Root-Aufräumen mit EBUSY scheiterte, weil ein noch offener Handle das rekursive Entfernen blockiert, und Nutzer, die ein Session-Verzeichnis löschen, träfen auf dieselbe Mauer. Die benannte Semaphore hält Kernel-Schlichtung ohne jeden Dateisystem-Fußabdruck.
+
+**Handgeschriebenes FFI auch für POSIX (`flock(2)` via koffi)** — Binding-Auswahl und asynchrone errno-Behandlung regelt die [Entscheidung zu vorkompilierten System-Primitiven](../architecture/2026-09-07-prebuilt-system-primitives.de.md). Die Windows-Seite behält die koffi-Bindings, die `win32.ts` bereits besitzt.
+
+## Folgen
+
+Prozessübergreifender Ausschluss erfordert das vorkompilierte System-Binding der Plattform, eine Lock-Datei pro materialisierter Session, die die Freigabe absichtlich liegen lässt, und die Festsitz-Halter-Regel: Ein hängender Prozess blockiert die Schreiber dieser Session bis zu seinem Ende. Es kauft sofortige Crash-Recovery (keine Wartezeit), keinen Erneuerungsverkehr und die Beseitigung jeder Übernahme-Race, die das TTL-Design verwaltete statt verhinderte. Advisory `flock` ist auf manchen Netzwerkdateisystemen (NFSv3) unzuverlässig; eine Wurzel auf so einem Mount degradiert zu rein prozessinternem Ausschluss. Das Löschen der Lock-Datei einer lebenden Session verwirkt den Ausschluss unter POSIX per Design — der Harness tut das nie; der agent-loop-Resume-Test nutzt es absichtlich, um einen festsitzenden ersten Lebenszyklus zu simulieren, und überspringt unter Windows, wo der Lock ein Kernel-Objekt ist, das kein Dateivorgang verwirken kann.

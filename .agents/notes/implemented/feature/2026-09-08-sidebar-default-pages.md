@@ -1,4 +1,5 @@
 # Agent Note: Sidebar default pages
+English | [中文](.agents/notes/implemented/feature/2026-09-08-sidebar-default-pages.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-08-sidebar-default-pages.de.md)
 
 Status: implemented
 
