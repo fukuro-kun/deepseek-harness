@@ -1,5 +1,7 @@
 # Agent Note: Periodic human-review maintenance for dsh-code-review
 
+English | [中文](.agents/notes/proposed/process/2026-07-13-human-review-skill-maintenance.zh.md) | [Deutsch](.agents/notes/proposed/process/2026-07-13-human-review-skill-maintenance.de.md)
+
 Status: proposed
 
 English | [中文](2026-07-13-human-review-skill-maintenance.zh.md)

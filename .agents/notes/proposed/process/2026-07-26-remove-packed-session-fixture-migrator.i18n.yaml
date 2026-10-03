@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/process/2026-07-26-remove-packed-session-fixture-migrator.md
-2026-07-26-remove-packed-session-fixture-migrator.md: 0a29ef98828ac07d291392d637b0508937c9a9a6
-2026-07-26-remove-packed-session-fixture-migrator.zh.md: aa9aece710587cef6c84ad9cf078821a2506deb1
+2026-07-26-remove-packed-session-fixture-migrator.md: 847dba13535b978f3b8f079e9445020b40f44c81
+2026-07-26-remove-packed-session-fixture-migrator.zh.md: 6bf553aed0ab01a5a0020cd2241845e9bcdd11eb
+2026-07-26-remove-packed-session-fixture-migrator.de.md: ac0bd4150da85c8aace0f27c31d846105e57085c

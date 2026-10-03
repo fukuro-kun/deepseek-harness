@@ -2,7 +2,7 @@
 
 Status: proposed
 
-[English](2026-08-27-port-tool-owned-render.md) | 中文
+[English](.agents/notes/proposed/process/2026-08-27-port-tool-owned-render.md) | 中文 | [Deutsch](.agents/notes/proposed/process/2026-08-27-port-tool-owned-render.de.md)
 
 ## 问题
 

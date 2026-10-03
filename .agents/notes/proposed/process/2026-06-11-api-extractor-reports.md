@@ -1,5 +1,7 @@
 # Agent Note: API extractor reports
 
+English | [中文](.agents/notes/proposed/process/2026-06-11-api-extractor-reports.zh.md) | [Deutsch](.agents/notes/proposed/process/2026-06-11-api-extractor-reports.de.md)
+
 Status: proposed
 
 English | [中文](2026-06-11-api-extractor-reports.zh.md)

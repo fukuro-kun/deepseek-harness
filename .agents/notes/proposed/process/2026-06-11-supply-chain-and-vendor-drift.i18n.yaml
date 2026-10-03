@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/process/2026-06-11-supply-chain-and-vendor-drift.md
-2026-06-11-supply-chain-and-vendor-drift.md: aecab81292e8d6eb59fe13a5530ba78de9b307a5
-2026-06-11-supply-chain-and-vendor-drift.zh.md: ba55b3b1815c8164650dd4aa5022dd4f98efd6a4
+2026-06-11-supply-chain-and-vendor-drift.md: 5e3f45109a4f88797bf4853ebea85fc83a4304c9
+2026-06-11-supply-chain-and-vendor-drift.zh.md: cb0e4a4e55d93035313de49d88b2d8fd56df3218
+2026-06-11-supply-chain-and-vendor-drift.de.md: c09122228b01bf8339fa20c142dfc4909594fddd

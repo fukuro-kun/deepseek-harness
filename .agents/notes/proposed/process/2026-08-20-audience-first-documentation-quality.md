@@ -1,5 +1,7 @@
 # Agent Note: Audience-first documentation quality criteria
 
+English | [中文](.agents/notes/proposed/process/2026-08-20-audience-first-documentation-quality.zh.md) | [Deutsch](.agents/notes/proposed/process/2026-08-20-audience-first-documentation-quality.de.md)
+
 Status: proposed
 
 English | [中文](2026-08-20-audience-first-documentation-quality.zh.md)

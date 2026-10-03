@@ -1,5 +1,7 @@
 # Agent Note: Remove the packed-session fixture branch migrator
 
+English | [中文](.agents/notes/proposed/process/2026-07-26-remove-packed-session-fixture-migrator.zh.md) | [Deutsch](.agents/notes/proposed/process/2026-07-26-remove-packed-session-fixture-migrator.de.md)
+
 Status: proposed
 
 English | [中文](2026-07-26-remove-packed-session-fixture-migrator.zh.md)

@@ -17,7 +17,7 @@ Die Desktop-Anwendung ist eine Electron-Shell um die dsh-Web-UI. Sie öffnet kei
 | Aktivierung | Dependency-Auflösung, Lifecycle-Skripte, Native-Module und Plugin-Start können fehlschlagen, und ein Prozess kann während eines Verzeichnisersatzes stoppen. | Release- und Plugin-Änderungen installieren in Staging, booten einen vollständigen Backend-Health-Check und ersetzen das aktive Profil erst nach Erfolg; ein Journal und ein Rollback-Profil decken unterbrochene Ersetzungen ab. |
 | Updates | Unabhängige Shell- und dsh-Updates würden Versions-Splits neu erzeugen, während unveränderte Shell-Blöcke keinen vollständigen Transfer erfordern sollten. | Die Electron-Shell, der passende dsh-Seed, Node.js und pnpm bilden eine signierte Update-Einheit. Plattform-Update-Artefakte dürfen unveränderte Blöcke wiederverwenden, aber die Runtime-Versionswahl löst sich nie vom Desktop-Release. |
 
-Die [Agent Note zu Electron-Paketierung und Updates](../../.agents/notes/implemented/architecture/2026-08-25-electron-desktop-packaging-and-updates.md) enthält die Begründung, Alternativen, Sicherheitsconstraints und Release-Qualifikationsanforderungen hinter diesen Entscheidungen.
+Die [Agent Note zu Electron-Paketierung und Updates](../../.agents/notes/implemented/architecture/2026-08-25-electron-desktop-packaging-and-updates.de.md) enthält die Begründung, Alternativen, Sicherheitsconstraints und Release-Qualifikationsanforderungen hinter diesen Entscheidungen.
 
 ## Installationshoheit
 
