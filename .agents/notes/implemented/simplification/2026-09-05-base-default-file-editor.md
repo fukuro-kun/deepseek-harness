@@ -1,4 +1,5 @@
 # Agent Note: Shared base default file editor selection
+English | [中文](.agents/notes/implemented/simplification/2026-09-05-base-default-file-editor.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-09-05-base-default-file-editor.de.md)
 
 Status: implemented
 

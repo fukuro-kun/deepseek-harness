@@ -1,4 +1,5 @@
 # Agent Note: Remove synthetic turns for log-only events
+English | [中文](.agents/notes/implemented/simplification/2026-07-28-remove-synthetic-log-only-turns.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-28-remove-synthetic-log-only-turns.de.md)
 
 Status: implemented
 

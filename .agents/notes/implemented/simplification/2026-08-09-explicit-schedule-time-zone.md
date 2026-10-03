@@ -1,4 +1,5 @@
 # Agent Note: Explicit Schedule time-zone boundary
+English | [中文](.agents/notes/implemented/simplification/2026-08-09-explicit-schedule-time-zone.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-08-09-explicit-schedule-time-zone.de.md)
 
 Status: implemented
 

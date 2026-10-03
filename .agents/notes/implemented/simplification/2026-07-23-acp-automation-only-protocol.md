@@ -1,4 +1,5 @@
 # Agent Note: ACP as an automation-only protocol
+English | [中文](.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-23-acp-automation-only-protocol.de.md)
 
 Status: implemented
 

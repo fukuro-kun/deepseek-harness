@@ -1,4 +1,5 @@
 # Agent Note: Collapse agent-loop events around the observable state machine
+English | [中文](.agents/notes/implemented/simplification/2026-07-24-agent-loop-observable-state-machine.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-24-agent-loop-observable-state-machine.de.md)
 
 Status: implemented
 

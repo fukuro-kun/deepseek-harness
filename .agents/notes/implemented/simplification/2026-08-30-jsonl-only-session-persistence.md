@@ -1,4 +1,5 @@
 # Agent Note: JSONL-only first-party Session persistence
+English | [中文](.agents/notes/implemented/simplification/2026-08-30-jsonl-only-session-persistence.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-08-30-jsonl-only-session-persistence.de.md)
 
 Status: implemented
 

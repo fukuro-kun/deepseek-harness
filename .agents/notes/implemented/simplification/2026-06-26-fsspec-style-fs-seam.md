@@ -1,4 +1,5 @@
 # Agent Note: Split the filesystem seam — provider text mutations plus the `dsh-fs-observation-policy` plugin
+English | [中文](.agents/notes/implemented/simplification/2026-06-26-fsspec-style-fs-seam.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-06-26-fsspec-style-fs-seam.de.md)
 
 Status: implemented
 

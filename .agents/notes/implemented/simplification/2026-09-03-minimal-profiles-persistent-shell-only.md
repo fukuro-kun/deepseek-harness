@@ -1,4 +1,5 @@
 # Agent Note: Minimal profiles expose only a persistent shell
+English | [中文](.agents/notes/implemented/simplification/2026-09-03-minimal-profiles-persistent-shell-only.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-09-03-minimal-profiles-persistent-shell-only.de.md)
 
 Status: implemented
 

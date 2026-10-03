@@ -1,4 +1,5 @@
 # Agent Note: Remove implicit batching from ordinary sends
+English | [中文](.agents/notes/implemented/simplification/2026-07-17-one-send-one-turn.zh.md) | [Deutsch](.agents/notes/implemented/simplification/2026-07-17-one-send-one-turn.de.md)
 
 Status: implemented
 

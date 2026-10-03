@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-09-06-agent-request-freeze-provenance.md
-2026-09-06-agent-request-freeze-provenance.md: 1235a87ea549c6bbd9c53620017cb1d96f8e7cf7
+2026-09-06-agent-request-freeze-provenance.md: 6010d451c4beb7745e1fdc8e133c4e108ec16893
 2026-09-06-agent-request-freeze-provenance.zh.md: 357b25b0f252a9423c485b2cc119f1226ec16687
+2026-09-06-agent-request-freeze-provenance.de.md: 7befbf07e9e4144c519af67d754c3ad982b35410

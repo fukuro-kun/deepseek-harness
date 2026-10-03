@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-28-omit-unneeded-invariant-companions.md
-2026-08-28-omit-unneeded-invariant-companions.md: d4ab138d62a67c2c6666ae7998028fedb3a53580
+2026-08-28-omit-unneeded-invariant-companions.md: b0c56d3ab332dc913f01a4ec32e70cf446f0f679
 2026-08-28-omit-unneeded-invariant-companions.zh.md: 609bacd6b631bef3f77d373475107c1c677acb26
+2026-08-28-omit-unneeded-invariant-companions.de.md: 85cb9c70810cdd542d8bf75ab671d656b78da2e1
