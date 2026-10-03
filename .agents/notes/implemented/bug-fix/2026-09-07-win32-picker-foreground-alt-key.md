@@ -1,4 +1,5 @@
 # Agent Note: Foreground activation for the Win32 picker via a synthesized Alt press
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-07-win32-picker-foreground-alt-key.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-07-win32-picker-foreground-alt-key.de.md)
 
 Status: implemented
 

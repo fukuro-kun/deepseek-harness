@@ -1,4 +1,5 @@
 # Agent Note: Scope kill racing the one-shot bootstrap
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-28-scope-kill-before-bootstrap.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-28-scope-kill-before-bootstrap.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Settle pinned scroll deliveries before layout changes
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-07-pinned-scroll-delivery-before-layout.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-07-pinned-scroll-delivery-before-layout.de.md)
 
 Status: implemented
 

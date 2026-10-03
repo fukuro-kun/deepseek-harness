@@ -1,4 +1,5 @@
 # Agent Note: Model-relative session-reference budgets
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-05-session-reference-model-budget.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-05-session-reference-model-budget.de.md)
 
 Status: implemented
 

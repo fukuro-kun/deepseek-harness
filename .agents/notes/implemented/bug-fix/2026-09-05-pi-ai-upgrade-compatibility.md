@@ -1,4 +1,5 @@
 # Agent Note: pi-ai upgrade compatibility
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-05-pi-ai-upgrade-compatibility.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-05-pi-ai-upgrade-compatibility.de.md)
 
 Status: implemented
 

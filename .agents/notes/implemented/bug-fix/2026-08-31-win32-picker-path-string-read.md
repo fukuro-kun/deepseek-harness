@@ -1,4 +1,5 @@
 # Agent Note: Read the Win32 picker path without a fixed-size unmanaged view
+English | [中文](.agents/notes/implemented/bug-fix/2026-08-31-win32-picker-path-string-read.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-08-31-win32-picker-path-string-read.de.md)
 
 Status: implemented
 

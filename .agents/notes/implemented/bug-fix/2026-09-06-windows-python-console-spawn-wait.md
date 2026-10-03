@@ -1,4 +1,5 @@
 # Agent Note: Wait for the Windows Python console runtime
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-06-windows-python-console-spawn-wait.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-06-windows-python-console-spawn-wait.de.md)
 
 Status: implemented
 

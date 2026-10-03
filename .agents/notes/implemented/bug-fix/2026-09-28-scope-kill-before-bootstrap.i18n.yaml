@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-28-scope-kill-before-bootstrap.md
-2026-09-28-scope-kill-before-bootstrap.md: afce7d3e75f8a50f0add478d1d7821eebaa0ec66
+2026-09-28-scope-kill-before-bootstrap.md: ef251dda9ec637a94045425117bde4cf178331b0
 2026-09-28-scope-kill-before-bootstrap.zh.md: e03ab7b92838a1003aeb1b818a7471d7816326d1
+2026-09-28-scope-kill-before-bootstrap.de.md: f8a8d260947e305107d49572addbc5a935e0d274

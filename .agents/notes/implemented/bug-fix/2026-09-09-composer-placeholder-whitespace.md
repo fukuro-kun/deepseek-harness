@@ -1,4 +1,5 @@
 # Agent Note: Composer placeholder emptiness
+English | [中文](.agents/notes/implemented/bug-fix/2026-09-09-composer-placeholder-whitespace.zh.md) | [Deutsch](.agents/notes/implemented/bug-fix/2026-09-09-composer-placeholder-whitespace.de.md)
 
 Status: implemented
 
