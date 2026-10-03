@@ -1,4 +1,5 @@
 # Agent Note: Storage root placement and derived-medium recovery
+English | [中文](2026-07-28-storage-root-and-derived-medium-recovery.zh.md) | [Deutsch](2026-07-28-storage-root-and-derived-medium-recovery.de.md)
 
 Status: proposed
 

@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-07-28-storage-root-and-derived-medium-recovery.md
-2026-07-28-storage-root-and-derived-medium-recovery.md: 3a4124e577b79b6775c40aed0adc63ab0c130dad
-2026-07-28-storage-root-and-derived-medium-recovery.zh.md: f8d91402ba682bef616274d1a4c4fe00360271fc
+2026-07-28-storage-root-and-derived-medium-recovery.md: 5c414298ee4301f6b444db775cc70147285c52e8
+2026-07-28-storage-root-and-derived-medium-recovery.zh.md: 13ecb2d57fb0797caedcccc44f7d8bc33fac40c4
+2026-07-28-storage-root-and-derived-medium-recovery.de.md: 44f3f50780e758dbff6fd2bf4ca850b370c50491

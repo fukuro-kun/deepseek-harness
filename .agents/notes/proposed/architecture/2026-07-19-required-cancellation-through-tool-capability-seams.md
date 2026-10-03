@@ -1,4 +1,5 @@
 # Agent Note: Required cancellation through tool-reachable capability seams
+English | [中文](2026-07-19-required-cancellation-through-tool-capability-seams.zh.md) | [Deutsch](2026-07-19-required-cancellation-through-tool-capability-seams.de.md)
 
 Status: proposed
 

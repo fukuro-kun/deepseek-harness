@@ -1,4 +1,5 @@
 # Agent Note: Record last activity in the session index
+English | [中文](2026-07-29-durable-last-activity-index.zh.md) | [Deutsch](2026-07-29-durable-last-activity-index.de.md)
 
 Status: proposed
 

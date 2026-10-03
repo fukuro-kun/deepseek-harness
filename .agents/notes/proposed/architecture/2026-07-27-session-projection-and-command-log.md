@@ -1,4 +1,5 @@
 # Agent Note: Session projections and command lifecycle logging
+English | [中文](2026-07-27-session-projection-and-command-log.zh.md) | [Deutsch](2026-07-27-session-projection-and-command-log.de.md)
 
 Status: proposed
 

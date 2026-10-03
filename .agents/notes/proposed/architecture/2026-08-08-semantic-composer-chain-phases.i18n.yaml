@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-08-08-semantic-composer-chain-phases.md
-2026-08-08-semantic-composer-chain-phases.md: 8dab5afcdd8025467ba2eeb55406d2464376a8fa
-2026-08-08-semantic-composer-chain-phases.zh.md: d00332b1552cf83eb969c764a33a56e2f61b1633
+2026-08-08-semantic-composer-chain-phases.md: 7b5384a1e7034737cdc0b00c98c2f7b0db955deb
+2026-08-08-semantic-composer-chain-phases.zh.md: be3ee7153566d5eeb6024f84cf3b775290909652
+2026-08-08-semantic-composer-chain-phases.de.md: 9375ea20205e1fda68ebd3bd93c81dbd3631def0

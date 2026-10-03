@@ -2,7 +2,7 @@
 
 Status: proposed
 
-[English](2026-07-24-domain-kv-storage-and-workspace.md) | 中文
+[English](2026-07-24-domain-kv-storage-and-workspace.md) | 中文 | [Deutsch](2026-07-24-domain-kv-storage-and-workspace.de.md)
 
 ## 问题
 

@@ -1,4 +1,5 @@
 # Agent Note: Domain KV storage capability seam and the workspace entity
+English | [中文](2026-07-24-domain-kv-storage-and-workspace.zh.md) | [Deutsch](2026-07-24-domain-kv-storage-and-workspace.de.md)
 
 Status: proposed
 

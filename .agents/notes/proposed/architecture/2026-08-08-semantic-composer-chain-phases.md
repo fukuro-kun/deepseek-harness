@@ -1,4 +1,5 @@
 # Agent Note: Semantic phases for composer-chain election
+English | [中文](2026-08-08-semantic-composer-chain-phases.zh.md) | [Deutsch](2026-08-08-semantic-composer-chain-phases.de.md)
 
 Status: proposed
 
