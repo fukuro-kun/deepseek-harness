@@ -1,4 +1,5 @@
 # Long-session browser benchmark
+English | [中文](benchmarks/long-session-browser/README.zh.md) | [Deutsch](benchmarks/long-session-browser/README.de.md)
 
 English | [中文](README.zh.md)
 

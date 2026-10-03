@@ -1,4 +1,5 @@
 # apps/web browser e2e
+English | [中文](apps/web/tests/README.zh.md) | [Deutsch](apps/web/tests/README.de.md)
 
 English | [中文](README.zh.md)
 

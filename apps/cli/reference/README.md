@@ -1,4 +1,5 @@
 # `dsh` CLI behavior reference
+English | [中文](apps/cli/reference/README.zh.md) | [Deutsch](apps/cli/reference/README.de.md)
 
 English | [中文](README.zh.md)
 

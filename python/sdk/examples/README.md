@@ -1,4 +1,5 @@
 # Python SDK example
+English | [中文](python/sdk/examples/README.zh.md) | [Deutsch](python/sdk/examples/README.de.md)
 
 English | [中文](README.zh.md)
 

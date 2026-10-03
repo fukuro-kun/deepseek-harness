@@ -2,6 +2,6 @@
 # side as of the last confirmed-consistent state. All three languages carry equal
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write SAFETY.md
-SAFETY.md: f3187e26559302eb09beb7b74cf9c83129cbfcbb
+SAFETY.md: 4f90aa67c63e05b5a4a3c760b956664c06c858d5
 SAFETY.zh.md: 43a3846c78901989e24bf4e9305455e244ed7109
-SAFETY.de.md: 516a22972eabf85b66812059b1c15e2349081ee8
+SAFETY.de.md: 4e4a5677f1d8dc9cb317012d484d867fb07fec1c

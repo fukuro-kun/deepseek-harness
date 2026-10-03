@@ -1,4 +1,5 @@
 # DeepSeek Harness Desktop
+English | [中文](apps/desktop/README.zh.md) | [Deutsch](apps/desktop/README.de.md)
 
 English | [中文](README.zh.md)
 

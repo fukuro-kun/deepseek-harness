@@ -1,4 +1,5 @@
 # DeepSeek Harness Brand Asset Usage Guidelines
+English | [中文](BRAND_GUIDELINES.zh.md) | [Deutsch](BRAND_GUIDELINES.de.md)
 
 English | [中文](BRAND_GUIDELINES.zh.md) | [Deutsch](BRAND_GUIDELINES.de.md)
 

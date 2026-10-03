@@ -1,4 +1,5 @@
 # deepseek-harness-runtime-bin
+English | [中文](python/sdk-runtime/README.zh.md) | [Deutsch](python/sdk-runtime/README.de.md)
 
 English | [中文](README.zh.md)
 

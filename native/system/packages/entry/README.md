@@ -3,6 +3,7 @@ description: "JavaScript entry for the prebuilt Landlock launcher and asynchrono
 kind: "package-library"
 ---
 # @deepseek-ai/node-addon-system
+English | [中文](native/system/packages/entry/README.zh.md) | [Deutsch](native/system/packages/entry/README.de.md)
 
 English | [中文](README.zh.md)
 

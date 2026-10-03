@@ -1,4 +1,5 @@
 # `@deepseek-ai/dsh`
+English | [中文](apps/cli/README.zh.md) | [Deutsch](apps/cli/README.de.md)
 
 English | [中文](README.zh.md)
 
