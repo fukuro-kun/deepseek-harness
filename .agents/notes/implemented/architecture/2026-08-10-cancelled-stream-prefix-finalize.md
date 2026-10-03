@@ -1,4 +1,5 @@
 # Agent Note: Cancelled streams finalize their delivered prefix
+English | [中文](2026-08-10-cancelled-stream-prefix-finalize.zh.md) | [Deutsch](2026-08-10-cancelled-stream-prefix-finalize.de.md)
 
 Status: implemented
 

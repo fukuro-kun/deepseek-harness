@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-10-remote-event-delivery.md) | 中文
+[English](2026-08-10-remote-event-delivery.md) | 中文 | [Deutsch](2026-08-10-remote-event-delivery.de.md)
 
 ## 问题
 

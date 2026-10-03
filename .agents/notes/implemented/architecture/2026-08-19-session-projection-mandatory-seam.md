@@ -1,4 +1,5 @@
 # Agent Note: Session projections as a required reader seam
+English | [中文](2026-08-19-session-projection-mandatory-seam.zh.md) | [Deutsch](2026-08-19-session-projection-mandatory-seam.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Client Conversation business-node assembly and keyed Chat snapshots
+English | [中文](2026-08-09-client-conversation-node-assembly.zh.md) | [Deutsch](2026-08-09-client-conversation-node-assembly.de.md)
 
 Status: implemented
 

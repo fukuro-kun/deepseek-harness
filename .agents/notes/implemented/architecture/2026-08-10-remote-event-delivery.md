@@ -1,4 +1,5 @@
 # Agent Note: Remote event delivery (`ctx.remote.$on`)
+English | [中文](2026-08-10-remote-event-delivery.zh.md) | [Deutsch](2026-08-10-remote-event-delivery.de.md)
 
 Status: implemented
 

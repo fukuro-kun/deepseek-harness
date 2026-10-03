@@ -1,4 +1,5 @@
 # Agent Note: Client shell layering and dynamic package boundaries
+English | [中文](2026-08-15-client-shells-and-dynamic-packages.zh.md) | [Deutsch](2026-08-15-client-shells-and-dynamic-packages.de.md)
 
 Status: implemented
 

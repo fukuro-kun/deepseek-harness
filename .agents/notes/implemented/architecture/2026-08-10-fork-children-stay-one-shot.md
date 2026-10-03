@@ -1,4 +1,5 @@
 # Agent Note: Forked children preserve the parent request prefix
+English | [中文](2026-08-10-fork-children-stay-one-shot.zh.md) | [Deutsch](2026-08-10-fork-children-stay-one-shot.de.md)
 
 Status: implemented
 

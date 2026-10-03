@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-18-session-history-and-event-transport.md) | 中文
+[English](2026-08-18-session-history-and-event-transport.md) | 中文 | [Deutsch](2026-08-18-session-history-and-event-transport.de.md)
 
 ## 问题
 

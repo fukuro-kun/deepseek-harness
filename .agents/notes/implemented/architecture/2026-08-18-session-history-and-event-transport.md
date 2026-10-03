@@ -1,4 +1,5 @@
 # Agent Note: Session history, control state, and Remote event transport
+English | [中文](2026-08-18-session-history-and-event-transport.zh.md) | [Deutsch](2026-08-18-session-history-and-event-transport.de.md)
 
 Status: implemented
 

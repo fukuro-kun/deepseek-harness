@@ -1,4 +1,5 @@
 # Agent Note: Publish Agent Teams under experimental package names
+English | [中文](2026-08-18-experimental-agent-teams-packages.zh.md) | [Deutsch](2026-08-18-experimental-agent-teams-packages.de.md)
 
 Status: implemented
 

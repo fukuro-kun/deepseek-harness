@@ -1,4 +1,5 @@
 # Agent Note: Credential records and authorization flows
+English | [中文](2026-08-13-credential-records-and-authorization-flows.zh.md) | [Deutsch](2026-08-13-credential-records-and-authorization-flows.de.md)
 
 Status: implemented
 

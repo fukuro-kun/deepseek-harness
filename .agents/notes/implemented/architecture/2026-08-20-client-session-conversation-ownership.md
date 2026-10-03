@@ -1,4 +1,5 @@
 # Agent Note: Client Session, Conversation, and UI ownership layers
+English | [中文](2026-08-20-client-session-conversation-ownership.zh.md) | [Deutsch](2026-08-20-client-session-conversation-ownership.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Session log versioning — one integer, an upgrade chain, and a per-event ignorable marker
+English | [中文](2026-08-10-session-log-version-mechanism.zh.md) | [Deutsch](2026-08-10-session-log-version-mechanism.de.md)
 
 Status: implemented
 

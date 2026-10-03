@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-08-18-experimental-agent-teams-packages.md) | 中文
+[English](2026-08-18-experimental-agent-teams-packages.md) | 中文 | [Deutsch](2026-08-18-experimental-agent-teams-packages.de.md)
 
 ## 问题
 
