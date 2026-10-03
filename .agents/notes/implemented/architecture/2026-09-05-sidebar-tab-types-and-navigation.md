@@ -1,4 +1,5 @@
 # Agent Note: Right Sidebar tab types and navigation
+English | [中文](2026-09-05-sidebar-tab-types-and-navigation.zh.md) | [Deutsch](2026-09-05-sidebar-tab-types-and-navigation.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Embedded Assistant stream consumers read compact records
+English | [中文](2026-09-06-embedded-stream-record-readers.zh.md) | [Deutsch](2026-09-06-embedded-stream-record-readers.de.md)
 
 Status: implemented
 

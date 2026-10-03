@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-06-v3-canonical-session-envelopes.md) | 中文
+[English](2026-09-06-v3-canonical-session-envelopes.md) | 中文 | [Deutsch](2026-09-06-v3-canonical-session-envelopes.de.md)
 
 ## 问题
 

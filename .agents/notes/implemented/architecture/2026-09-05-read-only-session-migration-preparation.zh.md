@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-05-read-only-session-migration-preparation.md) | 中文
+[English](2026-09-05-read-only-session-migration-preparation.md) | 中文 | [Deutsch](2026-09-05-read-only-session-migration-preparation.de.md)
 
 ## 问题
 

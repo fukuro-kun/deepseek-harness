@@ -1,4 +1,5 @@
 # Agent Note: Document preview and file addresses
+English | [中文](2026-09-08-document-preview-operations.zh.md) | [Deutsch](2026-09-08-document-preview-operations.de.md)
 
 Status: implemented
 

@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-06-embedded-stream-record-readers.md) | 中文
+[English](2026-09-06-embedded-stream-record-readers.md) | 中文 | [Deutsch](2026-09-06-embedded-stream-record-readers.de.md)
 
 ## 问题
 

@@ -1,4 +1,5 @@
 # Agent Note: Workspace file service
+English | [中文](2026-09-05-workspace-files-service.zh.md) | [Deutsch](2026-09-05-workspace-files-service.de.md)
 
 Status: implemented
 

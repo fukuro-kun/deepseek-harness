@@ -1,4 +1,5 @@
 # Agent Note: Canonical V3 Session event envelopes
+English | [中文](2026-09-06-v3-canonical-session-envelopes.zh.md) | [Deutsch](2026-09-06-v3-canonical-session-envelopes.de.md)
 
 Status: implemented
 

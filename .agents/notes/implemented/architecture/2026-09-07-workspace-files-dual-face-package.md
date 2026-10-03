@@ -1,4 +1,5 @@
 # Agent Note: Workspace files as one dual-face API package
+English | [中文](2026-09-07-workspace-files-dual-face-package.zh.md) | [Deutsch](2026-09-07-workspace-files-dual-face-package.de.md)
 
 Status: implemented
 

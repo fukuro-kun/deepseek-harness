@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-09-08-document-preview-operations.md) | 中文
+[English](2026-09-08-document-preview-operations.md) | 中文 | [Deutsch](2026-09-08-document-preview-operations.de.md)
 
 ## 问题
 

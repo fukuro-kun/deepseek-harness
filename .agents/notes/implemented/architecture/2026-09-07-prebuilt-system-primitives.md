@@ -1,4 +1,5 @@
 # Agent Note: Prebuilt system primitives
+English | [中文](2026-09-07-prebuilt-system-primitives.zh.md) | [Deutsch](2026-09-07-prebuilt-system-primitives.de.md)
 
 Status: implemented
 
