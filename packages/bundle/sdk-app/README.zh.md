@@ -5,7 +5,7 @@ kind: "package-bundle"
 
 # `@deepseek-ai/dsh-sdk-app`
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

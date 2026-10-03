@@ -4,7 +4,7 @@ kind: "package-reference"
 ---
 # Settings Controller
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](README.de.md)
 
 ## 概述
 

@@ -3,8 +3,8 @@ description: "Host Remote owner for settings and credential configuration surfac
 kind: "package-reference"
 ---
 # Settings Controller
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 
