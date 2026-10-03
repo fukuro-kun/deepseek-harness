@@ -1,4 +1,5 @@
 # Agent Note: Cooperative tool cancellation at the registry boundary
+English | [中文](2026-07-19-cooperative-tool-cancellation.zh.md) | [Deutsch](2026-07-19-cooperative-tool-cancellation.de.md)
 
 Status: implemented
 

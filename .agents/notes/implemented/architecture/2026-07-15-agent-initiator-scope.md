@@ -1,4 +1,5 @@
 # Agent Note: Initiating Agent scope over AsyncLocalStorage
+English | [中文](2026-07-15-agent-initiator-scope.zh.md) | [Deutsch](2026-07-15-agent-initiator-scope.de.md)
 
 Status: implemented
 

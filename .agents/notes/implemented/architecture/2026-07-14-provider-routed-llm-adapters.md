@@ -1,4 +1,5 @@
 # Agent Note: Provider-routed LLM adapters and a generic pi-ai backend
+English | [中文](2026-07-14-provider-routed-llm-adapters.zh.md) | [Deutsch](2026-07-14-provider-routed-llm-adapters.de.md)
 
 Status: implemented
 

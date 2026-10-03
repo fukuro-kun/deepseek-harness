@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-20-canonical-tool-output-contract.md) | 中文
+[English](2026-07-20-canonical-tool-output-contract.md) | 中文 | [Deutsch](2026-07-20-canonical-tool-output-contract.de.md)
 
 ## 问题
 

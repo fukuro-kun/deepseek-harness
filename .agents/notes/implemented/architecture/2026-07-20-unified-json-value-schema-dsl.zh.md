@@ -2,7 +2,7 @@
 
 Status: implemented
 
-[English](2026-07-20-unified-json-value-schema-dsl.md) | 中文
+[English](2026-07-20-unified-json-value-schema-dsl.md) | 中文 | [Deutsch](2026-07-20-unified-json-value-schema-dsl.de.md)
 
 ## 问题
 

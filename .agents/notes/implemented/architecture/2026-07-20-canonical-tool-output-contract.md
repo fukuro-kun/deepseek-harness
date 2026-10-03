@@ -1,4 +1,5 @@
 # Agent Note: Canonical tool output contract
+English | [中文](2026-07-20-canonical-tool-output-contract.zh.md) | [Deutsch](2026-07-20-canonical-tool-output-contract.de.md)
 
 Status: implemented
 

@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-15-agent-initiator-scope.md
-2026-07-15-agent-initiator-scope.md: ab11da116a463cd706418e797eb58f1bc4ab9b1c
-2026-07-15-agent-initiator-scope.zh.md: 343acba5f99379b6d2c3af41368e8fbe90b20611
+2026-07-15-agent-initiator-scope.md: eca9969d81b80c5adb9787966d3d58497bc7dee4
+2026-07-15-agent-initiator-scope.zh.md: 375bf2e03e74037cda367c8025536ae408d7d210
+2026-07-15-agent-initiator-scope.de.md: 76ff843627c610fd6826efde39c09304e1edda77

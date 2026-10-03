@@ -1,4 +1,5 @@
 # Agent Note: The slot system standard — single register, four props shares, and the framework store seat
+English | [中文](2026-07-22-slot-type-chain-implementation.zh.md) | [Deutsch](2026-07-22-slot-type-chain-implementation.de.md)
 
 Status: implemented
 

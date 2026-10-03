@@ -1,4 +1,5 @@
 # Agent Note: Meaningful package invariant contracts
+English | [中文](2026-07-19-package-invariant-runtime-contracts.zh.md) | [Deutsch](2026-07-19-package-invariant-runtime-contracts.de.md)
 
 Status: implemented
 

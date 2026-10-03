@@ -1,4 +1,5 @@
 # Agent Note: Unified JSON-value schema DSL
+English | [中文](2026-07-20-unified-json-value-schema-dsl.zh.md) | [Deutsch](2026-07-20-unified-json-value-schema-dsl.de.md)
 
 Status: implemented
 

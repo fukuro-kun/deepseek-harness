@@ -1,4 +1,5 @@
 # Agent Note: Routed model context and compaction policy
+English | [中文](2026-07-20-routed-model-context-and-compaction-policy.zh.md) | [Deutsch](2026-07-20-routed-model-context-and-compaction-policy.de.md)
 
 Status: implemented
 

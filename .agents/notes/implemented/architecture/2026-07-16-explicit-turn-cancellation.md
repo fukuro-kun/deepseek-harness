@@ -1,4 +1,5 @@
 # Agent Note: Explicit turn cancellation capability
+English | [中文](2026-07-16-explicit-turn-cancellation.zh.md) | [Deutsch](2026-07-16-explicit-turn-cancellation.de.md)
 
 Status: implemented
 

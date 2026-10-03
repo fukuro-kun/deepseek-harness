@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-14-provider-routed-llm-adapters.md
-2026-07-14-provider-routed-llm-adapters.md: 1001b10e18837399b41578658ffe62065e294ba8
-2026-07-14-provider-routed-llm-adapters.zh.md: c5bff0ef407c8a2c22e8cad7e7d32c58c8b0e2da
+2026-07-14-provider-routed-llm-adapters.md: b370ae935d775ee7886c6adb3033e539ff43fe22
+2026-07-14-provider-routed-llm-adapters.zh.md: 5d1b9c318a16628204399dcd116916db990f90b4
+2026-07-14-provider-routed-llm-adapters.de.md: 4fcd35c04fd297e085bed574c3c1cc41abc02906

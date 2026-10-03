@@ -1,4 +1,5 @@
 # Agent Note: Web client architecture — the client cordis plugin tree, the slot system, and the React-free object layer
+English | [中文](2026-07-19-gui-web-client-architecture.zh.md) | [Deutsch](2026-07-19-gui-web-client-architecture.de.md)
 
 Status: implemented
 
