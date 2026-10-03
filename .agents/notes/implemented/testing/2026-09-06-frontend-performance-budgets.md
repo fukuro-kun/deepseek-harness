@@ -1,4 +1,5 @@
 # Agent Note: Frontend large-session performance budgets
+English | [中文](.agents/notes/implemented/testing/2026-09-06-frontend-performance-budgets.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-06-frontend-performance-budgets.de.md)
 
 Status: implemented
 

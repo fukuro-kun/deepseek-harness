@@ -1,4 +1,5 @@
 # Agent Note: Session-log snapshot corpus
+English | [中文](.agents/notes/implemented/testing/2026-08-24-session-log-snapshot-corpus.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-08-24-session-log-snapshot-corpus.de.md)
 
 Status: implemented
 

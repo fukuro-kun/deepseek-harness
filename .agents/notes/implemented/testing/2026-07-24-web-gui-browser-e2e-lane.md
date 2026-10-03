@@ -1,4 +1,5 @@
 # Agent Note: Keyless browser e2e lane for the web GUI
+English | [中文](.agents/notes/implemented/testing/2026-07-24-web-gui-browser-e2e-lane.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-07-24-web-gui-browser-e2e-lane.de.md)
 
 Status: implemented
 

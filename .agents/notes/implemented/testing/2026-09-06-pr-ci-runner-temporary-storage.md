@@ -1,4 +1,5 @@
 # Agent Note: runner-owned temporary storage for PR CI
+English | [中文](.agents/notes/implemented/testing/2026-09-06-pr-ci-runner-temporary-storage.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-09-06-pr-ci-runner-temporary-storage.de.md)
 
 Status: implemented
 

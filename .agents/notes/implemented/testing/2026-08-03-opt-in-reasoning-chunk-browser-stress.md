@@ -1,4 +1,5 @@
 # Agent Note: Frame-coalesced reasoning-chunk publication and browser stress validation
+English | [中文](.agents/notes/implemented/testing/2026-08-03-opt-in-reasoning-chunk-browser-stress.zh.md) | [Deutsch](.agents/notes/implemented/testing/2026-08-03-opt-in-reasoning-chunk-browser-stress.de.md)
 
 Status: implemented
 

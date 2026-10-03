@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-08-23-installed-python-wheel-black-box-ci.md
-2026-08-23-installed-python-wheel-black-box-ci.md: 8821b93d0d1c5a32c7dbd97f67d78f7559769791
+2026-08-23-installed-python-wheel-black-box-ci.md: 7abdb12e2a33436883fb94d2fbece59edbb663ac
 2026-08-23-installed-python-wheel-black-box-ci.zh.md: 05972560816193ff0b93323e6dcbea3ad5020215
+2026-08-23-installed-python-wheel-black-box-ci.de.md: df655732d55cf6543f0b8a5c1f97199b1c7339f9
