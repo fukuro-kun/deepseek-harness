@@ -1,4 +1,5 @@
 # Cookbook: adding a workspace package
+English | [中文](docs/cookbook/adding-a-package.zh.md) | [Deutsch](docs/cookbook/adding-a-package.de.md)
 
 English | [中文](adding-a-package.zh.md)
 

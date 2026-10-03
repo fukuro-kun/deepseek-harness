@@ -1,4 +1,5 @@
 # Package and install a plugin
+English | [中文](docs/user/develop/basic/publish.zh.md) | [Deutsch](docs/user/develop/basic/publish.de.md)
 
 English | [中文](publish.zh.md)
 

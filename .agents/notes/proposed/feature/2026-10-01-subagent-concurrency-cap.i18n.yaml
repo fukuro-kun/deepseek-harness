@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/feature/2026-10-01-subagent-concurrency-cap.md
-2026-10-01-subagent-concurrency-cap.md: 31ed5307a311168bedaa8b9e874b98ca9b7e6662
-2026-10-01-subagent-concurrency-cap.zh.md: b8dfc206a6aa3a02f64f527e14e9d2b3c293f8c2
+2026-10-01-subagent-concurrency-cap.md: 9e3b2aa3ab016170d610163c9d11fba41c229e45
+2026-10-01-subagent-concurrency-cap.zh.md: ba5d669f3e1888846261a89330edba6fc6ae9264
+2026-10-01-subagent-concurrency-cap.de.md: 53dcc7c7cdb8e730453fe8da95bdf6bf55d1ca09

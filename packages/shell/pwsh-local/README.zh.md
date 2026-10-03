@@ -5,7 +5,7 @@ kind: "package-reference"
 
 # @deepseek-ai/dsh-pwsh-local
 
-[English](README.md) | 中文
+[English](README.md) | 中文 | [Deutsch](packages/shell/pwsh-local/README.de.md)
 
 ## 概述
 

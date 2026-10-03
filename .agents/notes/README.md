@@ -1,4 +1,5 @@
 # Agent Notes
+English | [中文](.agents/notes/README.zh.md) | [Deutsch](.agents/notes/README.de.md)
 
 English | [中文](README.zh.md)
 

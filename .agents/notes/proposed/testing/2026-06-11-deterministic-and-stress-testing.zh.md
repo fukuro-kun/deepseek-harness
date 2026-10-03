@@ -2,7 +2,7 @@
 
 Status: proposed
 
-[English](2026-06-11-deterministic-and-stress-testing.md) | 中文
+[English](2026-06-11-deterministic-and-stress-testing.md) | 中文 | [Deutsch](.agents/notes/proposed/testing/2026-06-11-deterministic-and-stress-testing.de.md)
 
 [CI 测试可靠性 Skill](../../../skills/dsh-ci-test-reliability/SKILL.md) 提供当前的测试编写与诊断指引，但没有实现本提案中的 lint 规则、通用回放 fixture 或 nightly stress job。这些机制仍处于提案状态。
 

@@ -2,6 +2,7 @@
      Run `pnpm run gen-doc-graphs` to regenerate. -->
 
 # Capability Seams And Core Services
+English | [中文](docs/capability-seams.zh.md) | [Deutsch](docs/capability-seams.de.md)
 
 A service can be a core spine service, a swappable capability seam, or a bundle/composition point. The graph shows the package that owns the service declaration, known implementation packages, and packages that consume the service directly.
 

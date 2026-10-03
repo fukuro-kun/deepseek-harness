@@ -1,6 +1,6 @@
 # 在网络代理后面运行 DSH
 
-[English](network-proxy.md) | 中文
+[English](network-proxy.md) | 中文 | [Deutsch](docs/user/guide/network-proxy.de.md)
 
 DSH 会把自身的出站请求——模型调用、web 搜索、页面抓取、走 HTTP 的 MCP 服务器——都经由标准代理环境变量所指定的代理发出。它在启动时读取这些变量，不需要其他配置。有几条路径出于设计或运行时限制保持直连，下文"哪些保持直连"一节列出了它们。
 

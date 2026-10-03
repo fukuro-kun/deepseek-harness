@@ -1,4 +1,5 @@
 # Agent Note: Task Surface for structured session interaction
+English | [中文](.agents/notes/proposed/feature/2026-08-04-task-surface.zh.md) | [Deutsch](.agents/notes/proposed/feature/2026-08-04-task-surface.de.md)
 
 Status: proposed
 

@@ -1,4 +1,5 @@
 # Agent Note: Deterministic tests, the replay invariant fixture, and race stress
+English | [中文](.agents/notes/proposed/testing/2026-06-11-deterministic-and-stress-testing.zh.md) | [Deutsch](.agents/notes/proposed/testing/2026-06-11-deterministic-and-stress-testing.de.md)
 
 Status: proposed
 

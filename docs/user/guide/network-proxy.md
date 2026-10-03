@@ -1,4 +1,5 @@
 # Run DSH behind a network proxy
+English | [中文](docs/user/guide/network-proxy.zh.md) | [Deutsch](docs/user/guide/network-proxy.de.md)
 
 English | [中文](network-proxy.zh.md)
 

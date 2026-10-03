@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/bug-fix/2026-08-20-attachment-read-quarantine.md
-2026-08-20-attachment-read-quarantine.md: 28e0f26cee2ec1e257fd4d43b4edc4300e2c6f23
-2026-08-20-attachment-read-quarantine.zh.md: 7f4ceae4e1fe9e656ed762de9828e14145976dc3
+2026-08-20-attachment-read-quarantine.md: 889ce98624ee69c63dca3c1d78db39d437d114af
+2026-08-20-attachment-read-quarantine.zh.md: 4d67b3b2ba5ef67cb68f31993385c0f857e592fd
+2026-08-20-attachment-read-quarantine.de.md: b4eec3e9f411fa836dbad8f377552cecaadfcbc4

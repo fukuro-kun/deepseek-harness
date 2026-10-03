@@ -1,4 +1,5 @@
 # Maintaining the dsh-code-review skill
+English | [中文](docs/cookbook/maintaining-dsh-code-review.zh.md) | [Deutsch](docs/cookbook/maintaining-dsh-code-review.de.md)
 
 English | [中文](maintaining-dsh-code-review.zh.md)
 

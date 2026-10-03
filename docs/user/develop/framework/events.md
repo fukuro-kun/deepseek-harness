@@ -1,4 +1,5 @@
 # Event system
+English | [中文](docs/user/develop/framework/events.zh.md) | [Deutsch](docs/user/develop/framework/events.de.md)
 
 English | [中文](events.zh.md)
 

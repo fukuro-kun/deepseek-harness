@@ -1,4 +1,5 @@
 # Schedule session-local reminders
+English | [中文](docs/user/guide/schedule.zh.md) | [Deutsch](docs/user/guide/schedule.de.md)
 
 English | [中文](schedule.zh.md)
 

@@ -1,4 +1,5 @@
 # Agent Note: Mutation testing as the coverage counterweight
+English | [中文](.agents/notes/proposed/testing/2026-06-11-mutation-testing.zh.md) | [Deutsch](.agents/notes/proposed/testing/2026-06-11-mutation-testing.de.md)
 
 Status: proposed
 

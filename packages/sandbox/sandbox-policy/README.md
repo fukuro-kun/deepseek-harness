@@ -4,6 +4,7 @@ kind: "package-reference"
 ---
 
 # @deepseek-ai/dsh-sandbox-policy
+English | [中文](packages/sandbox/sandbox-policy/README.zh.md) | [Deutsch](packages/sandbox/sandbox-policy/README.de.md)
 
 English | [中文](README.zh.md)
 

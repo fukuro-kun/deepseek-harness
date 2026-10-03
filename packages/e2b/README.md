@@ -4,6 +4,7 @@ kind: "package-group"
 ---
 
 # packages/e2b
+English | [中文](packages/e2b/README.zh.md) | [Deutsch](packages/e2b/README.de.md)
 
 English | [中文](README.zh.md)
 
