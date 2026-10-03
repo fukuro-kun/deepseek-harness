@@ -46,15 +46,25 @@ Wähle es, wenn du Volltext-Recall über frühere Sessions mit Ranking und Pagin
 ```
 
 | Feld | Default | Bedeutung |
+
 |---|---|---|
+
 | `path` | erforderlich | Dedizierter SQLite-Pfad des abgeleiteten Index oder `:memory:`; fehlende Pfade werden auf POSIX nur für den Eigentümer erstellt |
+
 | `openAt` | `startup` | `startup` öffnet bei Aktivierung; `first-search` verschiebt das SQLite-Modul bis zur ersten Suche; `never` deaktiviert die Volltextsuche, während geerbte Reads verfügbar bleiben |
+
 | `journalMode` | `wal` | `wal`, `delete`, `truncate` oder `persist` |
+
 | `defaultLimit` | `20` | Seitengröße, wenn ein Request `limit` auslässt |
+
 | `maxLimit` | `100` | Größte akzeptierte Seitengröße eines Requests |
+
 | `snippetChars` | `240` | Maximale Snippet-Länge in Unicode-Codepoints |
+
 | `readWindowMax` | `50` | Maximale `before`/`after`-Rohereignisse für das geerbte `readEvent()` |
+
 | `persistedReadConcurrency` | `4` | Gleichzeitige Reads persistierter Logs für geerbte Batch-Reads |
+
 | `preparedSessionCacheSize` | `5` | Kalte prepared-Session-Beobachtungen, die der geerbte `observeSession`-Reader zur Wiederverwendung behält |
 
 Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-session-query-sqlite) ist die erschöpfende Quelle für jedes akzeptierte Feld und sein JSDoc.
@@ -99,10 +109,15 @@ Die Design-Historie liegt in der [SQLite-FTS5-Session-Search-Note](../../../.age
 ### Quellkarte
 
 | Datei | Rolle |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | Service: Config, openAt-Lifecycle, serialisierte Reconciliation, Query-Ausführung, Cursor |
+
 | [`src/query.ts`](src/query.ts) | Request-Normalisierung, parametrisierte Prädikate, Snippets, Prädikat- und Binding-Budgets |
+
 | [`src/schema.ts`](src/schema.ts) | Datenbank-Schema, Application-ID-Eigentum, In-Place-Reset, Datei-Erstellung nur für den Eigentümer |
+
 | — | Es wird kein Runtime-Invarianten-Companion veröffentlicht; Reconciliation, Cursor-Generationen und abgeleitetes Index-Eigentum werden an jeder serialisierten Query-Grenze validiert. |
 
 ### Index-Lifecycle

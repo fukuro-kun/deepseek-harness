@@ -2,7 +2,6 @@
      Run `pnpm run gen-cordis-catalog` to regenerate. -->
 
 # Fiber
-English | [中文](fiber.zh.md) | [Deutsch](fiber.de.md)
 
 A fiber is one loaded plugin instance: its lifecycle state, validated config, and registered effects. `ctx.fiber` is the current fiber, and `ctx.effect()` delegates to it.
 

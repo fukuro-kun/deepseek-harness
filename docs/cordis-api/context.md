@@ -2,7 +2,6 @@
      Run `pnpm run gen-cordis-catalog` to regenerate. -->
 
 # Context
-English | [中文](context.zh.md) | [Deutsch](context.de.md)
 
 The context is the core Cordis object: every service, event, and lifecycle API is reached through `ctx`. Event methods are documented on [Events](events.md), effects and the current fiber on [Fiber](fiber.md), and plugin loading on [Registry](registry.md).
 

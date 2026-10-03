@@ -106,10 +106,15 @@ Dieser Abschnitt erklärt die Designentscheidungen hinter dem Service und zeigt 
 ### Quellkarte
 
 | Datei | Rolle |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | Service Definition: Namespace-Validierung, Registrierung, Auflösung, Write-Queue, describe/Redaction, Events, `installSection` |
+
 | [`src/redact.ts`](src/redact.ts) | `redactSecrets`-Walker: `role('secret')`-Felder entfernen und ihre Slots enumerieren |
+
 | [`src/types.ts`](src/types.ts) | Client-sichere Type-Surface: Event-Deklarationen, `SettingsNamespace`, `SettingsUpdateSource` |
+
 | [`src/invariant.ts`](src/invariant.ts) | Invariant-Companion: `settings/updated` feuert nur für einen registrierten Namespace, nur bei einer Änderung des aufgelösten Werts, mit dem maßgeblichen Wert |
 
 ### Auflösungs- und Write-Pfade

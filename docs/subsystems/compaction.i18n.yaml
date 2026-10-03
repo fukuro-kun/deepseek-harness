@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/compaction.md
 compaction.md: ec69406e0ef633920ea1d9d847132dd61c317f64
-compaction.zh.md: 16c6e7f212dbef702070106c77dd07356e414a39
+compaction.zh.md: cff81461a16a9780ec65324927344a01ed16a89a
 compaction.de.md: 4f5f9c01d1aea7889e0d0112b129896269f138e1

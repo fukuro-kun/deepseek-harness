@@ -22,8 +22,11 @@ boot 组提供每个 dsh app bin 启动所需的全部能力：`app-boot` 把 `c
 ## 包
 
 | 包 | 职责 | ctx 键 |
+
 |---|---|---|
+
 | [`app-boot`](app-boot/README.zh.md) | 从 `cordis.yml` 启动 dsh 应用：加载 `.env`、应用 profile 与 patch 层，并清晰报告启动失败 | （供各 bin 使用的库） |
+
 | [`cmdline`](cmdline/README.zh.md) | 让应用持有自己的 flag、`--help` 与退出码；启动器自身 flag 之后的一切原样传入 | `cmdlineArgs`、`appExit` |
 
 <a id="related-documentation"></a>

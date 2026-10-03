@@ -864,7 +864,7 @@ Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnp
 
 ### `ctx.deepseekLlmApiExtensions` — `DeepSeekLlmApiExtensionRegistry`
 
-Registry unabhängig geführter Top-Level-Felder für offizielle DeepSeek-Requests.
+Registry of independently owned top-level fields for official DeepSeek requests.
 
 ```ts cordis-catalog
 /**
@@ -891,7 +891,7 @@ Source: [`packages/llm/deepseek-llm-api-extensions/src/index.ts`](../../packages
 
 ### `ctx.llm` — `LlmRuntime`
 
-Der abstrakte `llm`-Service: eine Adapter-Registry plus eine Streaming-Modell-Call-API, abfangbar über das `llm/stream`-Waterfall.
+The abstract `llm` service: an adapter registry plus a streaming model-call API, interceptable via the `llm/stream` waterfall.
 
 ```ts cordis-catalog
 /**
@@ -1053,7 +1053,7 @@ Source: [`packages/llm/llm/src/index.ts`](../../packages/llm/llm/src/index.ts)
 
 #### `llm/adapters-updated` — emit
 
-Die Provider-Topologie hat sich geändert: ein Adapter hat Routen registriert oder deregistriert, oder das Configurable-Provider-Verzeichnis hat Einträge hinzugewonnen oder verloren. Diese payload-freie Registry-Benachrichtigung feuert an jedem Commit-Punkt (einschließlich Registrierungs-Disposal); Consumer lesen `listProviders()`, `listModels()` oder `listConfigurableProviders()` für den neuen State neu. Observer-Fehler sind enthalten und können die Registry-Mutation nicht vetoieren.
+The provider topology changed: an adapter registered or unregistered routes, or the configurable-provider directory gained or lost entries. This payload-free registry notification fires at each commit point (including registration disposal); consumers re-read `listProviders()`, `listModels()`, or `listConfigurableProviders()` for the new state. Observer failures are contained and cannot veto the registry mutation.
 
 ```ts cordis-catalog
 /**
@@ -1074,7 +1074,7 @@ Source: [`packages/llm/llm/src/types.ts`](../../packages/llm/llm/src/types.ts)
 
 #### `llm/stream` — waterfall
 
-Waterfall um jeden Streaming-Modell-Call (Retry, Replay, Routing). Gebunden an das LlmRuntime; `next()` aufrufen, um zum Stream des aufgelösten Adapters zu gelangen, oder eigene Chunks yielden, um kurzuschließen.
+Waterfall around every streaming model call (retry, replay, routing). Bound to the LlmRuntime; call `next()` to reach the resolved adapter's stream, or yield your own chunks to short-circuit.
 
 ```ts cordis-catalog
 /**

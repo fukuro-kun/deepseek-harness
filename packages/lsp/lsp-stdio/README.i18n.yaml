@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/lsp/lsp-stdio/README.md
 README.md: 0a66b545a39772b5e5e09de623d7f0d8b6cef0e7
-README.zh.md: 593623d8af0fe2f4121e70c2c7654de8a8c3d2e8
-README.de.md: fa8474d8d51ccaa10bfb43b0ee11af79fdba58cb
+README.zh.md: 8c3e68047ec901e7b889502d9a2fbe0003f2c2c2
+README.de.md: 851f033569569ed600212ac614e5aebfe172da69

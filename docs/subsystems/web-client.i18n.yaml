@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/web-client.md
 web-client.md: 998bd97650a22553813779cd89c106a35ebed908
-web-client.zh.md: c0e7c73191d106f5dc99b5d9802ce0abc0ff5afa
+web-client.zh.md: 6fbb30ec411f53120c504d80feafe64c9ed8ae56
 web-client.de.md: c02565d8813e3887f4eafea5d5abc7e5a83b9700

@@ -2,10 +2,8 @@
      Run `pnpm run gen-cordis-catalog` to regenerate. -->
 
 # Registry
-English | [中文](registry.zh.md) | [Deutsch](registry.de.md)
 
 Plugin loading and dependency injection.
-
 
 ### ctx.inject(deps, callback)
 

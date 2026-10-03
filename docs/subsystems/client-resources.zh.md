@@ -11,7 +11,6 @@
 资源地址是 `dsh-resource://<type>/…` 形式的 URL。host 命名协议，必须是 `ResourceProtocolMap` 的键；路径归协议自己，由其拥有者逐段做百分号编码。需要作用域的协议把作用域放进路径：`file` 协议的地址形如 `dsh-resource://file/session/<sessionId>/<path>`，其中 path 可以相对工作区根，也可以是保留前导斜杠的绝对路径，用 [`dsh-util-workspace-path`](../../packages/util/workspace-path/README.zh.md) 的 `fileAddressFor(sessionId, cwd, path)` 构造、`parseFileAddress(address)` 读回。模型本身只读 scheme 与 host：`protocolOf(address)` 对 `dsh-resource://` URL 返回小写 host，对其它任何字串返回 `undefined`。其它 scheme 下的地址——Sidebar 的 `sidebar://guide`——不指向资源，读作 `none`。
 
 | 地址 | 协议键 | 读作 |
-
 |---|---|---|
 | `dsh-resource://file/session/s1/notes/a.md` | `file` | 会话 `s1` 工作区根下 `notes/a.md` 的元数据（`file` 提供方已注册时） |
 | `dsh-resource://file/absolute/home/me/notes.md` | `file` | 可解析，但没有授权 Session，以 `workspace-file/unknown-workspace` 失败；不借用当前或 Tab Session |

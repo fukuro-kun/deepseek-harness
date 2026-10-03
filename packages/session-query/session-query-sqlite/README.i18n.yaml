@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/session-query/session-query-sqlite/README.md
 README.md: 27c0d3919b0b42d07d8f00f42563f926d27b7969
-README.zh.md: d675bee0d31d4d8a28a66e8d65f0e3e2fb2a62cd
-README.de.md: f2cb06878657ae698a40fa8c6c2f0212ed30bd8b
+README.zh.md: 2966a1241e8cbb7d1b98be6923fcdfebfd9b43a4
+README.de.md: 55abb0d023b4dd645013c348be2837b6ccc19ebb

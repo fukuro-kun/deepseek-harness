@@ -60,17 +60,29 @@ Der `servers`-Record bildet jede stabile Provider-ID auf ein Server-Kommando ab.
 ```
 
 | Feld | Default | Bedeutung |
+
 |---|---|---|
+
 | `command` | erforderlich | Zu spawnendes Executable — absolut oder beim Laden auf dem PATH des Childs aufgelöst; ohne Shell gestartet |
+
 | `extensionToLanguage` | erforderlich | Kleingeschriebene Extension mit führendem Punkt → LSP-Language-ID (z. B. `{ '.ts': 'typescript' }`) |
+
 | `args` | `[]` | Argumente, die an das Executable übergeben werden |
+
 | `env` | `{}` | Zusätzliches Env, gemergt über das credential-bereinigte Umgebungs-Env; Variablen, die `KEY`/`PASSWORD`/`SECRET`/`TOKEN` matchen, und alle `DSH_*`-Namen werden nicht weitergeleitet |
+
 | `initializationOptions` | `null` | Statische `initialize`-Optionen, die an den Server weitergeleitet werden |
+
 | `configuration` | `null` | Statische Antwort auf jedes `workspace/configuration`-Item |
+
 | `maxMessageBytes` | `16000000` | Größte einzelne geframete Nachricht, die vom Server akzeptiert wird |
+
 | `maxStderrBytes` | `1000000` | Größter stderr-Tail, der für Diagnostik behalten wird |
+
 | `maxDocumentBytes` | `4000000` | Größte Quelldatei, die dieser Host öffnet |
+
 | `shutdownTimeoutMs` | `5000` | Budget für graceful `shutdown`/`exit` vor der Eskalation |
+
 | `killGraceMs` | `2000` | Grace-Zeit für Request-Cancel und SIGTERM→SIGKILL-Eskalation |
 
 `servers` muss mindestens einen Eintrag mit nicht-leeren IDs enthalten; Timer-Budgets müssen positive Integer innerhalb von Nodes Timer-Bereich sein, und Byte-Caps müssen positiv sein. Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-lsp-stdio) ist die erschöpfende Quelle für jedes akzeptierte Feld.
@@ -110,15 +122,25 @@ Dieser Abschnitt erklärt die Designentscheidungen hinter dem Provider und wo de
 ### Quellkarte
 
 | Datei | Rolle |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | Plugin-Eintritt: Config-Schema, Executable-Auflösung, Provider-Registrierung, Prozess-Pooling |
+
 | [`src/host.ts`](src/host.ts) | Workspace-Kanonisierung und begrenzte Source-Reads über `ctx.fs` |
+
 | [`src/instance.ts`](src/instance.ts) | Ein Server-Prozess: Initialize-Handshake, serialisierte Transient-Open-Queries, begrenztes Teardown |
+
 | [`src/connection.ts`](src/connection.ts) | JSON-RPC-Endpoint: ID-Korrelation, ausgehende Requests, eingehende Server-Requests, stderr-Cap |
+
 | [`src/framing.ts`](src/framing.ts) | `Content-Length`-Framing und ein begrenzter Decoder |
+
 | [`src/protocol.ts`](src/protocol.ts) | Wire-Type-Teilmenge: Capabilities, Locations, Hover, Text-Dokument-Synchronisation |
+
 | [`src/translate.ts`](src/translate.ts) | Capability-Checks, UTF-16-Negotiation, `Location`/`LocationLink`/Hover-Normalisierung |
+
 | [`src/abort.ts`](src/abort.ts) | Cancellation-Helfer, die Caller- und Disposal-Signale verschmelzen |
+
 | — | Es wird kein Runtime-Invarianten-Companion veröffentlicht; Prozess-Pools und Pro-Workspace-Queues sind privater Implementierungszustand, und dieser Provider veröffentlicht keinen eigenständigen Lifecycle-Event-Stream oder enumerierbaren Snapshot. |
 
 ### Protokollverhalten

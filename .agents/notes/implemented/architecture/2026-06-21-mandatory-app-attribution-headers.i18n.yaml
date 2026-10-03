@@ -4,4 +4,4 @@
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-21-mandatory-app-attribution-headers.md
 2026-06-21-mandatory-app-attribution-headers.md: 5cba896b6d9400d6e777e6d2c0941647a8dc4579
 2026-06-21-mandatory-app-attribution-headers.zh.md: 9aebc304d4a19e26c9fe727cf14087096cf1705d
-2026-06-21-mandatory-app-attribution-headers.de.md: 32d1bcfb1bb2c5c7e983f2f02fec5116e3758555
+2026-06-21-mandatory-app-attribution-headers.de.md: 295bd3026879b5ec1264245fc8100be289f78c05

@@ -61,17 +61,29 @@ kind: "package-reference"
 ```
 
 | 字段 | 默认值 | 含义 |
+
 |---|---|---|
+
 | `command` | 必填 | 要 spawn 的可执行文件——绝对路径，或在加载时从子进程 PATH 解析；不使用 shell 启动 |
+
 | `extensionToLanguage` | 必填 | 小写、以点开头的扩展名 → LSP language id（例如 `{ '.ts': 'typescript' }`） |
+
 | `args` | `[]` | 传给可执行文件的参数 |
+
 | `env` | `{}` | 合并到已清理 credential 的环境之上的额外 env；匹配 `KEY`／`PASSWORD`／`SECRET`／`TOKEN` 的变量以及所有 `DSH_*` 名称不会被转发 |
+
 | `initializationOptions` | `null` | 转发给服务器的静态 `initialize` 选项 |
+
 | `configuration` | `null` | 每个 `workspace/configuration` 配置项的静态答案 |
+
 | `maxMessageBytes` | `16000000` | 从服务器接受的单条 framed 消息最大大小 |
+
 | `maxStderrBytes` | `1000000` | 为诊断保留的 stderr 尾部最大大小 |
+
 | `maxDocumentBytes` | `4000000` | 该主机可打开的源文件大小上限 |
+
 | `shutdownTimeoutMs` | `5000` | 升级前用于优雅 `shutdown`／`exit` 的预算 |
+
 | `killGraceMs` | `2000` | 请求取消及 SIGTERM→SIGKILL 升级的宽限期 |
 
 `servers` 必须至少包含一个配置项，每个 id 都必须非空；定时器预算必须是 Node 定时器范围内的正整数，字节上限必须为正。生成的[配置目录](../../../docs/config-catalog.zh.md#deepseek-aidsh-lsp-stdio)是每个受支持字段的穷尽式真源。
@@ -111,15 +123,25 @@ kind: "package-reference"
 ### 源码地图
 
 | 文件 | 职责 |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | 插件入口：config schema、可执行文件解析、提供方注册、进程池 |
+
 | [`src/host.ts`](src/host.ts) | 通过 `ctx.fs` 完成工作区规范化与有边界的源读取 |
+
 | [`src/instance.ts`](src/instance.ts) | 单个服务器进程：initialize 握手、串行化临时打开查询、有边界的释放 |
+
 | [`src/connection.ts`](src/connection.ts) | JSON-RPC 端点：id 关联、出站请求、入站服务器请求、stderr 上限 |
+
 | [`src/framing.ts`](src/framing.ts) | `Content-Length` 分帧与有边界的解码器 |
+
 | [`src/protocol.ts`](src/protocol.ts) | 协议类型子集：能力、位置、悬停、文本文档同步 |
+
 | [`src/translate.ts`](src/translate.ts) | 能力检查、UTF-16 协商、`Location`／`LocationLink`／hover 规范化 |
+
 | [`src/abort.ts`](src/abort.ts) | 融合调用方与释放信号的取消辅助 |
+
 | — | 不发布运行时不变式伴生入口；进程池与队列是私有状态。 |
 
 ### 协议行为

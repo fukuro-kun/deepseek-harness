@@ -21,8 +21,11 @@ Die boot-Gruppe stellt bereit, was jeder dsh-App-Bin zum Starten braucht: `app-b
 ## Pakete
 
 | Paket | Rolle | ctx-Schlüssel |
+
 |---|---|---|
+
 | [`app-boot`](app-boot/README.de.md) | Startet eine dsh-App aus einem `cordis.yml`: lädt `.env`, wendet Profile- und Patch-Layer an und meldet Startfehler klar | (Bibliothek für die Bins) |
+
 | [`cmdline`](cmdline/README.de.md) | Lässt die App ihre Flags, `--help` und den Exit-Code besitzen; reicht alles nach den Flags des Launchers unverändert durch | `cmdlineArgs`, `appExit` |
 
 <a id="related-documentation"></a>

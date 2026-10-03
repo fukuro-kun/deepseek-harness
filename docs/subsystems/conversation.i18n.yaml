@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/conversation.md
 conversation.md: cbc38f810f384fb02d8be36fcb0f32295a5b551a
-conversation.zh.md: f3ed95a5d370145dbd074ac5cf48fc73b578653e
+conversation.zh.md: 8ecb51f9c8733f0af05054655d0754161b34289a
 conversation.de.md: 25cd6f4363a762eb1453fcf8f58fb420e389ffcf

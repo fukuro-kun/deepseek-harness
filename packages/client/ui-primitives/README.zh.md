@@ -36,26 +36,47 @@ kind: "package-library"
 在功能包里写控件之前，先查这张表。插件无法 import 另一个插件的组件，因此本包是控件唯一可以共享的地方：合适的就复用，有意的视觉差异提升成 prop，而不是另起一份拷贝。
 
 | 导出 | 是什么 |
+
 |---|---|
+
 | `Button` | 可点击操作；`variant` 选择 `primary`、`ghost`、`outline` 或 `toolbar`。 |
+
 | `Switch` | 36×20 的双态开关。`label` 必填，控件不可能在没有名称的情况下发布。 |
+
 | `Input` | 单行文本输入，用于搜索框与行内表单。 |
+
 | `Menu` | 由条目、分隔线与分组标题构成的下拉菜单，支持嵌套子菜单。 |
+
 | `Pill` | 可选中的胶囊按钮，用于视图切换与筛选器；接受 `active` 与 `onClick`。 |
+
 | `Tag` | 只读胶囊徽章；`tone` 选择八种配色之一。 |
+
 | `StateDot` | 状态标记：`done`、`warning`、`ongoing`、`error` 或 `idle`。它是 `aria-hidden` 的，名称由渲染点提供。 |
+
 | `ConnectionIndicator` | 行内连接恢复控件，覆盖断线、重试与已恢复三种状态。 |
+
 | `DisclosureRow` | 24px 紧凑折叠行，标题与内容左右排列。 |
+
 | `Modal` | 页面遮罩之上的居中对话框。 |
+
 | `RiskConfirmation` | 以显式复选框把关的敏感操作确认。 |
+
 | `OnboardingSurface` | 首次运行的引导舞台，期间保持应用根节点 inert。 |
+
 | `Tooltip` | 克隆锚点上的悬停文本，可置于右、下、上三个方向。 |
+
 | `HoverCard` | 指针可停留、可选中的悬停预览；可选带复制按钮。 |
+
 | `Toast` | 顶部居中的瞬时横幅，保持时长由所有者的 `holdMs` 决定。 |
+
 | `JsonTree`、`JsonBlock` | 只读 JSON 查看。 |
+
 | `MarkdownText`、`CodeBlock` | 不可信 GFM 与 TeX 数学，以及高亮代码。`CodeBlock` 可通过 `lineNumbers` 开启行号；复制的源码不含行号栏，`contentRef` 则向需要把稳定源码包装节点用作滚动区的 owner 提供该节点。 |
+
 | `TerminalBlock`、`ReadBlock`、`DiffBlock`、`SearchBlock`、`WebBlock` | 与各类工具结果意图对应的 agent 输出卡片。 |
+
 | `icons/*`、`FishLogo`、`BrandWordmark`、`ReferenceIcon`、`LinkIcon` | 字形与品牌标识。`LinkIcon` 用于 14px 的可点击链接分类。 |
+
 | `FileTypeIcon`、`classifyFileType`、`fileExtension` | 按类别着色的 28px 文件或文件夹图形，以及它背后共享的不区分大小写文件名映射。代码与配置文件使用细分的全彩技术图形；链接前置图形使用 `LinkIcon`，图片内容使用图片预览。 |
 
 有三组容易混淆：
@@ -92,13 +113,21 @@ kind: "package-library"
 ### 源码地图
 
 | 文件 | 职责 |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | 原子组件公开导出 |
+
 | [`src/markdown/`](src/markdown/) | Markdown 与数学公式流水线：micromark 解析、KaTeX 排版、增量流式渲染器、`CodeBlock`/`JsonBlock` |
+
 | [`src/TerminalBlock.tsx`](src/TerminalBlock.tsx) | ANSI 转义解析（`anser`）与终端卡片渲染 |
+
 | [`src/ReadBlock.tsx`](src/ReadBlock.tsx) / [`src/DiffBlock.tsx`](src/DiffBlock.tsx) | 读取与差异卡片 |
+
 | [`src/SearchBlock.tsx`](src/SearchBlock.tsx) / [`src/WebBlock.tsx`](src/WebBlock.tsx) | 搜索与网页检索卡片 |
+
 | [`src/icons/`](src/icons/) | `ic_ds_*` 字形组件与品牌标记 |
+
 | [`src/useAnchoredPosition.ts`](src/useAnchoredPosition.ts) / [`src/useAnchoredMaxHeight.ts`](src/useAnchoredMaxHeight.ts) | 浮动面板与浮层几何钩子 |
 
 ### 流式 markdown

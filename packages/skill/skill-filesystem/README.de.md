@@ -44,11 +44,17 @@ Katalog und Body haben getrennte Lifecycles: Discovery parsed Frontmatter in den
 Default-Roots werden in der Rank-Reihenfolge dieses Providers gescannt:
 
 | Rank | Quelle | Pfad |
+
 |---|---|---|
+
 | 100 | `project-dsh` | `<projectRoot>/.dsh/skills` |
+
 | 200 | `project-agents` | `<projectRoot>/.agents/skills` |
+
 | 300 | `custom` | `Config.customSkillDirs` |
+
 | 400 | `user-dsh` | `<dshHome>/skills` |
+
 | 500 | `user-agents` | `<agentsHome>/skills` |
 
 Der Projekt-Root ist der nächste Vorfahren, der `.git` enthält; ohne einen solchen wird das aktuelle cwd verwendet. Der User-DSH-Root überspringt sein `.system`-Kind. `includeDefaultRoots: false` lässt die Projekt- und User-Zeilen plus den `$DSH_BUNDLED_SKILL_DIR`-Default weg, sodass ein isolierter Provider nur seine eigenen konfigurierten Roots sieht; `bundledSkillDir` fügt einen Bundled-Root auf Rank 600 hinzu.
@@ -66,13 +72,21 @@ Lade das Plugin zusammen mit der Skill-Registry; es benötigt `ctx.skills`.
 ```
 
 | Feld | Default | Bedeutung |
+
 |---|---|---|
+
 | `providerName` | `filesystem` | Eindeutiger Provider-Name, registriert auf `ctx.skills` |
+
 | `includeDefaultRoots` | `true` | Projekt- und User-Roots um `customSkillDirs` herum einbeziehen |
+
 | `dshHome` | `$DSH_HOME` oder `~/.dsh` | Harness-Config-Root; dessen `skills`-Unterverzeichnis wird gescannt |
+
 | `agentsHome` | `$DSH_AGENTS_HOME` oder `~/.agents` | Geteilter Agent-Config-Root, der nach kompatiblen Skills gescannt wird |
+
 | `customSkillDirs` | `[]` | Zusätzliche lokale Skill-Roots, nach Projekt-Roots und vor User-Roots |
+
 | `watch` | `true` | Lokale Roots beobachten und den Provider invalidieren, wenn sich der Katalog geändert haben könnte |
+
 | `bundledSkillDir` | — | Bundled-Skill-Root, der bei Konfiguration auf Rank 600 gescannt wird |
 
 Die übrigen `watch*`-Felder tunen das Chokidar-Verhalten — Polling, Stabilitätsfenster, Intervall, Projekt-Cap und Symlink-Following. Der generierte [Konfigurationskatalog](../../../docs/config-catalog.de.md#deepseek-aidsh-skill-filesystem) ist die erschöpfende Quelle für jedes Feld.
@@ -102,8 +116,11 @@ Der Provider steht auf zwei Trennungen. Erstens Katalog versus Body: Discovery p
 ### Quellkarte
 
 | Datei | Rolle |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | Plugin-Eintritt, Provider, Root-Auflösung, Frontmatter-Parsing, Watch-Manager |
+
 | — | Es wird kein Runtime-Invarianten-Companion veröffentlicht; dieses Paket exponiert keine eigenständige Event-Sequenz oder mutable Datenrelation über die Contracts hinaus, die an seinem besitzenden Seam durchgesetzt werden. |
 
 ### Discovery-Ablauf

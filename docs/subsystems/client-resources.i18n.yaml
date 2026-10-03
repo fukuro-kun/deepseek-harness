@@ -3,5 +3,5 @@
 # authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/client-resources.md
 client-resources.md: 99416749f710bbc978eb3a9559d27f29cfe3c789
-client-resources.zh.md: 8d3f130bed47147606d7b9a24a4ac4cf4d3fb44c
+client-resources.zh.md: 51956480c5ac60d42f910227568aedc82f92b91b
 client-resources.de.md: c957f346bd643d11c2dc6618016b8b4f3f9323b7

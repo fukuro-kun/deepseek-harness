@@ -688,13 +688,13 @@ Die Backends, die diesen Vertrag konsumieren, stehen auf [persistence.md](persis
 
 ## Cordis API
 
-Von `scripts/gen-cordis-catalog.ts` aus dem Quellcode generiert (frischheit-geprüft durch `pnpm run verify-cordis-catalog` in doc-sync; regenerieren mit `pnpm run gen-cordis-catalog`) — die Sprachseiten unterscheiden sich nur in den lokalspezifischen gepaarten Dokumentenpfaden. Signaturblöcke verwenden ein `ts cordis-catalog`-Fence und behalten die originalen Quell-JSDoc; Dispatch-Modi sind in der [Einleitung](../cordis-primer.de.md#dispatch-modes) definiert, und die framework-geerbte `ctx`-API steht in [cordis-api/inherited.md](../cordis-api/inherited.md).
+Generated from source by `scripts/gen-cordis-catalog.ts` (verified fresh by `pnpm run verify-cordis-catalog` in doc-sync; regenerate with `pnpm run gen-cordis-catalog`) — the language sides differ only in locale-specific paired document paths. Signature blocks use a `ts cordis-catalog` fence and keep the original source JSDoc; dispatch modes are defined in the [primer](../cordis-primer.de.md#dispatch-modes), and the framework-inherited `ctx` API lives in [cordis-api/inherited.md](../cordis-api/inherited.md).
 
 <a id="ctxsessioncontroller--sessioncontroller"></a>
 
 ### `ctx.sessionController` — `SessionController`
 
-Host-Dienst, der den generierten `ctx.remote.session`-Namespace trägt.
+Host service backing the generated `ctx.remote.session` namespace.
 
 ```ts cordis-catalog
 /**
@@ -837,17 +837,17 @@ workspaceDesktop(): { name: string; available: boolean; fileManager: 'finder' | 
 @Remote({ mode: 'stream' }) control(signal: AbortSignal): AsyncIterable<SessionControlFrame>
 ```
 
-Typen: [SessionId](core.de.md) · [SessionInspection](persistence.de.md) · [SessionSearchRequest](session-query.de.md)
+Types: [SessionId](core.de.md) · [SessionInspection](persistence.de.md) · [SessionSearchRequest](session-query.de.md)
 
-Quellcode: [`packages/api/session-controller/src/index.ts`](../../packages/api/session-controller/src/index.ts)
+Source: [`packages/api/session-controller/src/index.ts`](../../packages/api/session-controller/src/index.ts)
 
 <a id="ctxsessions--sessionstore"></a>
 
 ### `ctx.sessions` — `SessionStore`
 
-In-memory-Session-Store (`ctx.sessions`).
+In-memory session store (`ctx.sessions`).
 
-Persistence ist hier bewusst nicht implementiert — der Agent-Lifecycle hängt einen Session-Log-Schreiber an jedes veröffentlichte Session-Schreib-Handle; eine außerhalb dieses Lifestyles veröffentlichte Session persistiert nichts.
+Persistence is intentionally not implemented here — the agent lifecycle attaches a session-log writer to each published session's write handle; a session published outside that lifecycle persists nothing.
 
 ```ts cordis-catalog
 /**
@@ -972,9 +972,9 @@ list(): Session[]
 fork(source: SessionForkSource, boundary?: SessionSeq, childSessionId?: SessionId): Session
 ```
 
-Typen: [CreateSessionOptions](persistence.de.md) · [PrepareSessionOptions](persistence.de.md) · [SessionId](core.de.md)
+Types: [CreateSessionOptions](persistence.de.md) · [PrepareSessionOptions](persistence.de.md) · [SessionId](core.de.md)
 
-Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="api-session-events"></a>
 
@@ -984,7 +984,7 @@ Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/sr
 
 #### `api-session/activity` — emit
 
-Eine nutzer-autorendurable Nachricht hat die Session-Listen-Aktivität vorangebracht.
+One user-authored durable message advanced Session list activity.
 
 ```ts cordis-catalog
 /**
@@ -996,15 +996,15 @@ Eine nutzer-autorendurable Nachricht hat die Session-Listen-Aktivität vorangebr
 'api-session/activity'(sessionId: SessionId, updatedAt: number): void
 ```
 
-Typen: [SessionId](core.de.md)
+Types: [SessionId](core.de.md)
 
-Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionadded--emit"></a>
 
 #### `api-session/added` — emit
 
-Eine Session wurde für Session-Listen-Konsumenten sichtbar.
+A Session became visible to Session list consumers.
 
 ```ts cordis-catalog
 /**
@@ -1015,13 +1015,13 @@ Eine Session wurde für Session-Listen-Konsumenten sichtbar.
 'api-session/added'(summary: SessionSummary): void
 ```
 
-Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionerror--emit"></a>
 
 #### `api-session/error` — emit
 
-Ein Agent ist außerhalb einer dauerhaften Turn-Position fehlgeschlagen.
+One Agent failed outside a durable turn position.
 
 ```ts cordis-catalog
 /**
@@ -1033,15 +1033,15 @@ Ein Agent ist außerhalb einer dauerhaften Turn-Position fehlgeschlagen.
 'api-session/error'(sessionId: SessionId, message: string): void
 ```
 
-Typen: [SessionId](core.de.md)
+Types: [SessionId](core.de.md)
 
-Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionremoved--emit"></a>
 
 #### `api-session/removed` — emit
 
-Eine Session verließ das Live-Host-Register.
+A Session left the live Host registry.
 
 ```ts cordis-catalog
 /**
@@ -1052,15 +1052,15 @@ Eine Session verließ das Live-Host-Register.
 'api-session/removed'(sessionId: SessionId): void
 ```
 
-Typen: [SessionId](core.de.md)
+Types: [SessionId](core.de.md)
 
-Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="api-sessionstatus--emit"></a>
 
 #### `api-session/status` — emit
 
-Ein Agent hat seinen Laufzustand geändert.
+One Agent changed running state.
 
 ```ts cordis-catalog
 /**
@@ -1072,9 +1072,9 @@ Ein Agent hat seinen Laufzustand geändert.
 'api-session/status'(sessionId: SessionId, running: boolean): void
 ```
 
-Typen: [SessionId](core.de.md)
+Types: [SessionId](core.de.md)
 
-Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
+Source: [`packages/api/session-controller/src/types.ts`](../../packages/api/session-controller/src/types.ts)
 
 <a id="session-events"></a>
 
@@ -1084,7 +1084,7 @@ Quellcode: [`packages/api/session-controller/src/types.ts`](../../packages/api/s
 
 #### `session/created` — emit
 
-Erstellungs-Ankündigung während der Session-Veröffentlichung. Ein synchroner Wurf vetoes und rollt mit einer gepaarten Entsorgung zurück; ein während der Dispatch angeforderter Detach wird aufgeschoben. Eine zurückgegebene Promise-Ablehnung wird protokolliert, kann diese synchrone Grenze aber nicht rückwirkend vetieren. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`): agent-scope Listener erhalten nur Sessions, die durch den Kontext dieses Agents eintreten.
+Creation announcement during session publication. A synchronous throw vetoes and rolls back with a paired disposal; detach requested during dispatch is deferred. A returned-promise rejection is logged but cannot retroactively veto this synchronous boundary. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`): agent-scoped listeners receive only sessions entered through that agent's context.
 
 ```ts cordis-catalog
 /**
@@ -1101,15 +1101,15 @@ Erstellungs-Ankündigung während der Session-Veröffentlichung. Ein synchroner 
 'session/created'(this: Scoped<Session>, session: Session): void
 ```
 
-Typen: [Scoped](scope.de.md)
+Types: [Scoped](scope.de.md)
 
-Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="sessiondisposed--emit"></a>
 
 #### `session/disposed` — emit
 
-Wird einmal emittiert, wenn eine angekündigte Session den Store verlässt, einschließlich Veröffentlichungs-rollback, aber nie für einen Eintrag, dessen Erstellungs-Ankündigung nicht begann. Listener-Fehler werden protokolliert und eingedämmt. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`) wiederverwendet den Besitzer-Scope.
+Emitted once when an announced session leaves the store, including publication rollback, but never for an entry whose creation announcement did not begin. Listener failures are logged and contained. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`) reuses the owner scope.
 
 ```ts cordis-catalog
 /**
@@ -1124,15 +1124,15 @@ Wird einmal emittiert, wenn eine angekündigte Session den Store verlässt, eins
 'session/disposed'(this: Scoped<Session>, session: Session): void
 ```
 
-Typen: [Scoped](scope.de.md)
+Types: [Scoped](scope.de.md)
 
-Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="sessionevent--emit"></a>
 
 #### `session/event` — emit
 
-Post-Commit, Fire-and-Forget-Append-Feed. Der Listener-Snapshot wird vor dem Log-Push aufgelöst, aber Callbacks laufen danach; Observer-Fehler werden protokolliert und eingedämmt, ohne den committeten Append zu versagen. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`): agent-scope Listener erhalten nur Ereignisse von Sessions, die durch den Kontext dieses Agents eintreten.
+Post-commit, fire-and-forget append feed. The listener snapshot resolves before the log push, but callbacks run after it; observer failures are logged and contained without making the committed append fail. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`): agent-scoped listeners receive only events from sessions entered through that agent's context.
 
 ```ts cordis-catalog
 /**
@@ -1149,15 +1149,15 @@ Post-Commit, Fire-and-Forget-Append-Feed. Der Listener-Snapshot wird vor dem Log
 'session/event'(this: Scoped<Session>, session: Session, event: SessionEvent): void
 ```
 
-Typen: [Scoped](scope.de.md)
+Types: [Scoped](scope.de.md)
 
-Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 
 <a id="sessionflush--parallel"></a>
 
 #### `session/flush` — parallel
 
-Gewarteter paralleler Dauerhaftigkeits-Checkpoint: Jeder Listener läuft und der Aufrufer wartet auf alle, ohne Wasserfall-Veto. Scope-gefilterter Dispatch (`@deepseek-ai/dsh-scope`) wiederverwendet den Besitzer-Scope der Session.
+Awaited parallel durability checkpoint: every listener runs and the caller awaits all of them, with no waterfall veto. Scope-filtered dispatch (`@deepseek-ai/dsh-scope`) reuses the session's owner scope.
 
 ```ts cordis-catalog
 /**
@@ -1171,7 +1171,7 @@ Gewarteter paralleler Dauerhaftigkeits-Checkpoint: Jeder Listener läuft und der
 'session/flush'(this: Scoped<Session>, session: Session): Promise<void> | void
 ```
 
-Typen: [Scoped](scope.de.md)
+Types: [Scoped](scope.de.md)
 
-Quellcode: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
+Source: [`packages/core/session/src/index.ts`](../../packages/core/session/src/index.ts)
 <!-- END GENERATED cordis-surface -->

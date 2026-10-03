@@ -6,7 +6,6 @@ The extensions subsystem lets an agent define versioned Cordis packages, run the
 
 <!-- BEGIN GENERATED cordis-surface (gen-cordis-catalog.ts) — do not edit between markers -->
 
-
 <a id="cordis-surface"></a>
 
 ## Cordis API

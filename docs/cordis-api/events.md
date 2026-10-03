@@ -2,7 +2,6 @@
      Run `pnpm run gen-cordis-catalog` to regenerate. -->
 
 # Events
-English | [中文](events.zh.md) | [Deutsch](events.de.md)
 
 The event-dispatch API mixed into every context. Harness event declarations and their dispatch modes are generated into each owning [subsystem page](../subsystems/core.md).
 

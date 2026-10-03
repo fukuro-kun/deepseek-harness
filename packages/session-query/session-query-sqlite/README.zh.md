@@ -47,15 +47,25 @@ kind: "package-reference"
 ```
 
 | 字段 | 默认值 | 含义 |
+
 |---|---|---|
+
 | `path` | 必填 | 专用派生索引 SQLite 路径，或 `:memory:`；POSIX 上缺失的路径会以仅所有者可访问的方式创建 |
+
 | `openAt` | `startup` | `startup` 在激活时打开；`first-search` 把 SQLite 模块推迟到首次搜索；`never` 关闭全文搜索，继承的读取保持可用 |
+
 | `journalMode` | `wal` | `wal`、`delete`、`truncate` 或 `persist` |
+
 | `defaultLimit` | `20` | 请求省略 `limit` 时的分页大小 |
+
 | `maxLimit` | `100` | 接受的最大请求分页大小 |
+
 | `snippetChars` | `240` | 按 Unicode 码点计算的最大 snippet 长度 |
+
 | `readWindowMax` | `50` | 继承的 `readEvent()` 的 `before`/`after` 原始事件数上限 |
+
 | `persistedReadConcurrency` | `4` | 继承批量读取的并发持久化日志读取数 |
+
 | `preparedSessionCacheSize` | `5` | 继承的 `observeSession` 读取器为复用保留的冷 prepared-Session 观察数 |
 
 生成的[配置目录](../../../docs/config-catalog.zh.md#deepseek-aidsh-session-query-sqlite)是每个受支持字段及其 JSDoc 的穷尽式真源。
@@ -100,10 +110,15 @@ kind: "package-reference"
 ### 源码地图
 
 | 文件 | 职责 |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | 服务：配置、openAt 生命周期、串行化对账、查询执行、游标 |
+
 | [`src/query.ts`](src/query.ts) | 请求规范化、参数化谓词、摘录、谓词与绑定预算 |
+
 | [`src/schema.ts`](src/schema.ts) | 数据库 schema、application id 归属、原地重置、仅所有者文件创建 |
+
 | — | 不发布运行时不变式伴生入口；边界在每次串行化查询时校验。 |
 
 ### 索引生命周期

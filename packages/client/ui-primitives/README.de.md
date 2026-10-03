@@ -35,26 +35,47 @@ Komponiere Feature-UI aus diesen Atoms, wann immer der Web-Client ein Standard-C
 Prüfe diese Tabelle, bevor du ein Control in einem Feature-Paket schreibst. Ein Plugin kann keine Komponente eines anderen Plugins importieren, also ist dieses Paket der einzige Ort, an dem ein Control geteilt werden kann: nutze wieder, was passt, und hebe einen bewussten visuellen Unterschied in ein Prop, statt eine zweite Kopie anzulegen.
 
 | Export | Was es ist |
+
 |---|---|
+
 | `Button` | Klickbare Aktion; `variant` wählt `primary`, `ghost`, `outline` oder `toolbar`. |
+
 | `Switch` | Zweistelliger Toggle, 36×20. `label` ist erforderlich, sodass das Control nicht unbenannt ausgeliefert werden kann. |
+
 | `Input` | Einzeilige Texteingabe für Search-Boxen und Inline-Forms. |
+
 | `Menu` | Dropdown aus Items, Separatoren und Gruppen-Labels, mit verschachtelten Submenüs. |
+
 | `Pill` | Wählbarer Capsule-Button für View-Switcher und Filter; nimmt `active` und `onClick`. |
+
 | `Tag` | Read-only-Capsule-Badge; `tone` wählt eine von acht Paletten. |
+
 | `StateDot` | Status-Markierung: `done`, `warning`, `ongoing`, `error` oder `idle`. `aria-hidden`, sodass die Render-Stelle den Namen besitzt. |
+
 | `ConnectionIndicator` | Inline-Connection-Recovery-Control über die Zustände Ausfall, Retry und Recovered. |
+
 | `DisclosureRow` | 24px-kompakte Disclosure, die Titel und Content nebeneinander anordnet. |
+
 | `Modal` | Zentrierter Dialog über einer Page-Mask. |
+
 | `RiskConfirmation` | Sensitive Aktion hinter einer expliziten Checkbox. |
+
 | `OnboardingSurface` | First-run-Bühne, die den Application-Root inert hält. |
+
 | `Tooltip` | Hover-Text auf einem geklonten Anchor, platziert rechts, unten oder oben. |
+
 | `HoverCard` | Hover-Preview, auf dem der Pointer ruhen und aus der er auswählen kann; optionaler Copy-Button. |
+
 | `Toast` | Transienter Top-Center-Banner, gehalten für die `holdMs` des Owners. |
+
 | `JsonTree`, `JsonBlock` | Read-only-JSON-Inspektion. |
+
 | `MarkdownText`, `CodeBlock` | Unvertrauenswürdiges GFM mit TeX-Mathe sowie highlighted Code. `CodeBlock` akzeptiert opt-in `lineNumbers`; kopierte Quelle schließt den Gutter aus, und `contentRef` exponiert seinen stabilen Source-Wrapper an einen Owner, der ihn als Scrollport verwendet. |
+
 | `TerminalBlock`, `ReadBlock`, `DiffBlock`, `SearchBlock`, `WebBlock` | Die Agent-Output-Card passend zu jeder Tool-Result-Intent. |
+
 | `icons/*`, `FishLogo`, `BrandWordmark`, `ReferenceIcon`, `LinkIcon` | Glyphen und Brand-Marks. `LinkIcon` für 14px-Clickable-Link-Kategorien verwenden. |
+
 | `FileTypeIcon`, `classifyFileType`, `fileExtension` | Eine kategorien-gefärbte 28px-Datei- oder Ordner-Glyphe und das geteilte case-insensitive Dateinamen-Mapping dahinter. Code- und Konfigurationsdateien nutzen detaillierte vollfarbige Technologie-Glyphen; für link-führende Glyphen `LinkIcon` und für Bild-Content Bild-Previews verwenden. |
 
 Drei Paare sind leicht zu verwechseln:
@@ -91,13 +112,21 @@ Das Paket ist eine Trennung: präsentationale React-Atoms mit zero Cordis und ze
 ### Quellkarte
 
 | Datei | Rolle |
+
 |---|---|
+
 | [`src/index.ts`](src/index.ts) | Öffentliche Atom-Exports |
+
 | [`src/markdown/`](src/markdown/) | Markdown- und Mathe-Pipeline: micromark-Parsing, KaTeX-Typesetting, inkrementeller Streaming-Renderer, `CodeBlock`/`JsonBlock` |
+
 | [`src/TerminalBlock.tsx`](src/TerminalBlock.tsx) | ANSI-Escape-Parsing (`anser`) und Terminal-Card-Rendering |
+
 | [`src/ReadBlock.tsx`](src/ReadBlock.tsx) / [`src/DiffBlock.tsx`](src/DiffBlock.tsx) | Read- und Diff-Cards |
+
 | [`src/SearchBlock.tsx`](src/SearchBlock.tsx) / [`src/WebBlock.tsx`](src/WebBlock.tsx) | Search- und Web-Retrieval-Cards |
+
 | [`src/icons/`](src/icons/) | `ic_ds_*`-Glyph-Komponenten und Brand-Marks |
+
 | [`src/useAnchoredPosition.ts`](src/useAnchoredPosition.ts) / [`src/useAnchoredMaxHeight.ts`](src/useAnchoredMaxHeight.ts) | Floating-Panel- und Overlay-Geometrie-Hooks |
 
 ### Streaming-Markdown
