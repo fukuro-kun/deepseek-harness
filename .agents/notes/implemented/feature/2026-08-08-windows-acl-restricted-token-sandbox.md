@@ -1,4 +1,5 @@
 # Agent Note: Windows sandbox rung: raw ACL restricted tokens over mxc and AppContainer
+English | [中文](.agents/notes/implemented/feature/2026-08-08-windows-acl-restricted-token-sandbox.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-08-windows-acl-restricted-token-sandbox.de.md)
 
 Status: implemented
 

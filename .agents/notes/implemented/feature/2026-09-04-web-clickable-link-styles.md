@@ -1,4 +1,5 @@
 # Agent Note: Web clickable-link language — link alias, dotted hover underline, category glyphs
+English | [中文](.agents/notes/implemented/feature/2026-09-04-web-clickable-link-styles.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-04-web-clickable-link-styles.de.md)
 
 Status: implemented
 

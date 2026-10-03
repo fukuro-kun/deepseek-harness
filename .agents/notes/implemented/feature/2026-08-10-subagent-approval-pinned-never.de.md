@@ -1,0 +1,34 @@
+# Agent Note: Delegierte subagents laufen mit auf `'never'` fixierten Approvals
+
+Status: implemented
+
+[English](2026-08-10-subagent-approval-pinned-never.md) | [中文](2026-08-10-subagent-approval-pinned-never.zh.md) | Deutsch
+
+## Problem
+
+Ein delegiertes Kind, das um Approval bat, hatte niemanden zum Fragen. Unter einem interaktiven Elternteil (`'ask'`) wurde die Eskalation eines Hintergrund-Kindes zu einer ausstehenden Frage, die keine Produkt-Oberfläche zeigte — subagent-Sessions fehlen in der Web-Sidebar, das `list_agents` des Elternteils meldet nur schlichtes `running`/`idle`, und die Katalogzeilen zeigen nur Aktivität —, sodass ein permissions-blockiertes Kind von einem arbeitenden nicht zu unterscheiden war; headless und answerer-lose Kompositionen ließen denselben ask als `'unavailable'` geschlossen fehlschlagen. Der Ablehnungs-Audit landete nur im eigenen Log des Kindes, und kein Tool-Parameter oder Web-Control kann Sandbox-Modus oder Approval-Policy einer laufenden Kind-Session anpassen (Issue #1723). Der mechanismusschwere Fix — eine durable Blocked-State-Projektion, Eltern-Benachrichtigungen, Katalog-Badges und ein Permission-Write-Path durch den subagent-Ownership-Fence — war unmittelbar vor dem Release unverhältnismäßig.
+
+## Entscheidung
+
+Ein delegiertes Kind handelt nur innerhalb des bei der Delegation fixierten Permission-Scopes, und Approval-Prompts werden vollständig aus seiner Welt entfernt: `captureDelegatedPolicyOverrides(parent)` (`dsh-subagent/src/child-agent.ts`) snapshotet weiterhin das explizite Sandbox-Override der Eltern-Session, fixiert aber `approvalPolicy: 'never'`, sobald die Approval-Capability komponiert ist — es liest die eigene Approval-Policy des Elternteils nicht mehr. `appendDelegatedPolicyOverrides()` schreibt den Pin als durable `approval/policy { policy: 'never', source: 'delegation' }`-Event in das Log des Kindes, über dieselben One-Shot- und Continuable-Delegation-Pfade wie das Sandbox-Snapshot, sodass ein kalter Resume ihn replayt und die stale Eltern-Policy eines Fork-Seeds gegen ihn verliert.
+
+Die Durchsetzung ist die bestehende `ApprovalService`-`'never'`-Semantik an der einen Operation, die asks entscheidet: Jeder ask des Kindes — eine `sandbox_permissions`-Eskalation aus bash oder fs, eine hook-getriebene Permission-Frage, jeder künftige Asker — wird deterministisch als `'rejected'` aufgelöst, bevor irgendein Answerer konsultiert wird, und hinterlässt weiterhin das `approval/asked`/`approval/decided`-Audit-Paar im Kind-Log. Die gesamte Permission-Geschichte des Kindes ist damit sein Sandbox-Scope: Ein `danger-full-access`-Elternteil delegiert Kinder, die keine Approvals brauchen, ein `read-only`-Elternteil delegiert Kinder ohne Fluchtweg, und eine Erweiterungsentscheidung gehört immer zur Eltern-Seite (die Eltern-Session erweitern, dann erneut delegieren oder follow-upen).
+
+Jedes In-Process-Kind wird informiert, nicht gefangen: `applyChildComposition` registriert die scoped `subagent:delegation`-Runtime-Context-Aussage (Order 120, nach den `sandbox:policy`- und `approval:policy`-Sätzen), die feststellt, dass der Scope beim Start fixiert wurde, approval-pflichtige Operationen automatisch abgelehnt werden und eine Aufgabe, die weiteren Zugriff braucht, mit einer gemeldeten Beschränkung statt Retries endet. Die Aussage ist ein Runtime-Context-Beitrag, kein System-Prompt-Abschnitt, sodass der System-Prompt des Deployments über Eltern und Kinder hinweg einheitlich bleibt (die Snapshot-Suite fixiert diese Einheitlichkeit) und der Fakt mit denselben durable Snapshots wie die Policy-Sätze reist.
+
+Dies ersetzt die Approval-Hälfte der [In-Process-Delegation-Policy-Entscheidung](2026-07-25-subagent-policy-inheritance.de.md) und kehrt deren Urteil um, dass das Erzwingen von `'never'` einen künftigen Kind-Answerer ausschließe: Die Approval-Vererbung wurde ausgeliefert, produzierte die obigen unsichtbaren Blocked-States, und ein künftiger Kind-Answerer erfordert jetzt, zuerst diese Notiz umzukehren.
+
+## Erwogene Alternativen
+
+- **Das Approval-Override des Elternteils erben** (das bisherige Verhalten) — verworfen: Nur ein Elternteil bereits auf `'never'` erzeugte deterministische Kinder; ein interaktives Elternteil seedete Kinder, deren asks auf einen Prompt warteten, den niemand beobachtete, oder als `'unavailable'` geschlossen fehlschlugen, und das Ergebnis hing davon ab, welche Oberflächen gerade angebunden waren.
+- **Blocked-State-Sichtbarkeit und per-Kind-Permission-Anpassung** (die ursprüngliche #1723-Akzeptanz) — vertagt, nicht verworfen: Eine `list_agents`-Blocked-Annotation, Eltern-Benachrichtigungen über die Settlement-Delivery-Seam, Katalog-Badges und ein subagent-gerouteter Permission-Kanal bleiben das reichere Design, aber jedes braucht eigene Seam-Arbeit, und keines ist mehr erforderlich, sobald Kinder keinen blocked-waiting State erreichen können.
+- **Kind-asks an den Eltern-Controller routen** — weiterhin vertagt in der [Approval-Seam-Agent-Note](2026-07-06-approval-seam.de.md): Es braucht Parent-Chain-Ownership und die spawnende `callId`.
+- **Pinning innerhalb von `ApprovalService` nach Session-Ursprung** — verworfen: Es koppelt das Approval-Paket an Delegations-Vokabular und dupliziert eine Entscheidung, die die Delegations-Boundary bereits besitzt; das delegations-geseedete Event ist durchsetzbar, weil kein aktueller Write-Path die Policy einer Kind-Session umschalten kann (das `/permission`-Kommando erfordert generisches Host-Routing, das der subagent-Ownership-Fence Kind-Sessions verweigert).
+
+## Konsequenzen
+
+- Die Sandbox-Vererbung des Kindes ist das vollständige Delegations-Permission-Modell; das Feld `DelegatedPolicyOverrides.approvalPolicy` verengt sich zu `'never' | undefined` (`undefined` nur ohne komponierte Approval-Capability).
+- Modellsichtbar: Jeder Kind-Runtime-Context-Snapshot trägt die `subagent:delegation`-Aussage plus den stehenden Satz zu deaktivierten Approvals; Eltern-Requests bleiben unverändert. Der Executor-Boundary-Test beweist, dass eine Kind-Eskalation abgelehnt wird, ohne einen Root-Answerer zu konsultieren, der sie genehmigt hätte, mit dem Audit-Paar im Log.
+- Grenzen: In-Process-One-Shot-, Continuable- und Workflow-gespawnte Kinder werden über die geteilten Helfer durchgesetzt; `subagent-acp`-Kinder behalten die explizite maschinelle `permission`-Policy jenes Providers; `claude-code`-, `codex`- und `dsh-sdk`-Kinder laufen in externen Prozessen unter ihrer eigenen Komposition.
+- Vor dem Pin persistierte Kinder fallen beim kalten Resume auf den Deployment-Approval-Default zurück; vor dem Release wird keine Migration ergänzt.
+- Snapshot-Fixtures zeichnen den Pin auf: Jedes In-Process-Kind-Log erhält das Delegations-`approval/policy`-Event, und `subagent-published-run-failure` persistiert nun ein Ein-Event-Kind-Log, wo das Kind zuvor keine durable Events hinterließ.

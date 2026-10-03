@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-08-file-display-through-filesystem.md
-2026-09-08-file-display-through-filesystem.md: b1f93f8c9fbd245ad69bc732b2a599c6e0abeb0d
+2026-09-08-file-display-through-filesystem.md: 6bbda4470f1db304045233a18797918d21930f96
 2026-09-08-file-display-through-filesystem.zh.md: faa3fdb757c9a3fc60cae37692a559158e02ceee
+2026-09-08-file-display-through-filesystem.de.md: 4beaf8e01915bd728fa7dddf227cb70f3881e70c

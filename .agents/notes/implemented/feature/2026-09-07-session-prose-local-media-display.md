@@ -1,4 +1,5 @@
 # Agent Note: Session prose local media paths display through a same-origin file route
+English | [中文](.agents/notes/implemented/feature/2026-09-07-session-prose-local-media-display.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-09-07-session-prose-local-media-display.de.md)
 
 Status: implemented
 

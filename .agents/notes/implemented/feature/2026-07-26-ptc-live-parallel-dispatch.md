@@ -1,4 +1,5 @@
 # Agent Note: PTC mode live dispatch lifecycle and native-contract parallelism
+English | [中文](.agents/notes/implemented/feature/2026-07-26-ptc-live-parallel-dispatch.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-26-ptc-live-parallel-dispatch.de.md)
 
 Status: implemented
 

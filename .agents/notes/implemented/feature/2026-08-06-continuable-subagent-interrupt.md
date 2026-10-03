@@ -1,4 +1,5 @@
 # Agent Note: Continuable subagent current-turn interrupt
+English | [中文](.agents/notes/implemented/feature/2026-08-06-continuable-subagent-interrupt.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-06-continuable-subagent-interrupt.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: pwsh tool bash parity
+English | [中文](.agents/notes/implemented/feature/2026-08-02-pwsh-tool-bash-parity.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-02-pwsh-tool-bash-parity.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Delegated subagents run with approvals pinned to `'never'`
+English | [中文](.agents/notes/implemented/feature/2026-08-10-subagent-approval-pinned-never.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-10-subagent-approval-pinned-never.de.md)
 
 Status: implemented
 

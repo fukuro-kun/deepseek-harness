@@ -1,4 +1,5 @@
 # Agent Note: User-authorized subagent model routes
+English | [中文](.agents/notes/implemented/feature/2026-08-24-user-authorized-subagent-model-routes.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-24-user-authorized-subagent-model-routes.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: Minimal profiles use a bare runtime
+English | [中文](.agents/notes/implemented/feature/2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-08-11-minimal-profiles-bare-two-tool-runtime.de.md)
 
 Status: implemented
 

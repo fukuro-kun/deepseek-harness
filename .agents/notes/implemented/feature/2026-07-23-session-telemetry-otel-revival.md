@@ -1,4 +1,5 @@
 # Agent Note: Session telemetry seam with mandatory redaction and the OTel backend
+English | [中文](.agents/notes/implemented/feature/2026-07-23-session-telemetry-otel-revival.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-23-session-telemetry-otel-revival.de.md)
 
 Status: implemented
 

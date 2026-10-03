@@ -1,0 +1,39 @@
+# Agent Note: Standard-Websuche in ausgelieferten Kompositionen
+
+Status: implemented
+
+[English](2026-07-31-web-default-search.md) | [中文](2026-07-31-web-default-search.zh.md) | Deutsch
+
+Der [Shared-Base-Web-Fetch-Default](../../archived/feature/2026-09-01-shared-base-web-fetch-default.md) ersetzt die Fetch-Opt-in-Entscheidung dieses Notes. Dieses Note bleibt maßgeblich für den Standard-Search-Provider, die Credential-Auflösung, den Endpoint, den Timeout und die Trennung zwischen Provider-Verfügbarkeit und Modell-Tool-Registrierung.
+
+## Problem
+
+Der Harness hatte eine vollständige Web-Capability-Familie — Provider-Registry, DeepSeek-/Exa-/Perplexity-Search-Provider, lokalen Fetch, stabile Modell-Tools und strukturierte Ergebnispräsentation —, aber die ausgelieferte `dsh web`-Komposition mountete nichts davon. Das Modell konnte keine aktuellen Informationen entdecken, es sei denn, ein Deployment lieferte ein Custom-Overlay. Das bestehende DeepSeek-Provider nur zu mounten hätte den WebUI-Pfad nicht vervollständigt: Die Models-Seite speichert `DEEPSEEK_API_KEY` über `ctx.credentials`, während der Search-Provider beim Plugin-Laden nur die Prozessumgebung einfror — ein in der laufenden UI eingegebener oder rotierter Key hätte die Suche nicht erreicht.
+
+## Entscheidung
+
+`packages/bundle/base/cordis.patch.yml` mountet explizit `dsh-web` mit `searchProvider: deepseek-official` und `fetchProvider: http`, `dsh-web-search-deepseek`, `dsh-web-fetch-http` und `dsh-tool-web` mit `searchTimeoutMs: 60000`. Der [Shared-Base-Web-Fetch-Default](../../archived/feature/2026-09-01-shared-base-web-fetch-default.md) besitzt das aktuelle `fetch: true`; dieses Note besitzt weiterhin Provider-Auswahl, Search-Credentials und Timeout. Explizite Provider-ids halten die Auswahl unabhängig von der Registrierungsreihenfolge und lassen persönliche oder `--patch`-Overlays die Zeilen ersetzen oder deaktivieren. Das ausgelieferte Ein-Minuten-Budget deckt einen Hilfs-DeepSeek-Messages-Request plus serverseitiges Retrieval ab und lässt `dsh-tool-web`s providerneutralen 30-Sekunden-Default für Custom-Kompositionen unverändert. Die [Web-Capability-Seam-Entscheidung](../architecture/2026-06-24-web-capability-seam.de.md) besitzt die Public-Fetch-Sicherheitspolicy.
+
+Die DeepSeek-Suche nutzt dieselbe `DEEPSEEK_API_KEY`-Credential-Referenz wie der offizielle Konversations-Adapter. Der Provider löst diese Referenz innerhalb jeder Suche über den optionalen `ctx.credentials`-Service auf; nur eine Komposition ohne den seam fällt auf die Umgebung des startenden Prozesses zurück, und ein nichtleeres literales `apiKey` bleibt der programmatische letzte Ausweg. Ein auf der Web-Models-Seite gespeicherter oder rotierter Key erreicht daher die nächste Suche ohne Restart und ohne dass der Provider den Wert zurückbehält. Da `WebSearchProvider.available()` synchron ist, behandelt es einen installierten Resolver als lokal nutzbar; fehlende dynamische Credentials lassen die Operation mit dem providerspezifischen `WEB_PROVIDER_CREDENTIAL_MISSING`-Code fehlschlagen, während das stabile Tool-Schema registriert bleibt.
+
+Die Suche hält ihren Endpoint von Chat-Completions getrennt: `DEEPSEEK_SEARCH_BASE_URL` überschreibt die Anthropic-kompatible Basis, während `DEEPSEEK_BASE_URL` weiterhin Konversations-Requests konfiguriert. Jeder `web_search` führt einen Hilfs-DeepSeek-Messages-Call mit dem nativen Search-Server-Tool aus. Unmittelbar vor dem Dispatch appended der Provider ein log-only `web/deepseek-search-llm-request`-Event an die initiierende Agent-Session mit dem aufgelösten Endpoint, der API-Version und dem exakten geheimnisfreien JSON-Body. Ein Fehler nach dem Dispatch nennt diesen Endpoint und weist das Konversationsmodell an, den Nutzer zum Endpoint-Feld der Websuche in den Settings zu führen, wenn der Endpoint nicht beabsichtigt ist. Die Meldung nennt `DEEPSEEK_SEARCH_BASE_URL` und `web-search-deepseek.baseURL`, wenn diese Settings-Seite nicht verfügbar ist; das Modell wählt oder ändert das Credential-Ziel nicht. Credential-Preflight bleibt providerlokal und rast mit Caller-Cancellation; keines dieser Anliegen erweitert die generischen Web- oder Credentials-seams.
+
+Der Default-Mount erzeugt keine Web-spezifische Permission-Policy. `web_search`- und aktivierte `web_fetch`-Calls laufen außerhalb der Shell-/Filesystem-Sandbox und der Approval-Presets und folgen dem bestehenden Vertrag von `dsh-tool-web`. Der HTTP-Provider beschränkt Fetches auf validierte öffentliche Ziele, begrenzt aber keinen öffentlichen Datenegress. Der ausgelieferte `workspace-write`-Default regelt nur Datei-Mutationen; eine restricted-network-Produkthaltung erfordert eine `tools/pre-execute`-Policy oder capability-spezifische Netzwerk-Confinement, statt zu implizieren, der Filesystem-Access-Mode regle Web-Calls.
+
+## Erwogene Alternativen
+
+**Nur `dsh-tool-web` mounten.** Abgelehnt, weil stabile Schemas ohne registrierte Provider jeden Default-Call fehlschlagen ließen; Enablement und Backend-Verfügbarkeit sind bewusst getrennt, aber ein ausgelieferter Default muss seine beabsichtigten Implementierungen liefern.
+
+**`$DSH_HOME/.env` aus `cordis.yml` lesen oder in `process.env` hoisten.** Abgelehnt, weil der Credential-Provider dieses Dokument besitzt, Umgebungswerte schreibgeschützte Overrides sind und Hoisting gespeicherte Keys unrotierbar machen sowie die auditierte Secret-Grenze umgehen würde.
+
+**`process.env.DEEPSEEK_API_KEY` beim Provider-Laden einfrieren.** Abgelehnt, weil die Web-Models-Seite über `ctx.credentials` schreibt; der dokumentierte First-Run-Pfad des Produkts muss die nächste Operation ohne Restart funktionieren lassen.
+
+**Web-Tools in `web.cordis.yml` behalten.** Abgelehnt, weil das einen unerklärten Tool-Roster-Unterschied zwischen TUI und Web/Headless bewahrt. Die Zeilen sind nicht flächenspezifisch, also ist `base.cordis.yml` ihr einziges Zuhause; der [Tool-Roster-Entscheid](2026-07-31-even-out-shipped-tool-rosters.de.md) hält die geteilte Komposition fest.
+
+**`dsh-tool-web`s providerneutralen Timeout erhöhen.** Abgelehnt, weil Custom-Provider und Deployments unterschiedliche Latenzerwartungen besitzen; die ausgelieferte DeepSeek-Komposition besitzt dieses Deployment-Budget.
+
+**Fetch auf jeder Shared-Base-Fläche aktivieren.** Dieses Note lehnte die Alternative ab, weil Shared-Base-Produkte unterschiedliche Netzwerkpolicies erfordern konnten. Der [Shared-Base-Web-Fetch-Default](../../archived/feature/2026-09-01-shared-base-web-fetch-default.md) ersetzt diese Ablehnung, nachdem die ausgelieferten Produkte auf einen vollen Tool-Roster konvergierten; seine Public-Destination- und No-Approval-Auflagen bleiben aktuell.
+
+## Konsequenzen
+
+Native Modell-Requests auf Headless-, Full-SDK-, ACP- und Custom-Base-only-Profilen tragen die `web_search`- und `web_fetch`-Schemas samt Guidance; Web-Presets exponieren dasselbe Paar, auch unterhalb von `run_code` im PTC-Modus. Suche fügt einen vollständigen Hilfs-Modell-Call hinzu und kann das native Server-Tool mehrfach nutzen; ihr exakter geheimnisfreier Request bleibt aus dem Log der initiierenden Session rekonstruierbar. Fetch erzwingt öffentliche Adressen und erfordert keine Per-Call-Approval. Die Web-Snapshot-Lane bootet den ausgelieferten Baum, treibt einen replayten `web_search`-Call durch den echten DeepSeek-Provider gegen eine lokale Messages-fixture, assertiert den durable Hilfs-Request und das strukturierte Ergebnis und pinnt die settled Browser-Präsentation. Geteilte Snapshot-Header pinnen das gemeinsame Fetch-Schema und die Prompt-Guidance. Kompositions-Smokes pinnen den Tool-Roster; der Dump der gebauten Komposition pinnt das ausgelieferte Ein-Minuten-Suchbudget; Provider-Tests pinnen fehlendes, gespeichertes und rotiertes Credential-Verhalten plus Literal- und Ambient-Kompatibilität.

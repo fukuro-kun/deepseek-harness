@@ -1,6 +1,7 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Trilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. All three languages carry equal
+# authority; after editing any side, bring the others along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-08-windows-acl-restricted-token-sandbox.md
-2026-08-08-windows-acl-restricted-token-sandbox.md: a70fd8839c371c11b6660229146306f7c5aa642a
+2026-08-08-windows-acl-restricted-token-sandbox.md: 11439c3a026a7e606edae2ebe6ef1b7633c50166
 2026-08-08-windows-acl-restricted-token-sandbox.zh.md: 892eabf17c63b7ceaa9bb8b21ac8c6e71a2f6112
+2026-08-08-windows-acl-restricted-token-sandbox.de.md: ac268113ace1c2ecdaf5e5693c4e63a116b0a15a

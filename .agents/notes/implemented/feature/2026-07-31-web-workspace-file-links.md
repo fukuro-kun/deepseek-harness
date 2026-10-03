@@ -1,4 +1,5 @@
 # Agent Note: opening a produced file from the web UI
+English | [中文](.agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-31-web-workspace-file-links.de.md)
 
 Status: implemented
 

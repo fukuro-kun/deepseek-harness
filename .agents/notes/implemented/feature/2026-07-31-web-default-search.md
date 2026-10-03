@@ -1,4 +1,5 @@
 # Agent Note: Default Web search in shipped compositions
+English | [中文](.agents/notes/implemented/feature/2026-07-31-web-default-search.zh.md) | [Deutsch](.agents/notes/implemented/feature/2026-07-31-web-default-search.de.md)
 
 Status: implemented
 
