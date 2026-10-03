@@ -1,4 +1,5 @@
 # Agent Note: Isolated Node compatibility jobs on self-hosted Linux
+English | [中文](.agents/notes/implemented/process/2026-09-06-node-compatibility-selfhosted.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-06-node-compatibility-selfhosted.de.md)
 
 Status: implemented
 

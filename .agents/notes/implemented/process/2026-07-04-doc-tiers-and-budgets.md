@@ -1,4 +1,5 @@
 # Agent Note: Documentation structure, tiers, and budgets
+English | [中文](.agents/notes/implemented/process/2026-07-04-doc-tiers-and-budgets.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-04-doc-tiers-and-budgets.de.md)
 
 Status: implemented
 

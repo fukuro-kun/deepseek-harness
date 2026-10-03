@@ -1,4 +1,5 @@
 # Agent Note: Package Model Experience contract
+English | [中文](.agents/notes/implemented/process/2026-07-12-package-model-experience-contract.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-12-package-model-experience-contract.de.md)
 
 Status: implemented
 

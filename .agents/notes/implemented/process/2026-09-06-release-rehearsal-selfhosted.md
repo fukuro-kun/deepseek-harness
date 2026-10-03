@@ -1,4 +1,5 @@
 # Agent Note: trusted release rehearsals on persistent Linux runners
+English | [中文](.agents/notes/implemented/process/2026-09-06-release-rehearsal-selfhosted.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-06-release-rehearsal-selfhosted.de.md)
 
 Status: implemented
 

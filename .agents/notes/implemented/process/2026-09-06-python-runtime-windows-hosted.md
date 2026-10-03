@@ -1,4 +1,5 @@
 # Agent Note: Windows Python runtime CI stays on GitHub-hosted Windows
+English | [中文](.agents/notes/implemented/process/2026-09-06-python-runtime-windows-hosted.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-06-python-runtime-windows-hosted.de.md)
 
 Status: implemented
 

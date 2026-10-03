@@ -1,4 +1,5 @@
 # Agent Note: Blocked weighted approvals remain pending
+English | [中文](.agents/notes/implemented/process/2026-09-09-blocked-weighted-approvals-remain-pending.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-09-09-blocked-weighted-approvals-remain-pending.de.md)
 
 Status: implemented
 

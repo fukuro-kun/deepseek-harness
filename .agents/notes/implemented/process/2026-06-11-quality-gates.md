@@ -1,4 +1,5 @@
 # Agent Note: Mechanical quality gates over prose guidelines
+English | [中文](.agents/notes/implemented/process/2026-06-11-quality-gates.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-06-11-quality-gates.de.md)
 
 Status: implemented
 
