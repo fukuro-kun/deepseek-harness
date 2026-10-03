@@ -3,8 +3,8 @@ description: "Host and Client workspace control: mutate workspace navigation and
 kind: "package-reference"
 ---
 # Workspace Controller
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 

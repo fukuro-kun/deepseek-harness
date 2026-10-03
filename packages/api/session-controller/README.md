@@ -3,8 +3,8 @@ description: "Host and Client session control: create, resume, prompt, follow hi
 kind: "package-reference"
 ---
 # Session Controller
+English | [中文](README.zh.md) | [Deutsch](README.de.md)
 
-English | [中文](README.zh.md)
 
 ## Summary
 
