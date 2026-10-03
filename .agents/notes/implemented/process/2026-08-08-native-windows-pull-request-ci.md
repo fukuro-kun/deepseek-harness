@@ -1,4 +1,5 @@
 # Agent Note: Wine and native Windows CI
+English | [中文](.agents/notes/implemented/process/2026-08-08-native-windows-pull-request-ci.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-08-native-windows-pull-request-ci.de.md)
 
 Status: implemented
 

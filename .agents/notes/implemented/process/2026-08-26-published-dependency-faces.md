@@ -1,4 +1,5 @@
 # Agent Note: Published dependency faces and bounded peer relays
+English | [中文](.agents/notes/implemented/process/2026-08-26-published-dependency-faces.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-26-published-dependency-faces.de.md)
 
 Status: implemented
 

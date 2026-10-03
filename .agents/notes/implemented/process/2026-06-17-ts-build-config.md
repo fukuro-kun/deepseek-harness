@@ -1,4 +1,5 @@
 # Agent Note: TSC-first build and one compiler ownership
+English | [中文](.agents/notes/implemented/process/2026-06-17-ts-build-config.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-06-17-ts-build-config.de.md)
 
 Status: implemented
 

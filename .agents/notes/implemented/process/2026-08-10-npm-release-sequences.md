@@ -1,4 +1,5 @@
 # Agent Note: Private npm publication as three independent sequences
+English | [中文](.agents/notes/implemented/process/2026-08-10-npm-release-sequences.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-10-npm-release-sequences.de.md)
 
 Status: implemented
 

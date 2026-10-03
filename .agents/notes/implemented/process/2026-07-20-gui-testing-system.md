@@ -1,4 +1,5 @@
 # Agent Note: GUI testing system — the three-tier structure
+English | [中文](.agents/notes/implemented/process/2026-07-20-gui-testing-system.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-20-gui-testing-system.de.md)
 
 Status: implemented
 

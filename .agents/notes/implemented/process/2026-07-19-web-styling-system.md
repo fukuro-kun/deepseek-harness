@@ -1,4 +1,5 @@
 # Agent Note: Web styling system — the token framework and engineering constraints
+English | [中文](.agents/notes/implemented/process/2026-07-19-web-styling-system.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-19-web-styling-system.de.md)
 
 Status: implemented
 

@@ -1,4 +1,5 @@
 # Agent Note: In-job partitioned coverage
+English | [中文](.agents/notes/implemented/process/2026-08-18-in-job-partitioned-coverage.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-08-18-in-job-partitioned-coverage.de.md)
 
 Status: implemented
 

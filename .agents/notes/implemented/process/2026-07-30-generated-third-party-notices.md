@@ -1,4 +1,5 @@
 # Agent Note: Generated third-party notices
+English | [中文](.agents/notes/implemented/process/2026-07-30-generated-third-party-notices.zh.md) | [Deutsch](.agents/notes/implemented/process/2026-07-30-generated-third-party-notices.de.md)
 
 Status: implemented
 
